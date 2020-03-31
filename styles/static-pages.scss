@@ -1,0 +1,69 @@
+.static-section {
+  padding: 30px 10px;
+
+  > article {
+    max-width: 720px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  &.first-section > article {
+    max-width: 900px;
+  }
+}
+
+.theme-section {
+  background: $--about-background-gradient;
+}
+
+.grey-section {
+  background: radial-gradient(ellipse at top, #f9f9f9 30%, #e6eaf1 100%);
+}
+
+.dark-section {
+  box-shadow: 3px -3px 20px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to bottom, rgb(65, 65, 65) 0%, #292929 100%);
+  color: #f4f4f4;
+
+  a, .el-button--text {
+    color: #afc3d0;
+
+    &:hover {
+      color: #d2e9f6;
+    }
+  }
+}
+
+.first-section {
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    display: block;
+    height: 1px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .2);
+  }
+}
+
+@media (min-width: $--sm) {
+  .static-section {
+    padding: 50px 20px;
+  }
+}
+
+@media (min-width: $--lg) {
+  .static-section {
+    padding: 60px 30px;
+  }
+}
+
+@media (min-width: $--xl) {
+  .static-section {
+    padding: 70px 30px;
+  }
+}

@@ -1,0 +1,29 @@
+@import './variables-element.scss';
+
+$--font-family-base: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$--header-height: 80px;
+$--sidebar-size: 180px;
+$--page-cover-color: linear-gradient(to bottom right, rgba(255, 255, 246, 0.74) 0%, rgba(255, 251, 206, 0.82) 100%);
+$--max-content-width: 1200px;
+$--app-header-background: #fff;
+$--app-header-border: 1px solid rgba(221, 221, 221, 0.6);
+$--about-background-gradient: radial-gradient(ellipse farthest-corner at 0% 10%, rgba(243, 255, 0, 0.26) 30%, rgba(109, 185, 0, 0.32) 100%);
+$--landing-background-gradient: radial-gradient(ellipse farthest-corner at 0% 10%, rgba(243, 255, 0, 0.26) 30%, rgba(109, 185, 0, 0.32) 100%);
+
+$--hamburger-icon-menu: #0073a7;
+$--el-menu-item-color: rgba(48, 49, 51, 0.69);
+$--el-menu-item-hover-color: #333;
+$--el-menu-item-hover-background: rgba(195, 64, 109, 0.3);
+$--el-menu-item-is-active-color : #fff;
+$--el-menu-item-is-active-background : rgba(162, 0, 24, 0.5);
+
+//Theme thumb bg colors
+$--thumb-color-0: #eda175;
+$--thumb-color-1: #6DAA82;
+$--thumb-color-2: #aad7f7;
+$--thumb-color-3: #f2ec9f;
+$--thumb-color-4: #a39ac4;
+$--thumb-color-5: #CA848A;
+$--thumb-color-6: #BCE791;
+$--thumb-color-7: #7fa9e6;
+$--thumb-color-8: #999;

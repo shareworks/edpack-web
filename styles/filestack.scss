@@ -1,0 +1,32 @@
+.fsp-picker {
+  background: rgba(255, 255, 255, 0.8) !important;
+
+  .fsp-header {
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .fsp-modal {
+    box-shadow: 0 1px 20px rgba(0, 0, 0, 0.3);
+    background: #fff;
+    border-bottom: none;
+  }
+
+  .fsp-modal__sidebar {
+    background: #fff;
+    border-radius: 0px;
+    border-right: 1px solid #ddd;
+  }
+
+  .fsp-summary__header {
+    display: none;
+  }
+
+  .fsp-source-auth__wrapper {
+    padding-top: 70px;
+  }
+
+  .fsp-modal__sidebar:hover {
+    box-shadow: none;
+  }
+}

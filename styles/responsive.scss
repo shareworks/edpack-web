@@ -1,0 +1,52 @@
+@media (max-width: ($--sm - 1)) {
+  .hidden-xs {
+    display: none !important;
+  }
+
+  .hidden-sm,
+  .hidden-sm-inline {
+    display: none !important;
+  }
+}
+
+@media (min-width: $--sm) {
+  .visible-xs,
+  .visible-xs-inline {
+    display: none !important;
+  }
+
+  .visible-sm {
+    display: block !important;
+  }
+
+  .visible-sm-inline {
+    display: inline-block !important;
+  }
+}
+
+@media (max-width: ($--md - 1)) {
+  .hidden-sm {
+    display: none !important;
+  }
+}
+
+@media (min-width: $--md) {
+  .float-50 {
+    float: left;
+    width: 50%;
+  }
+
+  .hidden-sm-inline {
+    display: inline-block !important;
+  }
+
+  .visible-xs,
+  .visible-xs-inline {
+    display: none !important;
+  }
+
+  .visible-sm,
+  .visible-sn-inline {
+    display: none !important;
+  }
+}

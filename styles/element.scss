@@ -1,0 +1,259 @@
+/* Forms
+-------------------------- */
+.el-form-item:last-child {
+  margin-bottom: 0;
+}
+
+.el-form-item__content > .el-tag + .el-tag {
+  margin-left: 5px;
+}
+
+.el-form-item__label {
+  font-weight: 500;
+}
+
+.el-input__suffix > i,
+.el-input__prefix > i {
+  margin: 0;
+  margin-left: 5px;
+}
+
+.el-checkbox {
+  margin-right: 0;
+}
+
+.el-switch__input:focus + .el-switch__core,
+.el-checkbox__input.is-focus > .el-checkbox__inner {
+  box-shadow: 0 0 2px 1px $--color-primary;
+}
+
+.el-checkbox__inner {
+  margin-left: 1px;
+}
+
+@media (max-width: ($--md - 1)) {
+  .el-input__inner {
+    padding: 0 10px;
+  }
+
+  .el-form-item__label {
+    float: none;
+    display: block;
+    text-align: left;
+    width: 100% !important;
+  }
+
+  .el-form-item__content {
+    margin-left: 0 !important;
+  }
+}
+
+@media (min-width: $--sm) {
+  .input-with-select {
+    .el-input-group__prepend {
+      width: 140px;
+    }
+  }
+}
+
+/* Checkboxes
+-------------------------- */
+.checkboxes-row > .el-checkbox + .el-checkbox {
+  margin-left: 15px;
+}
+
+.el-checkbox-group .el-checkbox {
+  line-height: 32px;
+}
+
+.el-checkbox + .el-checkbox {
+  margin: 0;
+}
+
+.el-checkbox__label {
+  display: inline !important;
+  white-space: normal !important;
+}
+
+/* Dialog
+-------------------------- */
+.v-modal {
+  opacity: .8;
+  background: #fff;
+}
+.el-dialog {
+  margin-top: 10vh !important;
+  width: 90% !important;
+  max-width: $--max-width-dialog;
+  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.3);
+}
+
+.small-dialog > .el-dialog {
+  max-width: 600px !important;
+
+  > .el-dialog__body {
+    padding: 20px !important;
+  }
+
+  > .el-dialog__header {
+    padding: 20px !important;
+    padding-bottom: 0 !important;
+  }
+}
+
+.el-dialog__body {
+  padding: 20px;
+  word-break: normal;
+}
+
+.el-dialog__header {
+  padding-bottom: 0;
+}
+
+/* Tabs
+-------------------------- */
+.el-tabs__nav-wrap::after {
+  height: 0;
+}
+
+/* Buttons & Badges
+-------------------------- */
+.el-button {
+  & + & {
+    margin-left: 5px;
+  }
+
+  &.el-button--normal {
+    height: 40px;
+  }
+
+  &.el-button--medium {
+    height: 36px;
+  }
+
+  &.block {
+    width: 100%;
+  }
+
+  &.inline {
+    width: auto;
+  }
+}
+
+.el-badge__content.is-fixed {
+  z-index: 10;
+}
+
+.el-badge {
+  vertical-align: top;
+}
+
+
+/* Tables
+-------------------------- */
+.el-table-column--selection {
+  text-overflow: unset !important;
+
+  > .cell {
+    text-overflow: unset !important;
+  }
+}
+
+.el-table__expanded-cell,
+.el-table__expanded-cell:hover {
+  padding: 20px 10px !important;
+  background: #f9f9f9 !important;
+}
+
+.td.td-ellipsis {
+  @extend .text-ellipsis;
+}
+
+.cell-ellipsis > .cell {
+  white-space: nowrap;
+}
+
+.no-word-break.el-table .cell {
+  word-break: inherit !important;
+}
+
+.el-table {
+  position: unset;
+
+  &:before {
+  display: none;
+}
+}
+
+.el-main {
+  overflow: unset !important;
+}
+
+@media (min-width: $--sm) {
+  .el-table__expanded-cell,
+  .el-table__expanded-cell:hover {
+    padding: 20px !important;
+  }
+}
+
+/* Other Element UI Components
+-------------------------- */
+
+.el-input__icon {
+  width: auto;
+}
+
+.el-alert__content {
+  padding: 0 15px;
+}
+
+.el-upload-list__item {
+  background: #eee;
+  max-width: 300px;
+
+  .el-icon-close {
+    display: block;
+  }
+}
+
+.popper__arrow {
+  display: none !important;
+}
+
+.el-submenu .el-menu-item,
+.el-select-dropdown__item,
+.el-dropdown-menu__item {
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+  height: auto !important;
+  min-width: 150px;
+  border: 0 !important;
+  line-height: 36px !important;
+}
+
+.el-dropdown {
+  vertical-align: top;
+}
+
+.el-progress-bar__inner {
+  box-shadow: 0 0 4px $--color-success !important;
+}
+
+.el-tooltip__popper, .el-popover,
+.el-table .cell {
+  word-break: normal;
+}
+
+@media (min-width: $--sm) {
+  .el-dialog__body {
+    padding: 20px 30px 30px;
+  }
+
+  .el-dialog__header {
+    padding: 20px 30px 0;
+  }
+
+  .el-dialog__headerbtn {
+    right: 30px;
+  }
+}

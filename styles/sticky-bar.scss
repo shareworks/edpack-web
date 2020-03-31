@@ -1,0 +1,36 @@
+.sticky-bar {
+  min-height: 40px;
+}
+
+.sticky-bar.affix {
+  width: 100%;
+  left: 0px;
+  top: 0 !important;
+  padding: 10px 0;
+  z-index: 1000;
+  background: rgb(255, 255, 255);
+  border-bottom: 1px solid rgb(238, 238, 238);
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 5px;
+
+  > .el-row {
+    max-width: $--max-content-width;
+    margin: 0 auto;
+    padding: 0 10px;
+  }
+
+  & + .bar-placeholder {
+    height: 40px;
+  }
+}
+
+.nav-offset .sticky-bar.affix {
+  top: $--header-height !important;
+}
+
+@media (min-width: $--md) {
+  .sticky-bar.affix {
+    > .el-row {
+      padding: 0 20px;
+    }
+  }
+}
