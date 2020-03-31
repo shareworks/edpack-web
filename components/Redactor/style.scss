@@ -1,0 +1,24 @@
+.redactor-dropdown {
+  z-index: 3000;
+}
+
+#redactor-overlay {
+  z-index: 2080;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+#redactor-modal {
+  z-index: 2090;
+}
+
+.redactor-context-toolbar {
+  z-index: 2095;
+}
+
+#redactor-image-resizer {
+  z-index: 2096;
+}
+
+.redactor-styles {
+  font-family: $--font-family-base;
+}
