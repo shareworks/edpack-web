@@ -1,0 +1,105 @@
+header {
+  z-index: 60;
+  background: #fff;
+  border-bottom: $--app-header-border;
+  color: #2e3d49;
+  position: fixed;
+  background: $--app-header-background;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition-duration: .2s;
+  transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+  transition-property: transform;
+  width: 100%;
+  height: $--header-height;
+  transform: translate3d(0, 0, 0) !important;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 45px;
+  height: 65%;
+  background-image: url('/images/logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  transition: transform .2s ease-out;
+
+  &:hover {
+    transform: translate(-50%, -46%);
+  }
+
+  &:active {
+    transform-origin: 50% 55%;
+    transform: translate(-50%, -50%) rotateZ(20deg);
+  }
+}
+
+.header-container {
+  height: 100%;
+  padding: 0 20px;
+  max-width: $--max-content-width;
+  margin: 0 auto;
+  position: relative;
+
+  .el-menu.header-tabs {
+    background: none;
+    border-bottom: none;
+
+    .el-menu-item {
+      background: none;
+      font-weight: 500;
+      color: $--el-menu-item-color;
+      border-width: 0;
+
+      &:hover {
+        color: $--el-menu-item-hover-color;
+        background: $--el-menu-item-hover-background;
+      }
+
+      &.is-active {
+        background: $--el-menu-item-is-active-background;
+        color: $--el-menu-item-is-active-color;
+      }
+    }
+  }
+}
+
+button.menu-button {
+  padding: 16px;
+  margin-left: -16px;
+  font-size: 160%;
+  color: $--hamburger-icon-menu;
+  height: 100% !important;
+}
+
+.header-user-container {
+  height: 100%;
+  padding: calc((#{$--header-height} / 2) - 12px);
+  right: 0;
+  top: 0;
+  position: absolute;
+}
+
+.user-account-link {
+}
+
+.user-name {
+  color: $--color-text-primary;
+  white-space: nowrap;
+}
+
+.org-select {
+  display: inline-block;
+  margin-right: 20px;
+  margin-top: -6px;
+
+  .el-input__inner {
+    background: rgba(255, 255, 255, 0.6);
+    border: none !important;
+  }
+}

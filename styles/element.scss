@@ -1,5 +1,9 @@
 /* Forms
 -------------------------- */
+.el-popconfirm__main {
+  margin-bottom: 10px;
+}
+
 .el-form-item:last-child {
   margin-bottom: 0;
 }
@@ -15,11 +19,6 @@
 .el-input__suffix > i,
 .el-input__prefix > i {
   margin: 0;
-  margin-left: 5px;
-}
-
-.el-checkbox {
-  margin-right: 0;
 }
 
 .el-switch__input:focus + .el-switch__core,
@@ -84,8 +83,17 @@
 .el-dialog {
   margin-top: 10vh !important;
   width: 90% !important;
-  max-width: $--max-width-dialog;
+  max-width: 1200px !important;
   box-shadow: 0 1px 20px rgba(0, 0, 0, 0.3);
+}
+
+.el-dialog__body {
+  padding: 20px;
+  word-break: normal;
+}
+
+.el-dialog__header {
+  padding-bottom: 0;
 }
 
 .small-dialog > .el-dialog {
@@ -99,15 +107,6 @@
     padding: 20px !important;
     padding-bottom: 0 !important;
   }
-}
-
-.el-dialog__body {
-  padding: 20px;
-  word-break: normal;
-}
-
-.el-dialog__header {
-  padding-bottom: 0;
 }
 
 /* Tabs
@@ -177,18 +176,6 @@
   word-break: inherit !important;
 }
 
-.el-table {
-  position: unset;
-
-  &:before {
-  display: none;
-}
-}
-
-.el-main {
-  overflow: unset !important;
-}
-
 @media (min-width: $--sm) {
   .el-table__expanded-cell,
   .el-table__expanded-cell:hover {
@@ -198,11 +185,6 @@
 
 /* Other Element UI Components
 -------------------------- */
-
-.el-input__icon {
-  width: auto;
-}
-
 .el-alert__content {
   padding: 0 15px;
 }

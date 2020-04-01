@@ -1,6 +1,6 @@
 <template>
   <div>
-    <affix class="sticky-bar" relative-element-selector="#sticky-content" :offset="{ top: 128, bottom: -1000 }">
+    <affix class="sticky-bar" relative-element-selector="#sticky-content" :offset="{ top: 148, bottom: -1000 }">
       <el-row type="flex" justify="center" align="middle">
         <el-col :xs="11" :sm="16">
 
@@ -26,12 +26,6 @@
               <span>{{ $t('SW_LOGIN_AS') }}</span>
             </el-button>
 
-            <!-- Merge 2 users -->
-            <el-button @click="dialogMerge = true" type="warning" plain size="medium" v-if="multipleSelection.length === 2 && user.systemAdmin"  class="hidden-xs hidden-sm ml-5">
-              <i class="icon-call_merge"></i>
-              <span class="hidden-xs">{{ $t('SW_MERGE') }}</span>
-            </el-button>
-
             <!-- Clear selection -->
             <el-button type="text" size="medium" @click="selectionChange" class="ml-10">
               <i class="icon-clear"></i>
@@ -39,15 +33,9 @@
             </el-button>
           </div>
 
-          <div v-else-if="isAdmin">
-            <!-- Add users manually -->
-            <el-button type="primary" plain @click="dialogAddUsers = true" size="medium" class="button-square-xs">
-              <i class="icon-add"></i>
-              <span class="hidden-xs">{{ $t('SW_ADD_USERS') }}</span>
-            </el-button>
-
+          <div v-else>
             <!-- Total users found -->
-            <span v-show="status !== 'loading' || tableData.length" class="hidden-xs hidden-sm ml-10 line-height-38">
+            <span v-show="status !== 'loading' || tableData.length" class="hidden-xs hidden-sm line-height-38">
               {{ total }} {{ $t('SW_USERS').toLowerCase() }}
             </span>
           </div>
@@ -126,7 +114,7 @@
       <el-table-column property="counts.courses" :label="$t('SW_COURSES')" width="120">
         <template slot-scope="props">
           <i class="icon-graduation"></i>
-          {{ props.row.courses && props.row.courses.length || 0 }}
+          {{ props.row.counts && props.row.counts.courses || 0 }}
         </template>
       </el-table-column>
       <!-- Created date -->
@@ -141,24 +129,14 @@
     <!-- Table status -->
     <table-status :status="status" :noneText="$t('SW_NO_USERS_FOUND')" @clearSearch="searchText = ''"></table-status>
 
-    <!-- Add users dialog -->
-    <el-dialog :title="$t('SW_ADD_USERS')" append-to-body :visible.sync="dialogAddUsers">
-      <users-create v-if="dialogAddUsers" :closeDialog="closeDialog"></users-create>
-    </el-dialog>
-
     <!-- Edit user dialog -->
     <el-dialog :title="$t('SW_EDIT_USER')" append-to-body :visible.sync="dialogEditUser">
-      <user-account-form :form="editUserForm" v-if="dialogEditUser" :finish="finishEditUser"></user-account-form>
+      <account-form :form="editUserForm" v-if="dialogEditUser" :finish="finishEditUser"></account-form>
     </el-dialog>
 
     <!-- Email dialog -->
     <el-dialog :title="$t('SW_SEND_EMAIL_TO_SELECTION_USERS')" append-to-body :visible.sync="dialogEmail">
       <email-users v-if="dialogEmail" :selectedUsers="multipleSelection" :closeDialog="closeDialog"></email-users>
-    </el-dialog>
-
-    <!-- Merge dialog -->
-    <el-dialog :title="$t('SW_MERGE_USERS')" append-to-body :visible.sync="dialogMerge">
-      <users-merge v-if="dialogMerge" :selectedUsers="multipleSelection" :closeDialog="closeDialog"></users-merge>
     </el-dialog>
   </div>
 </template>
@@ -169,22 +147,20 @@ import Vue from 'vue'
 import debounce from 'lodash/debounce'
 import dateSorter from '@/utils/date-sorter'
 import sortCaseInsensitive from '@/utils/sort-case-insensitive'
-import UserAccountForm from '@/components/UserAccountForm'
-import UsersCreate from '@/components/UsersCreate'
+import AccountForm from '@/components/AccountForm'
 import EmailUsers from '@/components/EmailUsers'
-import UsersMerge from '@/components/UsersMerge'
 import LmsIcon from '@/components/LmsIcon'
 import TableStatus from '@/components/TableStatus'
 
 export default {
   name: 'UsersTable',
-  components: { UserAccountForm, UsersCreate, EmailUsers, UsersMerge, LmsIcon, TableStatus },
+  components: { AccountForm, EmailUsers, LmsIcon, TableStatus },
 
   data () {
     return {
       status: false,
       searchText: this.$route.query.query || '',
-      sort: 'createdDate',
+      sort: 'name',
       order: 'ascending',
       roles: [
         { label: 'all', value: 'all' },
@@ -201,10 +177,8 @@ export default {
       isAdmin: this.$store.state.isAdmin,
       school: this.$store.state.school,
       editUserForm: false,
-      dialogAddUsers: false,
       dialogEditUser: false,
-      dialogEmail: false,
-      dialogMerge: false
+      dialogEmail: false
     }
   },
 
@@ -226,6 +200,8 @@ export default {
     getUsers (refresh) {
       if (this.status === 'loading') return
       this.status = 'loading'
+
+      // CHange sort to: (name|createdDate) etc
 
       const params = {
         entity: this.user.organization._id,
@@ -255,7 +231,7 @@ export default {
     loginAs () {
       const userId = this.multipleSelection[0]._id
 
-      this.$http.get(`users/${userId}/adopt`)
+      this.$http.post(`users/${userId}/adopt`)
         .then(() => { window.location = window.location.origin })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
     },
@@ -311,9 +287,7 @@ export default {
       this.dialogEditUser = true
     },
     closeDialog (refresh) {
-      this.dialogAddUsers = false
       this.dialogEmail = false
-      this.dialogMerge = false
       this.selectionChange()
       if (refresh) {
         this.searchText = ''

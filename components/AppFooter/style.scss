@@ -1,0 +1,35 @@
+.app-footer {
+  text-align: center;
+  padding: 40px 0;
+  margin: 0 20px 80px;
+}
+
+.footer-logo {
+  background-image: url('/images/logo-text.svg');
+  background-size: contain;
+  width: 120px;
+  display: inline-block;
+  background-position: center;
+  opacity: .6;
+  height: 30px;
+  background-repeat: no-repeat;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.credits {
+  padding-top: 20px;
+  opacity: .7;
+  font-size: 13px;
+  color: #666;
+}
+
+.footer-link {
+  color: #222;
+
+  &:hover {
+    color: #000;
+  }
+}
