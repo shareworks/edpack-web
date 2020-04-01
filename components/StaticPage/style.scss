@@ -1,0 +1,34 @@
+.static-max-width {
+  max-width: 800px !important;
+}
+
+.static-page-content {
+  margin-top: -70px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.1);
+  padding: 20px;
+  background: #fff;
+  border-radius: 7px;
+
+  > section {
+    margin-bottom: 20px;
+    margin-top: 20px;
+
+    > p {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+@media (min-width: $--sm) {
+  .static-page-content {
+    margin-top: -90px;
+    padding: 30px;
+  }
+}
+
+@media (min-width: $--lg) {
+  .static-page-content {
+    margin-top: -110px;
+    padding: 40px;
+  }
+}
