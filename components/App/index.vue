@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <vue-progress-bar></vue-progress-bar>
+    <app-sidebar v-if="navAvailable" :closeSidebar="closeSidebar" :active="sidebarOpened" />
     <app-header v-if="navAvailable" :openSidebar="openSidebar"/>
 
     <!-- Main content -->
@@ -14,6 +15,7 @@
 
     <!-- Navigation stuff -->
     <app-footer v-if="showFooter"/>
+    <div class="dimmer" v-if="sidebarOpened" :class="{'active': obfuscatorActive}" @click="closeSidebar"></div>
     <freshchat v-if="loadFreshchat"></freshchat>
     <x-browser-update :config="browserUpdateConfig"></x-browser-update>
     <reload-after-deploy></reload-after-deploy>
@@ -28,6 +30,7 @@
 <script>
 import config from 'config'
 import AppHeader from '../../components/AppHeader'
+import AppSidebar from '../../components/AppSidebar'
 import AppFooter from '../../components/AppFooter'
 import { mapActions, mapState } from 'vuex'
 import browserConfig from '../../utils/browser-update'
@@ -43,7 +46,7 @@ export default {
     titleTemplate: '%s - ' + config.name + ' ' + mode
   },
   components: {
-    WelcomeDialog, AppHeader, AppFooter, ReloadAfterDeploy, Freshchat: () => import('../../components/Freshchat')
+    WelcomeDialog, AppHeader, AppSidebar, AppFooter, ReloadAfterDeploy, Freshchat: () => import('../../components/Freshchat')
   },
 
   data () {
@@ -97,12 +100,14 @@ export default {
     ...mapState({
       language: state => state.user.language,
       currentUser: state => state.user,
+      showFooter: state => state.route.meta.footer,
+      sidebarOpened: state => state.sidebarOpened,
+      obfuscatorActive: state => state.obfuscatorActive,
+      pageOffset: state => state.route.meta.auth,
       loadFreshchat: (state) => {
         if (!config.support) return false
         return state.user && state.school && state.school.role !== 'student'
       },
-      showFooter: state => state.route.meta.footer,
-      pageOffset: state => state.route.meta.auth,
       navAvailable: (state) => {
         // Hide when not authenticated
         if (!state.route.meta.auth || state.route.meta.hideNav) return false
