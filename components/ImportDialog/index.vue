@@ -54,13 +54,11 @@
 </template>
 
 <script>
-import QuestionDialog from '../../../component/QuestionDialog'
 import moment from 'moment'
 
 export default {
   name: 'ImportDialog',
   props: ['closeImportDialog'],
-  components: { QuestionDialog },
 
   data () {
     return {
