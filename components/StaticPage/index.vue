@@ -47,8 +47,8 @@
 </template>
 
 <script>
-import FooterCredits from './FooterCredits'
-import FooterLinks from './FooterLinks'
+import FooterCredits from '../FooterCredits'
+import FooterLinks from '../FooterLinks'
 
 export default {
   name: 'StaticPage',
