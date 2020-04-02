@@ -39,7 +39,7 @@
             <i class="icon-send"></i>
             <strong>{{ $t('SW_SEND_MESSAGE') }}</strong>
           </el-button>
-          <el-button @click="closeDialog" class="ml-10" type="text">{{ $t('SW_CANCEL') }}</el-button>
+          <el-button @click="cancel" class="ml-10" type="text">{{ $t('SW_CANCEL') }}</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -68,7 +68,7 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 Vue.use(VueGoogleMaps, { load: { key: config.google_maps_key } })
 
 export default {
-  name: 'ContactDialog',
+  name: 'ContactForm',
   props: ['closeDialog'],
   components: {},
 
@@ -86,7 +86,9 @@ export default {
 
   computed: {
     infoContent () {
-      return `<p class="bold">${this.business.name}<br><address>${this.business.streetAddress}<br>${this.business.postAddress}<br>${this.business.country}</address><a href="mailto:${this.business.mail}">${this.business.mail}</a><br><a href="http://goo.gl/maps/SQlrh" class="bold" target="_blank">Get directions</a></p>`
+      const b = this.business
+      const mapsUrl = 'https://goo.gl/maps/SQlrh'
+      return `<p class="bold">${b.name}<br><address>${b.streetAddress}<br>${b.postAddress}<br>${b.country}</address><a href="mailto:${b.mail}">${b.mail}</a><br><a href="${mapsUrl}" class="bold" target="_blank">Get directions</a></p>`
     }
   },
 
@@ -115,12 +117,16 @@ export default {
           this.form = { email: '', name: '', message: '' }
           this.closeDialog()
         })
+    },
+    cancel () {
+      if (this.closeDialog) return this.closeDialog()
+      else this.form = { email: '', name: '', message: '' }
     }
   }
 }
 </script>
 
 <style lang="scss">
-@import '~scss_vars';
-@import './style.scss';
+  @import '~scss_vars';
+  @import './style.scss';
 </style>

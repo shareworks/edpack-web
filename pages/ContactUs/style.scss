@@ -1,0 +1,27 @@
+.contact-form-wrapper {
+  display: block;
+  max-width: 900px;
+  margin: 0 auto;
+  box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  border: 0;
+  position: relative;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.7);
+  padding: calc(20px + 2%);
+  min-height: 440px;
+  transition: all .5s ease-in-out;
+
+  &.visible {
+    transform: translateY(0);
+  }
+
+  &.invisible {
+    transform: translateY(50px);
+  }
+}
+
+.contact-title {
+  line-height: 28px;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.4);
+}

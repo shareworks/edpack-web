@@ -131,7 +131,7 @@
 
     <!-- Edit user dialog -->
     <el-dialog :title="$t('SW_EDIT_USER')" append-to-body :visible.sync="dialogEditUser">
-      <account-form :form="editUserForm" v-if="dialogEditUser" :finish="finishEditUser"></account-form>
+      <user-account-form :form="editUserForm" v-if="dialogEditUser" :finish="finishEditUser"></user-account-form>
     </el-dialog>
 
     <!-- Email dialog -->
@@ -147,14 +147,14 @@ import Vue from 'vue'
 import debounce from 'lodash/debounce'
 import dateSorter from '../../utils/date-sorter'
 import sortCaseInsensitive from '../../utils/sort-case-insensitive'
-import AccountForm from '../../components/AccountForm'
+import UserAccountForm from '../../components/UserAccountForm'
 import EmailUsers from '../../components/EmailUsers'
 import LmsIcon from '../../components/LmsIcon'
 import TableStatus from '../../components/TableStatus'
 
 export default {
   name: 'UsersTable',
-  components: { AccountForm, EmailUsers, LmsIcon, TableStatus },
+  components: { UserAccountForm, EmailUsers, LmsIcon, TableStatus },
 
   data () {
     return {

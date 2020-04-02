@@ -82,7 +82,7 @@
 import { loadLanguages } from '../../utils/load-languages'
 import ThumbnailEdit from '../../components/ThumbnailEdit'
 export default {
-  name: 'AccountForm',
+  name: 'UserAccountForm',
   props: ['form', 'finish'],
   components: { ThumbnailEdit },
 
