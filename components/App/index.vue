@@ -27,12 +27,12 @@
 
 <script>
 import config from 'config'
-import AppHeader from '@/components/AppHeader'
-import AppFooter from '@/components/AppFooter'
+import AppHeader from '../../components/AppHeader'
+import AppFooter from '../../components/AppFooter'
 import { mapActions, mapState } from 'vuex'
-import browserConfig from '@/utils/browser-update'
-import WelcomeDialog from '@/components/WelcomeDialog'
-import ReloadAfterDeploy from '@/components/ReloadAfterDeploy'
+import browserConfig from '../../utils/browser-update'
+import WelcomeDialog from '../../components/WelcomeDialog'
+import ReloadAfterDeploy from '../../components/ReloadAfterDeploy'
 
 const mode = process.env.VUE_APP_MODE && process.env.VUE_APP_MODE !== 'production' ? process.env.VUE_APP_MODE.toUpperCase() : ''
 
@@ -43,7 +43,7 @@ export default {
     titleTemplate: '%s - ' + config.name + ' ' + mode
   },
   components: {
-    WelcomeDialog, AppHeader, AppFooter, ReloadAfterDeploy, Freshchat: () => import('@/components/Freshchat')
+    WelcomeDialog, AppHeader, AppFooter, ReloadAfterDeploy, Freshchat: () => import('../../components/Freshchat')
   },
 
   data () {

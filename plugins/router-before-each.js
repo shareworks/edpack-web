@@ -1,12 +1,12 @@
 import AxiosPlugin from './axios'
 import isAuthorized from './is-authorized'
-import { router } from '@/router'
+import { router } from '../../router'
 import config from 'config'
 import mockUser from 'config/mock-user'
-import store from '@/store'
-import { setCsrfToken } from '@/utils/csrf-handling'
+import store from '../../store'
+import { setCsrfToken } from '../utils/csrf-handling'
 import Axios from 'axios'
-import { loadLanguages } from '@/utils/load-languages'
+import { loadLanguages } from '../utils/load-languages'
 import LanguagePlugin from './language'
 
 export default {

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { loadLanguages } from '@/utils/load-languages'
+import { loadLanguages } from '../../utils/load-languages'
 import config from 'config'
 
 export default {

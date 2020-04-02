@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import getLmsType from '@/utils/get-lms-type'
+import getLmsType from '../../utils/get-lms-type'
 
 export default {
   name: 'LmsIcon',

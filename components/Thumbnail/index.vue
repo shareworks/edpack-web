@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import getColorId from '@/utils/get-color-id'
+import getColorId from '../../utils/get-color-id'
 
 export default {
   name: 'Thumbnail',

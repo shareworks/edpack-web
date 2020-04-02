@@ -1,4 +1,4 @@
-import localeEn from '@/en.json'
+import localeEn from '../../en.json'
 import VueI18n from 'vue-i18n'
 
 export default {

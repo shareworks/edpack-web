@@ -17,7 +17,7 @@
 <script>
 import config from 'config'
 import * as filestack from 'filestack-js'
-import convertDiacritics from '@/utils/convert-diacritics'
+import convertDiacritics from '../../utils/convert-diacritics'
 
 export default {
   name: 'ThumbnailEdit',

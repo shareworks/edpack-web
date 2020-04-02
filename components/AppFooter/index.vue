@@ -30,7 +30,7 @@ import config from 'config'
 
 export default {
   name: 'AppFooter',
-  components: { ContactDialog: () => import('@/components/ContactDialog') },
+  components: { ContactDialog: () => import('../../components/ContactDialog') },
 
   data () {
     return {

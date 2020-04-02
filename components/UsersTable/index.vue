@@ -145,12 +145,12 @@
 import moment from 'moment'
 import Vue from 'vue'
 import debounce from 'lodash/debounce'
-import dateSorter from '@/utils/date-sorter'
-import sortCaseInsensitive from '@/utils/sort-case-insensitive'
-import AccountForm from '@/components/AccountForm'
-import EmailUsers from '@/components/EmailUsers'
-import LmsIcon from '@/components/LmsIcon'
-import TableStatus from '@/components/TableStatus'
+import dateSorter from '../../utils/date-sorter'
+import sortCaseInsensitive from '../../utils/sort-case-insensitive'
+import AccountForm from '../../components/AccountForm'
+import EmailUsers from '../../components/EmailUsers'
+import LmsIcon from '../../components/LmsIcon'
+import TableStatus from '../../components/TableStatus'
 
 export default {
   name: 'UsersTable',

@@ -4,7 +4,7 @@
 
 <script>
 import moment from 'moment'
-import { router } from '@/router'
+import { router } from '../../../router'
 export default {
   name: 'ReloadAfterDeploy',
 

@@ -1,9 +1,9 @@
 // Check if app is started using LTI
-import { loadCsrfToken, removeCsrfToken } from '@/utils/csrf-handling'
+import { loadCsrfToken, removeCsrfToken } from '../utils/csrf-handling'
 import Axios from 'axios'
 import config from 'config'
-import { router } from '@/router'
-import store from '@/store'
+import { router } from '../../router'
+import store from '../../store'
 import Language from './language'
 
 export default {

@@ -79,8 +79,8 @@
 </template>
 
 <script>
-import { loadLanguages } from '@/utils/load-languages'
-import ThumbnailEdit from '@/components/ThumbnailEdit'
+import { loadLanguages } from '../../utils/load-languages'
+import ThumbnailEdit from '../../components/ThumbnailEdit'
 export default {
   name: 'AccountForm',
   props: ['form', 'finish'],

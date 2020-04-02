@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import QuestionDialog from '@/components/QuestionDialog'
+import QuestionDialog from '../../../component/QuestionDialog'
 import moment from 'moment'
 
 export default {

@@ -6,7 +6,7 @@
 import config from 'config'
 import Vue from 'vue'
 import $script from 'scriptjs'
-import convertDiacritics from '@/utils/convert-diacritics'
+import convertDiacritics from '../../utils/convert-diacritics'
 import * as filestack from 'filestack-js'
 
 export default {
