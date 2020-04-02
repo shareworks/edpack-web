@@ -20,7 +20,7 @@
 
     <!-- Contact dialog -->
     <el-dialog :title="$t('SW_CONTACT_US')" append-to-body :visible.sync="dialogContact">
-      <contact-dialog v-if="dialogContact" :closeDialog="closeDialog"></contact-dialog>
+      <contact-form v-if="dialogContact" :closeDialog="closeDialog"></contact-form>
     </el-dialog>
   </div>
 </template>
@@ -30,7 +30,7 @@ import config from 'config'
 
 export default {
   name: 'AppFooter',
-  components: { ContactDialog: () => import('../../components/ContactDialog') },
+  components: { ContactForm: () => import('../../components/ContactForm') },
 
   data () {
     return {
