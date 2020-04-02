@@ -42,7 +42,7 @@
 export default {
   name: 'FooterLinks',
   props: ['signin'],
-  components: { ContactForm: () => import('@/components/ContactForm') },
+  components: { ContactForm: () => import('../ContactForm') },
 
   data () {
     return {
