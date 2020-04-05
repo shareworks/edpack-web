@@ -12,7 +12,7 @@ $--fade-linear-transition: opacity 200ms linear !default;
 $--md-fade-transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1), opacity 300ms cubic-bezier(0.23, 1, 0.32, 1) !default;
 $--border-transition-base: border-color .2s cubic-bezier(.645,.045,.355,1) !default;
 $--color-transition-base: color .2s cubic-bezier(.645,.045,.355,1) !default;
-
+$--page-header-color: rgba(251, 246, 246, 0.67);
 /* Color
 -------------------------- */
 /// color|1|Brand Color|0

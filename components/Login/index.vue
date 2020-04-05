@@ -88,7 +88,7 @@ export default {
           this.$refs.counts[count.index].start()
         }, this.countAnimationDelay)
       }
-    },
+    }
   }
 }
 </script>

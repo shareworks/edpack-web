@@ -2,26 +2,26 @@
   <header class="clearfix">
     <div class="header-container">
 
-      <router-link :to="{ name: 'admin', params: { slug: school.slug, mode: 'courses' } }" class="bold inline font-20" style="margin-top: 25px;">Evalo</router-link>
+<!--      <router-link :to="{ name: 'admin', params: { slug: school.slug, mode: 'courses' } }" class="bold inline font-20" style="margin-top: 25px;">Evalo</router-link>-->
 
-      <!-- Menu icon -->
-<!--      <el-button type="text" class="menu-button visible-xs visible-sm" @click="openSidebar" aria-label="Toggle menu">-->
-<!--        <i class="icon-menu"></i>-->
-<!--      </el-button>-->
+<!--       Menu icon-->
+      <el-button type="text" class="menu-button visible-xs visible-sm" @click="openSidebar" aria-label="Toggle menu">
+        <i class="icon-menu"></i>
+      </el-button>
 
-      <!-- Menu buttons -->
-<!--      <el-menu class="hidden-xs hidden-sm header-tabs pull-left" mode="horizontal" :default-active="activeTab">-->
-<!--        <el-menu-item index="home" @click="tabClick('home')">-->
-<!--          <span>{{ $t('SW_HOME') }}</span>-->
-<!--        </el-menu-item>-->
-<!--        <el-menu-item v-if="isAdmin" index="admin" @click="tabClick('admin')">-->
-<!--          <span>{{ $t('SW_DASHBOARD') }}</span>-->
-<!--        </el-menu-item>-->
-<!--        <el-menu-item index="" class="hide"></el-menu-item>-->
-<!--      </el-menu>-->
+<!--       Menu buttons-->
+      <el-menu class="hidden-xs hidden-sm header-tabs pull-left" mode="horizontal" :default-active="activeTab">
+        <el-menu-item index="home" @click="tabClick('home')">
+          <span>{{ $t('SW_HOME') }}</span>
+        </el-menu-item>
+        <el-menu-item v-if="isAdmin" index="admin" @click="tabClick('admin')">
+          <span>{{ $t('SW_DASHBOARD') }}</span>
+        </el-menu-item>
+        <el-menu-item index="" class="hide"></el-menu-item>
+      </el-menu>
 
       <!-- Header logo -->
-      <router-link :to="{ name: 'admin', params: { slug: school.slug } }" aria-hidden="true" tabindex="-1" class="invisible header-logo"></router-link>
+      <router-link :to="{ name: 'admin', params: { slug: school.slug } }" aria-hidden="true" tabindex="-1" class="header-logo"></router-link>
 
       <!-- User dropdown menu -->
       <div class="header-user-container" v-if="user">
