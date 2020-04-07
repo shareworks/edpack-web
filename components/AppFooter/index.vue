@@ -11,7 +11,7 @@
       &copy; {{ (new Date()).getFullYear() }} &centerdot; <router-link class="footer-link" to="/about" target="_blank">{{ productName }}</router-link>
       {{ $t('SW_IS_BUILT_BY') }}
       <a :href="business.url" rel="noreferrer" class="footer-link" target="_blank">{{ business.shortName }}</a>.
-      <p class="mt-5">
+      <p class="mt-10">
         <router-link class="footer-link" to="/terms">{{ $t('SW_TERMS') }}</router-link> |
         <router-link class="footer-link" to="/privacy">{{ $t('SW_PRIVACY') }}</router-link> |
         <a href="#" class="footer-link" @click="openDialog">{{ $t('SW_CONTACT_US') }}</a>

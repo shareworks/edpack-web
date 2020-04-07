@@ -28,7 +28,7 @@
 
     <!--Saml domains-->
     <el-form-item :label="$t('SW_SAML_DOMAINS')" required>
-      <el-tag v-for="samlDomain in form.samlDomains" :key="samlDomain" closable :disable-transitions="false" @close="handleClose('samlDomains', domain)">
+      <el-tag v-for="samlDomain in form.saml.domains" :key="samlDomain" closable :disable-transitions="false" @close="handleClose('samlDomains', domain)">
         {{ samlDomain }}
       </el-tag>
       <el-input
@@ -49,7 +49,7 @@
 
     <!--Saml entity IDs-->
     <el-form-item :label="$t('SW_SAML_ENTITY_IDS')">
-      <el-tag v-for="entity in form.samlEntityIds" :key="entity" closable :disable-transitions="false" @close="handleClose('samlEntityIds', entity)">
+      <el-tag v-for="entity in form.saml.entityIds" :key="entity" closable :disable-transitions="false" @close="handleClose('samlEntityIds', entity)">
         {{ entity }}
       </el-tag>
       <el-input
@@ -102,9 +102,9 @@
 
       <!-- LTI secret -->
       <el-form-item label="LTI secret">
-        <el-input v-model="form.lti.secret" :readonly="true" :type="hideCredentials ? 'password' : 'text'" :placeholder="$t('SW_SECRET_PLACEHOLDER')">
+        <el-input v-model="form.ltiBasic.secret" :readonly="true" :type="hideCredentials ? 'password' : 'text'" :placeholder="$t('SW_SECRET_PLACEHOLDER')">
           <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
-            <el-button v-clipboard="form.lti.secret" @success="clipboardSuccess">
+            <el-button v-clipboard="form.ltiBasic.secret" @success="clipboardSuccess">
               <i class="icon-copy"></i>
             </el-button>
           </el-tooltip>
