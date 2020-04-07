@@ -3,7 +3,7 @@
 
     <!-- About logo -->
     <router-link to="/about" target="_blank" aria-hidden="true" tabindex="-1">
-      <span class="footer-logo invisible"></span>
+      <span class="footer-logo"></span>
     </router-link>
 
     <!-- Credit -->
