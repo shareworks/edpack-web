@@ -15,7 +15,9 @@
       <!-- Role -->
       <el-form-item>
         <el-select v-model="role" class="block">
-          <el-option v-for="item in ['staff', 'admin', 'student']" :key="item" :label="item" :value="item"></el-option>
+          <el-option v-for="item in ['staff', 'admin', 'student']" :key="item" :label="item" :value="item">
+            {{ $t('SW_' + item.toUpperCase()) }}
+          </el-option>
         </el-select>
       </el-form-item>
       <!-- Send to self -->
