@@ -86,10 +86,10 @@ export default {
       }
 
       const organization = this.user.organization._id
-      const roles = emails.map(email => ({ email, model: 'organization', id: organization, role: this.role }))
+      const roles = emails.map(email => ({ recipientEmail: email, model: 'organization', contextId: organization, role: this.role, downgrade: false, sendEmail: true }))
 
       this.sending = true
-      this.$http.post('users/invite', { roles }, { params: { toSelf: self } })
+      this.$http.post('users/invite', { invitations: roles }, { params: { toSelf: self } })
         .then(() => {
           this.form.recipients = ''
           this.warningVisible = false
