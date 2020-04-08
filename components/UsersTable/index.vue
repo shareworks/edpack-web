@@ -243,7 +243,6 @@ export default {
     },
     loginAs () {
       const userId = this.multipleSelection[0]._id
-      // the peerVue using http.get() not post
       this.$http.post(`users/${userId}/adopt`)
         .then(() => { window.location = window.location.origin })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
