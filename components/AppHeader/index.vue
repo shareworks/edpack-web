@@ -19,7 +19,7 @@
       </el-menu>
 
       <!-- Header logo -->
-      <router-link to="/" aria-hidden="true" tabindex="-1" class="header-logo"></router-link>
+      <router-link to="/home" aria-hidden="true" tabindex="-1" class="header-logo"></router-link>
 
       <!-- User dropdown menu -->
       <div class="header-user-container" v-if="user">

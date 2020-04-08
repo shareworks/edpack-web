@@ -136,7 +136,7 @@
     <table-status :status="status" :noneText="$t('SW_NO_USERS_FOUND')" @clearSearch="searchText = ''"></table-status>
 
     <!-- Add users dialog -->
-    <el-dialog :title="$t('SW_ADD_USERS')" append-to-body :visible.sync="dialogAddUsers">
+    <el-dialog :title="$t('SW_ADD_USERS')" append-to-body class="small-dialog" :visible.sync="dialogAddUsers">
       <users-create v-if="dialogAddUsers" :closeDialog="closeDialog"></users-create>
     </el-dialog>
 

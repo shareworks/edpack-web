@@ -7,10 +7,18 @@
     </el-alert>
 
     <el-form label-position="top">
+      <!-- Textarea for emails -->
       <el-form-item>
-        <el-input :disabled="sending" type="textarea" ref="recipients" autofocus :autosize="{ minRows: 3, maxRows: 8}" :placeholder="$t('SW_EMAIL_INVITES_PLACEHOLDER')" v-model="form.recipients">
-        </el-input>
+        <el-input :disabled="sending" type="textarea" ref="recipients" autofocus :autosize="{ minRows: 3, maxRows: 8}"
+                  :placeholder="$t('SW_EMAIL_INVITES_PLACEHOLDER')" v-model="form.recipients"></el-input>
       </el-form-item>
+      <!-- Role -->
+      <el-form-item>
+        <el-select v-model="role" class="block">
+          <el-option v-for="item in ['staff', 'admin', 'student']" :key="item" :label="item" :value="item"></el-option>
+        </el-select>
+      </el-form-item>
+      <!-- Send to self -->
       <el-form-item>
         <el-checkbox :label="$t('SW_SEND_TO_SELF')" v-model="form.toSelf" name="type"></el-checkbox>
       </el-form-item>
