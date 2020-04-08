@@ -102,11 +102,26 @@
   background-image: url('/images/placeholder-organization.png');
 }
 
-.tools-thumb,
-.tool-thumb {
-  background: transparent;
+.apps-thumb,
+.app-thumb {
+  background-color: #f3f3f3 !important;
+  border-radius: 10px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+
+  &.thumb-24 {
+    border-radius: 3px;
+  }
+
+  &.thumb-32 {
+    border-radius: 4px;
+  }
+
+  &.thumb-42 {
+    border-radius: 6px;
+  }
 }
 
 .line-32 {
   line-height: 32px;
 }
+

@@ -15,13 +15,14 @@ export default {
     thumbUrl () {
       if (!this.model) return false
       if (this.model.thumbnailUrl) return this.model.thumbnailUrl
+      if (this.model.logoUrl) return this.model.logoUrl
+      if (this.model.toolLogoUrl) return this.model.toolLogoUrl
       if (typeof this.model === 'string') return this.model
       return false
     },
     initials () {
       if (!this.model.name || this.model.thumbnailUrl) return
 
-      // eslint-disable-next-line
       const cleanName = this.model.name.replace(/\s*\(.*?\)\s*/g, '').replace(/\@.*/, '')
       const names = cleanName.split(/[\s.]+/)
 
@@ -42,6 +43,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~scss_vars';
-@import './style.scss';
+  @import '~scss_vars';
+  @import './style.scss';
 </style>
