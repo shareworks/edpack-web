@@ -34,6 +34,12 @@
           </div>
 
           <div v-else>
+            <!-- Add users manually -->
+            <el-button type="primary" plain @click="dialogAddUsers = true" size="medium" class="button-square-xs">
+              <i class="icon-add"></i>
+              <span class="hidden-xs">{{ $t('SW_ADD_USERS') }}</span>
+            </el-button>
+
             <!-- Total users found -->
             <span v-show="status !== 'loading' || tableData.length" class="hidden-xs hidden-sm line-height-38">
               {{ total }} {{ $t('SW_USERS').toLowerCase() }}
@@ -129,6 +135,11 @@
     <!-- Table status -->
     <table-status :status="status" :noneText="$t('SW_NO_USERS_FOUND')" @clearSearch="searchText = ''"></table-status>
 
+    <!-- Add users dialog -->
+    <el-dialog :title="$t('SW_ADD_USERS')" append-to-body :visible.sync="dialogAddUsers">
+      <users-create v-if="dialogAddUsers" :closeDialog="closeDialog"></users-create>
+    </el-dialog>
+
     <!-- Edit user dialog -->
     <el-dialog :title="$t('SW_EDIT_USER')" append-to-body :visible.sync="dialogEditUser">
       <user-account-form :form="editUserForm" v-if="dialogEditUser" :finish="finishEditUser"></user-account-form>
@@ -151,10 +162,11 @@ import UserAccountForm from '../../components/UserAccountForm'
 import EmailUsers from '../../components/EmailUsers'
 import LmsIcon from '../../components/LmsIcon'
 import TableStatus from '../../components/TableStatus'
+import UsersCreate from '../../components/UsersCreate'
 
 export default {
   name: 'UsersTable',
-  components: { UserAccountForm, EmailUsers, LmsIcon, TableStatus },
+  components: { UserAccountForm, UsersCreate, EmailUsers, LmsIcon, TableStatus },
 
   data () {
     return {
@@ -177,6 +189,7 @@ export default {
       isAdmin: this.$store.state.isAdmin,
       school: this.$store.state.school,
       editUserForm: false,
+      dialogAddUsers: false,
       dialogEditUser: false,
       dialogEmail: false
     }
@@ -287,6 +300,7 @@ export default {
       this.dialogEditUser = true
     },
     closeDialog (refresh) {
+      this.dialogAddUsers = false
       this.dialogEmail = false
       this.selectionChange()
       if (refresh) {
