@@ -62,6 +62,7 @@ export default {
   watch: {
     $route (to) {
       if (to.name === 'admin') this.activeTab = 'admin'
+      else if (to.name === 'home') this.activeTab = 'home'
       else this.activeTab = ''
     }
   },
