@@ -62,8 +62,8 @@ header {
       }
 
       &.is-active {
-        background: $--el-menu-item-is-active-background;
-        color: $--el-menu-item-is-active-color;
+        background: $--el-menu-item-is-active-background !important;
+        color: $--el-menu-item-is-active-color !important;
       }
     }
   }
@@ -85,9 +85,6 @@ button.menu-button {
   position: absolute;
 }
 
-.user-account-link {
-}
-
 .user-name {
   color: $--color-text-primary;
   white-space: nowrap;
@@ -99,7 +96,7 @@ button.menu-button {
   margin-top: -6px;
 
   .el-input__inner {
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(240, 240, 240, 0.6);
     border: none !important;
   }
 }
