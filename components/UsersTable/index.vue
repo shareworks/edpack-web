@@ -35,7 +35,7 @@
 
           <div v-else>
             <!-- Add users manually -->
-            <el-button type="primary" plain @click="dialogAddUsers = true" size="medium" class="button-square-xs">
+            <el-button type="primary" plain @click="dialogAddUsers = true" size="medium" class="button-square-xs mr-10">
               <i class="icon-add"></i>
               <span class="hidden-xs">{{ $t('SW_ADD_USERS') }}</span>
             </el-button>

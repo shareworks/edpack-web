@@ -34,6 +34,7 @@ export default {
     return {
       user: this.$store.state.user,
       school: this.$store.state.school,
+      role: 'staff',
       sending: false,
       form: { toSelf: true, recipients: '' },
       warningVisible: false
@@ -77,7 +78,7 @@ export default {
       }
 
       const organization = this.user.organization._id
-      const roles = emails.map(email => ({ email, model: 'organization', id: organization, role: 'staff' }))
+      const roles = emails.map(email => ({ email, model: 'organization', id: organization, role: this.role }))
 
       this.sending = true
       this.$http.post('users/invite', { roles }, { params: { toSelf: self } })
