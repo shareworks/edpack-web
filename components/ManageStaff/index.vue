@@ -2,61 +2,51 @@
   <div>
     <p class="mb-20">{{ $t('SW_DIALOG_MANAGE_STAFF_TEXT') }}</p>
 
-    <!-- Table with instructors -->
-    <el-table v-if="!loading" v-show="staff.length" :data="staff" row-key="_id" ref="staffTable">
-      <!-- Name -->
-      <el-table-column :label="$t('SW_STAFF')" prop="name" min-width="160">
-        <template slot-scope="props">
-          <div class="text-ellipsis">
-            <thumbnail :model="props.row" class="thumb-user thumb-24 mr-5 hidden-xs hidden-sm"></thumbnail>
-            <strong>{{props.row.name}}</strong>
-          </div>
-        </template>
-      </el-table-column>
-      <!-- Email address -->
-      <el-table-column property="email" :label="$t('SW_EMAIL')" min-width="180">
-        <template slot-scope="props">
-          <a :href="'mailto:' + props.row.email" target="_blank" class="text-ellipsis">{{ props.row.email }}</a>
-        </template>
-      </el-table-column>
-      <!-- Activity date -->
-      <el-table-column property="activityDate" :formatter="dateFormatter" :label="$t('SW_ACTIVITY_DATE')" min-width="140"></el-table-column>
-      <!-- Role -->
-      <el-table-column width="150" :label="$t('SW_ROLE')">
-        <template slot-scope="props">
-          <div class="pull-right">
-            <el-dropdown trigger="click" @command="handleCommand">
-              <el-button size="small" plain type="primary">
-                {{ $t('SW_' + props.row.role.toUpperCase()) }}
-                <i class="el-icon-caret-bottom el-icon--right"></i>
+    <el-row :gutter="10" v-if="!loading">
+      <!-- Existing instructors -->
+      <el-col :span="12">
+        <p class="mb-10 bold">{{ $t('SW_CURRENT_STAFF_TEXT') }}</p>
+        <div class="instructor-list">
+          <div v-for="instructor in instructors" class="text-ellipsis" :key="instructor._id">
+            <thumbnail :model="instructor" class="thumb-user thumb-24 mr-5"></thumbnail>
+            <strong>{{instructor.name}}</strong>
+            <div class="mb-20 font-12">
+              <span v-if="instructor.activityDate">
+                <span class="online-icon"></span>
+                {{ instructor.activityDate | fromNow }}
+              </span>
+              <span v-else>{{ $t('SW_INVITE_PENDING') }}</span> &centerdot;
+              <el-button :loading="removing" :disabled="instructors.length === 1" type="text" size="mini" @click="removeInstructor(instructor)">
+                <i class="icon-delete"></i>
+                <span class="hidden-xs hidden-sm">{{ $t('SW_REMOVE') }}</span>
               </el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item  :command="{instructor: props.row, role: 'owner'}">
-                  <span>{{ $t('SW_OWNER') }}</span>
-                </el-dropdown-item>
-                <el-dropdown-item  :command="{instructor: props.row, role: 'viewer'}">
-                  <span>{{ $t('SW_VIEWER') }}</span>
-                </el-dropdown-item>
-                <el-dropdown-item  :command="{instructor: props.row, role: 'none'}">
-                  <span>{{ $t('SW_NO_ROLE') }}</span>
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
+            </div>
           </div>
-        </template>
-      </el-table-column>
-    </el-table>
+        </div>
+      </el-col>
+      <!-- Add instructors -->
+      <el-col :span="12">
+        <p class="mb-10 bold">{{ $t('SW_ADD_STAFF_TEXT') }}</p>
+        <el-form label-position="top">
+          <el-form-item>
+            <el-input :disabled="sending" type="textarea" :autosize="{ minRows: 3, maxRows: 8}" :placeholder="$t('SW_EMAIL_INVITES_PLACEHOLDER')" v-model="form.recipients">
+            </el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-checkbox :label="$t('SW_SEND_TO_SELF')" v-model="form.toSelf" name="type"></el-checkbox>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="addUsers" :loading="sending">
+              <i class="icon-send"></i>
+              <strong>{{ $t('SW_INVITE') }}</strong>
+            </el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </el-row>
 
     <!-- Loading -->
     <spinner v-if="loading"></spinner>
-
-    <!-- Save changes or cancel -->
-    <div class="mt-30">
-      <el-button type="primary" @click="updateInstructors" :loading="submitting" class="mr-5">
-        <strong>{{ $t('SW_SAVE_CHANGES') }}</strong>
-      </el-button>
-      <el-button @click="closeDialog" type="text">{{ $t('SW_CANCEL') }}</el-button>
-    </div>
   </div>
 </template>
 
@@ -65,7 +55,7 @@ import moment from 'moment'
 
 export default {
   name: 'ManageStaff',
-  props: ['closeDialog', 'evaluation'],
+  props: ['closeDialog'],
 
   data () {
     return {
@@ -73,9 +63,11 @@ export default {
       school: this.$store.state.school,
       user: this.$store.state.user,
       lang: this.$store.state.lang,
-      staff: [],
+      instructors: [],
       loading: false,
-      submitting: false
+      removing: false,
+      sending: false,
+      form: { recipients: '', toSelf: true }
     }
   },
 
@@ -92,53 +84,63 @@ export default {
       this.loading = true
 
       this.$http.get('users', { params: { role: 'staff', entity: this.course._id } })
-        .then((res) => {
-          this.staff = []
-          const roleMap = {}
-
-          for (const member of this.evaluation.staff) {
-            roleMap[member._id] = member.role
-          }
-
-          for (const courseStaff of res.data.list) {
-            courseStaff.role = roleMap[courseStaff._id] || 'none'
-            this.staff.push(courseStaff)
-          }
-        })
+        .then((res) => { this.instructors = res.data.list })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.loading = false })
     },
-    handleCommand (command) {
-      command.instructor.role = command.role
-    },
-    updateInstructors () {
-      if (this.submitting) return
+    addUsers () {
+      if (this.sending) return
+      const toSelf = this.form.toSelf
 
-      const invitations = []
+      // Convert string to emails
+      let emails = this.form.recipients.replace(/\n/g, ',').split(',')
+      emails = emails.map(email => email.trim())
+
+      // Filter all emails that don't have a @
+      emails = emails.filter(email => email.includes('@'))
+
+      // Do something when no emails given
+      if (!emails.length) return
+
+      const roles = []
 
       // Add course role as staff
-      for (const staff of this.staff) {
-        invitations.push({
-          recipientEmail: staff.email,
-          contextId: this.evaluation._id,
-          downgrade: true,
-          role: staff.role,
-          sendEmail: false
+      for (const email of emails) {
+        roles.push({
+          email, model: 'course', id: this.course._id, role: 'staff'
         })
       }
 
-      this.submitting = true
-      this.$http.post('users/invite', { invitations }, { params: { toSelf: false } })
+      this.sending = true
+      this.$http.post('users/invite', { roles }, { params: { toSelf } })
         .then(() => {
-          this.evaluation.staff = this.staff.filter(staff => staff.role !== 'none')
+          this.form.recipients = ''
+          this.$store.state.course.counts.staff = this.course.counts.staff + roles.length
           this.getInstructors()
-          this.$message({ message: this.$i18n.t('SW_EVALUATION_ROLES_UPDATED'), type: 'success' })
-          this.closeDialog()
+          this.$message({ message: this.$i18n.t('SW_EMAILS_SENT'), type: 'success' })
         })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
-        .finally(() => { this.submitting = false })
+        .finally(() => { this.sending = false })
     },
-    dateFormatter (row, column, value) { return value ? moment(value).fromNow() : this.$i18n.t('SW_INVITE_PENDING') }
+    confirmRemove (instructor) {
+      this.$confirm(this.$i18n.t('SW_REMOVE_INSTRUCTOR_CONFIRM'), this.$i18n.t('SW_REMOVE_INSTRUCTOR'), {
+        confirmButtonText: this.$i18n.t('SW_REMOVE'),
+        cancelButtonText: this.$i18n.t('SW_CANCEL')
+      }).then(() => { this.removeInstructor(instructor) })
+    },
+    removeInstructor (instructor) {
+      this.removing = true
+      const roles = [{ email: instructor.email, model: 'course', id: this.course._id, role: 'none' }]
+
+      this.$http.post('users/invite', { roles })
+        .then(() => {
+          this.getInstructors()
+          this.$store.state.course.counts.staff = this.course.counts.staff - roles.length
+          this.$message({ message: this.$i18n.t('SW_USERS_REMOVED'), type: 'success' })
+        })
+        .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
+        .finally(() => { this.removing = false })
+    }
   }
 }
 </script>
