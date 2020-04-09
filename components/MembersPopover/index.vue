@@ -12,7 +12,7 @@
       <div v-else class="text-muted">{{ $t('SW_NO_STAFF_FOUND') }}</div>
 
       <!-- Manage -->
-      <el-button v-if="evaluation && evaluation.can.update" type="text" size="small" @click="$emit('manageStaff')">
+      <el-button v-if="canUpdate" type="text" size="small" @click="$emit('manageStaff')">
         <i class="icon-pencil"></i>
         {{ $t('SW_MANAGE_STAFF') }}
       </el-button>
@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  props: ['evaluation'],
+  props: ['evaluation', 'canUpdate'],
   name: 'MembersPopover',
 
   data () {
