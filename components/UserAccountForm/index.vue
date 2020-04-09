@@ -7,31 +7,13 @@
 
     <!-- Full name -->
     <el-form-item :label="$t('SW_YOUR_NAME')" required>
-      <el-input v-model="form.name"></el-input>
-    </el-form-item>
-
-<!--    @TODO: Change single faculty to faculties array-->
-<!--    &lt;!&ndash; Faculty &ndash;&gt;-->
-<!--    <el-form-item :label="school.terminology.faculty[lang]" v-if="school.manualCourses && school.faculties.length">-->
-<!--      <el-select class="block" v-model="form.faculty" value-key="_id" :placeholder="$t('SW_CHOOSE_FACULTY', [school.terminology.faculty[lang].toLowerCase()])">-->
-<!--        <el-option v-for="faculty in school.faculties" :key="faculty._id" :label="faculty[lang]" :value="faculty._id"></el-option>-->
-<!--      </el-select>-->
-<!--    </el-form-item>-->
-
-    <!-- Language -->
-    <el-form-item :label="$t('SW_LANGUAGE')" class="additional" v-if="languages.length > 1">
-      <el-select class="block" v-model="form.language">
-        <el-option v-for="language in languages" :key="language" :label="$t('SW_DEFAULT_' + language.toUpperCase())" :value="language">
-          <img :src="'/images/' + language + '.png'" class="language-icon" alt=""> &nbsp;
-          <span>{{ $t('SW_DEFAULT_' + language.toUpperCase()) }}</span>
-        </el-option>
-      </el-select>
+      <el-input prefix-icon="icon-bio" v-model="form.name"></el-input>
     </el-form-item>
 
     <!-- Emails -->
     <el-form-item :label="form.emails.length > 1 ? $t('SW_EMAILS') : $t('SW_EMAIL')" class="additional">
       <div v-for="(email, index) of form.emails" :key="index">
-        <el-input v-model="form.emails[index]" :readonly="!isAdmin" @change="emailChanged = true" :placeholder="$t('SW_EMAIL_PLACEHOLDER')"
+        <el-input prefix-icon="icon-email" v-model="form.emails[index]" :readonly="!isAdmin" @change="emailChanged = true" :placeholder="$t('SW_EMAIL_PLACEHOLDER')"
                   :class="email === form.email ? 'primary-email' : 'secondary-email'" class="mb-5">
           <el-button slot="append" @click="setPrimary(email)" v-if="isAdmin && form.emails.length > 1">
             <i v-if="email === form.email" class="el-icon-star-on el-icon-left"></i>
@@ -44,6 +26,24 @@
         <span>{{ $t('SW_ADD_EMAIL') }}</span>
       </el-button>
     </el-form-item>
+
+    <!-- Language -->
+    <el-form-item :label="$t('SW_LANGUAGE')" class="additional" v-if="languages.length > 1">
+      <el-select class="block" v-model="form.language">
+        <el-option v-for="language in languages" :key="language" :label="$t('SW_DEFAULT_' + language.toUpperCase())" :value="language">
+          <img :src="'/images/' + language + '.png'" class="language-icon" alt=""> &nbsp;
+          <span>{{ $t('SW_DEFAULT_' + language.toUpperCase()) }}</span>
+        </el-option>
+      </el-select>
+    </el-form-item>
+
+    <!--    @TODO: Change single faculty to faculties array-->
+    <!--    &lt;!&ndash; Faculty &ndash;&gt;-->
+    <!--    <el-form-item :label="school.terminology.faculty[lang]" v-if="school.manualCourses && school.faculties.length">-->
+    <!--      <el-select class="block" v-model="form.faculty" value-key="_id" :placeholder="$t('SW_CHOOSE_FACULTY', [school.terminology.faculty[lang].toLowerCase()])">-->
+    <!--        <el-option v-for="faculty in school.faculties" :key="faculty._id" :label="faculty[lang]" :value="faculty._id"></el-option>-->
+    <!--      </el-select>-->
+    <!--    </el-form-item>-->
 
     <!-- Role: Admin, Staff or Student -->
     <el-form-item :label="$t('SW_ROLE')" class="additional">

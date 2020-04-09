@@ -60,6 +60,21 @@
   height: 10px;
 }
 
+.question-pop {
+  font-size: 11px;
+  opacity: .5;
+  height: 16px;
+}
+
+.online-icon {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 2px;
+  border-radius: 3px;
+  background-color: $--color-success;
+}
+
 .multi-lang {
   .form-en,
   .form-nl {
