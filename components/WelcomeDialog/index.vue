@@ -12,7 +12,7 @@
     </h3>
 
     <p class="mb-20">{{ $t('SW_WELCOME_TEXT') }}
-      <span v-if="school.role !== 'student'">{{ $t('SW_WELCOME_TEXT1') }} <a href @click="openChat">{{ $t('SW_WELCOME_TEXT2') }}</a></span>
+      <span v-if="school.role !== 'student'">{{ $t('SW_WELCOME_TEXT1') }} <a  v-if="this.$store.state.school.enableFreshChat" href @click="openChat">{{ $t('SW_WELCOME_TEXT2') }}</a></span>
       <span v-else>{{ $t('SW_WELCOME_TEXT3') }}</span>.
     </p>
     <p class="mb-30">{{ $t('SW_GOOD_LUCK') }}</p>
