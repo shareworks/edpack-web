@@ -106,8 +106,9 @@ export default {
       pageOffset: state => state.route.meta.auth,
       loadFreshchat: (state) => {
         if (!config.support) return false
-        return state.user && state.school && state.school.role !== 'student'
+        return state.user && state.school && state.school.enableFreshChat && state.school.role !== 'student'
       },
+
       navAvailable: (state) => {
         // Hide when not authenticated
         if (!state.route.meta.auth || state.route.meta.hideNav) return false
