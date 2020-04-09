@@ -2,8 +2,16 @@
   <div>
     <p class="mb-20">{{ $t('SW_ADD_USERS_TEXT') }}</p>
 
-    <el-alert class="mb-10" show-icon v-if="warningVisible" type="warning" :title="$t('SW_DIFFERENT_EMAIL_TITLE')">
+    <el-alert class="mb-10" show-icon v-if="differentDomainWarningVisible" type="warning" :title="$t('SW_DIFFERENT_EMAIL_TITLE')">
       <p>{{ $t("SW_DIFFERENT_EMAIL_TEXT") }}</p>
+    </el-alert>
+
+    <el-alert class="mb-10" show-icon v-if="incorrectEmails.length !== 0" type="error" title="These emails are not correct, please check them again">
+      <ul>
+        <li v-for="email in incorrectEmails" :key="email">
+          <span class="bold">{{ email }}</span>
+        </li>
+      </ul>
     </el-alert>
 
     <el-form label-position="top">
@@ -45,7 +53,8 @@ export default {
       role: 'staff',
       sending: false,
       form: { toSelf: true, recipients: '' },
-      warningVisible: false
+      differentDomainWarningVisible: false,
+      incorrectEmails: []
     }
   },
 
@@ -54,19 +63,28 @@ export default {
   },
 
   methods: {
+    emailsValidation (emails) {
+      let failedEmails = []
+      const emailRegex = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
+
+      // Filter all emails that don't match regex:
+      emails.forEach(email => {
+        const isIncorrect = !emailRegex.test(email)
+        if (isIncorrect) { failedEmails.push(email) }
+      })
+
+      failedEmails = failedEmails.filter(email => { return email.trim() !== '' })
+      this.incorrectEmails = failedEmails
+    },
     addUsers () {
       if (this.sending) return
 
       // Convert string to emails
-      let emails = this.form.recipients.replace(/\n/g, ',').split(',')
-      emails = emails.map(email => email.trim())
+      const emails = this.form.recipients.replace(/\n/g, ',').split(',')
       const self = this.form.toSelf
 
-      // Filter all emails that don't have a @:
-      emails = emails.filter(email => email.includes('@'))
-
-      // Do something when no emails given
-      if (!emails.length) return
+      this.emailsValidation(emails)
+      if (this.incorrectEmails.length !== 0) return
 
       // Optionally check for proper org emails
       if (this.school.emailDomains.length) {
@@ -79,8 +97,8 @@ export default {
         })
 
         // if user use another domain - this warning message will be visible just one time
-        if (missingDomains && !this.warningVisible) {
-          this.warningVisible = true
+        if (missingDomains && !this.differentDomainWarningVisible) {
+          this.differentDomainWarningVisible = true
           return
         }
       }
@@ -92,7 +110,7 @@ export default {
       this.$http.post('users/invite', { invitations: roles }, { params: { toSelf: self } })
         .then(() => {
           this.form.recipients = ''
-          this.warningVisible = false
+          this.differentDomainWarningVisible = false
           this.$message({ message: this.$i18n.t('SW_EMAILS_SENT'), type: 'success' })
           this.closeDialog(true)
         })
