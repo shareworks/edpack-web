@@ -70,13 +70,12 @@ Vue.use(VueGoogleMaps, { load: { key: config.google_maps_key } })
 export default {
   name: 'ContactForm',
   props: ['closeDialog'],
-  components: {},
 
   data () {
     return {
       mapOptions: { scrollwheel: false, mapTypeControl: false },
-      position: { lat: 51.9296064, lng: 4.4742492 },
-      centerMap: { lat: 51.93410531, lng: 4.4742492 },
+      position: config.map.position,
+      centerMap: config.map.centerMap,
       infoWinOpen: true,
       form: { email: '', name: '', message: '' },
       infoOptions: { pixelOffset: { width: 0, height: -38 } },
@@ -87,7 +86,7 @@ export default {
   computed: {
     infoContent () {
       const b = this.business
-      const mapsUrl = 'https://goo.gl/maps/SQlrh'
+      const mapsUrl = config.mapsUrl
       return `<p class="bold">${b.name}<br><address>${b.streetAddress}<br>${b.postAddress}<br>${b.country}</address><a href="mailto:${b.mail}">${b.mail}</a><br><a href="${mapsUrl}" class="bold" target="_blank">Get directions</a></p>`
     }
   },
