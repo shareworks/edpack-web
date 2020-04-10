@@ -30,7 +30,7 @@
 export default {
   name: 'WelcomeDialog',
   props: ['closeDialog'],
-  components: { LogoAnimation },
+  components: { },
 
   data () {
     return {
