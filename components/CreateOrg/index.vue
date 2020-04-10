@@ -2,13 +2,14 @@
   <div class="multi-lang">
     <el-form :model="form" label-width="150px">
       <!-- Full name EN -->
-      <el-form-item :label="$t('SW_ORG_FULL_NAME')" prop="name.en" required :show-message="false" class="form-en">
-        <el-input ref="nameEn" name="nameEn" id="nameEn" v-model="form.name.en" autofocus></el-input>
-      </el-form-item>
-
-      <!-- Full name NL -->
-      <el-form-item :label="$t('SW_ORG_FULL_NAME')" prop="name.nl"  :show-message="false" required class="form-nl">
-        <el-input v-model="form.name.nl" name="nameNl" id="nameNl"></el-input>
+      <el-form-item :label="$t('SW_ORG_FULL_NAME')" prop="name.en" required :show-message="false">
+        <el-input ref="nameEn" name="nameEn" id="nameEn" size="medium" maxlength="200" v-model="form.name.en" autofocus :placeholder="$t('SW_ORG_FULL_NAME')">
+          <template slot="prepend"><img :src="'/images/en.png'" class="language-icon" alt="language-icon"></template>
+        </el-input>
+        <!-- Full name NL -->
+        <el-input ref="nameNl" name="nameNl" id="nameNl" size="medium" maxlength="200" v-model="form.name.nl" autofocus :placeholder="$t('SW_ORG_FULL_NAME')">
+          <template slot="prepend"><img :src="'/images/nl.png'" class="language-icon" alt="language-icon"></template>
+        </el-input>
       </el-form-item>
 
       <!-- Short name -->
