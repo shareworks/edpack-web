@@ -1,8 +1,6 @@
 <template>
   <div class="welcome-dialog">
-    <div class="dialog-logo invisible">
-      <logo-animation></logo-animation>
-    </div>
+    <div class="horizontal-logo"></div>
     <h3 class="mb-20 font-18">
       {{ $t('SW_WELCOME_ABOUT') }}
 
@@ -12,7 +10,7 @@
     </h3>
 
     <p class="mb-20">{{ $t('SW_WELCOME_TEXT') }}
-      <span v-if="school.role !== 'student'">{{ $t('SW_WELCOME_TEXT1') }} <a  v-if="this.$store.state.school.enableFreshChat" href @click="openChat">{{ $t('SW_WELCOME_TEXT2') }}</a></span>
+      <span v-if="showChatLink">{{ $t('SW_WELCOME_TEXT1') }} <a href @click="openChat">{{ $t('SW_WELCOME_TEXT2') }}</a></span>
       <span v-else>{{ $t('SW_WELCOME_TEXT3') }}</span>.
     </p>
     <p class="mb-30">{{ $t('SW_GOOD_LUCK') }}</p>
@@ -29,8 +27,6 @@
 </template>
 
 <script>
-const LogoAnimation = () => import('./logo-animation.svg')
-
 export default {
   name: 'WelcomeDialog',
   props: ['closeDialog'],
@@ -38,6 +34,7 @@ export default {
 
   data () {
     return {
+      showChatlink: this.school.role !== 'student' && this.$store.state.school.enableFreshChat,
       school: this.$store.state.school
     }
   },
@@ -58,5 +55,4 @@ export default {
 <style lang="scss">
   @import '~scss_vars';
   @import './style.scss';
-  @import './logo-animation.scss';
 </style>
