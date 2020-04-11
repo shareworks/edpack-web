@@ -105,7 +105,6 @@ export default {
       obfuscatorActive: state => state.obfuscatorActive,
       pageOffset: state => state.route.meta.auth,
       loadFreshchat: (state) => {
-        if (!config.support) return false
         return state.user && state.school && state.school.enableFreshChat && state.school.role !== 'student'
       },
 
