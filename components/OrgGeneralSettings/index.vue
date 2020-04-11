@@ -1,13 +1,17 @@
 <template>
   <div :class="{ 'multi-lang': form.languages.en && form.languages.nl }">
+
     <!-- Full name EN -->
-    <el-form-item :label="$t('SW_ORG_FULL_NAME')" required class="form-en" v-show="form.languages.en">
-      <el-input v-model="form.name.en"></el-input>
+    <el-form-item :label="$t('SW_ORG_FULL_NAME')" prop="name.en" required :show-message="false">
+      <el-input ref="nameEn" name="nameEn" id="nameEn" size="medium" maxlength="200" v-model="form.name.en" autofocus :placeholder="$t('SW_ORG_FULL_NAME')" v-show="form.languages.en">
+        <template slot="prepend"><img :src="'/images/en.png'" class="language-icon" alt="language-icon"></template>
+      </el-input>
+      <!-- Full name NL -->
+      <el-input ref="nameNl" name="nameNl" id="nameNl" size="medium" maxlength="200" v-model="form.name.nl" autofocus :placeholder="$t('SW_ORG_FULL_NAME')" v-show="form.languages.nl">
+        <template slot="prepend"><img :src="'/images/nl.png'" class="language-icon" alt="language-icon"></template>
+      </el-input>
     </el-form-item>
-    <!-- Full name NL -->
-    <el-form-item :label="$t('SW_ORG_FULL_NAME')" required class="form-nl" v-show="form.languages.nl">
-      <el-input v-model="form.name.nl"></el-input>
-    </el-form-item>
+
     <!-- Short name -->
     <el-form-item :label="$t('SW_ORG_SHORT_NAME')" required>
       <el-input v-model="form.shortName.en"></el-input>
@@ -62,21 +66,27 @@
     <el-form-item :label="$t('SW_ORG_WEBSITE_LINK')">
       <el-input v-model="form.websiteUrl" type="url" placeholder="https://about.your-school.com ..."></el-input>
     </el-form-item>
+
     <!-- Faculty term EN -->
-    <el-form-item :label="$t('SW_ORG_FACULTYTERM_NAME')" v-if="school.enableManualCourses" required class="form-en" v-show="form.languages.en">
-      <el-input v-model="form.terminology.faculty.en"></el-input>
+    <el-form-item :label="$t('SW_ORG_FACULTYTERM_NAME')" v-if="school.enableManualCourses" required>
+      <el-input ref="nameEn" name="facultyTermNameEn" id="facultyTermEn" size="medium" maxlength="200" v-model="form.terminology.faculty.en">
+        <template slot="prepend"><img :src="'/images/en.png'" class="language-icon" alt="language-icon"></template>
+      </el-input>
+      <!-- Faculty term NL -->
+      <el-input ref="nameNl" name="facultyTermNameNl" id="facultyTermNl" size="medium" maxlength="200" v-model="form.terminology.faculty.nl">
+        <template slot="prepend"><img :src="'/images/nl.png'" class="language-icon" alt="language-icon"></template>
+      </el-input>
     </el-form-item>
-    <!-- Faculty term NL -->
-    <el-form-item :label="$t('SW_ORG_FACULTYTERM_NAME')" v-if="school.enableManualCourses" required class="form-nl" v-show="form.languages.nl">
-      <el-input v-model="form.terminology.faculty.nl"></el-input>
-    </el-form-item>
+
     <!-- Faculties term EN -->
-    <el-form-item :label="$t('SW_ORG_FACULTIESTERM_NAME')" v-if="school.enableManualCourses" required class="form-en" v-show="form.languages.en">
-      <el-input v-model="form.terminology.faculties.en"></el-input>
-    </el-form-item>
-    <!-- Faculties term NL -->
-    <el-form-item :label="$t('SW_ORG_FACULTIESTERM_NAME')" v-if="school.enableManualCourses" required class="form-nl" v-show="form.languages.nl">
-      <el-input v-model="form.terminology.faculties.nl"></el-input>
+    <el-form-item :label="$t('SW_ORG_FACULTIESTERM_NAME')" v-if="school.enableManualCourses" required>
+      <el-input ref="nameEn" name="facultyTermNameEn" id="facultiesTermEn" size="medium" maxlength="200" v-model="form.terminology.faculties.en"  v-show="form.languages.en">
+        <template slot="prepend"><img :src="'/images/en.png'" class="language-icon" alt="language-icon"></template>
+      </el-input>
+      <!-- Faculties term NL -->
+      <el-input ref="nameNl" name="facultyTermNameNl" id="facultiesTermNl" size="medium" maxlength="200" v-model="form.terminology.faculties.nl"  v-show="form.languages.nl">
+        <template slot="prepend"><img :src="'/images/nl.png'" class="language-icon" alt="language-icon"></template>
+      </el-input>
     </el-form-item>
   </div>
 </template>
