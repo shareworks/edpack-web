@@ -356,9 +356,6 @@ export default {
     }
   },
 
-  mounted () {
-    console.log('this.form', this.form)
-  },
   methods: {
     generateSecret () {
       this.$confirm(this.$i18n.t('SW_ATTENTION_SECRET_GENERATE'), this.$i18n.t('SW_ATTENTION_SECRET_GENERATE_TITLE'), {
