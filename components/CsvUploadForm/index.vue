@@ -53,7 +53,7 @@
 
 <script>
 import Papa from 'papaparse'
-import StudentsTable from '@/components/StudentsTable'
+import StudentsTable from '../StudentsTable'
 
 export default {
   name: 'CsvUploadForm',
