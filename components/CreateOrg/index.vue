@@ -3,12 +3,12 @@
     <el-form :model="form" label-width="150px">
       <!-- Full name EN -->
       <el-form-item :label="$t('SW_ORG_FULL_NAME')" prop="name.en" required :show-message="false">
-        <el-input ref="nameEn" name="nameEn" id="nameEn" size="medium" maxlength="200" v-model="form.name.en" autofocus :placeholder="$t('SW_ORG_FULL_NAME')">
-          <template slot="prepend"><img :src="'/images/en.png'" class="language-icon" alt="language-icon"></template>
+        <el-input ref="nameEn" name="nameEn" id="nameEn" size="medium" maxlength="200" v-model="form.name.en" autofocus :placeholder="$t('SW_ORG_FULL_NAME')" v-show="school.languages.en">
+          <template v-if="!isJustOneLanguage" slot="prepend"><img :src="'/images/en.png'" class="language-icon" alt="language-icon"></template>
         </el-input>
         <!-- Full name NL -->
-        <el-input ref="nameNl" name="nameNl" id="nameNl" size="medium" maxlength="200" v-model="form.name.nl" autofocus :placeholder="$t('SW_ORG_FULL_NAME')">
-          <template slot="prepend"><img :src="'/images/nl.png'" class="language-icon" alt="language-icon"></template>
+        <el-input ref="nameNl" name="nameNl" id="nameNl" size="medium" maxlength="200" v-model="form.name.nl" autofocus :placeholder="$t('SW_ORG_FULL_NAME')" v-show="school.languages.nl">
+          <template v-if="!isJustOneLanguage" slot="prepend"><img :src="'/images/nl.png'" class="language-icon" alt="language-icon"></template>
         </el-input>
       </el-form-item>
 
@@ -46,6 +46,12 @@ export default {
 
   mounted () {
     this.$nextTick(() => this.$refs.nameEn.focus())
+  },
+
+  computed: {
+    isJustOneLanguage () {
+      return this.school.languages.en && !this.school.languages.nl || !this.school.languages.en && this.school.languages.nl
+    }
   },
 
   methods: {
