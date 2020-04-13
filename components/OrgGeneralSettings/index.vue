@@ -4,11 +4,11 @@
     <!-- Full name EN -->
     <el-form-item :label="$t('SW_ORG_FULL_NAME')" prop="name.en" required :show-message="false">
       <el-input ref="nameEn" name="nameEn" id="nameEn" size="medium" maxlength="200" v-model="form.name.en" autofocus :placeholder="$t('SW_ORG_FULL_NAME')" v-show="form.languages.en">
-        <template slot="prepend"><img :src="'/images/en.png'" class="language-icon" alt="language-icon"></template>
+        <template v-if="!isJustOneLanguage" slot="prepend"><img :src="'/images/en.png'" class="language-icon" alt="language-icon"></template>
       </el-input>
       <!-- Full name NL -->
       <el-input ref="nameNl" name="nameNl" id="nameNl" size="medium" maxlength="200" v-model="form.name.nl" autofocus :placeholder="$t('SW_ORG_FULL_NAME')" v-show="form.languages.nl">
-        <template slot="prepend"><img :src="'/images/nl.png'" class="language-icon" alt="language-icon"></template>
+        <template v-if="!isJustOneLanguage" slot="prepend"><img :src="'/images/nl.png'" class="language-icon" alt="language-icon"></template>
       </el-input>
     </el-form-item>
 
@@ -69,23 +69,23 @@
 
     <!-- Faculty term EN -->
     <el-form-item :label="$t('SW_ORG_FACULTYTERM_NAME')" v-if="school.enableManualCourses" required>
-      <el-input ref="nameEn" name="facultyTermNameEn" id="facultyTermEn" size="medium" maxlength="200" v-model="form.terminology.faculty.en">
-        <template slot="prepend"><img :src="'/images/en.png'" class="language-icon" alt="language-icon"></template>
+      <el-input ref="nameEn" name="facultyTermNameEn" id="facultyTermEn" size="medium" maxlength="200" v-model="form.terminology.faculty.en" v-show="form.languages.en">
+        <template v-if="!isJustOneLanguage" slot="prepend"><img :src="'/images/en.png'" class="language-icon" alt="language-icon"></template>
       </el-input>
       <!-- Faculty term NL -->
-      <el-input ref="nameNl" name="facultyTermNameNl" id="facultyTermNl" size="medium" maxlength="200" v-model="form.terminology.faculty.nl">
-        <template slot="prepend"><img :src="'/images/nl.png'" class="language-icon" alt="language-icon"></template>
+      <el-input ref="nameNl" name="facultyTermNameNl" id="facultyTermNl" size="medium" maxlength="200" v-model="form.terminology.faculty.nl" v-show="form.languages.nl">
+        <template v-if="!isJustOneLanguage" slot="prepend"><img :src="'/images/nl.png'" class="language-icon" alt="language-icon"></template>
       </el-input>
     </el-form-item>
 
     <!-- Faculties term EN -->
     <el-form-item :label="$t('SW_ORG_FACULTIESTERM_NAME')" v-if="school.enableManualCourses" required>
       <el-input ref="nameEn" name="facultyTermNameEn" id="facultiesTermEn" size="medium" maxlength="200" v-model="form.terminology.faculties.en"  v-show="form.languages.en">
-        <template slot="prepend"><img :src="'/images/en.png'" class="language-icon" alt="language-icon"></template>
+        <template v-if="!isJustOneLanguage" slot="prepend"><img :src="'/images/en.png'" class="language-icon" alt="language-icon"></template>
       </el-input>
       <!-- Faculties term NL -->
       <el-input ref="nameNl" name="facultyTermNameNl" id="facultiesTermNl" size="medium" maxlength="200" v-model="form.terminology.faculties.nl"  v-show="form.languages.nl">
-        <template slot="prepend"><img :src="'/images/nl.png'" class="language-icon" alt="language-icon"></template>
+        <template v-if="!isJustOneLanguage" slot="prepend"><img :src="'/images/nl.png'" class="language-icon" alt="language-icon"></template>
       </el-input>
     </el-form-item>
   </div>
@@ -108,6 +108,12 @@ export default {
       editorOptions: {},
       languages: config.languages,
       filepicker: filestack.init(config.filestack.key)
+    }
+  },
+
+  computed: {
+    isJustOneLanguage () {
+      return this.form.languages.en && !this.form.languages.nl || !this.form.languages.en && this.form.languages.nl
     }
   },
 
