@@ -5,7 +5,7 @@
     <el-form-item :label="form.terminology.faculties[lang]">
       <p class="form-help-text">{{ $t('SW_EXPLAIN_FACULTY_LIST', [form.terminology.faculties[lang].toLowerCase()]) }}</p>
 
-      <el-row :gutter="10">
+      <el-row v-if="form.faculties.length > 0" :gutter="10">
         <el-col :span="form.languages.nl ? 12 : 24" v-if="form.languages.en">
           <strong class="mb-10" v-if="form.languages.en && form.languages.nl">
             {{ $t('SW_DEFAULT_EN') }}
