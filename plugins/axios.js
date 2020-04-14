@@ -26,7 +26,7 @@ export default {
       response => response,
       (error) => {
         let errorMessage = false
-        const errorType = 'error'
+        let errorType = 'error'
         const status = error.response ? error.response.status : false
 
         // Unauthenticated
@@ -49,6 +49,7 @@ export default {
         if (status === 440) {
           removeCsrfToken()
           errorMessage = i18n.t('SW_NO_USER_SESSION')
+          errorType = 'info'
 
           Axios.post('users/logout', {})
             .then(() => {
