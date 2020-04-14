@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import CsvUploadForm from '@/components/CsvUploadForm'
+import CsvUploadForm from '../CsvUploadForm'
 
 const statsBeforeSync = { groups: [], groupsMap: {} }
 const statsAfterSync = {
@@ -80,7 +80,7 @@ const statsAfterSync = {
 
 export default {
   name: 'CsvSync',
-  props: ['closeDialog', 'evaluation'],
+  props: ['closeDialog', 'model'],
   components: { CsvUploadForm },
 
   data () {
@@ -100,13 +100,13 @@ export default {
   },
 
   created () {
-    this.getEvaluationMembers()
+    this.getMembers()
   },
 
   methods: {
-    getEvaluationMembers () {
+    getMembers () {
       this.loading = true
-      this.$http.get(`evaluations/${this.evaluation._id}/users`)
+      this.$http.get(`courses/${this.model._id}/users`)
         .then((res) => { this.currentUsers = res.data.list })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.loading = false })
@@ -116,11 +116,11 @@ export default {
       this.processingCsv = true
 
       const params = {}
-      const form = Object.assign({}, this.evaluation, { users: this.csvUsers })
+      const form = Object.assign({}, this.model, { users: this.csvUsers })
 
-      this.$http.put(`/evaluations/${form._id}/sync/excel`, form, { params, timeout: 100000 })
+      this.$http.put(`/models/${form._id}/sync/excel`, form, { params, timeout: 100000 })
         .then(() => {
-          this.$message({ message: this.$i18n.t('SW_EVALUATION_SYNC_EXCEL'), type: 'success' })
+          this.$message({ message: this.$i18n.t('SW_MODEL_SYNC_EXCEL'), type: 'success' })
           this.closeDialog(true)
         })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
@@ -144,7 +144,7 @@ export default {
         if (!this.statsBeforeSync.groupsMap[currentUser.groupName]) this.statsBeforeSync.groupsMap[currentUser.groupName] = []
         this.statsBeforeSync.groupsMap[currentUser.groupName].push(currentUser)
 
-        // Check if user is removed from Evaluation
+        // Check if user is removed from Model
         if (!user) this.statsAfterSync.removedUsers.push(currentUser)
       }
 
@@ -155,7 +155,7 @@ export default {
         if (!this.statsAfterSync.groupsMap[user.groupName]) this.statsAfterSync.groupsMap[user.groupName] = []
         this.statsAfterSync.groupsMap[user.groupName].push(user)
 
-        // Check if user is new to Evaluation
+        // Check if user is new to Model
         if (!currentUser) this.statsAfterSync.newUsers.push(user)
 
         // Check if user transferred from group
