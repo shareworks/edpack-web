@@ -1,5 +1,9 @@
 <template>
-  <div class="thumbnail" :class="colorId" :style="{'background-image': 'url(' + thumbUrl + ')'}">
+  <div class="thumbnail" :class="colorId"
+       :style="{'background-image': 'url(' + thumbUrl + ')',
+                'color': textColor ? textColor: '#fff',
+                'border': borderColor ? `1px solid ${borderColor}` : null
+  }">
     <span v-if="!thumbUrl">{{ initials }}</span>
   </div>
 </template>
@@ -9,7 +13,7 @@ import getColorId from '../../utils/get-color-id'
 
 export default {
   name: 'Thumbnail',
-  props: ['model'],
+  props: ['model', 'borderColor', 'textColor'],
 
   computed: {
     thumbUrl () {
