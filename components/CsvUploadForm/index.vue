@@ -23,7 +23,7 @@
       <p class="mb-10" v-else>{{ $t('SW_CSV_CHANGES_TEXT', [existing.groups, existing.students, groups.length, users.length]) }}</p>
       <el-button size="small" type="success" v-if="!existing" @click="toggleStudentsList">
         <i class="icon-users"></i>
-        View students
+        {{ $t('SW_VIEW_STUDENTS') }}
       </el-button>
       <el-button type="success" size="small" plain @click="handleRemoveCsv">
         <i class="icon-cancel"></i>
