@@ -27,7 +27,7 @@
       </el-button>
       <el-button type="success" size="small" plain @click="handleRemoveCsv">
         <i class="icon-cancel"></i>
-        Upload new .CSV
+        {{ $t('SW_UPLOAD_NEW_CSV') }}
       </el-button>
     </el-alert>
 
