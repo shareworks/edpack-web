@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Table with students -->
-    <el-table v-show="tableData.length" size="small" :data="tableData" row-key="_id" ref="studentsTable">
+    <el-table v-show="tableData.length" size="small" :data="getTableData" row-key="_id" ref="studentsTable">
       <!-- Name -->
       <el-table-column :label="$t('SW_STUDENT')" prop="name" min-width="160">
         <template slot-scope="props">
@@ -19,12 +19,12 @@
       <!-- Group name -->
       <el-table-column property="groupName" :label="$t('SW_GROUP')" min-width="180">
         <template slot-scope="props">
-          <strong>{{props.row.groupName}}</strong>
+          <strong>{{ props.row.groupName }}</strong>
         </template>
       </el-table-column>
     </el-table>
 
-    <el-pagination class="text-center" background layout="prev, pager, next" :total="total" :page-size="10"></el-pagination>
+    <el-pagination class="text-center" background layout="prev, pager, next" :total="total" :page-size="pageSize" @current-change="onPageChange"></el-pagination>
   </div>
 </template>
 
@@ -33,20 +33,25 @@
 export default {
   name: 'StudentsTable',
   props: ['closeDialog', 'tableData'],
-  components: {},
 
   data () {
     return {
-      course: this.$store.state.course,
-      status: false,
-      total: 0
+      pageSize: 10,
+      currentPage: 0,
+      total: this.tableData.length,
+      course: this.$store.state.course
     }
   },
 
-  mounted () {
+  computed: {
+    getTableData () {
+      const takeValuesFrom = this.pageSize * this.currentPage
+      return [...this.tableData].splice(takeValuesFrom, this.pageSize)
+    }
   },
 
   methods: {
+    onPageChange (pageNumber) { this.currentPage = pageNumber - 1 }
   }
 }
 </script>
