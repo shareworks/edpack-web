@@ -146,7 +146,7 @@
     </el-dialog>
 
     <!-- Email dialog -->
-    <el-dialog :title="$t('SW_SEND_EMAIL_TO_SELECTION_USERS')" append-to-body :visible.sync="dialogEmail">
+    <el-dialog :title="$tc('SW_SEND_EMAIL_TO_SELECTION_USERS', multipleSelection.length)" append-to-body :visible.sync="dialogEmail">
       <email-users v-if="dialogEmail" :selectedUsers="multipleSelection" :closeDialog="closeDialog"></email-users>
     </el-dialog>
   </div>
@@ -267,7 +267,7 @@ export default {
       if (this.status !== 'done') this.getUsers(true)
     },
     confirmRemove () {
-      this.$confirm(this.$i18n.t('SW_DELETE_USERS_CONFIRM'), this.$i18n.t('SW_DELETE_USERS'), {
+      this.$confirm(this.$i18n.tc('SW_DELETE_USERS_CONFIRM', this.multipleSelection.length), this.$i18n.tc('SW_DELETE_USERS', this.multipleSelection.length), {
         confirmButtonText: this.$i18n.t('SW_DELETE'),
         cancelButtonText: this.$i18n.t('SW_CANCEL')
       }).then(() => { this.removeUsers() })
