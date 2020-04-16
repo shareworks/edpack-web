@@ -26,22 +26,7 @@
       </el-col>
       <!-- Add instructors -->
       <el-col :span="12">
-        <p class="mb-10 bold">{{ $t('SW_ADD_STAFF_TEXT') }}</p>
-        <el-form label-position="top">
-          <el-form-item>
-            <el-input :disabled="sending" type="textarea" :autosize="{ minRows: 3, maxRows: 8}" :placeholder="$t('SW_EMAIL_INVITES_PLACEHOLDER')" v-model="form.recipients">
-            </el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-checkbox :label="$t('SW_SEND_TO_SELF')" v-model="form.toSelf" name="type"></el-checkbox>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="addUsers" :loading="sending">
-              <i class="icon-send"></i>
-              <strong>{{ $t('SW_INVITE') }}</strong>
-            </el-button>
-          </el-form-item>
-        </el-form>
+        <user-create></user-create>
       </el-col>
     </el-row>
 
@@ -52,10 +37,12 @@
 
 <script>
 import moment from 'moment'
+import UserCreate from '../UsersCreate'
 
 export default {
   name: 'ManageStaff',
   props: ['closeDialog'],
+  components: { UserCreate },
 
   data () {
     return {
