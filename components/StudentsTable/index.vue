@@ -6,7 +6,10 @@
       <el-table-column :label="$t('SW_STUDENT')" prop="name" min-width="160">
         <template slot-scope="props">
           <div class="text-ellipsis">
-            <strong>{{props.row.name}}</strong>
+            <el-popover width="200" trigger="click" placement="bottom">
+              <el-input size="small" v-model="props.row.name"></el-input>
+              <strong class="student-name" slot="reference">{{props.row.name}}</strong>
+            </el-popover>
           </div>
         </template>
       </el-table-column>
