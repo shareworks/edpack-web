@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h3>{{ $t('SW_STUDENTS_TABLE') }}</h3>
+    <span>{{ $t('SW_STUDENTS_TABLE_DESCRIPTION') }}</span>
     <!-- Table with students -->
     <el-table v-show="tableData.length" size="small" :data="getTableData" row-key="_id" ref="studentsTable">
       <!-- Name -->
