@@ -1,6 +1,8 @@
 <template>
   <div class="welcome-dialog">
-    <div class="horizontal-logo"></div>
+    <div class="dialog-logo">
+      <logo-animation></logo-animation>
+    </div>
     <h3 class="mb-20 font-18">
       {{ $t('SW_WELCOME_ABOUT') }}
 
@@ -27,10 +29,12 @@
 </template>
 
 <script>
+const LogoAnimation = () => import('../../../../public/images/logo-animation.svg')
+
 export default {
   name: 'WelcomeDialog',
   props: ['closeDialog'],
-  components: { },
+  components: { LogoAnimation },
 
   data () {
     return {
@@ -55,4 +59,5 @@ export default {
 <style lang="scss">
   @import '~scss_vars';
   @import './style.scss';
+  @import '../../../../src/styles/logo-animation.scss';
 </style>
