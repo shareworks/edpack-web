@@ -3,13 +3,8 @@
 
     <!-- Full name EN -->
     <el-form-item :label="$t('SW_ORG_FULL_NAME')" prop="name.en" required :show-message="false">
-      <el-input ref="nameEn" name="nameEn" id="nameEn" size="medium" maxlength="200" v-model="form.name.en" autofocus :placeholder="$t('SW_ORG_FULL_NAME')" v-show="form.languages.en">
-        <template v-if="!isJustOneLanguage" slot="prepend"><img :src="'/images/en.png'" class="language-icon" alt="language-icon"></template>
-      </el-input>
-      <!-- Full name NL -->
-      <el-input ref="nameNl" name="nameNl" id="nameNl" size="medium" maxlength="200" v-model="form.name.nl" autofocus :placeholder="$t('SW_ORG_FULL_NAME')" v-show="form.languages.nl">
-        <template v-if="!isJustOneLanguage" slot="prepend"><img :src="'/images/nl.png'" class="language-icon" alt="language-icon"></template>
-      </el-input>
+      <input-with-flag :change="setNewName" ref="nameEn" :isJustOneLanguage="isJustOneLanguage" :value="form.name.en" :form="form" lang="en" name="nameEn" id="nameEn" :placeholder="$t('SW_ORG_FULL_NAME')"/>
+      <input-with-flag :change="setNewName" ref="nameNl" :isJustOneLanguage="isJustOneLanguage" :value="form.name.nl" :form="form" lang="nl" name="nameNl" id="nameNl" :placeholder="$t('SW_ORG_FULL_NAME')"/>
     </el-form-item>
 
     <!-- Short name -->
@@ -69,24 +64,14 @@
 
     <!-- Faculty term EN -->
     <el-form-item :label="$t('SW_ORG_FACULTYTERM_NAME')" v-if="school.enableManualCourses" required>
-      <el-input ref="nameEn" name="facultyTermNameEn" id="facultyTermEn" size="medium" maxlength="200" v-model="form.terminology.faculty.en" v-show="form.languages.en">
-        <template v-if="!isJustOneLanguage" slot="prepend"><img :src="'/images/en.png'" class="language-icon" alt="language-icon"></template>
-      </el-input>
-      <!-- Faculty term NL -->
-      <el-input ref="nameNl" name="facultyTermNameNl" id="facultyTermNl" size="medium" maxlength="200" v-model="form.terminology.faculty.nl" v-show="form.languages.nl">
-        <template v-if="!isJustOneLanguage" slot="prepend"><img :src="'/images/nl.png'" class="language-icon" alt="language-icon"></template>
-      </el-input>
+      <input-with-flag :change="setNewFaculty" ref="facultyEn" :isJustOneLanguage="isJustOneLanguage" :value="form.terminology.faculty.en" :form="form" lang="en" name="facultyTermNameEn" id="facultyTermEn" />
+      <input-with-flag :change="setNewFaculty" ref="facultyNl" :isJustOneLanguage="isJustOneLanguage" :value="form.terminology.faculty.nl" :form="form" lang="nl" name="facultyTermNameNl" id="facultyTermNl" />
     </el-form-item>
 
     <!-- Faculties term EN -->
     <el-form-item :label="$t('SW_ORG_FACULTIESTERM_NAME')" v-if="school.enableManualCourses" required>
-      <el-input ref="nameEn" name="facultyTermNameEn" id="facultiesTermEn" size="medium" maxlength="200" v-model="form.terminology.faculties.en"  v-show="form.languages.en">
-        <template v-if="!isJustOneLanguage" slot="prepend"><img :src="'/images/en.png'" class="language-icon" alt="language-icon"></template>
-      </el-input>
-      <!-- Faculties term NL -->
-      <el-input ref="nameNl" name="facultyTermNameNl" id="facultiesTermNl" size="medium" maxlength="200" v-model="form.terminology.faculties.nl"  v-show="form.languages.nl">
-        <template v-if="!isJustOneLanguage" slot="prepend"><img :src="'/images/nl.png'" class="language-icon" alt="language-icon"></template>
-      </el-input>
+      <input-with-flag :change="setNewFaculties" ref="facultiesEn" :isJustOneLanguage="isJustOneLanguage" :value="form.terminology.faculties.en" :form="form" lang="en" name="facultyTermNameEn" id="facultiesTermEn" />
+      <input-with-flag :change="setNewFaculties" ref="facultiesNl" :isJustOneLanguage="isJustOneLanguage" :value="form.terminology.faculties.nl" :form="form" lang="nl" name="facultyTermNameNl" id="facultiesTermNl" />
     </el-form-item>
   </div>
 </template>
@@ -94,11 +79,13 @@
 <script>
 import config from 'config'
 import * as filestack from 'filestack-js'
+import InputWithFlag from "../InputWithFlag/InputWithFlag"
 import convertDiacritics from '../../utils/convert-diacritics'
 
 export default {
   name: 'OrgGeneralSettings',
   props: ['form'],
+  components: { InputWithFlag },
 
   data () {
     return {
@@ -148,7 +135,10 @@ export default {
     },
     errorUploading () {
       this.$message({ message: this.$i18n.t('SW_ERROR_LOADING'), type: 'error' })
-    }
+    },
+    setNewName (lang, value) { this.form.name[lang] = value },
+    setNewFaculty (lang, value) { this.form.terminology.faculty[lang] = value },
+    setNewFaculties (lang, value) { this.form.terminology.faculties[lang] = value },
   }
 }
 </script>

@@ -3,13 +3,8 @@
     <el-form :model="form" label-width="150px">
       <!-- Full name EN -->
       <el-form-item :label="$t('SW_ORG_FULL_NAME')" prop="name.en" required :show-message="false">
-        <el-input ref="nameEn" name="nameEn" id="nameEn" size="medium" maxlength="200" v-model="form.name.en" autofocus :placeholder="$t('SW_ORG_FULL_NAME')" v-show="school.languages.en">
-          <template v-if="!isJustOneLanguage" slot="prepend"><img :src="'/images/en.png'" class="language-icon" alt="language-icon"></template>
-        </el-input>
-        <!-- Full name NL -->
-        <el-input ref="nameNl" name="nameNl" id="nameNl" size="medium" maxlength="200" v-model="form.name.nl" autofocus :placeholder="$t('SW_ORG_FULL_NAME')" v-show="school.languages.nl">
-          <template v-if="!isJustOneLanguage" slot="prepend"><img :src="'/images/nl.png'" class="language-icon" alt="language-icon"></template>
-        </el-input>
+        <input-with-flag :isAutofocus="true" :change="setNewName" ref="nameEn" :isJustOneLanguage="isJustOneLanguage" :value="form.name.en" :form="form" lang="en" name="nameEn" id="nameEn" :placeholder="$t('SW_ORG_FULL_NAME')"/>
+        <input-with-flag :change="setNewName" ref="nameNl" :isJustOneLanguage="isJustOneLanguage" :value="form.name.nl" :form="form" lang="nl" name="nameNl" id="nameNl" :placeholder="$t('SW_ORG_FULL_NAME')"/>
       </el-form-item>
 
       <!-- Short name -->
@@ -27,9 +22,12 @@
 </template>
 
 <script>
+import InputWithFlag from "../InputWithFlag/InputWithFlag"
+
 export default {
   name: 'CreateOrg',
   props: ['closeDialog'],
+  components: { InputWithFlag },
 
   data () {
     return {
@@ -44,10 +42,6 @@ export default {
     }
   },
 
-  mounted () {
-    this.$nextTick(() => this.$refs.nameEn.focus())
-  },
-
   computed: {
     isJustOneLanguage () {
       return this.school.languages.en && !this.school.languages.nl || !this.school.languages.en && this.school.languages.nl
@@ -55,6 +49,7 @@ export default {
   },
 
   methods: {
+    setNewName (lang, value) { this.form.name[lang] = value },
     createOrg () {
       if (this.submitting) return
       if (!this.form.name.nl || !this.form.name.en) return this.$message({ message: this.$i18n.t('SW_NO_ORG_NAME'), type: 'error' })
