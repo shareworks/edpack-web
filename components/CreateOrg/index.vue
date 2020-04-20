@@ -3,8 +3,8 @@
     <el-form :model="form" label-width="150px">
       <!-- Full name EN -->
       <el-form-item :label="$t('SW_ORG_FULL_NAME')" prop="name.en" required :show-message="false">
-        <input-with-flag :isAutofocus="true" :change="setNewName" ref="nameEn" :isJustOneLanguage="isJustOneLanguage" :value="form.name.en" :form="form" lang="en" name="nameEn" id="nameEn" :placeholder="$t('SW_ORG_FULL_NAME')"/>
-        <input-with-flag :change="setNewName" ref="nameNl" :isJustOneLanguage="isJustOneLanguage" :value="form.name.nl" :form="form" lang="nl" name="nameNl" id="nameNl" :placeholder="$t('SW_ORG_FULL_NAME')"/>
+        <input-with-flag v-if="school.languages.en" :isAutofocus="true" :change="setNewName" ref="nameEn" :isJustOneLanguage="isJustOneLanguage" :value="form.name.en" :form="form" lang="en" name="nameEn" id="nameEn" :placeholder="$t('SW_ORG_FULL_NAME')"/>
+        <input-with-flag v-if="school.languages.nl" :change="setNewName" ref="nameNl" :isJustOneLanguage="isJustOneLanguage" :value="form.name.nl" :form="form" lang="nl" name="nameNl" id="nameNl" :placeholder="$t('SW_ORG_FULL_NAME')"/>
       </el-form-item>
 
       <!-- Short name -->
