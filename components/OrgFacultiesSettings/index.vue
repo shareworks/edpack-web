@@ -38,7 +38,10 @@
           </strong>
           <div v-for="(faculty, index) in form.faculties" :key="index">
             <div class="mb-10">
-              <el-input v-model="faculty.canvas.id">
+              <el-input v-if="faculty.canvas" v-model="faculty.canvas.id">
+                <template slot="prepend">#{{index + 1}}</template>
+              </el-input>
+              <el-input v-else :disabled="true">
                 <template slot="prepend">#{{index + 1}}</template>
               </el-input>
             </div>
