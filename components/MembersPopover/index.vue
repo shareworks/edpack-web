@@ -19,7 +19,7 @@
 
       <!-- Popover text -->
       <a href="#" @click="preventDefault" slot="reference" class="bold">
-        {{ evaluation ? evaluation.staff.length : course.counts.staff || 0 }}
+        {{ evaluation ? evaluation.staff.length : course.counts && course.counts.staff || 0 }}
         {{ $t('SW_STAFF_MEMBERS').toLowerCase() }}
       </a>
     </el-popover>
