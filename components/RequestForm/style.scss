@@ -1,0 +1,44 @@
+.email-item {
+  background-color: #666;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 0 !important;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+
+.email-input {
+  font-size: 16px !important;
+
+  .el-input__prefix > i {
+    left: 5px;
+    top: 2px;
+    position: relative;
+  }
+
+  .el-input-group__append {
+    background: none;
+    border: 0;
+  }
+
+  .el-input__inner {
+    min-width: 200px;
+    max-width: 400px;
+    width: 50vw;
+    height: 50px;
+    padding-left: 40px !important;
+  }
+
+  .submit-button {
+    height: 50px !important;
+    color: #fff !important;
+    position: relative;
+    background-color: $--color-primary !important;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+
+    &:hover {
+      background-color: $--color-primary-light-1 !important;
+    }
+  }
+}
+
