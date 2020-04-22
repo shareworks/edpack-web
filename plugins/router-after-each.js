@@ -1,6 +1,6 @@
 import { router } from '../../router'
 import scrollTop from 'simple-scrolltop'
-import store from '../../store'
+import store from '../store'
 import { loadLanguages } from '../utils/load-languages'
 import Language from './language'
 

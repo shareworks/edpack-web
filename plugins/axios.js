@@ -3,7 +3,7 @@ import { loadCsrfToken, removeCsrfToken } from '../utils/csrf-handling'
 import Axios from 'axios'
 import config from 'config'
 import { router } from '../../router'
-import store from '../../store'
+import store from '../store'
 import Language from './language'
 
 export default {
