@@ -1,5 +1,6 @@
 <template>
   <div>
+    <animated-landing></animated-landing>
     <el-row type="flex" justify="center" align="middle" class="minimum-page">
       <el-col>
         <div class="public-background"></div>
@@ -23,11 +24,12 @@
 <script>
 import Login from '../../components/Login'
 import FooterLinks from '../../components/FooterLinks'
+import AnimatedLanding from "../../../components/AnimatedLanding/AnimatedLanding";
 
 export default {
   name: 'Landing',
   metaInfo: { title: 'Sign in' },
-  components: { Login, FooterLinks }
+  components: { Login, FooterLinks, AnimatedLanding }
 }
 </script>
 
