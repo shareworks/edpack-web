@@ -24,7 +24,7 @@
 <script>
 import Login from '../../components/Login'
 import FooterLinks from '../../components/FooterLinks'
-import AnimatedLanding from "../../../components/AnimatedLanding/AnimatedLanding";
+import AnimatedLanding from "../../../components/AnimatedLanding";
 
 export default {
   name: 'Landing',
