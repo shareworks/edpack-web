@@ -25,6 +25,9 @@
         <i class="icon-arrow_forward"></i>
       </strong>
     </el-button>
+    <el-checkbox class="ml-10" @change="setDontShowDialogAgain">
+      {{ $t('SW_DONT_SHOW_AGAIN') }}
+    </el-checkbox>
   </div>
 </template>
 
@@ -33,7 +36,7 @@ const LogoAnimation = () => import('../../../../public/images/logo-animation.svg
 
 export default {
   name: 'WelcomeDialog',
-  props: ['closeDialog'],
+  props: ['closeDialog', 'setDontShowDialogAgain'],
   components: { LogoAnimation },
 
   data () {
