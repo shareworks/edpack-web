@@ -60,7 +60,7 @@ import Statistics from '@/components/Statistics'
 import Vue from 'vue'
 
 export default {
-  name: 'AdminPanel',
+  name: 'AdminPanelWrapper',
   metaInfo: { title: 'Admin' },
   props: ['mode', 'currentUser', 'school'],
   components: { Statistics },

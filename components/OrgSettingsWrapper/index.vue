@@ -41,7 +41,7 @@ import VueClipboards from 'vue-clipboards'
 Vue.use(VueClipboards)
 
 export default {
-  name: 'OrgSettings',
+  name: 'OrgSettingsWrapper',
   metaInfo: { title: 'Settings' },
   props: ['toTab', 'activeTab', 'setActiveTab', 'orgLoaded', 'setOrgLoaded'],
 
