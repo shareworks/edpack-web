@@ -25,9 +25,7 @@
         <i class="icon-arrow_forward"></i>
       </strong>
     </el-button>
-    <el-checkbox class="ml-10" @change="setDontShowDialogAgain">
-      {{ $t('SW_DONT_SHOW_AGAIN') }}
-    </el-checkbox>
+    <el-checkbox class="ml-10" @change="setDontShowDialogAgain">{{ $t('SW_DONT_SHOW_AGAIN') }}</el-checkbox>
   </div>
 </template>
 
