@@ -1,0 +1,15 @@
+.about-counters {
+  margin: 0 auto;
+  max-width: 1400px;
+  padding: 30px 0;
+
+  .el-card {
+    margin-bottom: 20px;
+  }
+}
+
+@media (min-width: $--sm) {
+  .about-counters .el-card {
+    padding: 20px 0;
+  }
+}
