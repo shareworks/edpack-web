@@ -43,11 +43,10 @@ Vue.use(VueClipboards)
 export default {
   name: 'OrgSettingsWrapper',
   metaInfo: { title: 'Settings' },
-  props: ['toTab', 'activeTab', 'setActiveTab', 'orgLoaded', 'setOrgLoaded'],
+  props: ['toTab', 'activeTab', 'setActiveTab', 'orgLoaded', 'setOrgLoaded', 'form', 'setForm'],
 
   data () {
     return {
-      form: Vue.util.extend({}, this.$store.state.school, { lms: 'canvas' }),
       school: Vue.util.extend({}, this.$store.state.school),
       submitting: false
     }
@@ -90,7 +89,7 @@ export default {
         .then((res) => {
           // Use JSON.parse(JSON.stringify(obj)) to prevent deep bindings, see Vue.utils.extend issue: https://github.com/vuejs/vue/issues/1849
           this.school = JSON.parse(JSON.stringify(res.data.list[0]))
-          this.form = JSON.parse(JSON.stringify(res.data.list[0]))
+          this.setForm(JSON.parse(JSON.stringify(res.data.list[0])))
         })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.setOrgLoaded(true) })
@@ -122,7 +121,7 @@ export default {
           this.$store.state.user.organization = school
           this.$store.dispatch('setUser', this.$store.state.user)
           this.school = JSON.parse(JSON.stringify(school))
-          this.form = JSON.parse(JSON.stringify(school))
+          this.setForm(JSON.parse(JSON.stringify(school)))
           this.$message({ message: this.$i18n.t('SW_CHANGES_SAVED'), type: 'success' })
         })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
