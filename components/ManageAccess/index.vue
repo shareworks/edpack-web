@@ -9,7 +9,7 @@
         <template slot-scope="props">
           <div class="text-ellipsis">
             <thumbnail :model="props.row" class="thumb-user thumb-24 mr-5 hidden-xs hidden-sm"></thumbnail>
-            <strong>{{props.row.name}}</strong>
+            <strong>{{props.row.name === user.name ? $t('SW_YOU') : props.row.name }}</strong>
           </div>
         </template>
       </el-table-column>
@@ -20,7 +20,7 @@
         </template>
       </el-table-column>
       <!-- Activity date -->
-      <el-table-column property="activityDate" :formatter="dateFormatter" :label="$t('SW_ACTIVITY_DATE')" min-width="140"></el-table-column>
+      <el-table-column sortable property="activityDate" :formatter="dateFormatter" :label="$t('SW_ACTIVITY_DATE')" min-width="140"></el-table-column>
       <!-- Role -->
       <el-table-column width="150" :label="$t('SW_ROLE')">
         <template slot-scope="props">
@@ -31,13 +31,13 @@
                 <i class="el-icon-caret-bottom el-icon--right"></i>
               </el-button>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item  :command="{instructor: props.row, role: 'owner'}">
+                <el-dropdown-item :command="{instructor: props.row, role: 'owner'}">
                   <span>{{ $t('SW_OWNER') }}</span>
                 </el-dropdown-item>
-                <el-dropdown-item  :command="{instructor: props.row, role: 'viewer'}">
+                <el-dropdown-item :command="{instructor: props.row, role: 'viewer'}">
                   <span>{{ $t('SW_VIEWER') }}</span>
                 </el-dropdown-item>
-                <el-dropdown-item  :command="{instructor: props.row, role: 'none'}">
+                <el-dropdown-item :command="{instructor: props.row, role: 'none'}">
                   <span>{{ $t('SW_NO_ROLE') }}</span>
                 </el-dropdown-item>
               </el-dropdown-menu>
