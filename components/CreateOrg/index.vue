@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import InputWithFlag from "../InputWithFlag/InputWithFlag"
+import InputWithFlag from '../InputWithFlag/InputWithFlag'
 
 export default {
   name: 'CreateOrg',
@@ -44,7 +44,7 @@ export default {
 
   computed: {
     isJustOneLanguage () {
-      return this.school.languages.en && !this.school.languages.nl || !this.school.languages.en && this.school.languages.nl
+      return (this.school.languages.en && !this.school.languages.nl) || (!this.school.languages.en && this.school.languages.nl)
     }
   },
 

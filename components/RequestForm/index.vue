@@ -43,7 +43,7 @@ import FooterLinks from '../FooterLinks'
 import FooterCredits from '../FooterCredits'
 
 export default {
-  name: "RequestForm",
+  name: 'RequestForm',
   data () {
     return {
       email: ''

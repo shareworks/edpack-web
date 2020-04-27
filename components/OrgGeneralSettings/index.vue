@@ -79,7 +79,7 @@
 <script>
 import config from 'config'
 import * as filestack from 'filestack-js'
-import InputWithFlag from "../InputWithFlag/InputWithFlag"
+import InputWithFlag from '../InputWithFlag/InputWithFlag'
 import convertDiacritics from '../../utils/convert-diacritics'
 
 export default {
@@ -100,7 +100,7 @@ export default {
 
   computed: {
     isJustOneLanguage () {
-      return this.form.languages.en && !this.form.languages.nl || !this.form.languages.en && this.form.languages.nl
+      return (this.form.languages.en && !this.form.languages.nl) || (!this.form.languages.en && this.form.languages.nl)
     }
   },
 
@@ -138,7 +138,7 @@ export default {
     },
     setNewName (lang, value) { this.form.name[lang] = value },
     setNewFaculty (lang, value) { this.form.terminology.faculty[lang] = value },
-    setNewFaculties (lang, value) { this.form.terminology.faculties[lang] = value },
+    setNewFaculties (lang, value) { this.form.terminology.faculties[lang] = value }
   }
 }
 </script>
