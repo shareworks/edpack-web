@@ -62,7 +62,7 @@ import Vue from 'vue'
 export default {
   name: 'AdminPanelWrapper',
   metaInfo: { title: 'Admin' },
-  props: ['mode', 'currentUser', 'school'],
+  props: ['mode', 'currentUser', 'school', 'setMode'],
   components: { Statistics },
 
   data () {
@@ -80,7 +80,7 @@ export default {
   watch: {
     $route (to) {
       if (to.params.mode !== this.mode) {
-        this.mode = to.params.mode
+        this.setMode(to.params.mode)
       }
     }
   },
