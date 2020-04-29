@@ -1,46 +1,31 @@
 <template>
-  <div class="static-section dark-section">
-    <article class="text-center mb-20">
-      <h2 class="text-center mb-20">{{ $t('SW_ACCESS_HEADER') }}</h2>
-      <p class="font-16 mb-30">{{ $t('SW_ACCESS_TEXT') }}</p>
+  <el-form class="mb-30" id="requestForm" :inline="true" ref="form" name="request" netlify-honeypot="bt-field2" action="thanks-request" netlify>
+    <!-- Name of form (hidden) -->
+    <input type="hidden" name="form-name" value="request">
 
-      <el-form class="mb-30" id="requestForm" :inline="true" ref="form" name="request" netlify-honeypot="bt-field2" action="thanks-request" netlify>
-        <!-- Name of form (hidden) -->
-        <input type="hidden" name="form-name" value="request">
+    <el-form-item class="email-item">
+      <!-- Email -->
+      <el-input class="email-input" prefix-icon="icon-email" type="email" name="email" size="large" v-model="email" :placeholder="$t('SW_YOUR_EMAIL')" @keyup.enter="submitRequest" :required="true">
+        <!--Submit request -->
+        <template slot="append">
+          <el-button class="submit-button" native-type="submit" type="primary" @click="submitRequest">
+            <i class="icon-send"></i>
+            <span class="hidden-xs">{{ $t('SW_REQUEST_ACCESS') }}</span>
+          </el-button>
+        </template>
+      </el-input>
+    </el-form-item>
 
-        <el-form-item class="email-item">
-          <!-- Email -->
-          <el-input class="email-input" prefix-icon="icon-email" type="email" name="email" size="large" v-model="email" :placeholder="$t('SW_YOUR_EMAIL')" @keyup.enter="submitRequest" :required="true">
-            <!--Submit request -->
-            <template slot="append">
-              <el-button class="submit-button" native-type="submit" type="primary" @click="submitRequest">
-                <i class="icon-send"></i>
-                <span class="hidden-xs">{{ $t('SW_REQUEST_ACCESS') }}</span>
-              </el-button>
-            </template>
-          </el-input>
-        </el-form-item>
+    <!-- Botfield -->
+    <el-form-item prop="name" class="hidden">
+      <el-input name="bt-field2"></el-input>
+    </el-form-item>
 
-        <!-- Botfield -->
-        <el-form-item prop="name" class="hidden">
-          <el-input name="bt-field2"></el-input>
-        </el-form-item>
-
-      </el-form>
-
-      <!-- Footer links -->
-      <footer-links class="mt-30 mb-20" :signin="true" ref="footerLinks"></footer-links>
-
-      <!-- Credits and terms -->
-      <footer-credits></footer-credits>
-    </article>
-  </div>
+  </el-form>
 </template>
 
 <script>
 import config from 'config'
-import FooterLinks from '../FooterLinks'
-import FooterCredits from '../FooterCredits'
 
 export default {
   name: 'RequestForm',
@@ -49,7 +34,6 @@ export default {
       email: ''
     }
   },
-  components: { FooterLinks, FooterCredits },
   methods: {
     submitRequest (e) {
       e.preventDefault()
