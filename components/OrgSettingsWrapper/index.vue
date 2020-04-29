@@ -95,7 +95,7 @@ export default {
         .finally(() => { this.setOrgLoaded(true) })
     },
     isJustOneLanguage () {
-      return (this.form.languages.en && !this.form.languages.nl) || (!this.form.languages.en && this.form.languages.nl)
+      return this.$store.state.languages.length === 1
     },
     onSubmit () {
       if (this.isJustOneLanguage()) {

@@ -10,6 +10,7 @@ export const LOCATION_CHANGE = 'router/ROUTE_CHANGED'
 export const WINDOW_RESIZE = 'WINDOW_RESIZE'
 export const SET_USER = 'SET_USER'
 export const SET_LANGUAGE = 'SET_LANGUAGE'
+export const SET_LANGUAGES = 'SET_LANGUAGES'
 export const SET_COURSE = 'SET_COURSE'
 
 const state = {
@@ -57,6 +58,9 @@ const mutations = {
   [SET_LANGUAGE] (state, data) {
     state.lang = data.payload
   },
+  [SET_LANGUAGES] (state, data) {
+    state.languages = getLanguages(data.payload)
+  },
   [SET_COURSE] (state, data) {
     state.course = data.payload
   }
@@ -77,6 +81,9 @@ const actions = {
   },
   setLanguage ({ commit }, payload) {
     commit({ type: SET_LANGUAGE, payload })
+  },
+  setLanguages ({ commit }, payload) {
+    commit({ type: SET_LANGUAGES, payload })
   },
   setCourse ({ commit }, payload) {
     commit({ type: SET_COURSE, payload })

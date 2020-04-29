@@ -100,7 +100,7 @@ export default {
 
   computed: {
     isJustOneLanguage () {
-      return (this.form.languages.en && !this.form.languages.nl) || (!this.form.languages.en && this.form.languages.nl)
+      return this.$store.state.languages.length === 1
     }
   },
 
@@ -120,6 +120,7 @@ export default {
       this.filepicker.picker(settings).open()
     },
     updateDefault () {
+      this.$store.dispatch('setLanguages', this.form.languages)
       if (this.form.languages.en && this.form.languages.nl) return
       this.form.defaultLanguage = this.form.languages.en ? 'en' : 'nl'
     },
