@@ -3,7 +3,7 @@
     <p class="mb-20">{{ $t('SW_DIALOG_MANAGE_STAFF_TEXT') }}</p>
 
     <!-- Table with instructors -->
-    <el-table v-if="!loading" v-show="staff.length" :data="staff" row-key="_id" ref="staffTable">
+    <el-table v-if="!loading" v-show="staff.length" :data="staff" row-key="_id" ref="staffTable" :default-sort="{prop: 'activityDate', order: 'ascending'}">
       <!-- Name -->
       <el-table-column :label="$t('SW_STAFF')" prop="name" min-width="160">
         <template slot-scope="props">
@@ -21,8 +21,7 @@
         </template>
       </el-table-column>
       <!-- Activity date -->
-      <el-table-column sortable property="activityDate" :formatter="dateFormatter" :sort-method="sortActivityDate" :label="$t('SW_ACTIVITY_DATE')" min-width="140"
-                       :default-sort="{prop: activityDate, order: 'descending'}"></el-table-column>
+      <el-table-column sortable property="activityDate" :formatter="dateFormatter" :sort-method="sortActivityDate" :label="$t('SW_ACTIVITY_DATE')" min-width="140"></el-table-column>
       <!-- Role -->
       <el-table-column width="150" :label="$t('SW_ROLE')">
         <template slot-scope="props">
