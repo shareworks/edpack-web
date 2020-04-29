@@ -9,7 +9,8 @@
         <template slot-scope="props">
           <div class="text-ellipsis">
             <thumbnail :model="props.row" class="thumb-user thumb-24 mr-5 hidden-xs hidden-sm"></thumbnail>
-            <strong>{{props.row.name === user.name ? $t('SW_YOU') : props.row.name }}</strong>
+            <strong>{{ props.row.name }}</strong>
+            <el-tag size="mini" class="ml-5" type="info" v-if="props.row._id === user._id">{{$t('SW_YOU')}}</el-tag>
           </div>
         </template>
       </el-table-column>
@@ -138,6 +139,7 @@ export default {
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.submitting = false })
     },
+    sortActivityDate (a, b) { return dateSorter(a.activityDate, b.activityDate) },
     dateFormatter (row, column, value) { return value ? moment(value).fromNow() : this.$i18n.t('SW_INVITE_PENDING') }
   }
 }
