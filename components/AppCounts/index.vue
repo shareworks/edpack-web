@@ -20,17 +20,46 @@
 import countTo from 'vue-count-to'
 
 export default {
-  name: 'aboutCounters',
-  props: ['counts', 'visibilityChanged', 'countAnimationDelay'],
+  name: 'AppCounts',
   components: { countTo },
   data () {
     return {
+      counts: false,
+      countAnimationDelay: 200,
       stats: [
         { name: this.$i18n.t('SW_ORGANIZATIONS'), prop: 'organizations', icon: 'icon-school' },
         { name: this.$i18n.t('SW_COURSES'), prop: 'courses', icon: 'icon-graduation' },
         { name: this.$i18n.t('SW_USERS'), prop: 'users', icon: 'icon-user' },
         { name: this.$i18n.t('SW_EVALUATIONS'), prop: 'surveys', icon: 'icon-bar-chart' }
       ]
+    }
+  },
+
+  mounted () {
+    this.getPublicAppCounts()
+  },
+
+  methods: {
+    visibilityChanged (isVisible, entry, count) {
+      const { target } = entry
+
+      if (isVisible) {
+        target.classList.remove('invisible')
+        target.classList.add('visible')
+      } else {
+        target.classList.add('invisible')
+      }
+
+      if (count && isVisible) {
+        setTimeout(() => {
+          this.$refs.counts[count.index].start()
+        }, this.countAnimationDelay)
+      }
+    },
+    getPublicAppCounts () {
+      this.$http.get('public/counts')
+        .then((res) => { this.counts = res.data.list[0] })
+        .catch((err) => { console.log(err) })
     }
   }
 }
