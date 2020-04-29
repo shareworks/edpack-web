@@ -21,7 +21,8 @@
         </template>
       </el-table-column>
       <!-- Activity date -->
-      <el-table-column sortable property="activityDate" :formatter="dateFormatter" :label="$t('SW_ACTIVITY_DATE')" min-width="140"></el-table-column>
+      <el-table-column sortable property="activityDate" :formatter="dateFormatter" :sort-method="sortActivityDate" :label="$t('SW_ACTIVITY_DATE')" min-width="140"
+                       :default-sort="{prop: activityDate, order: 'descending'}"></el-table-column>
       <!-- Role -->
       <el-table-column width="150" :label="$t('SW_ROLE')">
         <template slot-scope="props">
@@ -63,6 +64,7 @@
 
 <script>
 import moment from 'moment'
+import dateSorter from '../../utils/date-sorter'
 
 export default {
   name: 'ManageAccess',
