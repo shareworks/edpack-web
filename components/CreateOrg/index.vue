@@ -1,19 +1,10 @@
 <template>
   <div class="multi-lang">
     <el-form :model="form" label-width="150px">
-      <!-- Full name EN -->
-      <el-form-item :label="$t('SW_ORG_FULL_NAME')" prop="name.en" required :show-message="false">
-        <input-with-flag v-if="school.languages.en" :isAutofocus="true" :change="setNewName" ref="nameEn" :isJustOneLanguage="isJustOneLanguage" :value="form.name.en" :form="form" lang="en" name="nameEn" id="nameEn" :placeholder="$t('SW_ORG_FULL_NAME')"/>
-        <input-with-flag v-if="school.languages.nl" :change="setNewName" ref="nameNl" :isJustOneLanguage="isJustOneLanguage" :value="form.name.nl" :form="form" lang="nl" name="nameNl" id="nameNl" :placeholder="$t('SW_ORG_FULL_NAME')"/>
-      </el-form-item>
-
-      <!-- Short name -->
-      <el-form-item :label="$t('SW_ORG_SHORT_NAME')" prop="shortName.en" required :show-message="false">
-        <el-input v-model="form.shortName.en"></el-input>
-      </el-form-item>
+      <CreateOrgForm :form="form" :school="school" :setNewName="setNewName"></CreateOrgForm>
 
       <!-- Create or cancel -->
-      <el-form-item>
+      <el-form-item class="mt-20">
         <el-button type="primary" @click="createOrg" :loading="submitting">{{ $t('SW_CREATE_ORG') }}</el-button>
         <el-button type="text" @click="closeDialog">{{ $t('SW_CANCEL') }}</el-button>
       </el-form-item>
@@ -22,12 +13,12 @@
 </template>
 
 <script>
-import InputWithFlag from '../InputWithFlag/InputWithFlag'
+import CreateOrgForm from '../../../components/CreateOrgForm'
 
 export default {
   name: 'CreateOrg',
   props: ['closeDialog'],
-  components: { InputWithFlag },
+  components: { CreateOrgForm },
 
   data () {
     return {
@@ -39,12 +30,6 @@ export default {
         name: { en: '', nl: '' },
         shortName: { en: '', nl: '' }
       }
-    }
-  },
-
-  computed: {
-    isJustOneLanguage () {
-      return (this.school.languages.en && !this.school.languages.nl) || (!this.school.languages.en && this.school.languages.nl)
     }
   },
 
