@@ -1,0 +1,15 @@
+.stat-counter {
+  text-align: center;
+  margin-bottom: 10px;
+
+  .cdc-container {
+    max-width: 250px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: $--md) {
+  .stat-counter {
+    margin-bottom: 20px;
+  }
+}

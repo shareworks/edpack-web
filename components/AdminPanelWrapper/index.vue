@@ -55,9 +55,9 @@
 </template>
 
 <script>
-import config from 'config'
-import Statistics from '@/components/Statistics'
 import Vue from 'vue'
+import config from 'config'
+import Statistics from '../Statistics'
 
 export default {
   name: 'AdminPanelWrapper',

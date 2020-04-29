@@ -1,0 +1,79 @@
+<template>
+  <div>
+
+    <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}" v-if="!(isNaN(school.counts.surveyCompletionLifeTime) || isNaN(school.counts.surveyCompletionLast30Days))">
+      <el-card v-for="stat in completionStats" :key="stat.prop" class="stat-counter">
+
+        <vc-donut background="white" foreground="lightgrey" :size="80" unit="%" :thickness="30" :sections="stat.sections">
+          <div class="font-26">
+            <strong><countTo :startVal='(school.counts[stat.prop] / 2)' :endVal='school.counts[stat.prop]' :duration='4000'></countTo>%</strong>
+          </div>
+          <div class="font-14">{{ stat.name }}</div>
+        </vc-donut>
+      </el-card>
+    </masonry>
+
+    <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}">
+      <el-card v-for="stat in userStats" :key="stat.prop" class="stat-counter">
+      <div class="font-26">
+        <i :class="stat.icon"></i>
+        <strong><countTo :startVal='(school.counts[stat.prop] / 2)' :endVal='school.counts[stat.prop]' :duration='4000'></countTo></strong>
+      </div>
+      <div>{{ stat.name }}</div>
+    </el-card>
+    </masonry>
+
+    <masonry class="hidden-xs" :cols="{default: 3, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
+      <el-card v-for="stat in stats" :key="stat.prop" class="stat-counter">
+        <div class="font-20">
+          <i :class="stat.icon"></i>
+          <strong><countTo :startVal='(school.counts[stat.prop] / 2)' :endVal='school.counts[stat.prop]' :duration='4000'></countTo></strong>
+        </div>
+        <div>{{ $t('SW_TOTAL') }} {{ stat.name }}</div>
+      </el-card>
+    </masonry>
+  </div>
+</template>
+
+<script>
+import Vue from 'vue'
+import countTo from 'vue-count-to'
+import Donut from 'vue-css-donut-chart'
+
+Vue.use(Donut)
+
+export default {
+  name: 'Statistics',
+  props: ['closeDialog'],
+  components: { countTo },
+
+  data () {
+    return {
+      school: this.$store.state.school,
+      lang: this.$store.state.lang,
+      completionStats: [
+        { name: this.$i18n.t('SW_SURVEY_COMPLETION_LIFETIME'), prop: 'surveyCompletionLifeTime', sections: [{ color: '#67c23a', value: this.$store.state.school.counts.surveyCompletionLifeTime }] },
+        { name: this.$i18n.t('SW_SURVEY_COMPLETION_LAST_MONTH'), prop: 'surveyCompletionLast30Days', sections: [{ color: '#67c23a', value: this.$store.state.school.counts.surveyCompletionLast30Days }] }
+      ],
+      userStats: [
+        { name: this.$i18n.t('SW_COURSES'), prop: 'courses', icon: 'icon-graduation' },
+        { name: this.$i18n.t('SW_EVALUATIONS'), prop: 'evaluations', icon: 'icon-bar-chart' },
+        { name: this.$i18n.t('SW_USERS_THIS_YEAR'), prop: 'usersThisYear', icon: 'icon-user' },
+        { name: this.$i18n.t('SW_USERS_CREATED_THIS_YEAR'), prop: 'usersCreatedThisYear', icon: 'icon-user' },
+        { name: this.$i18n.t('SW_USERS_THIS_MONTH'), prop: 'usersThisMonth', icon: 'icon-user' },
+        { name: this.$i18n.t('SW_USERS_CREATED_THIS_MONTH'), prop: 'usersCreatedThisMonth', icon: 'icon-user' }
+      ],
+      stats: [
+        { name: this.$i18n.t('SW_ADMINS').toLowerCase(), prop: 'admins', icon: 'icon-user' },
+        { name: this.$i18n.t('SW_STAFF_MEMBERS').toLowerCase(), prop: 'staff', icon: 'icon-user' },
+        { name: this.$i18n.t('SW_STUDENTS').toLowerCase(), prop: 'students', icon: 'icon-user' }
+      ]
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+@import '~scss_vars';
+@import 'style';
+</style>
