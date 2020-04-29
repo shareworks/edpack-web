@@ -18,6 +18,15 @@
   .el-input-group__append {
     background: none;
     border: 0;
+
+
+    button.el-button {
+      background-color: $--main-color !important;
+
+      &:hover {
+        background-color: lighten($--main-color, 5%) !important;
+      }
+    }
   }
 
   .el-input__inner {
