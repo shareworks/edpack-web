@@ -18,7 +18,7 @@
           <!-- Cookies blocked warning -->
           <el-alert v-if="errorType === 'lti_error'" type="warning" class="mt-20 text-left" :closable="false">
             <h3 class="text-center mb-10">Cookies blocked?</h3>
-            <p class="mb-10">Your browsers seems to be blocking a cookie necessary for secure authentication. Possible solutions: </p>
+            <p class="mb-10">Your browser seems to be blocking a cookie necessary for secure authentication. Possible solutions: </p>
             <ul>
               <li>Allow 'cross-site tracking' or 'third-party cookies' in Preferences > Privacy</li>
               <li>Use another browser</li>
