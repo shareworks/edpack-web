@@ -1,4 +1,6 @@
-# Edpuck-web
+# Edpack-web
+
+This repository contains generic Vue components and JS code to reduce duplicate code in our frontend apps.
 
 ## How to get submodules after cloning
 
