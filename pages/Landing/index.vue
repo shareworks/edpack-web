@@ -1,6 +1,6 @@
 <template>
   <div>
-    <animated-landing></animated-landing>
+    <animated-landing class="animated"></animated-landing>
     <el-row type="flex" justify="center" align="middle" class="minimum-page">
       <el-col>
         <div class="public-background"></div>

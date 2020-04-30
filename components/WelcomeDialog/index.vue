@@ -30,7 +30,7 @@
 </template>
 
 <script>
-const LogoAnimation = () => import('../../../public/images/logo-animation.svg')
+const LogoAnimation = () => import('../../../../public/images/logo-animation.svg')
 
 export default {
   name: 'WelcomeDialog',
