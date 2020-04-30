@@ -48,7 +48,7 @@
 
       <!-- Statistics dialog -->
       <el-dialog :title="$t('SW_STATS')" append-to-body :visible.sync="dialogStats">
-        <statistics v-if="dialogStats" :closeDialog="toggleStats"></statistics>
+        <statistics v-if="dialogStats" :closeDialog="toggleStats" :completionStats="completionStats" :userStats="userStats" :stats="stats"></statistics>
       </el-dialog>
     </div>
   </div>
@@ -62,7 +62,7 @@ import Statistics from '../Statistics'
 export default {
   name: 'AdminPanelWrapper',
   metaInfo: { title: 'Admin' },
-  props: ['mode', 'currentUser', 'school', 'setMode'],
+  props: ['mode', 'currentUser', 'school', 'setMode', 'completionStats', 'userStats', 'stats'],
   components: { Statistics },
 
   data () {

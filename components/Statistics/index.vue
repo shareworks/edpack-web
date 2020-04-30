@@ -44,30 +44,13 @@ Vue.use(Donut)
 
 export default {
   name: 'Statistics',
-  props: ['closeDialog'],
+  props: ['closeDialog', 'completionStats', 'userStats', 'stats'],
   components: { countTo },
 
   data () {
     return {
       school: this.$store.state.school,
-      lang: this.$store.state.lang,
-      completionStats: [
-        { name: this.$i18n.t('SW_SURVEY_COMPLETION_LIFETIME'), prop: 'surveyCompletionLifeTime', sections: [{ color: '#67c23a', value: this.$store.state.school.counts.surveyCompletionLifeTime }] },
-        { name: this.$i18n.t('SW_SURVEY_COMPLETION_LAST_MONTH'), prop: 'surveyCompletionLast30Days', sections: [{ color: '#67c23a', value: this.$store.state.school.counts.surveyCompletionLast30Days }] }
-      ],
-      userStats: [
-        { name: this.$i18n.t('SW_COURSES'), prop: 'courses', icon: 'icon-graduation' },
-        { name: this.$i18n.t('SW_EVALUATIONS'), prop: 'evaluations', icon: 'icon-bar-chart' },
-        { name: this.$i18n.t('SW_USERS_THIS_YEAR'), prop: 'usersThisYear', icon: 'icon-user' },
-        { name: this.$i18n.t('SW_USERS_CREATED_THIS_YEAR'), prop: 'usersCreatedThisYear', icon: 'icon-user' },
-        { name: this.$i18n.t('SW_USERS_THIS_MONTH'), prop: 'usersThisMonth', icon: 'icon-user' },
-        { name: this.$i18n.t('SW_USERS_CREATED_THIS_MONTH'), prop: 'usersCreatedThisMonth', icon: 'icon-user' }
-      ],
-      stats: [
-        { name: this.$i18n.t('SW_ADMINS').toLowerCase(), prop: 'admins', icon: 'icon-user' },
-        { name: this.$i18n.t('SW_STAFF_MEMBERS').toLowerCase(), prop: 'staff', icon: 'icon-user' },
-        { name: this.$i18n.t('SW_STUDENTS').toLowerCase(), prop: 'students', icon: 'icon-user' }
-      ]
+      lang: this.$store.state.lang
     }
   }
 }
