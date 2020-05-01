@@ -21,7 +21,7 @@
     <reload-after-deploy></reload-after-deploy>
 
     <!-- Welcome dialog -->
-    <el-dialog append-to-body :visible.sync="dialogWelcome" @close="closeDialog">
+    <el-dialog append-to-body v-if="!isWelcomeDialogHidden" :visible.sync="dialogWelcome" @close="closeDialog">
       <welcome-dialog :setDontShowDialogAgain="setDontShowDialogAgain" :closeDialog="closeDialog"></welcome-dialog>
     </el-dialog>
   </div>
@@ -54,6 +54,7 @@ export default {
       browserUpdateConfig: browserConfig,
       inLTI: this.$store.state.inLTI,
       dialogWelcome: false,
+      isWelcomeDialogHidden: config.hideWelcomeDialog,
       resetKey: 1,
       dontShowDialogAgain: false
     }
