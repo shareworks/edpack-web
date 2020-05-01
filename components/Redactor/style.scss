@@ -7,6 +7,10 @@
   background: rgba(255, 255, 255, 0.8);
 }
 
+.redactor-toolbar {
+  z-index: 55;
+}
+
 #redactor-modal {
   z-index: 2090;
 }
