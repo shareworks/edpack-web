@@ -41,6 +41,7 @@ import store from './store'
 import { router } from '../router'
 
 // Custom Plugins
+import VueTruncate from 'vue-truncate-filter'
 import LanguagePlugin from './plugins/language'
 import BugsnagPlugin from './plugins/bugsnag'
 import LocalStoragePlugin from './plugins/local-storage'
@@ -57,6 +58,7 @@ Vue.use(BugsnagPlugin)
 Vue.use(LanguagePlugin)
 Vue.use(AxiosPlugin)
 Vue.use(VueObserveVisibility)
+Vue.use(VueTruncate)
 
 // Init Vue dependencies
 Vue.use(Element, { locale: elLocaleEn, size: 'normal' })
