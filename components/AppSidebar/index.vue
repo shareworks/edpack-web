@@ -49,9 +49,8 @@ export default {
   methods: {
     tabClick (tab) {
       this.activeTab = tab
-      const route = { name: tab, params: {} }
-      if (tab === 'admin') route.params.mode = 'courses'
-      route.params.slug = this.school.slug
+      let route = { name: tab, params: { slug: this.school.slug } }
+      if (tab === 'admin') route = '/admin'
       this.$router.push(route)
       this.closeSidebar()
     }

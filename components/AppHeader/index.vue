@@ -84,8 +84,8 @@ export default {
     },
     tabClick (tab) {
       this.activeTab = tab
-      const route = { name: tab, params: { slug: this.school.slug } }
-      if (tab === 'admin') route.params.mode = 'courses'
+      let route = { name: tab, params: { slug: this.school.slug } }
+      if (tab === 'admin') route = '/admin'
       this.$router.push(route)
     }
   }
