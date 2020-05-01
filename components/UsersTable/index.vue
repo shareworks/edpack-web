@@ -63,7 +63,7 @@
     <el-table v-show="tableData.length" :data="tableData" row-key="_id" ref="usersTable" @sort-change="sortChange" class="mt-20"
               @selection-change="selectionChange" :default-sort="{prop: this.sort, order: this.order}" id="sticky-content">
       <!-- Expand -->
-      <el-table-column type="expand" width="30">
+      <el-table-column v-if="!hideCourses" type="expand" width="30">
         <template slot-scope="props">
           <div class="mb-10"><strong class="mr-5">ID</strong> {{ props.row._id }}</div>
 
@@ -117,7 +117,7 @@
         </template>
       </el-table-column>
       <!-- Course count -->
-      <el-table-column property="counts.courses" :label="$t('SW_COURSES')" width="120">
+      <el-table-column v-if="!hideCourses" property="counts.courses" :label="$t('SW_COURSES')" width="120">
         <template slot-scope="props">
           <i class="icon-graduation"></i>
           {{ props.row.counts && props.row.counts.courses || 0 }}
@@ -154,6 +154,7 @@
 
 <script>
 import moment from 'moment'
+import config from 'config'
 import Vue from 'vue'
 import debounce from 'lodash/debounce'
 import dateSorter from '../../utils/date-sorter'
@@ -189,6 +190,7 @@ export default {
       isAdmin: this.$store.state.isAdmin,
       school: this.$store.state.school,
       editUserForm: false,
+      hideCourses: config.hideCourses,
       dialogAddUsers: false,
       dialogEditUser: false,
       dialogEmail: false
@@ -214,7 +216,7 @@ export default {
       if (this.status === 'loading') return
       this.status = 'loading'
 
-      // CHange sort to: (name|createdDate) etc
+      // Change sort to: (name|createdDate) etc
 
       const params = {
         entity: this.user.organization._id,
