@@ -4,8 +4,8 @@
 
       <!-- Full name EN -->
       <el-form-item :label="$t('SW_ORG_FULL_NAME')" prop="name.en" required :show-message="false">
-        <input-with-flag v-if="school.languages.en" :isAutofocus="true" :change="setNewName" ref="nameEn" :isJustOneLanguage="isJustOneLanguage" :value="form.name.en" :form="form" lang="en" name="nameEn" id="nameEn" :placeholder="$t('SW_ORG_FULL_NAME')"/>
-        <input-with-flag v-if="school.languages.nl" :change="setNewName" ref="nameNl" :isJustOneLanguage="isJustOneLanguage" :value="form.name.nl" :form="form" lang="nl" name="nameNl" id="nameNl" :placeholder="$t('SW_ORG_FULL_NAME')"/>
+        <input-with-flag v-if="school.languages.en" :change="setNewName" ref="nameEn" :value="form.name.en" :form="form" lang="en" name="nameEn" id="nameEn" :placeholder="$t('SW_ORG_FULL_NAME')" :isAutofocus="true"/>
+        <input-with-flag v-if="school.languages.nl" :change="setNewName" ref="nameNl" :value="form.name.nl" :form="form" lang="nl" name="nameNl" id="nameNl" :placeholder="$t('SW_ORG_FULL_NAME')"/>
       </el-form-item>
 
       <!-- Short name -->
@@ -40,12 +40,6 @@ export default {
         name: { en: '', nl: '' },
         shortName: { en: '', nl: '' }
       }
-    }
-  },
-
-  computed: {
-    isJustOneLanguage () {
-      return this.$store.state.languages.length === 1
     }
   },
 

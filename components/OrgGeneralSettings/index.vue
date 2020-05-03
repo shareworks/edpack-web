@@ -3,8 +3,8 @@
 
     <!-- Full name EN -->
     <el-form-item :label="$t('SW_ORG_FULL_NAME')" prop="name.en" required :show-message="false">
-      <input-with-flag :change="setNewName" ref="nameEn" v-if="form.languages.en" :isJustOneLanguage="isJustOneLanguage" :value="form.name.en" :form="form" lang="en" name="nameEn" id="nameEn" :placeholder="$t('SW_ORG_FULL_NAME')"/>
-      <input-with-flag :change="setNewName" ref="nameNl" v-if="form.languages.nl" :isJustOneLanguage="isJustOneLanguage" :value="form.name.nl" :form="form" lang="nl" name="nameNl" id="nameNl" :placeholder="$t('SW_ORG_FULL_NAME')"/>
+      <input-with-flag :change="setNewName" ref="nameEn" v-if="form.languages.en" :value="form.name.en" :form="form" lang="en" name="nameEn" id="nameEn" :placeholder="$t('SW_ORG_FULL_NAME')"/>
+      <input-with-flag :change="setNewName" ref="nameNl" v-if="form.languages.nl" :value="form.name.nl" :form="form" lang="nl" name="nameNl" id="nameNl" :placeholder="$t('SW_ORG_FULL_NAME')"/>
     </el-form-item>
 
     <!-- Short name -->
@@ -64,14 +64,14 @@
 
     <!-- Faculty term EN -->
     <el-form-item :label="$t('SW_ORG_FACULTYTERM_NAME')" v-if="school.enableManualCourses" required>
-      <input-with-flag :change="setNewFaculty"  v-if="form.languages.en" ref="facultyEn" :isJustOneLanguage="isJustOneLanguage" :value="form.terminology.faculty.en" :form="form" lang="en" name="facultyTermNameEn" id="facultyTermEn" />
-      <input-with-flag :change="setNewFaculty"  v-if="form.languages.nl" ref="facultyNl" :isJustOneLanguage="isJustOneLanguage" :value="form.terminology.faculty.nl" :form="form" lang="nl" name="facultyTermNameNl" id="facultyTermNl" />
+      <input-with-flag :change="setNewFaculty"  v-if="form.languages.en" ref="facultyEn" :value="form.terminology.faculty.en" :form="form" lang="en" name="facultyTermNameEn" id="facultyTermEn" />
+      <input-with-flag :change="setNewFaculty"  v-if="form.languages.nl" ref="facultyNl" :value="form.terminology.faculty.nl" :form="form" lang="nl" name="facultyTermNameNl" id="facultyTermNl" />
     </el-form-item>
 
     <!-- Faculties term EN -->
     <el-form-item :label="$t('SW_ORG_FACULTIESTERM_NAME')" v-if="school.enableManualCourses" required>
-      <input-with-flag :change="setNewFaculties"  v-if="form.languages.en" ref="facultiesEn" :isJustOneLanguage="isJustOneLanguage" :value="form.terminology.faculties.en" :form="form" lang="en" name="facultyTermNameEn" id="facultiesTermEn" />
-      <input-with-flag :change="setNewFaculties"  v-if="form.languages.nl" ref="facultiesNl" :isJustOneLanguage="isJustOneLanguage" :value="form.terminology.faculties.nl" :form="form" lang="nl" name="facultyTermNameNl" id="facultiesTermNl" />
+      <input-with-flag :change="setNewFaculties"  v-if="form.languages.en" ref="facultiesEn" :value="form.terminology.faculties.en" :form="form" lang="en" name="facultyTermNameEn" id="facultiesTermEn" />
+      <input-with-flag :change="setNewFaculties"  v-if="form.languages.nl" ref="facultiesNl" :value="form.terminology.faculties.nl" :form="form" lang="nl" name="facultyTermNameNl" id="facultiesTermNl" />
     </el-form-item>
   </div>
 </template>
@@ -95,12 +95,6 @@ export default {
       editorOptions: {},
       languages: config.languages,
       filepicker: filestack.init(config.filestack.key)
-    }
-  },
-
-  computed: {
-    isJustOneLanguage () {
-      return this.$store.state.languages.length === 1
     }
   },
 

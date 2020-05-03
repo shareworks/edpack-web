@@ -94,11 +94,8 @@ export default {
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.setOrgLoaded(true) })
     },
-    isJustOneLanguage () {
-      return this.$store.state.languages.length === 1
-    },
     onSubmit () {
-      if (this.isJustOneLanguage()) {
+      if (this.$store.state.languages.length === 1) {
         const currentLanguage = this.form.languages.en ? 'en' : 'nl'
         const anotherLanguage = this.form.languages.en ? 'nl' : 'en'
 
