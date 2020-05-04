@@ -4,7 +4,7 @@
       <!-- App language -->
       <app-language class="pull-right"></app-language>
       <!-- Go back button -->
-      <router-link :to="{ name: 'admin', params: { mode: 'courses', slug: school.slug } }" class="btn-back">
+      <router-link to="/admin" class="btn-back">
         <i class="icon-arrow_back"></i>
         <span>{{ $t('SW_BACK') }}</span>
       </router-link>
@@ -25,7 +25,7 @@
         <!-- Submit or cancel -->
         <el-form-item class="mt-20" v-if="canShowControlsButton">
           <el-button type="primary" @click="onSubmit" class="mr-10" :loading="submitting">{{ $t('SW_SAVE_CHANGES') }}</el-button>
-          <router-link :to="{ name: 'admin', params: {mode: 'courses', slug: school.slug }}">
+          <router-link to="/admin">
             <el-button type="text">{{ $t('SW_CANCEL') }}</el-button>
           </router-link>
         </el-form-item>

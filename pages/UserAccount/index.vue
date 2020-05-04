@@ -66,10 +66,9 @@ export default {
         })
     },
     finish () {
-      const state = this.isAdmin ? 'admin' : 'home'
-      const params = { slug: this.school.slug }
-      if (this.isAdmin) params.mode = 'courses'
-      this.$router.push({ name: state, params })
+      let route = { name: 'home', params: { slug: this.school.slug } }
+      if (this.isAdmin) route = '/admin'
+      this.$router.push(route)
     },
     handleCommand (command) {
       if (command.type === 'delete') this.confirmDelete()

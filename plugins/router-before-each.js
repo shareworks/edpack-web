@@ -81,7 +81,8 @@ export default {
       loadLanguages(i18n, user.language)
 
       // Redirect to admin
-      const redirectTo = { name: 'admin', params: { slug: user.organization.slug, mode: 'courses' } }
+      let redirectTo = { name: 'home', params: { slug: user.organization.slug } }
+      if (store.state.isAdmin) redirectTo = '/admin'
 
       if (to.name === 'landing' || to.name === 'root') return router.push(redirectTo)
 
