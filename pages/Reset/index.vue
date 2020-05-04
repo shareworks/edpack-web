@@ -16,7 +16,7 @@
           <p class="mb-20 text-center">{{ $t('SW_RESET_PASSWORD_TEXT') }}</p>
 
           <el-form>
-            <el-input :placeholder="$t('SW_YOUR_EMAIL')" prefix-icon="icon-email" class="mb-10" v-model="form.email"></el-input>
+            <el-input :placeholder="$t('SW_YOUR_EMAIL')" autofocus prefix-icon="icon-email" class="mb-10" v-model="form.email"></el-input>
 
             <el-button class="block" :loading="submitting" type="primary" @click="submitEmail">
               <i class="icon-send"></i>
