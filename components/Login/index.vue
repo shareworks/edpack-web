@@ -66,14 +66,14 @@ export default {
 
   methods: {
     selectSchool (school) {
-      let redirect = this.$route.query.redirect || 'admin'
+      let redirect = this.$route.query.redirect || ''
       if (redirect[0] === '/') redirect = redirect.substr(1)
       window.location.assign(`${this.apiUrl}/auth/saml?name=${school.name}&entrypoint=${school.url}&redirectpath=${redirect}`)
     },
     selectGoogle () {
       if (config.mock_user) return this.$router.push('/admin')
 
-      let redirect = this.$route.query.redirect || 'admin'
+      let redirect = this.$route.query.redirect || ''
       if (redirect[0] === '/') redirect = redirect.substr(1)
       window.location.assign(`${this.apiUrl}/auth/google?redirectpath=${redirect}`)
     },
