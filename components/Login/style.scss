@@ -10,7 +10,7 @@
   background: rgba(255, 255, 255, 0.7);
   padding: 20px 20px 30px;
 
-  > .title {
+  .title {
     margin-top: 0;
     margin-bottom: 20px;
     font-weight: normal;
@@ -61,7 +61,7 @@
   color: #000;
   position: relative;
   z-index: 2;
-  opacity: .3;
+  opacity: .4;
 
   &:before,
   &:after {
@@ -72,7 +72,7 @@
     left: 3px;
     height: 1px;
     width: 45%;
-    background: #999;
+    background: #666;
     z-index: -2;
   }
 
@@ -80,6 +80,14 @@
     left: auto;
     right: 3px;
   }
+}
+
+.el-button.close-password {
+  position: absolute;
+  right: 20px;
+  top: 6px;
+  font-weight: 400;
+  font-size: 28px;
 }
 
 .no-account {
