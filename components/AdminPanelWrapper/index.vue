@@ -34,8 +34,10 @@
 
       <!-- Header text -->
       <page-header :title="$t('SW_DASHBOARD')" :intro="$t('SW_DASHBOARD_SHORT', { school: currentUser.organization.name[lang] })" icon="icon-lock" :area="$t('SW_ADMIN_ONLY')">
-        <p class="mt-10" v-if="school.counts">{{ $t('SW_DASHBOARD_LONG', [ school.counts.users || 0, school.counts.admins || 0, school.counts.staff || 0, school.counts.students || 0, school.counts.courses || 0, school.counts.evaluations || 0 ]) }}</p>
-        <p class="mt-10" v-if="school.counts">{{ $t('SW_ORG_SUMMARY', [school.counts.usersThisYear]) }}</p>
+        <p class="mt-10" v-if="school.counts">
+          {{ $t('SW_DASHBOARD_LONG', [ school.counts.users || 0, school.counts.admins || 0, school.counts.staff || 0, school.counts.students || 0 ]) }}
+          {{ $t('SW_ORG_SUMMARY', [school.counts.usersThisYear]) }}
+        </p>
       </page-header>
 
       <!-- Tabs -->
