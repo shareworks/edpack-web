@@ -2,6 +2,7 @@
   <div>
     <slot></slot>
     <p class="mb-30" v-if="!hasSlotData">{{ $t('SW_EMAIL_DIALOG_USERS_TEXT') }}</p>
+
     <el-form label-position="top">
       <!-- Subject -->
       <el-form-item>
@@ -9,7 +10,7 @@
       </el-form-item>
 
       <!-- Message -->
-      <el-form-item v-if="hasSlotData" :label="$t('SW_MESSAGE')">
+      <el-form-item :label="$t('SW_MESSAGE')">
         <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 8}" :placeholder="$t('SW_EMAIL_MESSAGE_PLACEHOLDER')" v-model="form.message">
         </el-input>
       </el-form-item>
