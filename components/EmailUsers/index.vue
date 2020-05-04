@@ -1,16 +1,15 @@
 <template>
   <div>
-    <p class="mb-30" v-if="app">{{ $t('SW_EMAIL_FOLLOWER', [selectedUsers[0].name, app.toolName]) }}</p>
-    <p class="mb-30" v-else-if="directMessage">{{ $t('SW_EMAIL_USER', [selectedUsers[0].name]) }}</p>
-    <p class="mb-30" v-else-if="!directMessage && !app">{{ $t('SW_EMAIL_DIALOG_USERS_TEXT') }}</p>
+    <slot></slot>
+    <p class="mb-30" v-if="!hasSlotData">{{ $t('SW_EMAIL_DIALOG_USERS_TEXT') }}</p>
     <el-form label-position="top">
       <!-- Subject -->
       <el-form-item>
-        <el-input v-model="form.subject" ref="subject" :placeholder="app ? $t('SW_EMAIL_APP_SUBJECT', [app.toolName]) : $t('SW_EMAIL_SUBJECT_PLACEHOLDER')"></el-input>
+        <el-input v-model="form.subject" ref="subject" :placeholder="$t('SW_EMAIL_SUBJECT_PLACEHOLDER')"></el-input>
       </el-form-item>
 
       <!-- Message -->
-      <el-form-item v-if="directMessage || app || comments" :label="$t('SW_MESSAGE')">
+      <el-form-item v-if="hasSlotData" :label="$t('SW_MESSAGE')">
         <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 8}" :placeholder="$t('SW_EMAIL_MESSAGE_PLACEHOLDER')" v-model="form.message">
         </el-input>
       </el-form-item>
@@ -35,7 +34,7 @@
 <script>
 export default {
   name: 'EmailUsers',
-  props: ['closeDialog', 'selectedUsers', 'directMessage', 'app', 'comments'],
+  props: ['closeDialog', 'selectedUsers'],
 
   data () {
     return {
@@ -52,8 +51,10 @@ export default {
 
   mounted () {
     this.$nextTick(() => this.$refs.subject.focus())
-    console.log('this.selectedUsers', this.selectedUsers)
-    console.log('this.app', this.app)
+  },
+
+  computed: {
+    hasSlotData () { return this.$slots.default }
   },
 
   methods: {
