@@ -82,6 +82,9 @@ export default {
     },
     language (language) {
       if (language) this.resetKey++
+    },
+    school (school) {
+      if (school && school.slug) return document.body.classList.add(school.slug + '-styling')
     }
   },
 
@@ -106,6 +109,7 @@ export default {
     ...mapState({
       language: state => state.user.language,
       currentUser: state => state.user,
+      school: state => state.school,
       showFooter: state => state.route.meta.footer,
       sidebarOpened: state => state.sidebarOpened,
       obfuscatorActive: state => state.obfuscatorActive,
