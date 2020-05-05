@@ -14,22 +14,8 @@
         <div class="minimum-container">
           <p class="title"><strong>{{ $t('SW_COOKIES_TITLE') }}</strong></p>
 
-          <el-alert v-if="loading === 'pending'" :title="$t('SW_COOKIES_LOADING')" :center="true" :closable="false" type="info" class="mt-20 message-text">
-            <p>{{ $t('SW_COOKIES_CHECKING_TEXT') }}</p>
-            <spinner class="mb-20"></spinner>
-          </el-alert>
-
-          <el-alert v-if="loading === 'checking'" :title="$t('SW_COOKIES_CHECKING')" :center="true" :closable="false" type="info" class="mt-20 message-text">
-            <p>{{ $t('SW_COOKIES_CHECKING_TEXT') }}</p>
-            <spinner class="mb-20"></spinner>
-          </el-alert>
-
-          <el-alert v-if="loading === 'done'" :title="$t('SW_COOKIES_WORKING')" :center="true" :closable="false" type="success" class="mt-20 message-text">
-            <p class="mb-20">{{ $t('SW_COOKIES_WORKING_TEXT') }}</p>
-          </el-alert>
-
-          <el-alert v-if="loading === 'failed'" :title="$t('SW_COOKIES_FAILED')" :center="true" :closable="false" type="error" class="mt-20 message-text">
-            <p class="mb-20">{{ $t('SW_COOKIES_FAILED_TEXT') }}</p>
+          <el-alert v-for="cookie in cookies" :key="cookie.status" v-if="loading === cookie.status" :title="$t(cookie.title)" :center="true" :closable="false" :type="cookie.type" class="mt-20 message-text">
+            <p class="mb-20">{{ $t(cookie.paragraph) }}</p>
           </el-alert>
         </div>
 
@@ -52,7 +38,13 @@ export default {
   data () {
     return {
       loading: 'pending',
-      inLTI: this.$store.state.inLTI
+      inLTI: this.$store.state.inLTI,
+      cookies: [
+        { status: 'pending', title: 'SW_COOKIES_LOADING', paragraph: 'SW_COOKIES_CHECKING_TEXT', type: 'info' },
+        { status: 'checking', title: 'SW_COOKIES_CHECKING', paragraph: 'SW_COOKIES_CHECKING_TEXT', type: 'info' },
+        { status: 'done', title: 'SW_COOKIES_WORKING', paragraph: 'SW_COOKIES_WORKING_TEXT', type: 'success' },
+        { status: 'failed', title: 'SW_COOKIES_FAILED', paragraph: 'SW_COOKIES_FAILED_TEXT', type: 'error' }
+        ]
     }
   },
   mounted () {
