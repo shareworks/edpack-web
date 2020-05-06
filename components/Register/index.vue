@@ -4,7 +4,9 @@
     <transition name="login" mode="out-in">
       <div class="login" :key="'google'" v-if="!passwordMode">
         <div>
-          <p class="title"><strong>{{ $t('SW_LOGIN_SCHOOL') }}</strong></p>
+          <p class="mb-20">{{ $t('SW_REGISTER_TEXT') }}</p>
+
+          <p class="title"><strong>{{ $t('SW_REGISTER_SCHOOL') }}</strong></p>
 
           <!-- School selection -->
           <el-select class="block"
@@ -22,50 +24,29 @@
           </el-select>
 
           <!-- or -->
-          <div class="login-or">{{$t('SW_OR')}}</div>
+          <div class="login-or" v-if="signinByPassword">{{$t('SW_OR')}}</div>
 
-          <!-- Sign in by password -->
-          <el-button class="mb-10 block" type="primary" plain @click="passwordMode = true" v-if="signinByPassword">
-            <i class="icon-user"></i>
-            {{ $t('SW_SIGN_IN_BY_PASSWORD') }}
-          </el-button>
+          <!-- Register with new password -->
+          <div v-if="signinByPassword">
+            <p class="title"><strong>{{$t('SW_ACCEPT_BY_ACCOUNT') }}</strong></p>
 
-          <!-- Google log in -->
-          <el-button class="block no-margin" @click="selectGoogle">
-            <span class="google-icon"></span>
-            <strong>{{ $t('SW_LOG_IN_WITH_GOOGLE') }}</strong>
-          </el-button>
-        </div>
+            <el-input type="password" :placeholder="$t('SW_YOUR_PASSWORD')" prefix-icon="icon-lock" class="mb-5" v-model="form.email"></el-input>
+            <el-input type="password" :placeholder="$t('SW_REPEAT_YOUR_PASSWORD')" prefix-icon="icon-lock" class="mb-10"  v-model="form.password"></el-input>
 
-        <el-alert class="mt-10" type="error" show-icon v-if="errorType" :title="$t('SW_' + errorType.toUpperCase())"></el-alert>
-
-        <div class="login-statement">
-          <span class="hidden-xs">{{ $t('SW_LOGIN_STATEMENT') }} </span>
-          <a :href="businessUrl" target="_blank">{{ businessName }}</a>
-          {{ $t('SW_LOGIN_STATEMENT2') }}
-          <router-link to="/terms">{{ $t('SW_TERMS').toLowerCase() }}</router-link> & <router-link to="/privacy">{{ $t('SW_PRIVACY').toLowerCase() }}</router-link>.
-        </div>
-      </div>
-
-      <div class="login" :key="'password'" v-if="passwordMode">
-        <!--  Email/password form -->
-        <div>
-          <el-button type="text" size="small" class="close-password" @click="passwordMode = false">&times;</el-button>
-
-          <p class="title"><strong>{{$t('SW_SIGN_IN_BY_ACCOUNT') }}</strong></p>
-
-          <el-input :placeholder="$t('SW_YOUR_EMAIL_SHORT')" prefix-icon="icon-email" class="mb-5" v-model="form.email"></el-input>
-          <el-input type="password" :placeholder="$t('SW_YOUR_PASSWORD')" prefix-icon="icon-lock" class="mb-10"  v-model="form.password"></el-input>
-
-          <el-button class="mb-10 block" :loading="submitting" type="primary" @click="submitPassword">
-            {{ $t('SW_LOGIN') }}
-            <i class="icon-arrow_forward"></i>
-          </el-button>
-
-          <div class="text-center">
-            <el-button type="text" @click="$router.push({name: 'reset'})" size="small">{{ $t('SW_FORGOT_PASSWORD') }}</el-button>
+            <el-button class="mb-10 block" :loading="submitting" type="primary" @click="submitPassword">
+              {{ $t('SW_ACCEPT_SIGN_IN') }}
+              <i class="icon-arrow_forward"></i>
+            </el-button>
           </div>
 
+          <!-- or -->
+          <div class="login-or">{{$t('SW_OR')}}</div>
+
+          <!-- Register with Google account -->
+          <el-button class="block no-margin" @click="selectGoogle">
+            <span class="google-icon"></span>
+            <strong>{{ $t('SW_REGISTER_WITH_GOOGLE') }}</strong>
+          </el-button>
         </div>
 
         <el-alert class="mt-10" type="error" show-icon v-if="errorType" :title="$t('SW_' + errorType.toUpperCase())"></el-alert>
@@ -76,10 +57,10 @@
           {{ $t('SW_LOGIN_STATEMENT2') }}
           <router-link to="/terms">{{ $t('SW_TERMS').toLowerCase() }}</router-link> & <router-link to="/privacy">{{ $t('SW_PRIVACY').toLowerCase() }}</router-link>.
         </div>
-
       </div>
-    </transition>
 
+      <el-alert class="mt-10" type="error" show-icon v-if="errorType" :title="$t('SW_' + errorType.toUpperCase())"></el-alert>
+    </transition>
   </section>
 </template>
 

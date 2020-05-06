@@ -44,7 +44,7 @@ export default {
         { status: 'checking', title: 'SW_COOKIES_CHECKING', paragraph: 'SW_COOKIES_CHECKING_TEXT', type: 'info' },
         { status: 'done', title: 'SW_COOKIES_WORKING', paragraph: 'SW_COOKIES_WORKING_TEXT', type: 'success' },
         { status: 'failed', title: 'SW_COOKIES_FAILED', paragraph: 'SW_COOKIES_FAILED_TEXT', type: 'error' }
-        ]
+      ]
     }
   },
   mounted () {
