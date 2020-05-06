@@ -129,6 +129,19 @@
   top: 6px;
   font-weight: 400;
   font-size: 28px;
+  opacity: 0;
+
+  animation: closeButtonAnimation .25s .5s linear forwards;
+  transform-origin: 50% 56%;
+}
+
+
+@keyframes closeButtonAnimation {
+  0% { opacity: 0 }
+  100% {
+    opacity: 1;
+    transform: rotateZ(90deg);
+  }
 }
 
 .no-account {
