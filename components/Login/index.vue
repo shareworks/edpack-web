@@ -1,69 +1,87 @@
 <template>
-  <div class="login invisible" v-observe-visibility="{callback: visibilityChanged, throttle: 100, once: true}">
-    <div v-if="!passwordMode">
-      <p class="title"><strong>{{ $t('SW_LOGIN_SCHOOL') }}</strong></p>
+  <section class="form bottom" v-observe-visibility="{callback: visibilityChanged, throttle: 100, once: true}">
 
-      <!-- School selection -->
-      <el-select class="block"
-                 v-model="selectedSchool"
-                 filterable
-                 :placeholder="$t('SW_SELECT_YOUR_SCHOOL')"
-                 @change="selectSchool"
-                 :no-data-text="$t('SW_NO_DATA')"
-                 :no-match-text="$t('SW_NO_SCHOOLS_FOUND')"
-                 :loading-text="$t('SW_LOADING')">
-        <el-option v-for="(item, index) in schools" :key="index" :value="item">
-          <i class="icon-school"></i>
-          <span>{{ item.name }}</span>
-        </el-option>
-      </el-select>
+    <transition name="login" mode="out-in">
+      <div class="login" :key="'google'" v-if="!passwordMode">
+        <div>
+          <p class="title"><strong>{{ $t('SW_LOGIN_SCHOOL') }}</strong></p>
 
-      <!-- or -->
-      <div class="login-or">{{$t('SW_OR')}}</div>
+          <!-- School selection -->
+          <el-select class="block"
+                     v-model="selectedSchool"
+                     filterable
+                     :placeholder="$t('SW_SELECT_YOUR_SCHOOL')"
+                     @change="selectSchool"
+                     :no-data-text="$t('SW_NO_DATA')"
+                     :no-match-text="$t('SW_NO_SCHOOLS_FOUND')"
+                     :loading-text="$t('SW_LOADING')">
+            <el-option v-for="(item, index) in schools" :key="index" :value="item">
+              <i class="icon-school"></i>
+              <span>{{ item.name }}</span>
+            </el-option>
+          </el-select>
 
-      <!-- Sign in by password -->
-      <el-button class="mb-10 block" type="primary" plain @click="passwordMode = true" v-if="signinByPassword">
-        <i class="icon-user"></i>
-        {{ $t('SW_SIGN_IN_BY_PASSWORD') }}
-      </el-button>
+          <!-- or -->
+          <div class="login-or">{{$t('SW_OR')}}</div>
 
-      <!-- Google log in -->
-      <el-button class="block no-margin" @click="selectGoogle">
-        <span class="google-icon"></span>
-        <strong>{{ $t('SW_LOG_IN_WITH_GOOGLE') }}</strong>
-      </el-button>
-    </div>
+          <!-- Sign in by password -->
+          <el-button class="mb-10 block" type="primary" plain @click="passwordMode = true" v-if="signinByPassword">
+            <i class="icon-user"></i>
+            {{ $t('SW_SIGN_IN_BY_PASSWORD') }}
+          </el-button>
 
-    <!--  Email/password form -->
-    <div v-if="passwordMode">
-      <el-button type="text" size="small" class="close-password" @click="passwordMode = false">&times;</el-button>
+          <!-- Google log in -->
+          <el-button class="block no-margin" @click="selectGoogle">
+            <span class="google-icon"></span>
+            <strong>{{ $t('SW_LOG_IN_WITH_GOOGLE') }}</strong>
+          </el-button>
+        </div>
 
-      <p class="title"><strong>{{$t('SW_SIGN_IN_BY_ACCOUNT') }}</strong></p>
+        <el-alert class="mt-10" type="error" show-icon v-if="errorType" :title="$t('SW_' + errorType.toUpperCase())"></el-alert>
 
-      <el-input :placeholder="$t('SW_YOUR_EMAIL_SHORT')" prefix-icon="icon-email" class="mb-5" v-model="form.email"></el-input>
-      <el-input type="password" :placeholder="$t('SW_YOUR_PASSWORD')" prefix-icon="icon-lock" class="mb-10"  v-model="form.password"></el-input>
-
-      <el-button class="mb-10 block" :loading="submitting" type="primary" @click="submitPassword">
-        {{ $t('SW_LOGIN') }}
-        <i class="icon-arrow_forward"></i>
-      </el-button>
-
-      <div class="text-center">
-        <el-button type="text" @click="$router.push({name: 'reset'})" size="small">{{ $t('SW_FORGOT_PASSWORD') }}</el-button>
+        <div class="login-statement">
+          <span class="hidden-xs">{{ $t('SW_LOGIN_STATEMENT') }} </span>
+          <a :href="businessUrl" target="_blank">{{ businessName }}</a>
+          {{ $t('SW_LOGIN_STATEMENT2') }}
+          <router-link to="/terms">{{ $t('SW_TERMS').toLowerCase() }}</router-link> & <router-link to="/privacy">{{ $t('SW_PRIVACY').toLowerCase() }}</router-link>.
+        </div>
       </div>
 
-    </div>
 
-    <el-alert class="mt-10" type="error" show-icon v-if="errorType" :title="$t('SW_' + errorType.toUpperCase())"></el-alert>
+      <div class="login" :key="'password'" v-if="passwordMode">
+        <!--  Email/password form -->
+        <div>
+          <el-button type="text" size="small" class="close-password" @click="passwordMode = false">&times;</el-button>
 
-    <div class="login-statement">
-      <span class="hidden-xs">{{ $t('SW_LOGIN_STATEMENT') }} </span>
-      <a :href="businessUrl" target="_blank">{{ businessName }}</a>
-      {{ $t('SW_LOGIN_STATEMENT2') }}
-      <router-link to="/terms">{{ $t('SW_TERMS').toLowerCase() }}</router-link> & <router-link to="/privacy">{{ $t('SW_PRIVACY').toLowerCase() }}</router-link>.
-    </div>
+          <p class="title"><strong>{{$t('SW_SIGN_IN_BY_ACCOUNT') }}</strong></p>
 
-  </div>
+          <el-input :placeholder="$t('SW_YOUR_EMAIL_SHORT')" prefix-icon="icon-email" class="mb-5" v-model="form.email"></el-input>
+          <el-input type="password" :placeholder="$t('SW_YOUR_PASSWORD')" prefix-icon="icon-lock" class="mb-10"  v-model="form.password"></el-input>
+
+          <el-button class="mb-10 block" :loading="submitting" type="primary" @click="submitPassword">
+            {{ $t('SW_LOGIN') }}
+            <i class="icon-arrow_forward"></i>
+          </el-button>
+
+          <div class="text-center">
+            <el-button type="text" @click="$router.push({name: 'reset'})" size="small">{{ $t('SW_FORGOT_PASSWORD') }}</el-button>
+          </div>
+
+        </div>
+
+        <el-alert class="mt-10" type="error" show-icon v-if="errorType" :title="$t('SW_' + errorType.toUpperCase())"></el-alert>
+
+        <div class="login-statement">
+          <span class="hidden-xs">{{ $t('SW_LOGIN_STATEMENT') }} </span>
+          <a :href="businessUrl" target="_blank">{{ businessName }}</a>
+          {{ $t('SW_LOGIN_STATEMENT2') }}
+          <router-link to="/terms">{{ $t('SW_TERMS').toLowerCase() }}</router-link> & <router-link to="/privacy">{{ $t('SW_PRIVACY').toLowerCase() }}</router-link>.
+        </div>
+
+      </div>
+    </transition>
+
+  </section>
 </template>
 
 <script>
@@ -117,7 +135,7 @@ export default {
 
       // Post password here to API
       this.$http.post('/auth/local')
-        .then((res) => {
+        .then(() => {
           const redirect = this.$route.query.redirect || ''
           this.$router.push(redirect)
         })
@@ -127,16 +145,11 @@ export default {
         })
         .finally(() => { this.submitting = false })
     },
-    visibilityChanged (isVisible, entry, count) {
+    visibilityChanged (isVisible, entry) {
       const { target } = entry
       if (isVisible) {
-        target.classList.remove('invisible')
-        target.classList.add('visible')
-      }
-      if (count && isVisible) {
-        setTimeout(() => {
-          this.$refs.counts[count.index].start()
-        }, this.countAnimationDelay)
+        target.classList.remove('bottom')
+        target.classList.add('top')
       }
     }
   }

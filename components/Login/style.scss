@@ -1,3 +1,17 @@
+.form {
+  opacity: 0;
+  transition: all .3s linear;
+
+  &.top {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  &.bottom {
+    transform: translateY(50px);
+  }
+}
+
 .login {
   display: block;
   max-width: 460px;
@@ -21,6 +35,33 @@
     &::placeholder {
       color: #666;
     }
+  }
+}
+
+.login-enter-active {
+  opacity: 0;
+  transform: translateY(50px);
+  animation: form-visible .5s linear;
+}
+.login-leave-active {
+  opacity: 1;
+  transform: translateY(0);
+  animation: form-invisible .5s linear;
+}
+
+@keyframes form-visible {
+  0% { transform: translateY(50px); }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes form-invisible {
+  0% { transform: translateY(0); }
+  100% {
+    opacity: 0;
+    transform: translateY(50px);
   }
 }
 
@@ -95,12 +136,4 @@
   color: #000;
   margin-top: -10px;
   padding-bottom: 10px;
-}
-
-.login.visible {
-  transform: translateY(0);
-}
-
-.login.invisible {
-  transform: translateY(50px);
 }
