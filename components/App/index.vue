@@ -21,8 +21,8 @@
     <reload-after-deploy></reload-after-deploy>
 
     <!-- Welcome dialog -->
-    <el-dialog append-to-body v-if="!isWelcomeDialogHidden" :visible.sync="dialogWelcome" @close="closeDialog">
-      <welcome-dialog :setDontShowDialogAgain="setDontShowDialogAgain" :closeDialog="closeDialog"></welcome-dialog>
+    <el-dialog append-to-body :visible.sync="dialogWelcome">
+      <welcome-dialog :closeDialog="toggleDialog"></welcome-dialog>
     </el-dialog>
   </div>
 </template>
@@ -54,7 +54,6 @@ export default {
       browserUpdateConfig: browserConfig,
       inLTI: this.$store.state.inLTI,
       dialogWelcome: false,
-      isWelcomeDialogHidden: config.hideWelcomeDialog,
       resetKey: 1,
       dontShowDialogAgain: false
     }
@@ -78,7 +77,7 @@ export default {
   watch: {
     currentUser (user) {
       // Show welcome dialog to new user
-      if (user && !user.checks.welcome) this.showWelcomeDialog()
+      if (user && !user.checks.welcome) this.toggleDialog()
     },
     language (language) {
       if (language) this.resetKey++
@@ -89,18 +88,8 @@ export default {
   },
 
   methods: {
-    setDontShowDialogAgain (value) { this.dontShowDialogAgain = value },
-    closeDialog () {
-      this.dialogWelcome = false
-
-      if (this.dontShowDialogAgain) {
-        this.$store.state.user.checks.welcome = true
-        this.$http.put(`users/${this.currentUser._id}`, { checks: this.$store.state.user.checks })
-          .then(() => { /*  User checks updated! */ })
-      }
-    },
-    showWelcomeDialog () {
-      this.dialogWelcome = true
+    toggleDialog () {
+      this.dialogWelcome = !this.dialogWelcome
     },
     ...mapActions(['handleResize', 'openSidebar', 'closeSidebar'])
   },
