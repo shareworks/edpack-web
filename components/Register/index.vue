@@ -124,7 +124,7 @@ export default {
       this.submitting = true
 
       // Post password here to API
-      this.$http.post('/auth/local/password')
+      this.$http.post('/auth/local/password', this.form, { params: { accessToken: this.accessToken || this.recoverToken, organization: this.organizationId } })
         .then(() => {
           const redirect = this.$route.query.redirect || ''
           this.$router.push(redirect)

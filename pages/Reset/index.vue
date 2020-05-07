@@ -52,7 +52,7 @@ export default {
       if (!this.form.email || this.submitting) return
       this.submitting = true
 
-      this.$http.post('/auth/local/recover-password')
+      this.$http.post('/auth/local/recover-password', this.form)
         .then((res) => {
           this.$message({ message: this.$i18n.t('SW_EMAIL_RESET_SUBMITTED'), type: 'success' })
         })
