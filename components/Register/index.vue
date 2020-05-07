@@ -28,7 +28,7 @@
 
           <!-- Register with new password -->
           <div v-if="signinByPassword">
-            <p class="title"><strong>{{$t('SW_ACCEPT_BY_ACCOUNT') }}</strong></p>
+            <p class="title"><strong>{{$t(recoverToken ? 'SW_RESET_BY_ACCOUNT' : 'SW_ACCEPT_BY_ACCOUNT') }}</strong></p>
 
             <el-input type="password" :placeholder="$t('SW_YOUR_PASSWORD')" prefix-icon="icon-lock" class="mb-5" v-model="form.email"></el-input>
             <el-input type="password" :placeholder="$t('SW_REPEAT_YOUR_PASSWORD')" prefix-icon="icon-lock" class="mb-10"  v-model="form.password"></el-input>
@@ -73,6 +73,9 @@ export default {
 
   data () {
     return {
+      accessToken: '',
+      recoverToken: '',
+      organizationId: '',
       apiUrl: config.api_url,
       signinByPassword: config.signinByPassword,
       passwordMode: false,
@@ -93,6 +96,12 @@ export default {
       .catch(() => { this.$message({ message: this.$i18n.t('SW_COULD_NOT_GET_IDP'), type: 'error' }) })
   },
 
+  created () {
+    this.accessToken = this.$route.query.error || '';
+    this.organizationId = this.$route.query.organization || '';
+    this.recoverToken = this.$route.query.recoverToken || '';
+  },
+
   methods: {
     selectSchool (school) {
       let redirect = this.$route.query.redirect || ''
@@ -109,12 +118,13 @@ export default {
     submitPassword () {
       if (config.mock_user) return this.$router.push('/admin')
       if (!this.form.password || !this.form.email) return this.$message({ message: this.$i18n.t('SW_EMAIL_PASSWORD_INCOMPLETE'), type: 'error' })
+      if ((!this.accessToken && !this.recoverToken) || !this.organizationId) return this.$message({ message: this.$i18n.t('SW_MISSING_REGISTER_TOKENS'), type: 'error' })
 
       if (this.submitting) return
       this.submitting = true
 
       // Post password here to API
-      this.$http.post('/auth/local')
+      this.$http.post('/auth/local/password')
         .then(() => {
           const redirect = this.$route.query.redirect || ''
           this.$router.push(redirect)
