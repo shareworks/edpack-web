@@ -97,7 +97,7 @@ export default {
   },
 
   created () {
-    this.accessToken = this.$route.query.error || '';
+    this.accessToken = this.$route.query.accessToken || '';
     this.organizationId = this.$route.query.organization || '';
     this.recoverToken = this.$route.query.recoverToken || '';
   },
