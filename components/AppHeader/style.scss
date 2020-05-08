@@ -95,6 +95,8 @@ button.menu-button {
   width: 200px;
   text-align: center;
   transition: transform .2s ease-out;
+  font-weight: bold;
+  font-size: 16px;
 
   &:hover {
     transform: translate(-50%, -46%);
