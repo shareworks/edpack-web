@@ -14,7 +14,7 @@
         <div class="minimum-container">
           <p class="title"><strong>{{ $t('SW_COOKIES_TITLE') }}</strong></p>
 
-          <el-alert v-for="cookie in cookies" :key="cookie.status" v-if="loading === cookie.status" :title="$t(cookie.title)" :center="true" :closable="false" :type="cookie.type" class="mt-20 message-text">
+          <el-alert v-for="cookie in cookies" :key="cookie.status" v-show="loading === cookie.status" :title="$t(cookie.title)" :center="true" :closable="false" :type="cookie.type" class="mt-20 message-text">
             <p class="mb-20">{{ $t(cookie.paragraph) }}</p>
           </el-alert>
         </div>
