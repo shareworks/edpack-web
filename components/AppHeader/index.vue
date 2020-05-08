@@ -18,8 +18,11 @@
         <el-menu-item index="" class="hide"></el-menu-item>
       </el-menu>
 
-      <!-- Header logo -->
-      <router-link to="/home" aria-hidden="true" tabindex="-1" class="header-logo"></router-link>
+      <!-- Header logo or text -->
+      <router-link to="/home" aria-hidden="true" tabindex="-1">
+        <div v-if="school.appName" class="app-header-title">{{ school.appName }}</div>
+        <div v-else class="header-logo"></div>
+      </router-link>
 
       <!-- User dropdown menu -->
       <div class="header-user-container" v-if="user">
