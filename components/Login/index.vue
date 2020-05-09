@@ -54,8 +54,8 @@
 
           <p class="title"><strong>{{$t('SW_SIGN_IN_BY_ACCOUNT') }}</strong></p>
 
-          <el-input :placeholder="$t('SW_YOUR_EMAIL_SHORT')" prefix-icon="icon-email" class="mb-5" v-model="form.email"></el-input>
-          <el-input type="password" :placeholder="$t('SW_YOUR_PASSWORD')" prefix-icon="icon-lock" class="mb-10"  v-model="form.password"></el-input>
+          <el-input type="email" :placeholder="$t('SW_YOUR_EMAIL_SHORT')" name="email" id="email" prefix-icon="icon-email" class="mb-5" v-model="form.email"></el-input>
+          <el-input type="password" :placeholder="$t('SW_YOUR_PASSWORD')" name="password" id="password" prefix-icon="icon-lock" class="mb-10"  v-model="form.password"></el-input>
 
           <el-button class="mb-10 block" :loading="submitting" type="primary" @click="submitPassword">
             {{ $t('SW_LOGIN') }}
@@ -135,7 +135,7 @@ export default {
       // Post password here to API
       this.$http.post('/auth/local/login', this.form)
         .then(() => {
-          const redirect = this.$route.query.redirect || ''
+          const redirect = this.$route.query.redirect || 'home'
           this.$router.push(redirect)
         })
         .catch(() => {

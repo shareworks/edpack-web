@@ -20,8 +20,8 @@
             <el-input type="password" :placeholder="$t('SW_REPEAT_YOUR_PASSWORD')" prefix-icon="icon-lock" class="mb-10"  v-model="repeatPassword"></el-input>
 
             <el-button class="block" :loading="submitting" type="primary" @click="submitPassword">
-              <i class="icon-send"></i>
-              {{ $t('SW_REQUEST_RESET_LINK') }}
+              {{ $t('SW_RESET_SIGN_IN') }}
+              <i class="icon-arrow_forward"></i>
             </el-button>
           </el-form>
         </div>
@@ -65,7 +65,7 @@ export default {
       if (this.submitting) return
       this.submitting = true
 
-      this.$http.post('/auth/local/password', this.form)
+      this.$http.post('/auth/local/password', this.form, { params: { accessToken: this.recoverToken, organization: this.organizationId } })
         .then((res) => {
           this.$message({ message: this.$i18n.t('SW_PASSWORD_RESET_SUBMITTED'), type: 'success' })
           this.$router.push('/')

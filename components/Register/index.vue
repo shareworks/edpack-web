@@ -113,7 +113,7 @@ export default {
     submitPassword () {
       if (config.mock_user) return this.$router.push('/admin')
       if (!this.form.password || !this.repeatPassword) return this.$message({ message: this.$i18n.t('SW_PASSWORD_INCOMPLETE'), type: 'error' })
-      if ((!this.accessToken && !this.recoverToken) || !this.organizationId) return this.$message({ message: this.$i18n.t('SW_MISSING_REGISTER_TOKENS'), type: 'error' })
+      if (!this.accessToken || !this.organizationId) return this.$message({ message: this.$i18n.t('SW_MISSING_REGISTER_TOKENS'), type: 'error' })
       if (this.form.password !== this.repeatPassword) {
         this.form.password = ''
         this.repeatPassword = ''
@@ -124,7 +124,7 @@ export default {
       this.submitting = true
 
       // Post password here to API
-      this.$http.post('/auth/local/password', this.form, { params: { accessToken: this.accessToken || this.recoverToken, organization: this.organizationId } })
+      this.$http.post('/auth/local/password', this.form, { params: { accessToken: this.accessToken, organization: this.organizationId } })
         .then(() => {
           this.$message({ message: this.$i18n.t('SW_INVITATION_COMPLETED'), type: 'success' })
           this.$router.push('/')
