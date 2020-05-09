@@ -30,8 +30,8 @@
           <div v-if="signinByPassword">
             <p class="title"><strong>{{$t(recoverToken ? 'SW_RESET_BY_ACCOUNT' : 'SW_ACCEPT_BY_ACCOUNT') }}</strong></p>
 
-            <el-input type="password" :placeholder="$t('SW_YOUR_PASSWORD')" prefix-icon="icon-lock" class="mb-5" v-model="form.email"></el-input>
-            <el-input type="password" :placeholder="$t('SW_REPEAT_YOUR_PASSWORD')" prefix-icon="icon-lock" class="mb-10"  v-model="form.password"></el-input>
+            <el-input type="password" :placeholder="$t('SW_YOUR_PASSWORD')" prefix-icon="icon-lock" class="mb-5" v-model="form.password"></el-input>
+            <el-input type="password" :placeholder="$t('SW_REPEAT_YOUR_PASSWORD')" prefix-icon="icon-lock" class="mb-10"  v-model="repeatPassword"></el-input>
 
             <el-button class="mb-10 block" :loading="submitting" type="primary" @click="submitPassword">
               {{ $t('SW_ACCEPT_SIGN_IN') }}
@@ -73,9 +73,9 @@ export default {
 
   data () {
     return {
-      accessToken: '',
-      recoverToken: '',
-      organizationId: '',
+      accessToken: this.$route.query.accessToken || '',
+      recoverToken: this.$route.query.recoverToken || '',
+      organizationId: this.$route.query.organization || '',
       apiUrl: config.api_url,
       signinByPassword: config.signinByPassword,
       passwordMode: false,
@@ -86,7 +86,8 @@ export default {
       errorType: this.$route.query.error,
       businessUrl: config.business.url,
       businessName: config.business.shortName,
-      form: { email: '', password: '' }
+      repeatPassword: '',
+      form: { password: '' }
     }
   },
 
@@ -94,12 +95,6 @@ export default {
     this.$http.get('/auth/saml/identity-providers')
       .then((res) => { this.schools = res.data.list })
       .catch(() => { this.$message({ message: this.$i18n.t('SW_COULD_NOT_GET_IDP'), type: 'error' }) })
-  },
-
-  created () {
-    this.accessToken = this.$route.query.accessToken || '';
-    this.organizationId = this.$route.query.organization || '';
-    this.recoverToken = this.$route.query.recoverToken || '';
   },
 
   methods: {
@@ -117,8 +112,13 @@ export default {
     },
     submitPassword () {
       if (config.mock_user) return this.$router.push('/admin')
-      if (!this.form.password || !this.form.email) return this.$message({ message: this.$i18n.t('SW_EMAIL_PASSWORD_INCOMPLETE'), type: 'error' })
+      if (!this.form.password || !this.repeatPassword) return this.$message({ message: this.$i18n.t('SW_PASSWORD_INCOMPLETE'), type: 'error' })
       if ((!this.accessToken && !this.recoverToken) || !this.organizationId) return this.$message({ message: this.$i18n.t('SW_MISSING_REGISTER_TOKENS'), type: 'error' })
+      if (this.form.password !== this.repeatPassword) {
+        this.form.password = ''
+        this.repeatPassword = ''
+        return this.$message({ message: this.$i18n.t('SW_PASSWORD_MISMATCH'), type: 'error' })
+      }
 
       if (this.submitting) return
       this.submitting = true
@@ -126,11 +126,11 @@ export default {
       // Post password here to API
       this.$http.post('/auth/local/password', this.form, { params: { accessToken: this.accessToken || this.recoverToken, organization: this.organizationId } })
         .then(() => {
-          const redirect = this.$route.query.redirect || ''
-          this.$router.push(redirect)
+          this.$message({ message: this.$i18n.t('SW_INVITATION_COMPLETED'), type: 'success' })
+          this.$router.push('/')
         })
         .catch(() => {
-          this.$message({ message: this.$i18n.t('SW_EMAIL_PASSWORD_INCORRECT'), type: 'error' })
+          this.$message({ message: this.$i18n.t('SW_PASSWORD_INCORRECT'), type: 'error' })
           this.form.password = ''
         })
         .finally(() => { this.submitting = false })

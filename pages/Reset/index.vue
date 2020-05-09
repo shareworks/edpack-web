@@ -16,9 +16,10 @@
           <p class="mb-20 text-center">{{ $t('SW_RESET_PASSWORD_TEXT') }}</p>
 
           <el-form>
-            <el-input :placeholder="$t('SW_YOUR_EMAIL')" autofocus prefix-icon="icon-email" class="mb-10" v-model="form.email"></el-input>
+            <el-input type="password" :placeholder="$t('SW_YOUR_PASSWORD')" autofocus prefix-icon="icon-password" class="mb-5" v-model="form.password"></el-input>
+            <el-input type="password" :placeholder="$t('SW_REPEAT_YOUR_PASSWORD')" prefix-icon="icon-lock" class="mb-10"  v-model="repeatPassword"></el-input>
 
-            <el-button class="block" :loading="submitting" type="primary" @click="submitEmail">
+            <el-button class="block" :loading="submitting" type="primary" @click="submitPassword">
               <i class="icon-send"></i>
               {{ $t('SW_REQUEST_RESET_LINK') }}
             </el-button>
@@ -43,24 +44,39 @@ export default {
   data () {
     return {
       submitting: false,
-      form: { email: '' }
+      accessToken: this.$route.query.accessToken || '',
+      recoverToken: this.$route.query.recoverToken || '',
+      organizationId: this.$route.query.organization || '',
+      repeatPassword: '',
+      form: { password: '' }
     }
   },
 
   methods: {
-    submitEmail () {
-      if (!this.form.email || this.submitting) return
+    submitPassword () {
+      if (!this.form.password || !this.repeatPassword) return this.$message({ message: this.$i18n.t('SW_PASSWORD_INCOMPLETE'), type: 'error' })
+      if ((!this.accessToken && !this.recoverToken) || !this.organizationId) return this.$message({ message: this.$i18n.t('SW_MISSING_REGISTER_TOKENS'), type: 'error' })
+      if (this.form.password !== this.repeatPassword) {
+        this.form.password = ''
+        this.repeatPassword = ''
+        return this.$message({ message: this.$i18n.t('SW_PASSWORD_MISMATCH'), type: 'error' })
+      }
+
+      if (this.submitting) return
       this.submitting = true
 
-      this.$http.post('/auth/local/recover-password', this.form)
+      this.$http.post('/auth/local/password', this.form)
         .then((res) => {
-          this.$message({ message: this.$i18n.t('SW_EMAIL_RESET_SUBMITTED'), type: 'success' })
+          this.$message({ message: this.$i18n.t('SW_PASSWORD_RESET_SUBMITTED'), type: 'success' })
+          this.$router.push('/')
         })
         .catch(() => {
-          this.$message({ message: this.$i18n.t('SW_EMAIL_NOT_NOT_FOUND'), type: 'error' })
-          this.form.email = ''
+          this.$message({ message: this.$i18n.t('SW_ALREADY_RESET'), type: 'error' })
         })
-        .finally(() => { this.submitting = false })
+        .finally(() => {
+          this.form.email = ''
+          this.submitting = false
+        })
     }
   }
 }
