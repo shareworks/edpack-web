@@ -30,8 +30,8 @@
           <div v-if="signinByPassword">
             <p class="title"><strong>{{$t(recoverToken ? 'SW_RESET_BY_ACCOUNT' : 'SW_ACCEPT_BY_ACCOUNT') }}</strong></p>
 
-            <el-input type="password" :placeholder="$t('SW_YOUR_PASSWORD')" prefix-icon="icon-lock" class="mb-5" v-model="form.password"></el-input>
-            <el-input type="password" :placeholder="$t('SW_REPEAT_YOUR_PASSWORD')" prefix-icon="icon-lock" class="mb-10"  v-model="repeatPassword"></el-input>
+            <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_YOUR_PASSWORD')" prefix-icon="icon-lock" class="mb-5" v-model="form.password"></el-input>
+            <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_REPEAT_YOUR_PASSWORD')" prefix-icon="icon-lock" class="mb-10"  v-model="repeatPassword"></el-input>
 
             <el-button class="mb-10 block" :loading="submitting" type="primary" @click="submitPassword">
               {{ $t('SW_ACCEPT_SIGN_IN') }}
