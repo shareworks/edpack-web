@@ -92,7 +92,7 @@ export default {
       repeatPassword: '',
       form: { password: '' },
       passwordDifficult: 0,
-      passwordsLevels : ['Password is very weak', 'Password is weak', 'Password is reasonable',  'Password is strong', 'Password is very strong']
+      passwordsLevels: ['Password is very weak', 'Password is weak', 'Password is reasonable', 'Password is strong', 'Password is very strong']
     }
   },
 
