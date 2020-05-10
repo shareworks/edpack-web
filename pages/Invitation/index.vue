@@ -1,5 +1,6 @@
 <template>
   <div>
+    <animated-landing class="animated"></animated-landing>
     <el-row type="flex" justify="center" align="middle" class="minimum-page">
       <el-col>
         <div class="public-background"></div>
@@ -20,11 +21,12 @@
 <script>
 import Register from '../../components/Register'
 import FooterLinks from '../../components/FooterLinks'
+import AnimatedLanding from '../../../components/AnimatedLanding'
 
 export default {
   name: 'Invitation',
   metaInfo: { title: 'Accept invitation' },
-  components: { Register, FooterLinks }
+  components: { Register, FooterLinks, AnimatedLanding }
 }
 </script>
 
