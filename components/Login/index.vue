@@ -63,7 +63,7 @@
           </el-button>
 
           <div class="text-center">
-            <el-button type="text" @click="$router.push({name: 'reset'})" size="small">{{ $t('SW_FORGOT_PASSWORD') }}</el-button>
+            <el-button type="text" @click="$router.push({name: 'forgot'})" size="small">{{ $t('SW_FORGOT_PASSWORD') }}</el-button>
           </div>
 
         </div>
