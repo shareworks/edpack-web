@@ -3,6 +3,12 @@
     <page-cover>
       <page-header :title="$t('SW_MY_ACCOUNT')" :intro="$t('SW_MY_ACCOUNT_SHORT')"></page-header>
 
+      <!-- View your profile -->
+      <el-button size="small" type="primary" @click="$router.push({ name: 'profile', params: { id: form._id, slug: school.slug } })" class="mt-10">
+        <i class="icon-bio"></i>
+        {{ $t('SW_VIEW_PROFILE') }}
+      </el-button>
+
       <!-- Log out -->
       <el-button size="small" @click="logout" class="mt-10">
         <i class="icon-exit"></i>
