@@ -10,6 +10,15 @@
       <el-input prefix-icon="icon-bio" v-model="form.name"></el-input>
     </el-form-item>
 
+    <!-- Reset password -->
+    <el-form-item :label="$t('SW_RESET_PASSWORD')" required>
+      <el-button size="small" @click="showResetForm = true">
+        <i class="icon-password"></i>
+        <!-- TODO: need to add icon-password to the icomoon font, maybe other too -->
+        <span>{{ $t('SW_RESET') }}</span>
+      </el-button>
+    </el-form-item>
+
     <!-- Emails -->
     <el-form-item :label="form.emails.length > 1 ? $t('SW_EMAILS') : $t('SW_EMAIL')" class="additional">
       <div v-for="(email, index) of form.emails" :key="index">
@@ -75,16 +84,22 @@
       </el-button>
       <el-button type="text" @click="finish()">{{ $t('SW_CANCEL') }}</el-button>
     </el-form-item>
+
+    <el-dialog :visible.sync="showResetForm">
+      <reset-form></reset-form>
+    </el-dialog>
   </el-form>
 </template>
 
 <script>
+import ResetForm from '../ResetForm'
 import { loadLanguages } from '../../utils/load-languages'
 import ThumbnailEdit from '../../components/ThumbnailEdit'
+
 export default {
   name: 'UserAccountForm',
   props: ['form', 'finish'],
-  components: { ThumbnailEdit },
+  components: { ThumbnailEdit, ResetForm },
 
   data () {
     return {
@@ -95,7 +110,8 @@ export default {
       submitting: false,
       languages: Object.keys(this.$store.state.school.languages).filter((key) => { return this.$store.state.school.languages[key] }),
       emailChanged: false,
-      changingRole: false
+      changingRole: false,
+      showResetForm: false
     }
   },
 
