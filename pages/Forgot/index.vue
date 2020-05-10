@@ -1,5 +1,6 @@
 <template>
   <div>
+    <animated-landing class="animated"></animated-landing>
     <el-row type="flex" justify="center" align="middle" class="minimum-page">
       <el-col>
         <!-- Show BG -->
@@ -34,11 +35,12 @@
 
 <script>
 import FooterLinks from '../../components/FooterLinks'
+import AnimatedLanding from '../../../components/AnimatedLanding'
 
 export default {
   name: 'Reset',
   metaInfo: { title: 'Forgot password' },
-  components: { FooterLinks },
+  components: { FooterLinks, AnimatedLanding },
 
   data () {
     return {

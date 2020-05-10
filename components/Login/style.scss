@@ -38,6 +38,21 @@
   }
 }
 
+#email,
+#password {
+  border-color: $--color-primary;
+}
+
+#email {
+  border-bottom-width: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+#password {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
 .login-enter-active {
   opacity: 0;
   transform: translateY(50px);

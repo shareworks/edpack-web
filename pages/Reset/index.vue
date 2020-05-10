@@ -1,5 +1,6 @@
 <template>
   <div>
+    <animated-landing class="animated"></animated-landing>
     <el-row type="flex" justify="center" align="middle" class="minimum-page">
       <el-col>
         <!-- Show BG -->
@@ -16,8 +17,8 @@
           <p class="mb-20 text-center">{{ $t('SW_RESET_PASSWORD_TEXT') }}</p>
 
           <el-form>
-            <el-input type="password" :placeholder="$t('SW_YOUR_PASSWORD')" autofocus prefix-icon="icon-password" class="mb-5" v-model="form.password"></el-input>
-            <el-input type="password" :placeholder="$t('SW_REPEAT_YOUR_PASSWORD')" prefix-icon="icon-lock" class="mb-10"  v-model="repeatPassword"></el-input>
+            <el-input type="password" :placeholder="$t('SW_YOUR_PASSWORD')" autofocus prefix-icon="icon-password" id="password" v-model="form.password"></el-input>
+            <el-input type="password" :placeholder="$t('SW_REPEAT_YOUR_PASSWORD')" prefix-icon="icon-lock" id="reset-password" class="mb-10" v-model="repeatPassword"></el-input>
 
             <el-button class="block" :loading="submitting" type="primary" @click="submitPassword">
               {{ $t('SW_RESET_SIGN_IN') }}
@@ -35,11 +36,12 @@
 
 <script>
 import FooterLinks from '../../components/FooterLinks'
+import AnimatedLanding from '../../../components/AnimatedLanding'
 
 export default {
   name: 'Reset',
   metaInfo: { title: 'Reset password' },
-  components: { FooterLinks },
+  components: { FooterLinks, AnimatedLanding },
 
   data () {
     return {
