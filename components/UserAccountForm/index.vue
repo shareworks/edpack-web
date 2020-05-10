@@ -11,7 +11,7 @@
     </el-form-item>
 
     <!-- Reset password -->
-    <el-form-item :label="$t('SW_RESET_PASSWORD')" required>
+    <el-form-item :label="$t('SW_RESET_PASSWORD')">
       <el-button size="small" @click="showResetForm = true">
         <i class="icon-password"></i>
         <!-- TODO: need to add icon-password to the icomoon font, maybe other too -->
@@ -86,7 +86,7 @@
     </el-form-item>
 
     <el-dialog :visible.sync="showResetForm">
-      <reset-form></reset-form>
+      <reset-form :hide-shadow="true"></reset-form>
     </el-dialog>
   </el-form>
 </template>

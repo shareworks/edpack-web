@@ -32,8 +32,3 @@ export default {
   components: { FooterLinks, AnimatedLanding, ResetForm }
 }
 </script>
-
-<style lang="scss">
-    @import '~scss_vars';
-    @import './style.scss';
-</style>

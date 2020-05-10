@@ -1,5 +1,5 @@
 <template>
-  <div class="minimum-container">
+  <div class="minimum-container" :class="{ 'no-shadow': hideShadow }">
     <div class="title text-center"><strong>{{ $t('SW_RESET_PASSWORD') }}</strong></div>
     <p class="mb-20 text-center">{{ $t('SW_RESET_PASSWORD_TEXT') }}</p>
 
@@ -22,6 +22,7 @@ import Password from 'vue-password-strength-meter'
 
 export default {
   name: 'ResetForm',
+  props: ['hideShadow'],
   components: { Password },
   data () {
     return {
@@ -68,3 +69,8 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  @import '~scss_vars';
+  @import './style.scss';
+</style>

@@ -53,8 +53,8 @@
           <el-button type="text" size="small" class="close-password" @click="passwordMode = false">&times;</el-button>
 
           <p class="title"><strong>{{$t('SW_SIGN_IN_BY_ACCOUNT') }}</strong></p>
-          <el-input @keyup.enter.native="submitPassword" type="email" :placeholder="$t('SW_YOUR_EMAIL_SHORT')" name="email" id="email" prefix-icon="icon-email" v-model="form.email"></el-input>
-          <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_YOUR_PASSWORD')" name="password" id="password" prefix-icon="icon-lock" class="mb-10" v-model="form.password"></el-input>
+          <el-input @keyup.enter.native="submitPassword" type="email" :placeholder="$t('SW_YOUR_EMAIL_SHORT')" name="email" id="login-email" prefix-icon="icon-email" v-model="form.email"></el-input>
+          <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_YOUR_PASSWORD')" name="password" id="login-password" prefix-icon="icon-lock" class="mb-10" v-model="form.password"></el-input>
 
           <el-button class="mb-10 block" :loading="submitting" type="primary" @click="submitPassword">
             {{ $t('SW_LOGIN') }}
