@@ -171,12 +171,14 @@ export default {
   components: { UserAccountForm, UsersCreate, EmailUsers, LmsIcon, TableStatus },
 
   data () {
+    const roleFilter = this.$route.query.filter || this.roles[0].value
+
     return {
       status: false,
       searchText: this.$route.query.query || '',
       sort: 'name',
       order: 'ascending',
-      roleFilter: this.$route.query.filter || this.roles[0].label,
+      roleFilter,
       tableData: [],
       inLTI: this.$store.state.inLTI,
       skip: false,
@@ -212,11 +214,12 @@ export default {
       if (this.status === 'loading') return
       this.status = 'loading'
 
-      // Change sort to: (name|createdDate) etc
+      // TODO: Change sort to: (name|createdDate) etc
 
       const params = {
         entity: this.user.organization._id,
         amount: 30,
+        role : this.roleFilter,
         sort: this.sort,
         order: this.order === 'ascending' ? (this.sort === 'name' ? '1' : '-1') : (this.sort === 'name' ? '-1' : '1')
       }
@@ -226,9 +229,10 @@ export default {
         this.skip = 0
       }
 
-      if (this.roleFilter !== 'all') params.role = this.roleFilter
+      if (this.roleFilter === 'all') delete params.role
       if (this.skip) params.skip = this.skip
       if (this.searchText) params.filter = this.searchText
+
 
       this.$http.get('users', { params })
         .then((res) => {
