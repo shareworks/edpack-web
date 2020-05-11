@@ -153,20 +153,21 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import moment from 'moment'
 import config from 'config'
-import Vue from 'vue'
 import debounce from 'lodash/debounce'
-import dateSorter from '../../utils/date-sorter'
-import sortCaseInsensitive from '../../utils/sort-case-insensitive'
-import UserAccountForm from '../../components/UserAccountForm'
-import EmailUsers from '../../components/EmailUsers'
 import LmsIcon from '../../components/LmsIcon'
+import dateSorter from '../../utils/date-sorter'
+import EmailUsers from '../../components/EmailUsers'
 import TableStatus from '../../components/TableStatus'
 import UsersCreate from '../../components/UsersCreate'
+import UserAccountForm from '../../components/UserAccountForm'
+import sortCaseInsensitive from '../../utils/sort-case-insensitive'
 
 export default {
   name: 'UsersTable',
+  props: ['roles'],
   components: { UserAccountForm, UsersCreate, EmailUsers, LmsIcon, TableStatus },
 
   data () {
@@ -175,12 +176,7 @@ export default {
       searchText: this.$route.query.query || '',
       sort: 'name',
       order: 'ascending',
-      roles: [
-        { label: 'all', value: 'all' },
-        { label: 'admins', value: 'admin' },
-        { label: 'staffs', value: 'staff' },
-        { label: 'students', value: 'student' }],
-      roleFilter: this.$route.query.filter || 'all',
+      roleFilter: this.$route.query.filter || this.roles[0].label,
       tableData: [],
       inLTI: this.$store.state.inLTI,
       skip: false,
