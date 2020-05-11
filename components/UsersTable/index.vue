@@ -101,6 +101,16 @@
           </a>
         </template>
       </el-table-column>
+
+      <!-- view profile -->
+      <el-table-column :label="$t('SW_PROFILE')" min-width="70">
+        <template slot-scope="props">
+          <a href @click.prevent="$router.push({ name: 'profile', params: { id: props.row._id, slug: school.slug } })">
+            {{ $t('SW_VIEW') }}
+          </a>
+        </template>
+      </el-table-column>
+
       <!-- Email address -->
       <el-table-column property="email" :label="$t('SW_EMAIL')" min-width="180">
         <template slot-scope="props">
@@ -124,9 +134,9 @@
         </template>
       </el-table-column>
       <!-- Created date -->
-      <el-table-column property="createdDate" :formatter="dateFormatter" :sort-method="sortCreatedDate" :label="$t('SW_CREATED_DATE')" min-width="140" sortable></el-table-column>
+      <el-table-column property="createdDate" :formatter="dateFormatter" :sort-method="sortCreatedDate" :label="$t('SW_CREATED_DATE')" min-width="120" sortable></el-table-column>
       <!-- Activity date -->
-      <el-table-column property="activityDate" :formatter="dateFormatter" :sort-method="sortActivityDate" :label="$t('SW_ACTIVITY_DATE')" min-width="140" sortable></el-table-column>
+      <el-table-column property="activityDate" :formatter="dateFormatter" :sort-method="sortActivityDate" :label="$t('SW_ACTIVITY_DATE')" min-width="120" sortable></el-table-column>
     </el-table>
 
     <!-- Infinite scroll -->
@@ -157,6 +167,7 @@ import Vue from 'vue'
 import moment from 'moment'
 import config from 'config'
 import debounce from 'lodash/debounce'
+import { router } from '../../../router'
 import LmsIcon from '../../components/LmsIcon'
 import dateSorter from '../../utils/date-sorter'
 import EmailUsers from '../../components/EmailUsers'
