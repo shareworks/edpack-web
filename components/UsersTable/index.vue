@@ -167,17 +167,18 @@ import sortCaseInsensitive from '../../utils/sort-case-insensitive'
 
 export default {
   name: 'UsersTable',
-  props: ['roles'],
   components: { UserAccountForm, UsersCreate, EmailUsers, LmsIcon, TableStatus },
 
   data () {
-    const roleFilter = this.$route.query.filter || this.roles[0].value
+    const roles = config.usersTableRoles
+    const roleFilter = this.$route.query.filter || roles[0].value
 
     return {
       status: false,
       searchText: this.$route.query.query || '',
       sort: 'name',
       order: 'ascending',
+      roles,
       roleFilter,
       tableData: [],
       inLTI: this.$store.state.inLTI,
