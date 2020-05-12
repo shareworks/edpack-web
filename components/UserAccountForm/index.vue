@@ -11,10 +11,9 @@
     </el-form-item>
 
     <!-- Reset password -->
-    <el-form-item :label="$t('SW_RESET_PASSWORD')">
+    <el-form-item :label="$t('SW_RESET_PASSWORD')" v-if="signinByPassword">
       <el-button size="small" @click="showResetForm = true">
-        <i class="icon-password"></i>
-        <!-- TODO: need to add icon-password to the icomoon font, maybe other too -->
+        <i class="icon-lock"></i>
         <span>{{ $t('SW_RESET') }}</span>
       </el-button>
     </el-form-item>
@@ -93,6 +92,7 @@
 
 <script>
 import ResetForm from '../ResetForm'
+import config from 'config'
 import { loadLanguages } from '../../utils/load-languages'
 import ThumbnailEdit from '../../components/ThumbnailEdit'
 
@@ -108,7 +108,8 @@ export default {
       school: this.$store.state.school,
       isAdmin: this.$store.state.isAdmin,
       submitting: false,
-      languages: Object.keys(this.$store.state.school.languages).filter((key) => { return this.$store.state.school.languages[key] }),
+      signinByPassword: config.signinByPassword,
+      languages: this.$store.state.languages,
       emailChanged: false,
       changingRole: false,
       showResetForm: false

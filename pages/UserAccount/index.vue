@@ -4,7 +4,7 @@
       <page-header :title="$t('SW_MY_ACCOUNT')" :intro="$t('SW_MY_ACCOUNT_SHORT')"></page-header>
 
       <!-- View your profile -->
-      <el-button size="small" type="primary" @click="$router.push({ name: 'profile', params: { id: form._id, slug: school.slug } })" class="mt-10">
+      <el-button size="small" type="primary" v-if="hasUserProfiles" @click="$router.push({ name: 'profile', params: { id: form._id, slug: school.slug } })" class="mt-10">
         <i class="icon-bio"></i>
         {{ $t('SW_VIEW_PROFILE') }}
       </el-button>
@@ -45,6 +45,7 @@
 
 <script>
 import Vue from 'vue'
+import config from 'config'
 import UserAccountForm from '../../components/UserAccountForm'
 import { removeCsrfToken } from '../../utils/csrf-handling'
 
@@ -56,6 +57,7 @@ export default {
   data () {
     return {
       submitting: false,
+      hasUserProfiles: config.hasUserProfiles,
       school: this.$store.state.school,
       form: Vue.util.extend({}, this.$store.state.user),
       inLTI: this.$store.state.inLTI

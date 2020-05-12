@@ -102,8 +102,8 @@
         </template>
       </el-table-column>
 
-      <!-- view profile -->
-      <el-table-column :label="$t('SW_PROFILE')" min-width="70">
+      <!-- View profile -->
+      <el-table-column :label="$t('SW_PROFILE')" v-if="hasUserProfiles" min-width="70">
         <template slot-scope="props">
           <a href @click.prevent="$router.push({ name: 'profile', params: { id: props.row._id, slug: school.slug } })">
             {{ $t('SW_VIEW') }}
@@ -200,6 +200,7 @@ export default {
       school: this.$store.state.school,
       editUserForm: false,
       hideCourses: config.hideCourses,
+      hasUserProfiles: config.hasUserProfiles,
       dialogAddUsers: false,
       dialogEditUser: false,
       dialogEmail: false
@@ -230,7 +231,7 @@ export default {
       const params = {
         entity: this.user.organization._id,
         amount: 30,
-        role : this.roleFilter,
+        role: this.roleFilter,
         sort: this.sort,
         order: this.order === 'ascending' ? (this.sort === 'name' ? '1' : '-1') : (this.sort === 'name' ? '-1' : '1')
       }
