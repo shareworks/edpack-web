@@ -1,8 +1,8 @@
 <template>
   <div>
 
-    <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}" v-if="!(isNaN(school.counts.surveyCompletionLifeTime) || isNaN(school.counts.surveyCompletionLast30Days))">
-      <el-card v-if="completionStats" v-for="stat in completionStats" :key="stat.prop" class="stat-counter">
+    <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}" v-if="completionStats">
+      <el-card v-for="stat in completionStats" :key="stat.prop" class="stat-counter">
 
         <vc-donut background="white" foreground="lightgrey" :size="80" unit="%" :thickness="30" :sections="stat.sections">
           <div class="font-26">
@@ -13,8 +13,8 @@
       </el-card>
     </masonry>
 
-    <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}">
-      <el-card v-if="userStats" v-for="stat in userStats" :key="stat.prop" class="stat-counter">
+    <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}" v-if="userStats">
+      <el-card v-for="stat in userStats" :key="stat.prop" class="stat-counter">
       <div class="font-26">
         <i :class="stat.icon"></i>
         <strong><countTo :startVal='(school.counts[stat.prop] / 2)' :endVal='school.counts[stat.prop]' :duration='4000'></countTo></strong>
@@ -23,8 +23,8 @@
     </el-card>
     </masonry>
 
-    <masonry class="hidden-xs" :cols="{default: 3, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
-      <el-card v-if="stats" v-for="stat in stats" :key="stat.prop" class="stat-counter">
+    <masonry class="hidden-xs" :cols="{default: 3, 767: 2}" :gutter="{default: '20px', 767: '10px'}" v-if="stats">
+      <el-card v-for="stat in stats" :key="stat.prop" class="stat-counter">
         <div class="font-20">
           <i :class="stat.icon"></i>
           <strong><countTo :startVal='(school.counts[stat.prop] / 2)' :endVal='school.counts[stat.prop]' :duration='4000'></countTo></strong>

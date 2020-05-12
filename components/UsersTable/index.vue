@@ -245,7 +245,6 @@ export default {
       if (this.skip) params.skip = this.skip
       if (this.searchText) params.filter = this.searchText
 
-
       this.$http.get('users', { params })
         .then((res) => {
           this.tableData = this.tableData.concat(res.data.list)
