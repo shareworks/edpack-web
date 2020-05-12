@@ -69,7 +69,7 @@ export default {
       const self = this.form.toSelf
       const message = this.form.message
       const subject = this.form.subject
-      const body = { message, subject, users }
+      const body = { message, subject, recipients: users }
 
       this.$http.post('messages/personal', body, { params: { toSelf: self } })
         .then(() => {
