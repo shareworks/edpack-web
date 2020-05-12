@@ -8,7 +8,7 @@
 
     <!-- Credit -->
     <div class="credits">
-      <div class="mb-20" v-if="school && school.colofon[lang]">{{ $t('SW_AS_CLIENT_OF') }} {{ school.name[lang] }} &centerdot;
+      <div class="mb-20" v-if="school && school.colofon && school.colofon[lang]">{{ $t('SW_AS_CLIENT_OF') }} {{ school.name[lang] }} &centerdot;
         <a class="footer-link" href="#" v-if="school && school.colofon" @click="toggleDialog($event)">{{ $t('SW_COLOFON') }}</a>
       </div>
 
@@ -28,8 +28,8 @@
     </el-dialog>
 
     <!-- Colofon dialog -->
-    <el-dialog :title="$t('SW_COLOFON')" append-to-body :visible.sync="dialogColofon">
-      <div class="redactor-in" v-if="school && school.colofon" v-html="school.colofon[lang]"></div>
+    <el-dialog :title="$t('SW_COLOFON')" v-if="school && school.colofon" append-to-body :visible.sync="dialogColofon">
+      <div class="redactor-in" v-html="school.colofon[lang]"></div>
     </el-dialog>
   </div>
 </template>

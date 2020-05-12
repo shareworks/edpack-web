@@ -14,7 +14,7 @@
         </a>
       </h3>
 
-      <p class="mb-20">{{ $t('SW_WELCOME_TEXT', [this.school.name[lang]]) }}
+      <p class="mb-20">{{ $t('SW_WELCOME_TEXT', [school.name[lang]]) }}
         <span v-if="showChatLink">{{ $t('SW_WELCOME_TEXT1') }} <a href @click="openChat">{{ $t('SW_WELCOME_TEXT2') }}</a></span>
         <span v-else>{{ $t('SW_WELCOME_TEXT3') }}</span>.
       </p>
@@ -23,7 +23,7 @@
 
     <!-- Accept terms and privacy statement -->
     <section v-else-if="step === 1">
-      <p class="mb-20">{{ $t('SW_READ_TERMS', [this.school.name[lang]]) }}</p>
+      <p class="mb-20">{{ $t('SW_READ_TERMS', [school.name[lang]]) }}</p>
 
       <el-card shadow="never" class="mb-20">
         <div class="terms-window">
@@ -79,7 +79,7 @@ export default {
     },
     nextStep () {
       if (this.submitting) return
-      if (this.step === 0 && this.school.colofon[this.lang]) return this.step++
+      if (this.step === 0 && this.school.colofon && this.school.colofon[this.lang]) return this.step++
 
       if (!this.dontShowAgain) return this.closeDialog()
 
