@@ -5,9 +5,8 @@
 
     <el-form>
       <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_YOUR_PASSWORD')" autofocus prefix-icon="icon-password" id="password" v-model="form.password"></el-input>
+      <password v-model="form.password" :strengthMeterOnly="true"/>
       <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_REPEAT_YOUR_PASSWORD')" prefix-icon="icon-lock" id="reset-password" class="mb-10" v-model="repeatPassword"></el-input>
-      <password v-if="form.password.length" v-model="form.password" :strengthMeterOnly="true" @score="showScore"/>
-      <p class="mb-5" v-if="form.password.length">{{ passwordsLevels[passwordDifficult] }}</p>
 
       <el-button class="block" :loading="submitting" type="primary" @click="submitPassword">
         {{ $t('SW_RESET_SIGN_IN') }}
@@ -31,16 +30,11 @@ export default {
       recoverToken: this.$route.query.recoverToken || '',
       organizationId: this.$route.query.organization || '',
       repeatPassword: '',
-      form: { password: '' },
-      passwordDifficult: 0,
-      passwordsLevels: ['Password is very weak', 'Password is weak', 'Password is reasonable', 'Password is strong', 'Password is very strong']
+      form: { password: '' }
     }
   },
 
   methods: {
-    showScore (score) {
-      this.passwordDifficult = score
-    },
     submitPassword () {
       if (!this.form.password || !this.repeatPassword) return this.$message({ message: this.$i18n.t('SW_PASSWORD_INCOMPLETE'), type: 'error' })
       if ((!this.accessToken && !this.recoverToken) || !this.organizationId) return this.$message({ message: this.$i18n.t('SW_MISSING_REGISTER_TOKENS'), type: 'error' })

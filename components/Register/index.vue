@@ -31,9 +31,8 @@
             <p class="title"><strong>{{$t(recoverToken ? 'SW_RESET_BY_ACCOUNT' : 'SW_ACCEPT_BY_ACCOUNT') }}</strong></p>
 
             <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_YOUR_PASSWORD')" prefix-icon="icon-lock" id="password" v-model="form.password"></el-input>
+            <password v-model="form.password" :strengthMeterOnly="true"/>
             <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_REPEAT_YOUR_PASSWORD')" prefix-icon="icon-lock" id="reset-password" class="mb-10"  v-model="repeatPassword"></el-input>
-            <password v-if="form.password.length" v-model="form.password" :strengthMeterOnly="true" @score="showScore"/>
-            <p class="mb-5" v-if="form.password.length">{{ passwordsLevels[passwordDifficult] }}</p>
 
             <el-button class="mb-10 block" :loading="submitting" type="primary" @click="submitPassword">
               {{ $t('SW_ACCEPT_SIGN_IN') }}
@@ -90,9 +89,7 @@ export default {
       businessUrl: config.business.url,
       businessName: config.business.shortName,
       repeatPassword: '',
-      form: { password: '' },
-      passwordDifficult: 0,
-      passwordsLevels: ['Password is very weak', 'Password is weak', 'Password is reasonable', 'Password is strong', 'Password is very strong']
+      form: { password: '' }
     }
   },
 
@@ -103,9 +100,6 @@ export default {
   },
 
   methods: {
-    showScore (score) {
-      this.passwordDifficult = score
-    },
     selectSchool (school) {
       let redirect = this.$route.query.redirect || ''
       if (redirect[0] === '/') redirect = redirect.substr(1)
