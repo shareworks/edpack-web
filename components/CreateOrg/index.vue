@@ -2,10 +2,9 @@
   <div class="multi-lang">
     <el-form :model="form" label-width="150px">
 
-      <!-- Full name EN -->
+      <!-- Full name -->
       <el-form-item :label="$t('SW_ORG_FULL_NAME')" prop="name.en" required :show-message="false">
-        <input-with-flag v-if="school.languages.en" :change="setNewName" ref="nameEn" :value="form.name.en" :form="form" lang="en" name="nameEn" id="nameEn" :placeholder="$t('SW_ORG_FULL_NAME')" :isAutofocus="true"/>
-        <input-with-flag v-if="school.languages.nl" :change="setNewName" ref="nameNl" :value="form.name.nl" :form="form" lang="nl" name="nameNl" id="nameNl" :placeholder="$t('SW_ORG_FULL_NAME')"/>
+        <inputs-with-flags :change="setNewName" :value="form.name" name="full" :placeholder="$t('SW_ORG_FULL_NAME')" :isAutofocus="true"/>
       </el-form-item>
 
       <!-- Short name -->
@@ -23,12 +22,12 @@
 </template>
 
 <script>
-import InputWithFlag from '../InputWithFlag/InputWithFlag'
+import InputsWithFlags from '../InputsWithFlags'
 
 export default {
   name: 'CreateOrg',
   props: ['closeDialog'],
-  components: { InputWithFlag },
+  components: { InputsWithFlags },
 
   data () {
     return {

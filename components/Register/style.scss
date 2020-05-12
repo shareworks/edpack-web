@@ -12,8 +12,36 @@
   }
 }
 
+#password,
+#reset-password {
+  border-radius: 5px;
+  border-color: $--color-primary;
+}
+
+#password {
+  border-bottom-width: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+#reset-password {
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.Password {
+  max-width: 100% !important;
+  margin: 0 !important;
+  border-left: 1px solid $--color-primary;
+  border-right: 1px solid $--color-primary;
+
+  .Password__strength-meter {
+    margin: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+}
+
 .login {
-  display: block;
   max-width: 460px;
   margin: 30px auto;
   box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1);
@@ -36,21 +64,6 @@
       color: #666;
     }
   }
-}
-
-#login-email,
-#login-password {
-  border-color: $--color-primary;
-}
-
-#login-email {
-  border-bottom-width: 0;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-#login-password {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
 }
 
 .login-enter-active {

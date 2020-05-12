@@ -7,3 +7,31 @@
 .dialog-logo {
   min-height: 80px;
 }
+
+.terms-window {
+  max-height: calc(90vh - 250px);
+  padding: 15px;
+  overflow-x: hidden;
+  text-align: left;
+  overflow-y: auto;
+  margin: -15px;
+  font-size: 13px;
+
+  .static-header {
+    padding: 30px;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 14px;
+  }
+
+  .terms > section {
+    margin-bottom: 20px;
+    margin-top: 20px;
+
+    > p {
+      margin-bottom: 10px;
+    }
+  }
+}

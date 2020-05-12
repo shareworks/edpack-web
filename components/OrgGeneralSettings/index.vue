@@ -3,8 +3,7 @@
 
     <!-- Full name EN -->
     <el-form-item :label="$t('SW_ORG_FULL_NAME')" prop="name.en" required :show-message="false">
-      <input-with-flag :change="setNewName" ref="nameEn" v-if="form.languages.en" :value="form.name.en" :form="form" lang="en" name="nameEn" id="nameEn" :placeholder="$t('SW_ORG_FULL_NAME')"/>
-      <input-with-flag :change="setNewName" ref="nameNl" v-if="form.languages.nl" :value="form.name.nl" :form="form" lang="nl" name="nameNl" id="nameNl" :placeholder="$t('SW_ORG_FULL_NAME')"/>
+      <inputs-with-flags :change="setNewName" :value="form.name" name="full" :placeholder="$t('SW_ORG_FULL_NAME')"/>
     </el-form-item>
 
     <!-- Short name -->
@@ -64,14 +63,12 @@
 
     <!-- Faculty term EN -->
     <el-form-item :label="$t('SW_ORG_FACULTYTERM_NAME')" v-if="school.enableManualCourses" required>
-      <input-with-flag :change="setNewFaculty"  v-if="form.languages.en" ref="facultyEn" :value="form.terminology.faculty.en" :form="form" lang="en" name="facultyTermNameEn" id="facultyTermEn" />
-      <input-with-flag :change="setNewFaculty"  v-if="form.languages.nl" ref="facultyNl" :value="form.terminology.faculty.nl" :form="form" lang="nl" name="facultyTermNameNl" id="facultyTermNl" />
+      <inputs-with-flags :change="setNewFaculty" :value="form.terminology.faculty" name="facultyTerm"/>
     </el-form-item>
 
     <!-- Faculties term EN -->
     <el-form-item :label="$t('SW_ORG_FACULTIESTERM_NAME')" v-if="school.enableManualCourses" required>
-      <input-with-flag :change="setNewFaculties"  v-if="form.languages.en" ref="facultiesEn" :value="form.terminology.faculties.en" :form="form" lang="en" name="facultyTermNameEn" id="facultiesTermEn" />
-      <input-with-flag :change="setNewFaculties"  v-if="form.languages.nl" ref="facultiesNl" :value="form.terminology.faculties.nl" :form="form" lang="nl" name="facultyTermNameNl" id="facultiesTermNl" />
+      <inputs-with-flags :change="setNewFaculties" :value="form.terminology.faculties" name="facultiesTerm"/>
     </el-form-item>
   </div>
 </template>
@@ -79,13 +76,13 @@
 <script>
 import config from 'config'
 import * as filestack from 'filestack-js'
-import InputWithFlag from '../InputWithFlag/InputWithFlag'
+import InputsWithFlags from '../InputsWithFlags'
 import convertDiacritics from '../../utils/convert-diacritics'
 
 export default {
   name: 'OrgGeneralSettings',
   props: ['form'],
-  components: { InputWithFlag },
+  components: { InputsWithFlags },
 
   data () {
     return {

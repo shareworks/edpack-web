@@ -8,6 +8,10 @@
 
     <!-- Credit -->
     <div class="credits">
+      <div class="mb-20" v-if="school && school.colofon[lang]">{{ $t('SW_AS_CLIENT_OF') }} {{ school.name[lang] }} &centerdot;
+        <a class="footer-link" href="#" v-if="school && school.colofon" @click="toggleDialog($event)">{{ $t('SW_COLOFON') }}</a>
+      </div>
+
       &copy; {{ (new Date()).getFullYear() }} &centerdot; <router-link class="footer-link" to="/about" target="_blank">{{ productName }}</router-link>
       {{ $t('SW_IS_BUILT_BY') }}
       <a :href="business.url" rel="noreferrer" class="footer-link" target="_blank">{{ business.shortName }}</a>.
@@ -22,6 +26,11 @@
     <el-dialog :title="$t('SW_CONTACT_US')" append-to-body :visible.sync="dialogContact">
       <contact-form v-if="dialogContact" :closeDialog="closeDialog"></contact-form>
     </el-dialog>
+
+    <!-- Colofon dialog -->
+    <el-dialog :title="$t('SW_COLOFON')" append-to-body :visible.sync="dialogColofon">
+      <div class="redactor-in" v-if="school && school.colofon" v-html="school.colofon[lang]"></div>
+    </el-dialog>
   </div>
 </template>
 
@@ -35,7 +44,10 @@ export default {
   data () {
     return {
       dialogContact: false,
+      dialogColofon: false,
       productName: config.name,
+      school: this.$store.state.school,
+      lang: this.$store.state.lang,
       business: config.business
     }
   },
@@ -47,6 +59,10 @@ export default {
     },
     closeDialog () {
       this.dialogContact = false
+    },
+    toggleDialog (e) {
+      e.preventDefault()
+      this.dialogColofon = !this.dialogColofon
     }
   }
 }

@@ -101,6 +101,16 @@
           </a>
         </template>
       </el-table-column>
+
+      <!-- view profile -->
+      <el-table-column :label="$t('SW_PROFILE')" min-width="70">
+        <template slot-scope="props">
+          <a href @click.prevent="$router.push({ name: 'profile', params: { id: props.row._id, slug: school.slug } })">
+            {{ $t('SW_VIEW') }}
+          </a>
+        </template>
+      </el-table-column>
+
       <!-- Email address -->
       <el-table-column property="email" :label="$t('SW_EMAIL')" min-width="180">
         <template slot-scope="props">
@@ -124,9 +134,9 @@
         </template>
       </el-table-column>
       <!-- Created date -->
-      <el-table-column property="createdDate" :formatter="dateFormatter" :sort-method="sortCreatedDate" :label="$t('SW_CREATED_DATE')" min-width="140" sortable></el-table-column>
+      <el-table-column property="createdDate" :formatter="dateFormatter" :sort-method="sortCreatedDate" :label="$t('SW_CREATED_DATE')" min-width="120" sortable></el-table-column>
       <!-- Activity date -->
-      <el-table-column property="activityDate" :formatter="dateFormatter" :sort-method="sortActivityDate" :label="$t('SW_ACTIVITY_DATE')" min-width="140" sortable></el-table-column>
+      <el-table-column property="activityDate" :formatter="dateFormatter" :sort-method="sortActivityDate" :label="$t('SW_ACTIVITY_DATE')" min-width="120" sortable></el-table-column>
     </el-table>
 
     <!-- Infinite scroll -->
@@ -153,34 +163,33 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import moment from 'moment'
 import config from 'config'
-import Vue from 'vue'
 import debounce from 'lodash/debounce'
-import dateSorter from '../../utils/date-sorter'
-import sortCaseInsensitive from '../../utils/sort-case-insensitive'
-import UserAccountForm from '../../components/UserAccountForm'
-import EmailUsers from '../../components/EmailUsers'
 import LmsIcon from '../../components/LmsIcon'
+import dateSorter from '../../utils/date-sorter'
+import EmailUsers from '../../components/EmailUsers'
 import TableStatus from '../../components/TableStatus'
 import UsersCreate from '../../components/UsersCreate'
+import UserAccountForm from '../../components/UserAccountForm'
+import sortCaseInsensitive from '../../utils/sort-case-insensitive'
 
 export default {
   name: 'UsersTable',
   components: { UserAccountForm, UsersCreate, EmailUsers, LmsIcon, TableStatus },
 
   data () {
+    const roles = config.usersTableRoles
+    const roleFilter = this.$route.query.filter || roles[0].value
+
     return {
       status: false,
       searchText: this.$route.query.query || '',
       sort: 'name',
       order: 'ascending',
-      roles: [
-        { label: 'all', value: 'all' },
-        { label: 'admins', value: 'admin' },
-        { label: 'staffs', value: 'staff' },
-        { label: 'students', value: 'student' }],
-      roleFilter: this.$route.query.filter || 'all',
+      roles,
+      roleFilter,
       tableData: [],
       inLTI: this.$store.state.inLTI,
       skip: false,
@@ -216,11 +225,12 @@ export default {
       if (this.status === 'loading') return
       this.status = 'loading'
 
-      // Change sort to: (name|createdDate) etc
+      // TODO: Change sort to: (name|createdDate) etc
 
       const params = {
         entity: this.user.organization._id,
         amount: 30,
+        role : this.roleFilter,
         sort: this.sort,
         order: this.order === 'ascending' ? (this.sort === 'name' ? '1' : '-1') : (this.sort === 'name' ? '-1' : '1')
       }
@@ -230,9 +240,10 @@ export default {
         this.skip = 0
       }
 
-      if (this.roleFilter !== 'all') params.role = this.roleFilter
+      if (this.roleFilter === 'all') delete params.role
       if (this.skip) params.skip = this.skip
       if (this.searchText) params.filter = this.searchText
+
 
       this.$http.get('users', { params })
         .then((res) => {

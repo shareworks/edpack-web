@@ -4,7 +4,9 @@
     <transition name="login" mode="out-in">
       <div class="login" :key="'google'" v-if="!passwordMode">
         <div>
-          <p class="title"><strong>{{ $t('SW_LOGIN_SCHOOL') }}</strong></p>
+          <p class="mb-20">{{ $t('SW_REGISTER_TEXT') }}</p>
+
+          <p class="title"><strong>{{ $t('SW_REGISTER_SCHOOL') }}</strong></p>
 
           <!-- School selection -->
           <el-select class="block"
@@ -22,49 +24,30 @@
           </el-select>
 
           <!-- or -->
-          <div class="login-or">{{$t('SW_OR')}}</div>
+          <div class="login-or" v-if="signinByPassword">{{$t('SW_OR')}}</div>
 
-          <!-- Sign in by password -->
-          <el-button class="mb-10 block" type="primary" plain @click="passwordMode = true" v-if="signinByPassword">
-            <i class="icon-user"></i>
-            {{ $t('SW_SIGN_IN_BY_PASSWORD') }}
-          </el-button>
+          <!-- Register with new password -->
+          <div v-if="signinByPassword">
+            <p class="title"><strong>{{$t(recoverToken ? 'SW_RESET_BY_ACCOUNT' : 'SW_ACCEPT_BY_ACCOUNT') }}</strong></p>
 
-          <!-- Google log in -->
-          <el-button class="block no-margin" @click="selectGoogle">
-            <span class="google-icon"></span>
-            <strong>{{ $t('SW_LOG_IN_WITH_GOOGLE') }}</strong>
-          </el-button>
-        </div>
+            <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_YOUR_PASSWORD')" prefix-icon="icon-lock" id="password" v-model="form.password"></el-input>
+            <password v-model="form.password" :strengthMeterOnly="true"/>
+            <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_REPEAT_YOUR_PASSWORD')" prefix-icon="icon-lock" id="reset-password" class="mb-10"  v-model="repeatPassword"></el-input>
 
-        <el-alert class="mt-10" type="error" show-icon v-if="errorType" :title="$t('SW_' + errorType.toUpperCase())"></el-alert>
-
-        <div class="login-statement">
-          <span class="hidden-xs">{{ $t('SW_LOGIN_STATEMENT') }} </span>
-          <a :href="businessUrl" target="_blank">{{ businessName }}</a>
-          {{ $t('SW_LOGIN_STATEMENT2') }}
-          <router-link to="/terms">{{ $t('SW_TERMS').toLowerCase() }}</router-link> & <router-link to="/privacy">{{ $t('SW_PRIVACY').toLowerCase() }}</router-link>.
-        </div>
-      </div>
-
-      <div class="login" :key="'password'" v-if="passwordMode">
-        <!--  Email/password form -->
-        <div>
-          <el-button type="text" size="small" class="close-password" @click="passwordMode = false">&times;</el-button>
-
-          <p class="title"><strong>{{$t('SW_SIGN_IN_BY_ACCOUNT') }}</strong></p>
-          <el-input @keyup.enter.native="submitPassword" type="email" :placeholder="$t('SW_YOUR_EMAIL_SHORT')" name="email" id="login-email" prefix-icon="icon-email" v-model="form.email"></el-input>
-          <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_YOUR_PASSWORD')" name="password" id="login-password" prefix-icon="icon-lock" class="mb-10" v-model="form.password"></el-input>
-
-          <el-button class="mb-10 block" :loading="submitting" type="primary" @click="submitPassword">
-            {{ $t('SW_LOGIN') }}
-            <i class="icon-arrow_forward"></i>
-          </el-button>
-
-          <div class="text-center">
-            <el-button type="text" @click="$router.push({name: 'forgot'})" size="small">{{ $t('SW_FORGOT_PASSWORD') }}</el-button>
+            <el-button class="mb-10 block" :loading="submitting" type="primary" @click="submitPassword">
+              {{ $t('SW_ACCEPT_SIGN_IN') }}
+              <i class="icon-arrow_forward"></i>
+            </el-button>
           </div>
 
+          <!-- or -->
+          <div class="login-or">{{$t('SW_OR')}}</div>
+
+          <!-- Register with Google account -->
+          <el-button class="block no-margin" @click="selectGoogle">
+            <span class="google-icon"></span>
+            <strong>{{ $t('SW_REGISTER_WITH_GOOGLE') }}</strong>
+          </el-button>
         </div>
 
         <el-alert class="mt-10" type="error" show-icon v-if="errorType" :title="$t('SW_' + errorType.toUpperCase())"></el-alert>
@@ -75,22 +58,26 @@
           {{ $t('SW_LOGIN_STATEMENT2') }}
           <router-link to="/terms">{{ $t('SW_TERMS').toLowerCase() }}</router-link> & <router-link to="/privacy">{{ $t('SW_PRIVACY').toLowerCase() }}</router-link>.
         </div>
-
       </div>
-    </transition>
 
+      <el-alert class="mt-10" type="error" show-icon v-if="errorType" :title="$t('SW_' + errorType.toUpperCase())"></el-alert>
+    </transition>
   </section>
 </template>
 
 <script>
 import config from 'config'
+import Password from 'vue-password-strength-meter'
 
 export default {
   name: 'Login',
-  components: {},
+  components: { Password },
 
   data () {
     return {
+      accessToken: this.$route.query.accessToken || '',
+      recoverToken: this.$route.query.recoverToken || '',
+      organizationId: this.$route.query.organization || '',
       apiUrl: config.api_url,
       signinByPassword: config.signinByPassword,
       passwordMode: false,
@@ -101,7 +88,8 @@ export default {
       errorType: this.$route.query.error,
       businessUrl: config.business.url,
       businessName: config.business.shortName,
-      form: { email: '', password: '' }
+      repeatPassword: '',
+      form: { password: '' }
     }
   },
 
@@ -126,19 +114,25 @@ export default {
     },
     submitPassword () {
       if (config.mock_user) return this.$router.push('/admin')
-      if (!this.form.password || !this.form.email) return this.$message({ message: this.$i18n.t('SW_EMAIL_PASSWORD_INCOMPLETE'), type: 'error' })
+      if (!this.form.password || !this.repeatPassword) return this.$message({ message: this.$i18n.t('SW_PASSWORD_INCOMPLETE'), type: 'error' })
+      if (!this.accessToken || !this.organizationId) return this.$message({ message: this.$i18n.t('SW_MISSING_REGISTER_TOKENS'), type: 'error' })
+      if (this.form.password !== this.repeatPassword) {
+        this.form.password = ''
+        this.repeatPassword = ''
+        return this.$message({ message: this.$i18n.t('SW_PASSWORD_MISMATCH'), type: 'error' })
+      }
 
       if (this.submitting) return
       this.submitting = true
 
       // Post password here to API
-      this.$http.post('/auth/local/login', this.form)
+      this.$http.post('/auth/local/password', this.form, { params: { accessToken: this.accessToken, organization: this.organizationId } })
         .then(() => {
-          const redirect = this.$route.query.redirect || 'home'
-          this.$router.push(redirect)
+          this.$message({ message: this.$i18n.t('SW_INVITATION_COMPLETED'), type: 'success' })
+          this.$router.push('/')
         })
         .catch(() => {
-          this.$message({ message: this.$i18n.t('SW_EMAIL_PASSWORD_INCORRECT'), type: 'error' })
+          this.$message({ message: this.$i18n.t('SW_PASSWORD_INCORRECT'), type: 'error' })
           this.form.password = ''
         })
         .finally(() => { this.submitting = false })

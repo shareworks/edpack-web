@@ -85,9 +85,33 @@ button.menu-button {
   position: absolute;
 }
 
+.app-header-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 50%;
+  color: #fff;
+  width: 200px;
+  text-align: center;
+  transition: transform .2s ease-out;
+  font-weight: bold;
+  font-size: 16px;
+
+  &:hover {
+    transform: translate(-50%, -46%);
+  }
+
+  &:active {
+    transform-origin: 50% 55%;
+    transform: translate(-50%, -46%) scale(1.2);
+  }
+}
+
 .user-name {
   color: $--color-text-primary;
   white-space: nowrap;
+  margin-left: 3px;
 }
 
 .org-select {

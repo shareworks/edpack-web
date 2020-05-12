@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="text-center">
+    <div class="text-center footer-links">
 
       <div class="inline" v-if="signin">
         <!-- Log in -->
