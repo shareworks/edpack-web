@@ -63,8 +63,9 @@ export default {
           // Switch org or stop
           const switchToOrg = user.organizations.find(org => org.slug === to.params.slug)
           if (!switchToOrg) return router.replace({ name: 'error', query: { type: 'restricted_access' } })
+          user.organization = switchToOrg
 
-          // Update session with another org
+          // Update API session with other org
           router.app.$http.put(`session/context?organization=${switchToOrg._id}`)
             .then(() => { setUser(user, to, next) })
             .catch(() => { onError(to, next) })
