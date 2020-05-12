@@ -71,7 +71,7 @@ export default {
       const subject = this.form.subject
       const body = { message, subject, users }
 
-      this.$http.post('users/message', body, { params: { toSelf: self } })
+      this.$http.post('messages/personal', body, { params: { toSelf: self } })
         .then(() => {
           this.$message({ message: this.$i18n.t('SW_EMAILS_SENT'), type: 'success' })
           this.closeDialog()
