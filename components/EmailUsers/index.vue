@@ -65,11 +65,11 @@ export default {
 
       if (!this.form.subject || !this.form.message) return this.$message({ message: this.$i18n.t('SW_FILL_REQUIRED'), type: 'error' })
 
-      const users = this.selectedUsers.map(user => user._id)
+      const recipients = this.selectedUsers.map(user => user._id)
       const self = this.form.toSelf
       const message = this.form.message
       const subject = this.form.subject
-      const body = { message, subject, recipients: users }
+      const body = { message, subject, recipients }
 
       this.$http.post('messages/personal', body, { params: { toSelf: self } })
         .then(() => {
