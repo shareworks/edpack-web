@@ -121,9 +121,13 @@
             {{ props.row.counts && props.row.counts.students || 0 | numeral('0a') }}
           </template>
         </el-table-column>
-        <!-- Evaluation count -->
-        <evaluation-count></evaluation-count>
-
+        <!-- Custom counts -->
+        <el-table-column v-for="customCount in customCounts" :key="customCount.type" :property="'counts.' + customCount.type" :label="$t('SW_' + customCount.type.toUpperCase())" width="120" sortable>
+          <template slot-scope="props">
+            <i :class="customCount.icon"></i>
+            {{ props.row.counts && props.row.counts[customCount.type] || 0 | numeral('0a') }}
+          </template>
+        </el-table-column>
         <!-- User role -->
         <el-table-column property="role" :label="$t('SW_YOUR_ROLE')" min-width="80">
           <template slot-scope="props">
@@ -175,12 +179,11 @@ import debounce from 'lodash/debounce'
 import TableStatus from '../TableStatus'
 import CreateCourse from '../CreateCourse'
 import dateSorter from '../../utils/date-sorter'
-import EvaluationCount from '../../../components/EvaluationCount'
 import sortCaseInsensitive from '../../utils/sort-case-insensitive'
 export default {
   name: 'CoursesTable',
-  props: ['member'],
-  components: { CreateCourse, LmsIcon, TableStatus, EvaluationCount },
+  props: ['member', 'customCounts'],
+  components: { CreateCourse, LmsIcon, TableStatus },
 
   data () {
     return {

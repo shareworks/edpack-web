@@ -48,8 +48,8 @@ export default {
       user: this.$store.state.user,
       sending: false,
       form: {
-        subject: this.$i18n.t('SW_REMINDER_SUBJECT_DEFAULT'),
-        message: this.$i18n.t('SW_REMINDER_TEXT_DEFAULT'),
+        subject: '',
+        message: '',
         roles: []
       },
       toSelfOnly: false,
