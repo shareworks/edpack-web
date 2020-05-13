@@ -52,8 +52,11 @@
     <div class="bar-placeholder"></div>
 
     <div class="mt-20" id="sticky-content">
+      <!-- Course cards -->
+      <courses-cards v-show="tableData.length" v-if="viewMode === 'cards'" :courses="tableData"></courses-cards>
+
       <!-- Course table -->
-      <el-table v-show="tableData.length" row-key="_id" ref="coursesTable" :data="tableData" @sort-change="sortChange"
+      <el-table v-show="tableData.length" v-if="viewMode === 'table'" row-key="_id" ref="coursesTable" :data="tableData" @sort-change="sortChange"
                 @selection-change="selectionChange" :default-sort="{prop: this.sort, order: this.order}">
         <!-- Expand -->
         <el-table-column type="expand" width="30">
@@ -180,13 +183,16 @@ import TableStatus from '../TableStatus'
 import CreateCourse from '../CreateCourse'
 import dateSorter from '../../utils/date-sorter'
 import sortCaseInsensitive from '../../utils/sort-case-insensitive'
+import CoursesCards from '@/edpack-web/components/CoursesCards'
+
 export default {
   name: 'CoursesTable',
   props: ['member', 'customCounts'],
-  components: { CreateCourse, LmsIcon, TableStatus },
+  components: { CoursesCards, CreateCourse, LmsIcon, TableStatus },
 
   data () {
     return {
+      viewMode: this.$route.name === 'home' ? 'cards' : 'table',
       status: false,
       searchText: this.$route.query.query || '',
       sort: 'createdDate',

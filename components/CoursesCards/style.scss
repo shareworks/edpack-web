@@ -1,0 +1,15 @@
+.courses-cards {
+  .box-card {
+    margin-bottom: 20px;
+  }
+}
+
+@media (min-width: $--md) {
+  .courses-cards {
+    margin-top: 30px;
+
+    .box-card {
+      margin-bottom: 30px;
+    }
+  }
+}
