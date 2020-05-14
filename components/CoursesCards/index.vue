@@ -4,10 +4,10 @@
       <div v-for="(course, index) in courses" :key="index">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <el-button @click="$router.push({ name: (course.role || 'staff'), params: { course: course._id, slug: school.slug } })" size="medium" class="text-ellipsis" type="text">
-              {{course.name}}
+            <router-link :to="{ name: (course.role || 'staff'), params: { course: course._id, slug: school.slug } }" class="block text-ellipsis">
+              <strong>{{course.name}}</strong>
               <lms-icon :model="course"></lms-icon>
-            </el-button>
+            </router-link>
           </div>
 
           <el-row>
