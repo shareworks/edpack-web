@@ -46,7 +46,6 @@ export default {
         message: '',
         toSelf: true
       }
-
     }
   },
 
