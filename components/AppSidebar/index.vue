@@ -4,7 +4,7 @@
 
       <!-- Logo -->
       <div class="logo-container">
-        <img class="logo" src="/images/logo.svg" alt="" />
+        <img class="logo" src="/images/icon.png" alt="" />
       </div>
 
       <!-- Sidebar menu -->
