@@ -103,14 +103,14 @@ export default {
         this.form.terminology.faculty[anotherLanguage] = this.form.terminology.faculty[currentLanguage]
         this.form.terminology.faculties[anotherLanguage] = this.form.terminology.faculties[currentLanguage]
 
-        this.form.categories.forEach(category => { category[anotherLanguage] = category[currentLanguage] })
-        this.form.faculties.forEach(faculty => { faculty[anotherLanguage] = faculty[currentLanguage] })
+        if (this.form.categories) this.form.categories.forEach(category => { category[anotherLanguage] = category[currentLanguage] })
+        if (this.form.faculties) this.form.faculties.forEach(faculty => { faculty[anotherLanguage] = faculty[currentLanguage] })
       }
 
       this.submitting = true
       this.form.shortName.nl = this.form.shortName.en
-      this.form.faculties = this.form.faculties.filter(fac => fac.en || fac.nl || fac._id)
-      this.form.categories = this.form.categories.filter(cat => cat.en || cat.nl || cat._id)
+      if (this.form.faculties) { this.form.faculties = this.form.faculties.filter(fac => fac.en || fac.nl || fac._id) }
+      if (this.form.categories) { this.form.categories = this.form.categories.filter(cat => cat.en || cat.nl || cat._id) }
 
       this.$http.put(`organizations/${this.form._id}`, this.form)
         .then((res) => {

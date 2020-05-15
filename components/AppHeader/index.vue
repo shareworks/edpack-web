@@ -1,5 +1,5 @@
 <template>
-  <header class="clearfix">
+  <header class="app-header clearfix">
     <div class="header-container">
 
       <!-- Menu icon -->
