@@ -26,7 +26,7 @@
       </el-col>
       <!-- Add instructors -->
       <el-col :span="12">
-        <user-create></user-create>
+        <users-create :isManageStaff="true" :closeDialog="closeDialog"></users-create>
       </el-col>
     </el-row>
 
@@ -37,12 +37,12 @@
 
 <script>
 import moment from 'moment'
-import UserCreate from '../UsersCreate'
+import UsersCreate from '../UsersCreate'
 
 export default {
   name: 'ManageStaff',
   props: ['closeDialog'],
-  components: { UserCreate },
+  components: { UsersCreate },
 
   data () {
     return {

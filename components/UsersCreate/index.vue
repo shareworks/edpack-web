@@ -1,6 +1,7 @@
 <template>
   <div>
-    <p class="mb-20">{{ $t('SW_ADD_USERS_TEXT') }}</p>
+    <p v-if="!isManageStaff" class="mb-20">{{ $t('SW_ADD_USERS_TEXT') }}</p>
+    <p v-else class="mb-20"><b>{{ $t('SW_INVITE_COACHES') }}</b></p>
 
     <el-alert class="mb-10" show-icon v-if="differentDomainWarningVisible" type="warning" :title="$t('SW_DIFFERENT_EMAIL_TITLE')">
       <p>{{ $t("SW_DIFFERENT_EMAIL_TEXT") }}</p>
@@ -17,11 +18,11 @@
     <el-form label-position="top">
       <!-- Textarea for emails -->
       <el-form-item>
-        <el-input :disabled="sending" type="textarea" ref="recipients" autofocus :autosize="{ minRows: 3, maxRows: 8}"
+        <el-input :disabled="sending" type="textarea" ref="recipients" :autosize="{ minRows: 3, maxRows: 8}"
                   :placeholder="$t('SW_EMAIL_INVITES_PLACEHOLDER')" v-model="form.recipients"></el-input>
       </el-form-item>
       <!-- Role -->
-      <el-form-item>
+      <el-form-item v-if="!isManageStaff">
         <el-select v-model="role" class="block">
           <el-option v-for="item in ['staff', 'admin', 'student']" :key="item" :label="$t('SW_' + item.toUpperCase())" :value="item"></el-option>
         </el-select>
@@ -36,7 +37,7 @@
         <i class="icon-send"></i>
         <strong>{{ $t('SW_INVITE') }}</strong>
       </el-button>
-      <el-button type="text" class="ml-10" @click="closeDialog(false)">{{ $t('SW_CANCEL') }}</el-button>
+      <el-button type="text" class="ml-10" @click="closeDialog()">{{ $t('SW_CANCEL') }}</el-button>
     </div>
   </div>
 </template>
@@ -44,7 +45,7 @@
 <script>
 export default {
   name: 'UsersCreate',
-  props: ['closeDialog'],
+  props: ['closeDialog', 'isManageStaff'],
 
   data () {
     return {
@@ -59,7 +60,7 @@ export default {
   },
 
   mounted () {
-    this.$nextTick(() => this.$refs.recipients.focus())
+    this.$nextTick(() => this?.$refs?.recipients?.focus())
   },
 
   methods: {
