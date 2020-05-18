@@ -7,7 +7,10 @@
       <create-course-form :school="school" :form="form" :lang="lang"></create-course-form>
       <!-- Create or cancel -->
       <el-form-item class="mt-20">
-        <el-button type="primary" @click="createCourse" :loading="submitting">{{ $t('SW_CREATE_COURSE') }}</el-button>
+        <el-button type="primary" @click="createCourse" :loading="submitting">
+          {{ $t('SW_CREATE_COURSE') }}
+          <i class="icon-arrow_forward"></i>
+        </el-button>
         <el-button type="text" class="ml-10" @click="closeDialog">{{ $t('SW_CANCEL') }}</el-button>
       </el-form-item>
     </el-form>
