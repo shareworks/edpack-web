@@ -17,7 +17,7 @@ const state = {
   navAvailable: false,
   sidebarOpened: false,
   obfuscatorActive: false,
-  isMobile: false,
+  isMobile: window.innerWidth < 768,
   school: false,
   course: false,
   user: false,
@@ -43,7 +43,7 @@ const mutations = {
   },
   [WINDOW_RESIZE] (state) {
     const { innerWidth } = window
-    const isMobile = innerWidth > 768
+    const isMobile = innerWidth < 768
     state.isMobile = isMobile
   },
   [SET_USER] (state, data) {
@@ -87,6 +87,9 @@ const actions = {
   },
   setCourse ({ commit }, payload) {
     commit({ type: SET_COURSE, payload })
+  },
+  setMobileView ({ commit }, payload) {
+    commit({ type: WINDOW_RESIZE, payload })
   }
 }
 
