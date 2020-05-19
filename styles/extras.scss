@@ -130,3 +130,13 @@
     height: 80px;
   }
 }
+
+@media (max-width: $--sm) {
+  .expand-table-xs {
+    max-width: 110%;
+    width: calc(100% + 20px);
+
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+}
