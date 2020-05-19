@@ -31,7 +31,7 @@ export default {
       }).then(() => {
         const now = new Date()
         this.$ls.set('reloaded', now)
-        Location.reload(true)
+        window.location.reload()
       })
     }
   }
