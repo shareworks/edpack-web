@@ -7,7 +7,7 @@
       <p>{{ $t("SW_DIFFERENT_EMAIL_TEXT") }}</p>
     </el-alert>
 
-    <el-alert class="mb-10" show-icon v-if="incorrectEmails.length !== 0" type="error" title="These emails are not correct, please check them again">
+    <el-alert class="mb-10" show-icon v-if="incorrectEmails.length !== 0" type="error" :title="$t('SW_EMAILS_NOT_CORRECT')">
       <ul>
         <li v-for="email in incorrectEmails" :key="email">
           <span class="bold">{{ email }}</span>
@@ -80,8 +80,18 @@ export default {
     addUsers () {
       if (this.sending) return
 
+      const formRecipients = this.form.recipients.trim()
+
+
+      if (!formRecipients) {
+        return this.$message({message: this.$i18n.t('SW_EMAIL_ERROR'), type: 'warning'})
+      }
+
+
       // Convert string to emails
+
       const emails = this.form.recipients.replace(/\n/g, ',').split(',')
+
       const self = this.form.toSelf
 
       this.emailsValidation(emails)
