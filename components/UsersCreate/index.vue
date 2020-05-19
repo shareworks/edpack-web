@@ -1,6 +1,7 @@
 <template>
   <div>
     <p v-if="!isManageStaff" class="mb-20">{{ $t('SW_ADD_USERS_TEXT') }}</p>
+    <p v-else-if="justStudents" class="mb-20">{{ $t('SW_ADD_STUDENTS_TEXT') }}</p>
     <p v-else class="mb-10 bold">{{ $t('SW_INVITE_COACHES') }}</p>
 
     <el-alert class="mb-10" show-icon v-if="differentDomainWarningVisible" type="warning" :title="$t('SW_DIFFERENT_EMAIL_TITLE')">
@@ -45,7 +46,7 @@
 <script>
 export default {
   name: 'UsersCreate',
-  props: ['closeDialog', 'isManageStaff'],
+  props: ['closeDialog', 'isManageStaff', 'justStudents'],
 
   data () {
     return {
@@ -115,7 +116,9 @@ export default {
       }
 
       const organization = this.user.organization._id
-      const roles = emails.map(email => ({ recipientEmail: email, model: 'organization', contextId: organization, role: this.role, downgrade: false, sendEmail: true }))
+      const roles = emails.map(email => ({ recipientEmail: email, model: 'organization', contextId: organization, role: this.justStudents ? 'student' : this.role, downgrade: false, sendEmail: true }))
+
+      console.log(roles)
 
       this.sending = true
       this.$http.post('users/invite', { invitations: roles }, { params: { toSelf: self } })
