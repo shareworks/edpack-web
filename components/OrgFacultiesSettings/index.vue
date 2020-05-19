@@ -34,7 +34,7 @@
         </el-col>
         <el-col :span="calcSpan" v-if="form.lmsApiIntegration && form.availableLms.includes('canvas')">
           <strong class="mb-10">
-            Canvas Account ID
+            {{ $t('SW_ACCOUNT_ID') }}
           </strong>
           <div v-for="(faculty, index) in form.faculties" :key="index">
             <div class="mb-10">

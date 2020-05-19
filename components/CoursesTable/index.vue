@@ -75,11 +75,11 @@
               </el-col>
               <el-col :span="12">
                 <p v-if="props.row.canvas && props.row.canvas.id">
-                  <strong class="mr-5">Canvas Course ID</strong>
+                  <strong class="mr-5">{{ $t('SW_CANVAS_ID') }}</strong>
                   {{ props.row.canvas.id }}
                 </p>
                 <p>
-                  <strong class="mr-5">ID</strong> {{ props.row._id }}
+                  <strong class="mr-5">{{ $t('SW_COURSE_ID') }}</strong> {{ props.row._id }}
                 </p>
                 <p v-if="props.row.createdBy">
                   <strong class="mr-5">{{ $t('SW_CREATED_BY') }}</strong>

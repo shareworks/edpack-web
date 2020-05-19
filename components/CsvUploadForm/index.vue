@@ -147,7 +147,7 @@ export default {
       })
     },
     handleUploadExceed () {
-      this.$message({ message: 'Please remove the existing file first.', type: 'error' })
+      this.$message({ message: this.$i18n.t('SW_PLEASE_REMOVE_FIRST'), type: 'error' })
     },
     downloadTemplate (e) {
       e.preventDefault()
