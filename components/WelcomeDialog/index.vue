@@ -4,7 +4,7 @@
       <logo-animation></logo-animation>
     </div>
 
-    <!-- About Eduapp -->
+    <!-- About project -->
     <section v-if="step === 0">
       <h3 class="mb-20 font-18">
         {{ $t('SW_WELCOME_ABOUT') }}
@@ -32,14 +32,21 @@
       </el-card>
     </section>
 
+    <!-- Fill student name and avatar -->
+    <section v-else-if="step === 2" class="mb-30">
+      <p class="mb-20">{{ $t('SW_ADD_NAME_IMAGE') }}</p>
+
+      <user-account-form :finish="closeDialog" :isWelcomeDialog="true" :form="studentForm"></user-account-form>
+    </section>
+
     <app-language class="mr-10" :big="true"></app-language>
 
     <el-button type="primary" @click="nextStep" :loading="submitting">
-      <strong v-if="step === 0">
+      <strong v-if="step === 0 || (hasSecondScreen && step === 1)">
         {{ $t('SW_CONTINUE') }}
         <i class="icon-arrow_forward"></i>
       </strong>
-      <strong v-if="step === 1">
+      <strong v-if="step !== 0 || (hasSecondScreen && step === 2)">
         <i class="icon-checkmark"></i>
         {{ $t('SW_ACCEPT_CLOSE') }}
       </strong>
@@ -49,12 +56,15 @@
 </template>
 
 <script>
+import Vue from "vue";
+import config from 'config'
+import UserAccountForm from '../UserAccountForm'
 const LogoAnimation = () => import('../../../../public/images/logo-animation.svg')
 
 export default {
   name: 'WelcomeDialog',
   props: ['closeDialog'],
-  components: { LogoAnimation },
+  components: { LogoAnimation, UserAccountForm },
 
   data () {
     return {
@@ -64,7 +74,9 @@ export default {
       currentUser: this.$store.state.user,
       lang: this.$store.state.lang,
       submitting: false,
-      dontShowAgain: !!(this.$store.state.school.colofon && this.$store.state.school.colofon[this.$store.state.lang])
+      dontShowAgain: !!(this.$store.state.school.colofon && this.$store.state.school.colofon[this.$store.state.lang]),
+      studentForm: Vue.util.extend({}, this.$store.state.user),
+      hasSecondScreen: config.name === 'Growflow'
     }
   },
 
@@ -80,7 +92,7 @@ export default {
     nextStep () {
       if (this.submitting) return
       if (this.step === 0 && this.school.colofon && this.school.colofon[this.lang]) return this.step++
-
+      if (this.hasSecondScreen) return this.step = 2
       if (!this.dontShowAgain) return this.closeDialog()
 
       // Update user

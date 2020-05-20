@@ -10,78 +10,81 @@
       <el-input prefix-icon="icon-bio" v-model="form.name"></el-input>
     </el-form-item>
 
-    <!-- Reset password -->
-    <el-form-item :label="$t('SW_RESET_PASSWORD')" v-if="signinByPassword">
-      <el-button size="small" @click="showResetForm = true">
-        <i class="icon-lock"></i>
-        <span>{{ $t('SW_RESET') }}</span>
-      </el-button>
-    </el-form-item>
+    <div v-if="!isWelcomeDialog">
 
-    <!-- Emails -->
-    <el-form-item :label="form.emails.length > 1 ? $t('SW_EMAILS') : $t('SW_EMAIL')" class="additional">
-      <div v-for="(email, index) of form.emails" :key="index">
-        <el-input prefix-icon="icon-email" v-model="form.emails[index]" :readonly="!isAdmin" @change="emailChanged = true" :placeholder="$t('SW_EMAIL_PLACEHOLDER')"
-                  :class="email === form.email ? 'primary-email' : 'secondary-email'" class="mb-5">
-          <el-button slot="append" @click="setPrimary(email)" v-if="isAdmin && form.emails.length > 1">
-            <i v-if="email === form.email" class="el-icon-star-on el-icon-left"></i>
-            {{email === form.email ? $t('SW_PRIMARY') : $t('SW_SECONDARY') }}
-          </el-button>
-        </el-input>
-      </div>
-      <el-button v-if="currentUser.systemAdmin" size="small" class="block" type="text" @click="form.emails.push('')">
-        <i class="icon-add"></i>
-        <span>{{ $t('SW_ADD_EMAIL') }}</span>
-      </el-button>
-    </el-form-item>
+      <!-- Reset password -->
+      <el-form-item :label="$t('SW_RESET_PASSWORD')" v-if="signinByPassword">
+        <el-button size="small" @click="showResetForm = true">
+          <i class="icon-lock"></i>
+          <span>{{ $t('SW_RESET') }}</span>
+        </el-button>
+      </el-form-item>
 
-    <!-- Language -->
-    <el-form-item :label="$t('SW_LANGUAGE')" class="additional" v-if="languages.length > 1">
-      <el-select class="block" v-model="form.language">
-        <el-option v-for="language in languages" :key="language" :label="$t('SW_DEFAULT_' + language.toUpperCase())" :value="language">
-          <img :src="'/images/' + language + '.png'" class="language-icon" alt=""> &nbsp;
-          <span>{{ $t('SW_DEFAULT_' + language.toUpperCase()) }}</span>
-        </el-option>
-      </el-select>
-    </el-form-item>
-
-    <!--    @TODO: Change single faculty to faculties array-->
-    <!--    &lt;!&ndash; Faculty &ndash;&gt;-->
-    <!--    <el-form-item :label="school.terminology.faculty[lang]" v-if="school.manualCourses && school.faculties.length">-->
-    <!--      <el-select class="block" v-model="form.faculty" value-key="_id" :placeholder="$t('SW_CHOOSE_FACULTY', [school.terminology.faculty[lang].toLowerCase()])">-->
-    <!--        <el-option v-for="faculty in school.faculties" :key="faculty._id" :label="faculty[lang]" :value="faculty._id"></el-option>-->
-    <!--      </el-select>-->
-    <!--    </el-form-item>-->
-
-    <!-- Role: Admin, Staff or Student -->
-    <el-form-item :label="$t('SW_ROLE')" class="additional">
-      {{ $t('SW_' + (form.role || school.role).toUpperCase()) }}
-      {{ $t('SW_ROLE_AT', { school: form.organization.name[lang] }) }}
-
-      <el-dropdown v-if="isAdmin" trigger="click" @command="changeRole">
-            <el-button size="small" class="ml-10">
-              <i class="icon-pencil"></i>
-              <span>{{ $t('SW_CHANGE_ROLE') }}</span>
+      <!-- Emails -->
+      <el-form-item :label="form.emails.length > 1 ? $t('SW_EMAILS') : $t('SW_EMAIL')" class="additional">
+        <div v-for="(email, index) of form.emails" :key="index">
+          <el-input prefix-icon="icon-email" v-model="form.emails[index]" :readonly="!isAdmin" @change="emailChanged = true" :placeholder="$t('SW_EMAIL_PLACEHOLDER')"
+                    :class="email === form.email ? 'primary-email' : 'secondary-email'" class="mb-5">
+            <el-button slot="append" @click="setPrimary(email)" v-if="isAdmin && form.emails.length > 1">
+              <i v-if="email === form.email" class="el-icon-star-on el-icon-left"></i>
+              {{email === form.email ? $t('SW_PRIMARY') : $t('SW_SECONDARY') }}
             </el-button>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item :command="{ newRole: 'admin' }" :disabled="form.role === 'admin'">{{ $t('SW_ADMIN') }}</el-dropdown-item>
-          <el-dropdown-item :command="{ newRole: 'staff' }" :disabled="form.role === 'staff'">{{ $t('SW_STAFF') }}</el-dropdown-item>
-          <el-dropdown-item :command="{ newRole: 'student' }" :disabled="form.role === 'student'">{{ $t('SW_STUDENT') }}</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-    </el-form-item>
+          </el-input>
+        </div>
+        <el-button v-if="currentUser.systemAdmin" size="small" class="block" type="text" @click="form.emails.push('')">
+          <i class="icon-add"></i>
+          <span>{{ $t('SW_ADD_EMAIL') }}</span>
+        </el-button>
+      </el-form-item>
 
-    <!-- Newsletter -->
-    <el-form-item :label="$t('SW_NEWSLETTER')" class="additional">
-      <el-checkbox class="newsletter" :label="$t('SW_NEWSLETTER_TEXT')" v-model="form.newsletter"></el-checkbox>
-    </el-form-item>
+      <!-- Language -->
+      <el-form-item :label="$t('SW_LANGUAGE')" class="additional" v-if="languages.length > 1">
+        <el-select class="block" v-model="form.language">
+          <el-option v-for="language in languages" :key="language" :label="$t('SW_DEFAULT_' + language.toUpperCase())" :value="language">
+            <img :src="'/images/' + language + '.png'" class="language-icon" alt=""> &nbsp;
+            <span>{{ $t('SW_DEFAULT_' + language.toUpperCase()) }}</span>
+          </el-option>
+        </el-select>
+      </el-form-item>
+
+      <!--    @TODO: Change single faculty to faculties array-->
+      <!--    &lt;!&ndash; Faculty &ndash;&gt;-->
+      <!--    <el-form-item :label="school.terminology.faculty[lang]" v-if="school.manualCourses && school.faculties.length">-->
+      <!--      <el-select class="block" v-model="form.faculty" value-key="_id" :placeholder="$t('SW_CHOOSE_FACULTY', [school.terminology.faculty[lang].toLowerCase()])">-->
+      <!--        <el-option v-for="faculty in school.faculties" :key="faculty._id" :label="faculty[lang]" :value="faculty._id"></el-option>-->
+      <!--      </el-select>-->
+      <!--    </el-form-item>-->
+
+      <!-- Role: Admin, Staff or Student -->
+      <el-form-item :label="$t('SW_ROLE')" class="additional">
+        {{ $t('SW_' + (form.role || school.role).toUpperCase()) }}
+        {{ $t('SW_ROLE_AT', { school: form.organization.name[lang] }) }}
+
+        <el-dropdown v-if="isAdmin" trigger="click" @command="changeRole">
+              <el-button size="small" class="ml-10">
+                <i class="icon-pencil"></i>
+                <span>{{ $t('SW_CHANGE_ROLE') }}</span>
+              </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item :command="{ newRole: 'admin' }" :disabled="form.role === 'admin'">{{ $t('SW_ADMIN') }}</el-dropdown-item>
+            <el-dropdown-item :command="{ newRole: 'staff' }" :disabled="form.role === 'staff'">{{ $t('SW_STAFF') }}</el-dropdown-item>
+            <el-dropdown-item :command="{ newRole: 'student' }" :disabled="form.role === 'student'">{{ $t('SW_STUDENT') }}</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </el-form-item>
+
+      <!-- Newsletter -->
+      <el-form-item :label="$t('SW_NEWSLETTER')" class="additional">
+        <el-checkbox class="newsletter" :label="$t('SW_NEWSLETTER_TEXT')" v-model="form.newsletter"></el-checkbox>
+      </el-form-item>
+    </div>
 
     <!-- Submit or cancel -->
     <el-form-item>
       <el-button type="primary" class="mr-5" @click="onSubmit" :loading="submitting">
         {{ $t('SW_SAVE_CHANGES') }}
       </el-button>
-      <el-button type="text" @click="finish()">{{ $t('SW_CANCEL') }}</el-button>
+      <el-button  v-if="!isWelcomeDialog" type="text" @click="finish()">{{ $t('SW_CANCEL') }}</el-button>
     </el-form-item>
 
     <el-dialog :visible.sync="showResetForm">
@@ -98,7 +101,7 @@ import ThumbnailEdit from '../../components/ThumbnailEdit'
 
 export default {
   name: 'UserAccountForm',
-  props: ['form', 'finish'],
+  props: ['form', 'finish', 'isWelcomeDialog'],
   components: { ThumbnailEdit, ResetForm },
 
   data () {
