@@ -92,7 +92,7 @@ export default {
     nextStep () {
       if (this.submitting) return
       if (this.step === 0 && this.school.colofon && this.school.colofon[this.lang]) return this.step++
-      if (this.hasSecondScreen) return this.step = 2
+      if (this.step !== 2 && this.hasSecondScreen) return this.step = 2
       if (!this.dontShowAgain) return this.closeDialog()
 
       // Update user

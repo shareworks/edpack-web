@@ -80,11 +80,11 @@
     </div>
 
     <!-- Submit or cancel -->
-    <el-form-item>
+    <el-form-item  v-if="!isWelcomeDialog">
       <el-button type="primary" class="mr-5" @click="onSubmit" :loading="submitting" :disabled="formChanged">
         {{ $t('SW_SAVE_CHANGES') }}
       </el-button>
-      <el-button  v-if="!isWelcomeDialog" type="text" @click="finish()">{{ $t('SW_CANCEL') }}</el-button>
+      <el-button type="text" @click="finish()">{{ $t('SW_CANCEL') }}</el-button>
     </el-form-item>
 
     <el-dialog :visible.sync="showResetForm">
@@ -126,7 +126,8 @@ export default {
   watch: {
     form: {
       handler () {
-        this.formChanged = isEqual(this.form, this.formCopy)
+        if (this.isWelcomeDialog) { this.onSubmit() }
+        else { this.formChanged = isEqual(this.form, this.formCopy) }
       },
       deep: true,
       immediate: true
