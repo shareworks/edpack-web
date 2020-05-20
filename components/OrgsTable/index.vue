@@ -113,10 +113,8 @@
       <el-table-column property="createdDate" :formatter="dateFormatter" :sort-method="sortCreatedDate" :label="$t('SW_CREATED_DATE')" min-width="160" sortable></el-table-column>
     </el-table>
 
-    <!-- Infinite scroll -->
     <mugen-scroll :handler="getOrgs" :handle-on-mount="false" :should-handle="status === 'incomplete'"></mugen-scroll>
 
-    <!-- Table status -->
     <table-status :status="status" :noneText="$t('SW_NO_ORGS_FOUND')" @clearSearch="searchText = ''"></table-status>
 
     <!-- Create org dialog -->

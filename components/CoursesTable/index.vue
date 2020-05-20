@@ -150,10 +150,8 @@
       </el-table>
     </div>
 
-    <!-- Infinite scroll -->
     <mugen-scroll :handler="getCourses" :handle-on-mount="false" :should-handle="status === 'incomplete'"></mugen-scroll>
 
-    <!-- Table status -->
     <table-status :status="status" :noneText="$t('SW_NO_COURSES_FOUND')" @clearSearch="searchText = ''"></table-status>
 
     <div v-if="status === 'none' && statusFilter === 'active'" class="mt-30">

@@ -139,10 +139,8 @@
       <el-table-column property="activityDate" :formatter="dateFormatter" :sort-method="sortActivityDate" :label="$t('SW_ACTIVITY_DATE')" min-width="120" sortable></el-table-column>
     </el-table>
 
-    <!-- Infinite scroll -->
     <mugen-scroll :handler="getUsers" :handle-on-mount="false" :should-handle="status === 'incomplete'"></mugen-scroll>
 
-    <!-- Table status -->
     <table-status :status="status" :noneText="$t('SW_NO_USERS_FOUND')" @clearSearch="searchText = ''"></table-status>
 
     <!-- Add users dialog -->
