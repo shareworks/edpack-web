@@ -81,7 +81,7 @@
 
     <!-- Submit or cancel -->
     <el-form-item>
-      <el-button type="primary" class="mr-5" @click="onSubmit" :loading="submitting">
+      <el-button type="primary" class="mr-5" @click="onSubmit" :loading="submitting" :disabled="formChanged">
         {{ $t('SW_SAVE_CHANGES') }}
       </el-button>
       <el-button  v-if="!isWelcomeDialog" type="text" @click="finish()">{{ $t('SW_CANCEL') }}</el-button>
@@ -94,8 +94,10 @@
 </template>
 
 <script>
-import ResetForm from '../ResetForm'
+import Vue from "vue";
 import config from 'config'
+import isEqual from 'lodash/isEqual'
+import ResetForm from '../ResetForm'
 import { loadLanguages } from '../../utils/load-languages'
 import ThumbnailEdit from '../../components/ThumbnailEdit'
 
@@ -115,7 +117,19 @@ export default {
       languages: this.$store.state.languages,
       emailChanged: false,
       changingRole: false,
-      showResetForm: false
+      showResetForm: false,
+      formChanged: false,
+      formCopy: Vue.util.extend({}, this.form),
+    }
+  },
+
+  watch: {
+    form: {
+      handler () {
+        this.formChanged = isEqual(this.form, this.formCopy)
+      },
+      deep: true,
+      immediate: true
     }
   },
 
