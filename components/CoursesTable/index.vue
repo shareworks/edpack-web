@@ -134,7 +134,7 @@
         <!-- User role -->
         <el-table-column property="role" :label="$t('SW_YOUR_ROLE')" min-width="80">
           <template slot-scope="props">
-            <span v-if="props.row.role">{{ $t('SW_' + props.row.role.toUpperCase() )}}</span>
+            <span v-if="props.row.role">{{ $tc('SW_' + props.row.role.toUpperCase(), 1 )}}</span>
             <span v-else>-</span>
           </template>
         </el-table-column>
