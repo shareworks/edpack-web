@@ -42,7 +42,7 @@
 
             <!-- Total users found -->
             <span v-show="status !== 'loading' || tableData.length" class="hidden-xs hidden-sm line-height-38">
-              {{ total }} {{ $t('SW_USERS').toLowerCase() }}
+              {{ total }} {{ $tc('SW_USERS', total).toLowerCase() }}
             </span>
           </div>
         </el-col>
@@ -69,7 +69,7 @@
 
           <div v-if="props.row.courses && props.row.courses.length">
             <el-table :data="props.row.courses" row-key="_id" :default-sort="{prop: 'createdDate', order: 'descending'}">
-              <el-table-column property="name" :label="$t('SW_COURSE')" min-width="180">
+              <el-table-column property="name" :label="$tc('SW_COURSE', 1)" min-width="180">
                 <template slot-scope="scope">
                   <router-link  :to="{ name: 'staff', params: { course: scope.row._id, slug: school.slug } }" class="block text-ellipsis">
                     <span v-if="scope.row.name">{{ scope.row.name }}</span>
@@ -127,7 +127,7 @@
         </template>
       </el-table-column>
       <!-- Course count -->
-      <el-table-column v-if="!hideCourses" property="counts.courses" :label="$t('SW_COURSES')" width="120">
+      <el-table-column v-if="!hideCourses" property="counts.courses" :label="$tc('SW_COURSE', 2)" width="120">
         <template slot-scope="props">
           <i class="icon-graduation"></i>
           {{ props.row.counts && props.row.counts.courses || 0 }}

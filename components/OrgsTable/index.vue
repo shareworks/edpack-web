@@ -85,7 +85,7 @@
         </template>
       </el-table-column>
       <!-- User count -->
-      <el-table-column property="counts.users" :label="$t('SW_USERS')" width="120" sortable>
+      <el-table-column property="counts.users" :label="$tc('SW_USERS', 2)" width="120" sortable>
         <template slot-scope="props">
           <i class="icon-user"></i>
           {{ props.row.counts && props.row.counts.users || 0 | numeral('0a') }}

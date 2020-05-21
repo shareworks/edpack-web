@@ -17,7 +17,7 @@
         </p>
         <el-checkbox-group v-model="form.roles">
           <el-checkbox label="admin" class="mr-20">{{ $t('SW_ADMINS') }}</el-checkbox>
-          <el-checkbox label="staff" class="mr-20">{{ $t('SW_STAFFS') }}</el-checkbox>
+          <el-checkbox label="staff" class="mr-20">{{ $tc('SW_STAFF', 2) }}</el-checkbox>
           <el-checkbox label="student" class="mr-20">{{ $t('SW_STUDENTS') }}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>

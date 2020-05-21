@@ -67,7 +67,7 @@
               </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item :command="{ newRole: 'admin' }" :disabled="form.role === 'admin'">{{ $t('SW_ADMIN') }}</el-dropdown-item>
-            <el-dropdown-item :command="{ newRole: 'staff' }" :disabled="form.role === 'staff'">{{ $t('SW_STAFF') }}</el-dropdown-item>
+            <el-dropdown-item :command="{ newRole: 'staff' }" :disabled="form.role === 'staff'">{{ $tc('SW_STAFF', 1) }}</el-dropdown-item>
             <el-dropdown-item :command="{ newRole: 'student' }" :disabled="form.role === 'student'">{{ $t('SW_STUDENT') }}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
