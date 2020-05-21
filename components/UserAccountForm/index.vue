@@ -94,7 +94,7 @@
 </template>
 
 <script>
-import Vue from "vue";
+import Vue from 'vue'
 import config from 'config'
 import isEqual from 'lodash/isEqual'
 import ResetForm from '../ResetForm'
@@ -119,15 +119,14 @@ export default {
       changingRole: false,
       showResetForm: false,
       formChanged: false,
-      formCopy: Vue.util.extend({}, this.form),
+      formCopy: Vue.util.extend({}, this.form)
     }
   },
 
   watch: {
     form: {
       handler () {
-        if (this.isWelcomeDialog) { this.onSubmit() }
-        else { this.formChanged = isEqual(this.form, this.formCopy) }
+        if (this.isWelcomeDialog) { this.onSubmit() } else { this.formChanged = isEqual(this.form, this.formCopy) }
       },
       deep: true,
       immediate: true

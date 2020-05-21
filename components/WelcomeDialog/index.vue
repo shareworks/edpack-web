@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import Vue from "vue";
+import Vue from 'vue'
 import config from 'config'
 import UserAccountForm from '../UserAccountForm'
 const LogoAnimation = () => import('../../../../public/images/logo-animation.svg')
@@ -92,7 +92,12 @@ export default {
     nextStep () {
       if (this.submitting) return
       if (this.step === 0 && this.school.colofon && this.school.colofon[this.lang]) return this.step++
-      if (this.step !== 2 && this.hasSecondScreen) return this.step = 2
+
+      if (this.step !== 2 && this.hasSecondScreen) {
+        this.step = 2
+        return
+      }
+
       if (!this.dontShowAgain) return this.closeDialog()
 
       // Update user

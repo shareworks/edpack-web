@@ -83,11 +83,9 @@ export default {
 
       const formRecipients = this.form.recipients.trim()
 
-
       if (!formRecipients) {
-        return this.$message({message: this.$i18n.t('SW_EMAIL_ERROR'), type: 'warning'})
+        return this.$message({ message: this.$i18n.t('SW_EMAIL_ERROR'), type: 'warning' })
       }
-
 
       // Convert string to emails
 
