@@ -17,7 +17,7 @@
             <el-badge :value="multipleSelection.length" v-if="isAdmin">
               <el-button type="primary" size="medium" plain @click="dialogEmail = true" class="button-square-xs ml-5">
                 <i class="icon-email"></i>
-                <span class="hidden-xs">{{ $t('SW_EMAIL') }}</span>
+                <span class="hidden-xs">{{ $tc('SW_EMAIL', 1) }}</span>
               </el-button>
             </el-badge>
 
@@ -78,7 +78,7 @@
                   </router-link>
                 </template>
               </el-table-column>
-              <el-table-column property="role" :label="$t('SW_ROLE')" min-width="110">
+              <el-table-column property="role" :label="$tc('SW_ROLE', 1)" min-width="110">
                 <template slot-scope="scope">
                   <span v-if="scope.row.role">{{ $t('SW_' + scope.row.role.toUpperCase() )}}</span>
                   <span v-else>-</span>
@@ -112,14 +112,14 @@
       </el-table-column>
 
       <!-- Email address -->
-      <el-table-column property="email" :label="$t('SW_EMAIL')" min-width="180">
+      <el-table-column property="email" :label="$tc('SW_EMAIL', 1)" min-width="180">
         <template slot-scope="props">
           <a :href="'mailto:' + props.row.email" target="_blank" class="text-ellipsis">{{ props.row.email }}</a>
         </template>
       </el-table-column>
 
       <!-- Organization role of user -->
-      <el-table-column property="role" :label="$t('SW_ROLE')" min-width="80">
+      <el-table-column property="role" :label="$tc('SW_ROLE', 1)" min-width="80">
         <template slot-scope="props">
             <div class="text-ellipsis">
               {{ $t('SW_' + props.row.role.toUpperCase() )}}

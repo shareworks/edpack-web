@@ -11,14 +11,14 @@
       <el-form-item  :label="$t('SW_MESSAGE')">
         <redactor :config="editorOptions" ref="blogPost" v-model="form.message"></redactor>
       </el-form-item>
-      <el-form-item :label="$t('SW_ROLES')">
+      <el-form-item :label="$tc('SW_ROLE', 2)">
         <p class="form-help-text">
           {{ $t('SW_WHICH_ROLES_NEWSLETTER') }}
         </p>
         <el-checkbox-group v-model="form.roles">
-          <el-checkbox label="admin" class="mr-20">{{ $t('SW_ADMINS') }}</el-checkbox>
+          <el-checkbox label="admin" class="mr-20">{{ $tc('SW_ADMIN', 2) }}</el-checkbox>
           <el-checkbox label="staff" class="mr-20">{{ $tc('SW_STAFF', 2) }}</el-checkbox>
-          <el-checkbox label="student" class="mr-20">{{ $t('SW_STUDENTS') }}</el-checkbox>
+          <el-checkbox label="student" class="mr-20">{{ $tc('SW_STUDENT', 2) }}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
 

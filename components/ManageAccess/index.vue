@@ -15,7 +15,7 @@
         </template>
       </el-table-column>
       <!-- Email address -->
-      <el-table-column property="email" :label="$t('SW_EMAIL')" min-width="180">
+      <el-table-column property="email" :label="$tc('SW_EMAIL', 1)" min-width="180">
         <template slot-scope="props">
           <a :href="'mailto:' + props.row.email" target="_blank" class="text-ellipsis">{{ props.row.email }}</a>
         </template>
@@ -23,7 +23,7 @@
       <!-- Activity date -->
       <el-table-column sortable property="activityDate" :formatter="dateFormatter" :sort-method="sortActivityDate" :label="$t('SW_ACTIVITY_DATE')" min-width="140"></el-table-column>
       <!-- Role -->
-      <el-table-column width="150" :label="$t('SW_ROLE')">
+      <el-table-column width="150" :label="$tc('SW_ROLE', 1)">
         <template slot-scope="props">
           <div class="pull-right">
             <el-dropdown trigger="click" @command="handleCommand">

@@ -21,7 +21,7 @@
 
         <!-- Email -->
         <el-form-item prop="email" required>
-          <el-input type="email" :placeholder="$t('SW_EMAIL')" v-model="form.email" name="email">
+          <el-input type="email" :placeholder="$tc('SW_EMAIL', 1)" v-model="form.email" name="email">
             <template slot="prepend">
               <i class="icon-email"></i>
             </template>

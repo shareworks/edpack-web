@@ -118,7 +118,7 @@
           </template>
         </el-table-column>
         <!-- Student count -->
-        <el-table-column property="counts.students" :label="$t('SW_STUDENTS')" width="140">
+        <el-table-column property="counts.students" :label="$tc('SW_STUDENT', 2)" width="140">
           <template slot-scope="props">
             <i class="icon-user"></i>
             {{ props.row.counts && props.row.counts.students || 0 | numeral('0a') }}
@@ -282,7 +282,7 @@ export default {
       if (this.$refs.coursesTable) this.$refs.coursesTable.clearSelection()
     },
     confirmArchive () {
-      this.$confirm(this.$i18n.tc('SW_ARCHIVE_COURSES_CONFIRM', this.multipleSelection.length), this.$i18n.tc('SW_ARCHIVE_COURSES', this.multipleSelection.length), {
+      this.$confirm(this.$i18n.tc('SW_ARCHIVE_COURSES_CONFIRM', this.multipleSelection.length), this.$i18n.tc('SW_ARCHIVE_COURSE', this.multipleSelection.length), {
         confirmButtonText: this.$i18n.t('SW_ARCHIVE'),
         cancelButtonText: this.$i18n.t('SW_CANCEL'),
         beforeClose: (action, instance, done) => {

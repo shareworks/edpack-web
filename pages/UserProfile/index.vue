@@ -24,7 +24,7 @@
         <!-- Email user -->
         <el-button v-if="!isSelf" @click="dialogEmail = true" type="primary" size="medium">
           <i class="icon-email"></i>
-          {{ $t('SW_EMAIL') }}
+          {{ $tc('SW_EMAIL', 1) }}
         </el-button>
 
         <!-- Edit profile -->
@@ -74,7 +74,7 @@
     </div>
 
     <!-- Email dialog -->
-    <el-dialog :title="$t('SW_EMAIL')" append-to-body :visible.sync="dialogEmail">
+    <el-dialog :title="$tc('SW_EMAIL', 1)" append-to-body :visible.sync="dialogEmail">
       <email-users :closeDialog="toggleDialog" :selectedUsers="[user]">
         <template v-slot>
           <p class="mb-30">{{ $t('SW_EMAIL_USER', [user.name]) }}</p>

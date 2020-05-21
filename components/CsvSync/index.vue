@@ -16,8 +16,8 @@
           </div>
           <el-table size="small" :data="statsAfterSync.newUsers">
             <el-table-column prop="name" :label="$t('SW_NAME')" width="180"></el-table-column>
-            <el-table-column prop="email" :label="$t('SW_EMAIL')" width="280"></el-table-column>
-            <el-table-column prop="groupName" :label="$t('SW_GROUP')"></el-table-column>
+            <el-table-column prop="email" :label="$tc('SW_EMAIL', 1)" width="280"></el-table-column>
+            <el-table-column prop="groupName" :label="$tc('SW_GROUP', 1)"></el-table-column>
           </el-table>
         </el-tab-pane>
 
@@ -28,7 +28,7 @@
           </div>
           <el-table size="small" :data="statsAfterSync.transferredUsers">
             <el-table-column prop="name" :label="$t('SW_NAME')" width="180"></el-table-column>
-            <el-table-column prop="email" :label="$t('SW_EMAIL')" width="280"></el-table-column>
+            <el-table-column prop="email" :label="$tc('SW_EMAIL', 1)" width="280"></el-table-column>
             <el-table-column prop="fromGroupName" :label="$t('SW_FROM_GROUP')"></el-table-column>
             <el-table-column prop="toGroupName" :label="$t('SW_TO_GROUP')"></el-table-column>
           </el-table>
@@ -41,8 +41,8 @@
           </div>
           <el-table size="small" :data="statsAfterSync.removedUsers">
             <el-table-column prop="name" :label="$t('SW_NAME')" width="180"></el-table-column>
-            <el-table-column prop="email" :label="$t('SW_EMAIL')" width="280"></el-table-column>
-            <el-table-column prop="groupName" :label="$t('SW_GROUP')"></el-table-column>
+            <el-table-column prop="email" :label="$tc('SW_EMAIL', 1)" width="280"></el-table-column>
+            <el-table-column prop="groupName" :label="$tc('SW_GROUP', 1)"></el-table-column>
           </el-table>
         </el-tab-pane>
       </el-tabs>
