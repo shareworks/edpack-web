@@ -92,7 +92,7 @@
         </template>
       </el-table-column>
       <!-- Custom counts -->
-      <el-table-column v-for="customCount in customCounts" :key="customCount.type" :property="'counts.' + customCount.type" :label="$t('SW_' + customCount.type.toUpperCase())" width="120" sortable>
+      <el-table-column v-for="customCount in customCounts" :key="customCount.type" :property="'counts.' + customCount.type" :label="$tc('SW_' + customCount.type.toUpperCase(), 1)" width="120" sortable>
         <template slot-scope="props">
           <i :class="customCount.icon"></i>
           {{ props.row.counts && props.row.counts[customCount.type] || 0 | numeral('0a') }}
@@ -101,7 +101,7 @@
       <!-- Your role -->
       <el-table-column property="role" :label="$t('SW_YOUR_ROLE')" min-width="110">
         <template slot-scope="props">
-          <span v-if="props.row.role">{{ $t('SW_' + props.row.role.toUpperCase() )}}</span>
+          <span v-if="props.row.role">{{ $tc('SW_' + props.row.role.toUpperCase(), 1 )}}</span>
           <div v-else>
             <el-button type="text" size="mini" @click="becomeAdmin(props.row)" :disabled="sending">
               {{ $t('SW_BECOME_ADMIN') }}
