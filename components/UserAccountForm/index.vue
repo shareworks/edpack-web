@@ -160,14 +160,14 @@ export default {
 
       this.changingRole = this.form._id
 
-      const invitations = [{
+      const student = [{
         recipientEmail: this.form.email,
         downGrade: true,
         contextId: this.school._id,
         role: newRole
       }]
 
-      this.$http.post('users/invite', { invitations })
+      this.$http.post('users/invite', { invitations: student })
         .then((res) => {
 
           if (this.updateUser) {
