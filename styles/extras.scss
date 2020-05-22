@@ -41,8 +41,8 @@
   display: inline-block;
   background-image: url('/images/logo.png');
   background-size: contain;
-  width: 200px;
-  height: 42px;
+  width: 280px;
+  height: 100px;
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -121,13 +121,6 @@
       margin-right: 0 !important;
       margin-left: 0 !important;
     }
-  }
-}
-
-@media (min-width: $--sm) {
-  .horizontal-logo {
-    width: 280px;
-    height: 80px;
   }
 }
 
