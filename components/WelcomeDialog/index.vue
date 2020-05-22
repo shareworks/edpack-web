@@ -27,7 +27,7 @@
 
       <el-card shadow="never" class="mb-20">
         <div class="terms-window">
-          <div v-if="school.colofon && school.colofon[lang]" v-html="school.colofon[lang]"></div>
+          <div v-html="school.colofon[lang]"></div>
         </div>
       </el-card>
     </section>
@@ -67,8 +67,8 @@
 <script>
 import Vue from 'vue'
 import config from 'config'
-const LogoAnimation = () => import('../../../../public/images/logo-animation.svg')
 import ThumbnailEdit from '../../components/ThumbnailEdit'
+const LogoAnimation = () => import('../../../../public/images/logo-animation.svg')
 
 export default {
   name: 'WelcomeDialog',
@@ -92,14 +92,20 @@ export default {
   },
 
   created () {
-    if (this.acceptTerms) this.steps.push('terms')
-    if (this.verifyAccountInfo) this.steps.push('verify')
+    if (this.acceptTerms && !this.currentUser.checks.acceptedTerms) this.steps.push('terms')
+    if (this.verifyAccountInfo && !this.currentUser.checks.verifiedAccount) this.steps.push('verify')
   },
 
   methods: {
     nextStep () {
-      if (this.step === this.steps.length - 1) return this.closeDialog()
-      this.step++
+      // If only intro and no check on dont show again, just close
+      if (this.step === 0 && this.steps.length === 1 && !this.dontShowAgain) return this.closeDialog()
+
+      // If more then intro, just continue to next one
+      if (this.step === 0 && this.steps.length > 1) return this.step++
+
+      // If passed intro, always update user
+      else this.updateUser()
     },
     openAbout (e) {
       e.preventDefault()
@@ -110,10 +116,29 @@ export default {
       window.fcWidget.open()
     },
     updateUser () {
+      if (this.submitting) return
       this.submitting = true
-      this.$store.state.user.checks.welcome = true
-      this.$http.put(`users/${this.currentUser._id}`, { checks: this.$store.state.user.checks })
-        .then(() => { this.closeDialog() })
+
+      // Add checks when they apply
+      this.form.checks.verifiedAccount = this.steps[this.step] === 'verify'
+      this.form.checks.acceptedTerms = this.acceptTerms
+      this.form.checks.welcome = this.dontShowAgain
+
+      const params = { params: { entity: this.school._id } }
+
+      this.$http.put(`users/${this.currentUser._id}`, this.form, params)
+        .then((res) => {
+          const user = this.$store.state.user
+
+          // Update current user
+          user.name = this.form.name
+          user.thumbnailUrl = this.form.thumbnailUrl
+          this.$store.dispatch('setUser', user)
+
+          // Close dialog or continue
+          if (this.steps.length !== this.step + 1) this.step++
+          this.closeDialog()
+        })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.submitting = false })
     }

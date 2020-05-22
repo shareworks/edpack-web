@@ -129,13 +129,17 @@ export default {
 
       this.$http.put(`users/${this.form._id}`, this.form, params)
         .then((res) => {
-          const user = res.data.list[0]
+          const user = this.$store.state.user
+          const updatedUser = res.data.list[0]
+
           this.$message({ message: this.$i18n.t('SW_CHANGES_SAVED'), type: 'success' })
+
           if (this.form._id === this.currentUser._id) {
             // Update current user
-            user.organization = this.school
+            updatedUser.organization = user.organization
+            updatedUser.organizations = user.organizations
             loadLanguages(this.$i18n, this.form.language)
-            this.$store.dispatch('setUser', user)
+            this.$store.dispatch('setUser', updatedUser)
           }
 
           this.finish(user)
