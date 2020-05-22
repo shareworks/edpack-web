@@ -99,7 +99,7 @@ import ThumbnailEdit from '../../components/ThumbnailEdit'
 
 export default {
   name: 'UserAccountForm',
-  props: ['form', 'finish', 'updateUserRole'],
+  props: ['form', 'finish', 'updateUser'],
   components: { ThumbnailEdit, ResetForm },
 
   data () {
@@ -131,6 +131,10 @@ export default {
         .then((res) => {
           const user = this.$store.state.user
           const updatedUser = res.data.list[0]
+
+          if (this.updateUser) {
+            this.updateUser(updatedUser._id, this.form)
+          }
 
           this.$message({ message: this.$i18n.t('SW_CHANGES_SAVED'), type: 'success' })
 
@@ -165,8 +169,8 @@ export default {
       this.$http.post('users/invite', { invitations })
         .then((res) => {
 
-          if (this.updateUserRole) {
-            this.updateUserRole(...res.data.list, newRole)
+          if (this.updateUser) {
+            this.updateUser(...res.data.list, {role: newRole})
           }
 
           this.form.role = newRole
