@@ -36,7 +36,7 @@
 
             <!-- Total orgs found -->
             <span v-show="status !== 'loading' || tableData.length" class="hidden-xs hidden-sm ml-10 line-height-38">
-              {{ total }} {{ $t('SW_ORGANIZATIONS').toLowerCase() }}
+              {{ total }} {{ $tc('SW_ORGANIZATION', total).toLowerCase() }}
             </span>
           </div>
         </el-col>
@@ -72,7 +72,7 @@
       <!-- Selection checkboxes -->
       <el-table-column type="selection" reserve-selection width="35"></el-table-column>
       <!-- Name -->
-      <el-table-column property="name" :label="$t('SW_ORGANIZATION')" min-width="160" sortable :sort-method="sortName">
+      <el-table-column property="name" :label="$tc('SW_ORGANIZATION', 1)" min-width="160" sortable :sort-method="sortName">
         <template slot-scope="props">
           <strong class="block text-ellipsis">{{ props.row.name[lang] }}</strong>
         </template>
@@ -85,14 +85,14 @@
         </template>
       </el-table-column>
       <!-- User count -->
-      <el-table-column property="counts.users" :label="$t('SW_USERS')" width="120" sortable>
+      <el-table-column property="counts.users" :label="$tc('SW_USERS', 2)" width="120" sortable>
         <template slot-scope="props">
           <i class="icon-user"></i>
           {{ props.row.counts && props.row.counts.users || 0 | numeral('0a') }}
         </template>
       </el-table-column>
       <!-- Custom counts -->
-      <el-table-column v-for="customCount in customCounts" :key="customCount.type" :property="'counts.' + customCount.type" :label="$t('SW_' + customCount.type.toUpperCase())" width="120" sortable>
+      <el-table-column v-for="customCount in customCounts" :key="customCount.type" :property="'counts.' + customCount.type" :label="$tc('SW_' + customCount.type.toUpperCase(), 1)" width="120" sortable>
         <template slot-scope="props">
           <i :class="customCount.icon"></i>
           {{ props.row.counts && props.row.counts[customCount.type] || 0 | numeral('0a') }}
@@ -101,7 +101,7 @@
       <!-- Your role -->
       <el-table-column property="role" :label="$t('SW_YOUR_ROLE')" min-width="110">
         <template slot-scope="props">
-          <span v-if="props.row.role">{{ $t('SW_' + props.row.role.toUpperCase() )}}</span>
+          <span v-if="props.row.role">{{ $tc('SW_' + props.row.role.toUpperCase(), 1 )}}</span>
           <div v-else>
             <el-button type="text" size="mini" @click="becomeAdmin(props.row)" :disabled="sending">
               {{ $t('SW_BECOME_ADMIN') }}

@@ -5,7 +5,7 @@
     </div>
 
     <!-- About project -->
-    <section v-if="step === 0">
+    <section v-if="steps[step] === 'intro'">
       <h3 class="mb-20 font-18">
         {{ $t('SW_WELCOME_ABOUT') }}
 
@@ -22,65 +22,91 @@
     </section>
 
     <!-- Accept terms and privacy statement -->
-    <section v-else-if="step === 1">
-      <p class="mb-20">{{ $t('SW_READ_TERMS', [school.name[lang]]) }}</p>
+    <section v-else-if="steps[step] === 'terms'">
+      <h3 class="font-18 mb-20">{{ $t('SW_READ_TERMS', [school.name[lang]]) }}</h3>
 
       <el-card shadow="never" class="mb-20">
         <div class="terms-window">
-          <div v-if="school.colofon && school.colofon[lang]" v-html="school.colofon[lang]"></div>
+          <div v-html="school.colofon[lang]"></div>
         </div>
       </el-card>
     </section>
 
     <!-- Fill student name and avatar -->
-    <section v-else-if="step === 2" class="mb-30">
-      <p class="mb-20">{{ $t('SW_ADD_NAME_IMAGE') }}</p>
+    <section v-else-if="steps[step] === 'verify'" class="mb-30">
+      <h3 class="mb-20 font-18">{{ $t('SW_ADD_NAME_IMAGE') }}</h3>
+      <p class="mb-20">{{ $t('SW_ADD_NAME_TEXT') }}</p>
+      <el-form ref="form" :model="form" label-width="150px" class="text-left">
+        <!-- Thumbnail -->
+        <el-form-item :label="$t('SW_YOUR_PHOTO')">
+          <thumbnail-edit :form="form"></thumbnail-edit>
+        </el-form-item>
 
-      <user-account-form :finish="closeDialog" :isWelcomeDialog="true" :form="studentForm"></user-account-form>
+        <!-- Full name -->
+        <el-form-item :label="$t('SW_YOUR_NAME')" required>
+          <el-input prefix-icon="icon-bio" v-model="form.name"></el-input>
+        </el-form-item>
+      </el-form>
     </section>
 
-    <app-language class="mr-10" :big="true"></app-language>
-
+    <app-language v-if="steps[step] === 'intro'" class="mr-10" :big="true"></app-language>
+    <el-button class="mr-5" v-else @click="step--">
+      <i class="icon-arrow_back"></i>
+      {{ $t('SW_BACK') }}
+    </el-button>
     <el-button type="primary" @click="nextStep" :loading="submitting">
-      <strong v-if="step === 0 || (hasSecondScreen && step === 1)">
-        {{ $t('SW_CONTINUE') }}
-        <i class="icon-arrow_forward"></i>
-      </strong>
-      <strong v-if="step !== 0 || (hasSecondScreen && step === 2)">
-        <i class="icon-checkmark"></i>
-        {{ $t('SW_ACCEPT_CLOSE') }}
-      </strong>
+      <strong v-if="steps[step] === 'intro'">{{ $t('SW_CONTINUE') }}</strong>
+      <strong v-else-if="steps[step] === 'terms'">{{ $t('SW_ACCEPT_CLOSE') }}</strong>
+      <strong v-else-if="steps[step] === 'verify'">{{ $t('SW_SAVE_CLOSE') }}</strong>
+      <i class="ml-5 icon-arrow_forward"></i>
     </el-button>
     <el-checkbox class="ml-10" v-model="dontShowAgain">{{ $t('SW_DONT_SHOW_AGAIN') }}</el-checkbox>
   </div>
 </template>
 
 <script>
-import Vue from "vue";
+import Vue from 'vue'
 import config from 'config'
-import UserAccountForm from '../UserAccountForm'
+import ThumbnailEdit from '../../components/ThumbnailEdit'
 const LogoAnimation = () => import('../../../../public/images/logo-animation.svg')
 
 export default {
   name: 'WelcomeDialog',
   props: ['closeDialog'],
-  components: { LogoAnimation, UserAccountForm },
+  components: { LogoAnimation, ThumbnailEdit },
 
   data () {
     return {
       step: 0,
+      steps: ['intro'],
       showChatLink: this?.school?.role !== 'student' && this.$store.state.school.enableFreshChat,
       school: this.$store.state.school,
       currentUser: this.$store.state.user,
       lang: this.$store.state.lang,
       submitting: false,
-      dontShowAgain: !!(this.$store.state.school.colofon && this.$store.state.school.colofon[this.$store.state.lang]),
-      studentForm: Vue.util.extend({}, this.$store.state.user),
-      hasSecondScreen: config.name === 'Growflow'
+      dontShowAgain: false,
+      acceptTerms: !!(this.$store.state.school.colofon && this.$store.state.school.colofon[this.$store.state.lang]),
+      form: Vue.util.extend({}, this.$store.state.user),
+      verifyAccountInfo: config.verifyAccountInfo
     }
   },
 
+  created () {
+    if (this.acceptTerms && !this.currentUser.checks.acceptedTerms) this.steps.push('terms')
+    if (this.verifyAccountInfo && !this.currentUser.checks.verifiedAccount) this.steps.push('verify')
+  },
+
   methods: {
+    nextStep () {
+      // If only intro and no check on dont show again, just close
+      if (this.step === 0 && this.steps.length === 1 && !this.dontShowAgain) return this.closeDialog()
+
+      // If more then intro, just continue to next one
+      if (this.step === 0 && this.steps.length > 1) return this.step++
+
+      // If passed intro, always update user
+      else this.updateUser()
+    },
     openAbout (e) {
       e.preventDefault()
       window.open('/about')
@@ -89,17 +115,30 @@ export default {
       e.preventDefault()
       window.fcWidget.open()
     },
-    nextStep () {
+    updateUser () {
       if (this.submitting) return
-      if (this.step === 0 && this.school.colofon && this.school.colofon[this.lang]) return this.step++
-      if (this.step !== 2 && this.hasSecondScreen) return this.step = 2
-      if (!this.dontShowAgain) return this.closeDialog()
-
-      // Update user
       this.submitting = true
-      this.$store.state.user.checks.welcome = true
-      this.$http.put(`users/${this.currentUser._id}`, { checks: this.$store.state.user.checks })
-        .then(() => { this.closeDialog() })
+
+      // Add checks when they apply
+      this.form.checks.verifiedAccount = this.steps[this.step] === 'verify'
+      this.form.checks.acceptedTerms = this.acceptTerms
+      this.form.checks.welcome = this.dontShowAgain
+
+      const params = { params: { entity: this.school._id } }
+
+      this.$http.put(`users/${this.currentUser._id}`, this.form, params)
+        .then((res) => {
+          const user = this.$store.state.user
+
+          // Update current user
+          user.name = this.form.name
+          user.thumbnailUrl = this.form.thumbnailUrl
+          this.$store.dispatch('setUser', user)
+
+          // Close dialog or continue
+          if (this.steps.length !== this.step + 1) this.step++
+          this.closeDialog()
+        })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.submitting = false })
     }

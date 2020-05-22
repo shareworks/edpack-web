@@ -34,7 +34,7 @@
 
             <!-- Total courses found -->
             <span v-show="status !== 'loading' || tableData.length" class="hidden-xs hidden-sm ml-10 line-height-38">
-              {{ total }} {{ $t('SW_COURSES').toLowerCase() }}
+              {{ total }} {{ $tc('SW_COURSE', total).toLowerCase() }}
             </span>
           </div>
         </el-col>
@@ -68,7 +68,7 @@
                   {{ props.row.name }}
                 </p>
                 <p v-if="props.row.counts">
-                  <strong class="mr-5">{{ $t('SW_STAFF_MEMBERS') }}</strong>
+                  <strong class="mr-5">{{ $tc('SW_STAFF', 2) }}</strong>
                   <i class="icon-user"></i>
                   {{ props.row.counts.staff || 0 }}
                 </p>
@@ -100,7 +100,7 @@
         <!-- Selection checkboxes -->
         <el-table-column type="selection" reserve-selection width="35"></el-table-column>
         <!-- Course name -->
-        <el-table-column property="name" :label="$t('SW_COURSE')" min-width="180" sortable :sort-method="sortCaseInsensitive">
+        <el-table-column property="name" :label="$tc('SW_COURSE', 1)" min-width="180" sortable :sort-method="sortCaseInsensitive">
           <template slot-scope="props">
             <router-link :to="{ name: (props.row.role || 'staff'), params: { course: props.row._id, slug: school.slug } }" class="block text-ellipsis">
               <strong v-if="props.row.name">{{ props.row.name }}</strong>
@@ -118,7 +118,7 @@
           </template>
         </el-table-column>
         <!-- Student count -->
-        <el-table-column property="counts.students" :label="$t('SW_STUDENTS')" width="140">
+        <el-table-column property="counts.students" :label="$tc('SW_STUDENT', 2)" width="140">
           <template slot-scope="props">
             <i class="icon-user"></i>
             {{ props.row.counts && props.row.counts.students || 0 | numeral('0a') }}
@@ -134,7 +134,7 @@
         <!-- User role -->
         <el-table-column property="role" :label="$t('SW_YOUR_ROLE')" min-width="80">
           <template slot-scope="props">
-            <span v-if="props.row.role">{{ $t('SW_' + props.row.role.toUpperCase() )}}</span>
+            <span v-if="props.row.role">{{ $tc('SW_' + props.row.role.toUpperCase(), 1 )}}</span>
             <span v-else>-</span>
           </template>
         </el-table-column>
@@ -282,7 +282,7 @@ export default {
       if (this.$refs.coursesTable) this.$refs.coursesTable.clearSelection()
     },
     confirmArchive () {
-      this.$confirm(this.$i18n.tc('SW_ARCHIVE_COURSES_CONFIRM', this.multipleSelection.length), this.$i18n.tc('SW_ARCHIVE_COURSES', this.multipleSelection.length), {
+      this.$confirm(this.$i18n.tc('SW_ARCHIVE_COURSES_CONFIRM', this.multipleSelection.length), this.$i18n.tc('SW_ARCHIVE_COURSE', this.multipleSelection.length), {
         confirmButtonText: this.$i18n.t('SW_ARCHIVE'),
         cancelButtonText: this.$i18n.t('SW_CANCEL'),
         beforeClose: (action, instance, done) => {
@@ -296,7 +296,7 @@ export default {
       })
     },
     confirmRemove () {
-      this.$confirm(this.$i18n.tc('SW_DELETE_COURSES_CONFIRM', this.multipleSelection.length), this.$i18n.tc('SW_DELETE_COURSES', this.multipleSelection.length), {
+      this.$confirm(this.$i18n.t('SW_DELETE_COURSES_CONFIRM'), this.$i18n.tc('SW_DELETE_COURSE', this.multipleSelection.length), {
         confirmButtonText: this.$i18n.t('SW_DELETE'),
         cancelButtonText: this.$i18n.t('SW_CANCEL'),
         beforeClose: (action, instance, done) => {

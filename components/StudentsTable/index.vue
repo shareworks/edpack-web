@@ -5,7 +5,7 @@
     <!-- Table with students -->
     <el-table v-show="tableValues.length" size="small" :data="getTableData" row-key="_id" ref="studentsTable">
       <!-- Name -->
-      <el-table-column :label="$t('SW_STUDENT')" prop="name" min-width="160">
+      <el-table-column :label="$tc('SW_STUDENT', 1)" prop="name" min-width="160">
         <template slot-scope="props">
           <div class="text-ellipsis">
             <el-popover width="200" trigger="click" placement="bottom">
@@ -16,13 +16,13 @@
         </template>
       </el-table-column>
       <!-- Email address -->
-      <el-table-column property="email" :label="$t('SW_EMAIL')" min-width="180">
+      <el-table-column property="email" :label="$tc('SW_EMAIL', 1)" min-width="180">
         <template slot-scope="props">
           <a :href="'mailto:' + props.row.email" target="_blank" class="text-ellipsis">{{ props.row.email }}</a>
         </template>
       </el-table-column>
       <!-- Group name -->
-      <el-table-column property="groupName" :label="$t('SW_GROUP')" min-width="180">
+      <el-table-column property="groupName" :label="$tc('SW_GROUP', 1)" min-width="180">
         <template slot-scope="props">
           <strong>{{ props.row.groupName }}</strong>
         </template>

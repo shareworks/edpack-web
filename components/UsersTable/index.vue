@@ -17,7 +17,7 @@
             <el-badge :value="multipleSelection.length" v-if="isAdmin">
               <el-button type="primary" size="medium" plain @click="dialogEmail = true" class="button-square-xs ml-5">
                 <i class="icon-email"></i>
-                <span class="hidden-xs">{{ $t('SW_EMAIL') }}</span>
+                <span class="hidden-xs">{{ $tc('SW_EMAIL', 1) }}</span>
               </el-button>
             </el-badge>
 
@@ -42,7 +42,7 @@
 
             <!-- Total users found -->
             <span v-show="status !== 'loading' || tableData.length" class="hidden-xs hidden-sm line-height-38">
-              {{ total }} {{ $t('SW_USERS').toLowerCase() }}
+              {{ total }} {{ $tc('SW_USERS', total).toLowerCase() }}
             </span>
           </div>
         </el-col>
@@ -51,7 +51,7 @@
           <!-- Search input -->
           <el-input v-model="searchText" size="medium" clearable :placeholder="$t('SW_SEARCH_USERS')" class="input-with-select">
             <el-select v-model="roleFilter" slot="prepend" @change="changeFilter">
-              <el-option v-for="item in roles" :key="item.value" :label="$t('SW_' + item.label.toUpperCase())" :value="item.value"></el-option>
+              <el-option v-for="item in roles" :key="item.value" :label="$tc('SW_' + item.label.toUpperCase())" :value="item.value"></el-option>
             </el-select>
           </el-input>
         </el-col>
@@ -69,7 +69,7 @@
 
           <div v-if="props.row.courses && props.row.courses.length">
             <el-table :data="props.row.courses" row-key="_id" :default-sort="{prop: 'createdDate', order: 'descending'}">
-              <el-table-column property="name" :label="$t('SW_COURSE')" min-width="180">
+              <el-table-column property="name" :label="$tc('SW_COURSE', 1)" min-width="180">
                 <template slot-scope="scope">
                   <router-link  :to="{ name: 'staff', params: { course: scope.row._id, slug: school.slug } }" class="block text-ellipsis">
                     <span v-if="scope.row.name">{{ scope.row.name }}</span>
@@ -78,7 +78,7 @@
                   </router-link>
                 </template>
               </el-table-column>
-              <el-table-column property="role" :label="$t('SW_ROLE')" min-width="110">
+              <el-table-column property="role" :label="$tc('SW_ROLE', 1)" min-width="110">
                 <template slot-scope="scope">
                   <span v-if="scope.row.role">{{ $t('SW_' + scope.row.role.toUpperCase() )}}</span>
                   <span v-else>-</span>
@@ -112,22 +112,22 @@
       </el-table-column>
 
       <!-- Email address -->
-      <el-table-column property="email" :label="$t('SW_EMAIL')" min-width="180">
+      <el-table-column property="email" :label="$tc('SW_EMAIL', 1)" min-width="180">
         <template slot-scope="props">
           <a :href="'mailto:' + props.row.email" target="_blank" class="text-ellipsis">{{ props.row.email }}</a>
         </template>
       </el-table-column>
 
       <!-- Organization role of user -->
-      <el-table-column property="role" :label="$t('SW_ROLE')" min-width="80">
+      <el-table-column property="role" :label="$tc('SW_ROLE', 1)" min-width="80">
         <template slot-scope="props">
             <div class="text-ellipsis">
-              {{ $t('SW_' + props.row.role.toUpperCase() )}}
+              {{ $tc('SW_' + props.row.role.toUpperCase() )}}
             </div>
         </template>
       </el-table-column>
       <!-- Course count -->
-      <el-table-column v-if="!hideCourses" property="counts.courses" :label="$t('SW_COURSES')" width="120">
+      <el-table-column v-if="!hideCourses" property="counts.courses" :label="$tc('SW_COURSE', 2)" width="120">
         <template slot-scope="props">
           <i class="icon-graduation"></i>
           {{ props.row.counts && props.row.counts.courses || 0 }}

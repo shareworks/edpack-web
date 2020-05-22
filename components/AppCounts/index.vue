@@ -26,7 +26,13 @@ export default {
   data () {
     return {
       counts: false,
-      countAnimationDelay: 200
+      countAnimationDelay: 200,
+      stats: [
+        { name: this.$i18n.tc('SW_ORGANIZATION', 2), prop: 'organizations', icon: 'icon-school' },
+        { name: this.$i18n.tc('SW_COURSE', 2), prop: 'courses', icon: 'icon-graduation' },
+        { name: this.$i18n.tc('SW_USERS', 1), prop: 'users', icon: 'icon-user' },
+        { name: this.$i18n.t('SW_EVALUATIONS'), prop: 'surveys', icon: 'icon-bar-chart' }
+      ]
     }
   },
 

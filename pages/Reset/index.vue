@@ -11,8 +11,14 @@
             <div class="horizontal-logo"></div>
         </div>
 
-        <!-- Reset Form -->
+        <div class="minimum-container">
+          <div class="title text-center"><strong>{{ $t('SW_RESET_PASSWORD') }}</strong></div>
+          <p class="mb-20 text-center">{{ $t('SW_RESET_PASSWORD_TEXT') }}</p>
+
+          <!-- Reset Form -->
         <reset-form></reset-form>
+
+        </div>
 
         <!-- Footer links -->
        <footer-links :signin="true"></footer-links>

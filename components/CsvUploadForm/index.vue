@@ -38,8 +38,8 @@
       </el-alert>
       <el-table :data="invalidUsers" style="width: 100%" size="small" max-height="300px" class="mt-10">
         <el-table-column prop="name" :label="$t('SW_NAME')" width="180"></el-table-column>
-        <el-table-column prop="email" :label="$t('SW_EMAIL')" width="300"></el-table-column>
-        <el-table-column prop="groupName" :label="$t('SW_GROUP')"></el-table-column>
+        <el-table-column prop="email" :label="$tc('SW_EMAIL', 1)" width="300"></el-table-column>
+        <el-table-column prop="groupName" :label="$tc('SW_GROUP', 1)"></el-table-column>
       </el-table>
     </div>
 

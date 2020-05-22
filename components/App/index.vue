@@ -55,7 +55,7 @@ export default {
       inLTI: this.$store.state.inLTI,
       dialogWelcome: false,
       resetKey: 1,
-      dontShowDialogAgain: false
+      disableWelcome: false
     }
   },
 
@@ -77,7 +77,7 @@ export default {
   watch: {
     currentUser (user) {
       // Show welcome dialog to new user
-      if (user && !user.checks.welcome) this.toggleDialog()
+      if (user && !user.checks.welcome && !this.disableWelcome) this.toggleDialog()
     },
     language (language) {
       if (language) this.resetKey++
@@ -90,6 +90,7 @@ export default {
   methods: {
     toggleDialog () {
       this.dialogWelcome = !this.dialogWelcome
+      this.disableWelcome = true
     },
     ...mapActions(['handleResize', 'openSidebar', 'closeSidebar'])
   },
