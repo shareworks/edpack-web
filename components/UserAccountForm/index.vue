@@ -12,7 +12,7 @@
 
     <!-- Reset password -->
     <el-form-item :label="$t('SW_RESET_PASSWORD')" v-if="signinByPassword" class="additional">
-      <el-button size="small" @click="showResetForm = true">
+      <el-button size="medium" type="primary" plain @click="showResetForm = true">
         <i class="icon-lock"></i>
         <span>{{ $t('SW_RESET') }}</span>
       </el-button>
@@ -84,7 +84,8 @@
       <el-button type="text" @click="finish()">{{ $t('SW_CANCEL') }}</el-button>
     </el-form-item>
 
-    <el-dialog :visible.sync="showResetForm">
+    <el-dialog :title="$t('SW_RESET_PASSWORD')" :visible.sync="showResetForm">
+      <p class="mb-20">{{ $t('SW_RESET_PASSWORD_TEXT') }}</p>
       <reset-form :hide-shadow="true"></reset-form>
     </el-dialog>
   </el-form>

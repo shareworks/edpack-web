@@ -1,7 +1,4 @@
 <template>
-  <div class="minimum-container" :class="{ 'no-shadow': hideShadow }">
-    <div class="title text-center"><strong>{{ $t('SW_RESET_PASSWORD') }}</strong></div>
-    <p class="mb-20 text-center">{{ $t('SW_RESET_PASSWORD_TEXT') }}</p>
 
     <el-form>
       <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_YOUR_PASSWORD')" autofocus prefix-icon="icon-password" id="password" v-model="form.password"></el-input>
@@ -13,7 +10,6 @@
         <i class="icon-arrow_forward"></i>
       </el-button>
     </el-form>
-  </div>
 </template>
 
 <script>
@@ -21,7 +17,6 @@ import Password from 'vue-password-strength-meter'
 
 export default {
   name: 'ResetForm',
-  props: ['hideShadow'],
   components: { Password },
   data () {
     return {
