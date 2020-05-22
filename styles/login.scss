@@ -1,18 +1,15 @@
 .form-register,
 .form-login {
+  opacity: 0;
+  transition: all .3s linear;
 
-  .form {
-    opacity: 0;
-    transition: all .3s linear;
+  &.top {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-    &.top {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    &.bottom {
-      transform: translateY(50px);
-    }
+  &.bottom {
+    transform: translateY(50px);
   }
 
   .login {

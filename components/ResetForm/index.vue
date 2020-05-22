@@ -1,5 +1,4 @@
 <template>
-
     <el-form>
       <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_YOUR_PASSWORD')" autofocus prefix-icon="icon-password" id="password" v-model="form.password"></el-input>
       <password v-model="form.password" :strengthMeterOnly="true"/>
