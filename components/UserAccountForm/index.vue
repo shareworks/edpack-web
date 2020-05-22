@@ -54,8 +54,8 @@
     <!--    </el-form-item>-->
 
     <!-- Role: Admin, Staff or Student -->
-    <el-form-item :label="$t('SW_ROLE')" class="additional">
-      {{ $t('SW_' + (form.role || school.role).toUpperCase()) }}
+    <el-form-item :label="$tc('SW_ROLE', 1)" class="additional">
+      {{ $tc('SW_' + (form.role || school.role).toUpperCase()) }}
       {{ $t('SW_ROLE_AT', { school: form.organization.name[lang] }) }}
 
       <el-dropdown v-if="isAdmin" trigger="click" @command="changeRole">
@@ -64,9 +64,9 @@
               <span>{{ $t('SW_CHANGE_ROLE') }}</span>
             </el-button>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item :command="{ newRole: 'admin' }" :disabled="form.role === 'admin'">{{ $t('SW_ADMIN') }}</el-dropdown-item>
-          <el-dropdown-item :command="{ newRole: 'staff' }" :disabled="form.role === 'staff'">{{ $t('SW_STAFF') }}</el-dropdown-item>
-          <el-dropdown-item :command="{ newRole: 'student' }" :disabled="form.role === 'student'">{{ $t('SW_STUDENT') }}</el-dropdown-item>
+          <el-dropdown-item :command="{ newRole: 'admin' }" :disabled="form.role === 'admin'">{{ $tc('SW_ADMIN', 1) }}</el-dropdown-item>
+          <el-dropdown-item :command="{ newRole: 'staff' }" :disabled="form.role === 'staff'">{{ $tc('SW_STAFF', 1) }}</el-dropdown-item>
+          <el-dropdown-item :command="{ newRole: 'student' }" :disabled="form.role === 'student'">{{ $tc('SW_STUDENT', 1) }}</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </el-form-item>

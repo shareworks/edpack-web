@@ -25,7 +25,7 @@
       <!-- Role -->
       <el-form-item v-if="!isManageStaff">
         <el-select v-model="role" class="block">
-          <el-option v-for="item in ['staff', 'admin', 'student']" :key="item" :label="$t('SW_' + item.toUpperCase())" :value="item"></el-option>
+          <el-option v-for="item in ['staff', 'admin', 'student']" :key="item" :label="$tc('SW_' + item.toUpperCase(), 1)" :value="item"></el-option>
         </el-select>
       </el-form-item>
       <!-- Send to self -->

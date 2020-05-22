@@ -51,7 +51,7 @@
           <!-- Search input -->
           <el-input v-model="searchText" size="medium" clearable :placeholder="$t('SW_SEARCH_USERS')" class="input-with-select">
             <el-select v-model="roleFilter" slot="prepend" @change="changeFilter">
-              <el-option v-for="item in roles" :key="item.value" :label="$t('SW_' + item.label.toUpperCase())" :value="item.value"></el-option>
+              <el-option v-for="item in roles" :key="item.value" :label="$tc('SW_' + item.label.toUpperCase())" :value="item.value"></el-option>
             </el-select>
           </el-input>
         </el-col>
@@ -122,7 +122,7 @@
       <el-table-column property="role" :label="$tc('SW_ROLE', 1)" min-width="80">
         <template slot-scope="props">
             <div class="text-ellipsis">
-              {{ $t('SW_' + props.row.role.toUpperCase() )}}
+              {{ $tc('SW_' + props.row.role.toUpperCase() )}}
             </div>
         </template>
       </el-table-column>
