@@ -27,6 +27,7 @@ export default {
     return {
       counts: false,
       countAnimationDelay: 200
+    }
   },
 
   mounted () {
