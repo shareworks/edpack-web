@@ -99,7 +99,7 @@ import ThumbnailEdit from '../../components/ThumbnailEdit'
 
 export default {
   name: 'UserAccountForm',
-  props: ['form', 'finish'],
+  props: ['form', 'finish', 'updateUserRole'],
   components: { ThumbnailEdit, ResetForm },
 
   data () {
@@ -163,7 +163,12 @@ export default {
       }]
 
       this.$http.post('users/invite', { invitations })
-        .then(() => {
+        .then((res) => {
+
+          if (this.updateUserRole) {
+            this.updateUserRole(...res.data.list, newRole)
+          }
+
           this.form.role = newRole
           this.$message({ message: this.$i18n.t('SW_ROLE_CHANGED'), type: 'success' })
         })

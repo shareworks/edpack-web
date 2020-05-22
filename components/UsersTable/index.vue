@@ -150,7 +150,7 @@
 
     <!-- Edit user dialog -->
     <el-dialog :title="$t('SW_EDIT_USER')" append-to-body :visible.sync="dialogEditUser">
-      <user-account-form :form="editUserForm" v-if="dialogEditUser" class="edit-user-form" :finish="finishEditUser"></user-account-form>
+      <user-account-form :form="editUserForm" :updateUserRole="updateUserRole" v-if="dialogEditUser" class="edit-user-form" :finish="finishEditUser"></user-account-form>
     </el-dialog>
 
     <!-- Email dialog -->
@@ -330,7 +330,14 @@ export default {
     dateFormatter (row, column, value) { return value ? moment(value).fromNow() : '-' },
     sortCreatedDate (a, b) { return dateSorter(a.createdDate, b.createdDate) },
     sortActivityDate (a, b) { return dateSorter(a.activityDate, b.activityDate) },
-    sortCaseInsensitive (a, b) { return sortCaseInsensitive(a.name, b.name) }
+    sortCaseInsensitive (a, b) { return sortCaseInsensitive(a.name, b.name) },
+    updateUserRole (userId, newRole) {
+      this.tableData.forEach(student => {
+        if (student._id === userId) {
+          student.role = newRole
+        }
+      })
+    }
   }
 }
 </script>
