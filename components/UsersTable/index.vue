@@ -150,7 +150,7 @@
 
     <!-- Edit user dialog -->
     <el-dialog :title="$t('SW_EDIT_USER')" append-to-body :visible.sync="dialogEditUser">
-      <user-account-form :form="editUserForm" v-if="dialogEditUser" :finish="finishEditUser"></user-account-form>
+      <user-account-form :form="editUserForm" v-if="dialogEditUser" class="edit-user-form" :finish="finishEditUser"></user-account-form>
     </el-dialog>
 
     <!-- Email dialog -->

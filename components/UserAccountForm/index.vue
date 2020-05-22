@@ -11,7 +11,7 @@
     </el-form-item>
 
     <!-- Reset password -->
-    <el-form-item :label="$t('SW_RESET_PASSWORD')" v-if="signinByPassword" class="additional">
+    <el-form-item :label="$t('SW_RESET_PASSWORD')" v-if="signinByPassword" class="additional reset-password">
       <el-button size="medium" type="primary" plain @click="showResetForm = true">
         <i class="icon-lock"></i>
         <span>{{ $t('SW_RESET') }}</span>
