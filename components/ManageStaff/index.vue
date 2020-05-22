@@ -7,20 +7,23 @@
       <el-col :span="12">
         <p class="mb-10 bold">{{ $t('SW_CURRENT_STAFF_TEXT') }}</p>
         <div class="instructor-list">
-          <div v-for="instructor in instructors" class="text-ellipsis" :key="instructor._id">
-            <thumbnail :model="instructor" class="thumb-user thumb-24 mr-5"></thumbnail>
-            <strong>{{instructor.name}}</strong>
-            <div class="mb-20 font-12">
+          <div v-for="instructor in instructors" class="text-ellipsis instructor-data" :key="instructor._id">
+            <thumbnail :model="instructor" class="thumb-user thumb-42 mr-5"></thumbnail>
+            <div>
+              <strong>{{instructor.name}}</strong>
+              <div class="mb-20 font-12">
               <span v-if="instructor.activityDate">
                 <span class="online-icon"></span>
                 {{ instructor.activityDate | fromNow }}
               </span>
-              <span v-else>{{ $t('SW_INVITE_PENDING') }}</span> &centerdot;
-              <el-button :loading="removing" :disabled="instructors.length === 1" type="text" size="mini" @click="removeInstructor(instructor)">
-                <i class="icon-delete"></i>
-                <span class="hidden-xs hidden-sm">{{ $t('SW_REMOVE') }}</span>
-              </el-button>
+                <span v-else>{{ $t('SW_INVITE_PENDING') }}</span> &centerdot;
+                <el-button :loading="removing" :disabled="instructors.length === 1" type="text" size="mini" @click="removeInstructor(instructor)">
+                  <i class="icon-delete"></i>
+                  <span class="hidden-xs hidden-sm">{{ $t('SW_REMOVE') }}</span>
+                </el-button>
+              </div>
             </div>
+
           </div>
         </div>
       </el-col>
