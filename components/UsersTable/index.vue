@@ -207,7 +207,7 @@ export default {
 
   watch: {
     searchText: debounce(function () {
-      this.$router.replace({ query: { query: this.searchText, filter: this.roleFilter } })
+      this.$router.replace({ name: 'admin', params: { slug: this.school.slug, mode: 'users' }, query: { query: this.searchText, filter: this.roleFilter } })
     }, 400),
     '$route' () {
       this.selectionChange()
@@ -326,7 +326,7 @@ export default {
       const index = this.tableData.findIndex(user => user._id === updatedUser._id)
       this.tableData.splice(index, 1, updatedUser)
     },
-    changeFilter (filter) { this.$router.replace({ query: { query: this.searchText, filter: filter } }) },
+    changeFilter (filter) { this.$router.replace({ name: 'admin', params: { slug: this.school.slug, mode: 'users' }, query: { query: this.searchText, filter: filter } }) },
     dateFormatter (row, column, value) { return value ? moment(value).fromNow() : '-' },
     sortCreatedDate (a, b) { return dateSorter(a.createdDate, b.createdDate) },
     sortActivityDate (a, b) { return dateSorter(a.activityDate, b.activityDate) },

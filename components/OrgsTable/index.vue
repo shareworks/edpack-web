@@ -167,7 +167,7 @@ export default {
 
   watch: {
     searchText: debounce(function () {
-      this.$router.replace({ query: { query: this.searchText } })
+      this.$router.replace({ name: 'admin', params: { slug: this.school.slug, mode: 'organizations' }, query: { query: this.searchText } })
     }, 400),
     '$route' () {
       this.selectionChange()

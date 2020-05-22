@@ -211,7 +211,7 @@ export default {
 
   watch: {
     searchText: debounce(function () {
-      this.$router.replace({ query: { query: this.searchText, filter: this.statusFilter } })
+      this.$router.replace({ name: 'admin', params: { slug: this.school.slug, mode: 'courses' }, query: { query: this.searchText, filter: this.statusFilter } })
     }, 400),
     '$route' () {
       this.selectionChange()
@@ -360,7 +360,7 @@ export default {
       this.order = val.order
       if (this.status !== 'done') this.getCourses(true)
     },
-    changeFilter (filter) { this.$router.replace({ query: { query: this.searchText, filter: filter } }) },
+    changeFilter (filter) { this.$router.replace({ name: 'admin', params: { slug: this.school.slug, mode: 'courses' }, query: { query: this.searchText, filter: filter } }) },
     sortCreatedDate (a, b) { return dateSorter(a.createdDate, b.createdDate) },
     sortCaseInsensitive (a, b) { return sortCaseInsensitive(a.name, b.name) },
     dateFormatter (row, column, value) { return moment(value).fromNow() }
