@@ -70,7 +70,7 @@ import config from 'config'
 import Password from 'vue-password-strength-meter'
 
 export default {
-  name: 'Login',
+  name: 'Register',
   components: { Password },
 
   data () {
