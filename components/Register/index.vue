@@ -1,5 +1,5 @@
 <template>
-  <section class="form bottom" v-observe-visibility="{callback: visibilityChanged, throttle: 100, once: true}">
+  <section class="form-register bottom" v-observe-visibility="{callback: visibilityChanged, throttle: 100, once: true}">
 
     <transition name="login" mode="out-in">
       <div class="login" :key="'google'" v-if="!passwordMode">
