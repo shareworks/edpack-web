@@ -14,7 +14,7 @@
       </div>
     </page-cover>
 
-    <div class="page-body max-600">
+    <div class="page-body max-600 welcome-body">
 
       <!-- About project -->
       <section v-if="steps[step] === 'intro'">
