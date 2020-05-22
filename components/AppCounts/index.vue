@@ -21,17 +21,12 @@ import countTo from 'vue-count-to'
 
 export default {
   name: 'AppCounts',
+  props: ['stats'],
   components: { countTo },
   data () {
     return {
       counts: false,
-      countAnimationDelay: 200,
-      stats: [
-        { name: this.$i18n.t('SW_ORGANIZATIONS'), prop: 'organizations', icon: 'icon-school' },
-        { name: this.$i18n.t('SW_COURSES'), prop: 'courses', icon: 'icon-graduation' },
-        { name: this.$i18n.t('SW_USERS'), prop: 'users', icon: 'icon-user' },
-        { name: this.$i18n.t('SW_EVALUATIONS'), prop: 'surveys', icon: 'icon-bar-chart' }
-      ]
+      countAnimationDelay: 200
     }
   },
 
