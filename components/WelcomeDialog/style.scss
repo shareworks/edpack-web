@@ -1,7 +1,16 @@
-.welcome-dialog {
+.welcome-dialog.el-dialog {
+  padding: 0;
   text-align: center;
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 900px !important;
+
+  .el-dialog__header,
+  .el-dialog__body {
+    padding: 0;
+  }
+
+  .el-dialog__headerbtn {
+    z-index: 1;
+  }
 }
 
 .dialog-logo {
