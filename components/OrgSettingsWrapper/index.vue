@@ -95,6 +95,10 @@ export default {
         .finally(() => { this.setOrgLoaded(true) })
     },
     onSubmit () {
+      if (this.form.domainError) {
+        return this.$message({ message: this.$i18n.t('SW_DOMAINS_ERROR', this.form.domainError.length), type: 'error' })
+      }
+
       if (this.$store.state.languages.length === 1) {
         const currentLanguage = this.form.languages.en ? 'en' : 'nl'
         const anotherLanguage = this.form.languages.en ? 'nl' : 'en'

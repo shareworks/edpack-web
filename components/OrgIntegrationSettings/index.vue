@@ -6,8 +6,17 @@
     <el-switch v-model="hideCredentials" active-color="#13ce66" inactive-color="#ff4949" class="mb-20" :active-text="$t('SW_VIEW_CREDENTIALS')"></el-switch>
 
     <!--Email domains-->
+
+    <el-alert class="mb-10" show-icon v-if="incorrectDomains.length !== 0" type="error" :title="$tc('SW_DOMAINS_NOT_CORRECT', incorrectDomains.length)">
+      <ul>
+        <li v-for="domain in incorrectDomains" :key="domain">
+          <span class="bold">{{ domain }}</span>
+        </li>
+      </ul>
+    </el-alert>
+
     <el-form-item :label="$t('SW_EMAIL_DOMAINS')" required>
-      <el-tag v-for="domain in form.emailDomains" :key="domain" closable :disable-transitions="false" @close="handleClose('emailDomains', domain)">
+      <el-tag v-for="domain in form.emailDomains" :key="domain" closable :disable-transitions="false" @close="handleClose('emailDomains', domain); domainsValidation()">
         {{ domain }}
       </el-tag>
       <el-input
@@ -18,7 +27,7 @@
         placeholder="@role.your-school.com"
         ref="emailDomains"
         @keyup.enter.native="handleInputConfirm('emailDomains')"
-        @blur="handleInputConfirm('emailDomains')">
+        @blur="handleInputConfirm('emailDomains'); domainsValidation()">
       </el-input>
       <el-button v-else size="small" class="ml-5" @click="showInput('emailDomains')">
         <i class="icon-add"></i>
@@ -330,6 +339,7 @@ export default {
       user: this.$store.state.user,
       lang: this.$store.state.lang,
       ltiVersion: 'basic',
+      incorrectDomains: [],
       processing: false,
       inputVisible: {
         emailDomains: false,
@@ -357,6 +367,20 @@ export default {
   },
 
   methods: {
+    domainsValidation () {
+      let failedDomains = []
+      const domainRegex = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
+
+      // Filter all emails that don't match regex:
+      this.form.emailDomains.forEach(domain => {
+        const isIncorrect = !domainRegex.test(domain)
+        if (isIncorrect) { failedDomains.push(domain) }
+      })
+
+      failedDomains = failedDomains.filter(domain => { return domain.trim() !== '' })
+      this.incorrectDomains = failedDomains
+      this.form.domainError = failedDomains.length > 0
+    },
     generateSecret () {
       this.$confirm(this.$i18n.t('SW_ATTENTION_SECRET_GENERATE'), this.$i18n.t('SW_ATTENTION_SECRET_GENERATE_TITLE'), {
         confirmButtonText: this.$i18n.t('SW_GENERATE'),
