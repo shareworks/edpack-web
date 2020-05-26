@@ -116,8 +116,6 @@ export default {
       const organization = this.user.organization._id
       const roles = emails.map(email => ({ recipientEmail: email, model: 'organization', contextId: organization, role: this.justStudents ? 'student' : this.role, downgrade: false, sendEmail: true }))
 
-      console.log(roles)
-
       this.sending = true
       this.$http.post('users/invite', { invitations: roles }, { params: { toSelf: self } })
         .then(() => {
