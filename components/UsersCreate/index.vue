@@ -120,7 +120,7 @@ export default {
 
       if (this.course) {
         const courseRoles = emails.map(email => ({ recipientEmail: email, model: 'course', contextId: this.course._id, role: this.justStudents ? 'student' : this.role, downgrade: false, sendEmail: true }))
-        this.roles = this.roles.concat(courseRoles)
+        roles = roles.concat(courseRoles)
       }
 
 
