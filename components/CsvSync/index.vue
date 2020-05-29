@@ -116,7 +116,7 @@ export default {
       this.processingCsv = true
 
       const params = {}
-      const form = Object.assign({}, this.model, { users: this.csvUsers })
+      const form = Object.assign({}, this.model, { participants: this.csvUsers })
 
       this.$http.put(`${this.model.type}s/${form._id}/sync-users`, form, { params, timeout: 100000 })
         .then(() => {
