@@ -106,7 +106,7 @@ export default {
   methods: {
     getMembers () {
       this.loading = true
-      this.$http.get(`courses/${this.model._id}/users`)
+      this.$http.get(`${this.model.type}s/${this.model._id}/users`)
         .then((res) => { this.currentUsers = res.data.list })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.loading = false })
@@ -118,7 +118,7 @@ export default {
       const params = {}
       const form = Object.assign({}, this.model, { users: this.csvUsers })
 
-      this.$http.put(`/models/${form._id}/sync/excel`, form, { params, timeout: 100000 })
+      this.$http.put(`${this.model.type}s/${form._id}/sync-users`, form, { params, timeout: 100000 })
         .then(() => {
           this.$message({ message: this.$i18n.t('SW_MODEL_SYNC_EXCEL'), type: 'success' })
           this.closeDialog(true)
