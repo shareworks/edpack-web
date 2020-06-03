@@ -11,8 +11,8 @@
     </el-form-item>
 
     <!-- Reset password -->
-    <el-form-item :label="$t('SW_RESET_PASSWORD')" v-if="signinByPassword">
-      <el-button size="small" @click="showResetForm = true">
+    <el-form-item :label="$t('SW_RESET_PASSWORD')" v-if="signinByPassword" class="additional reset-password">
+      <el-button size="medium" type="primary" plain @click="showResetForm = true">
         <i class="icon-lock"></i>
         <span>{{ $t('SW_RESET') }}</span>
       </el-button>
@@ -22,7 +22,8 @@
     <el-form-item :label="form.emails.length > 1 ? $t('SW_EMAILS') : $t('SW_EMAIL')" class="additional">
       <div v-for="(email, index) of form.emails" :key="index">
         <el-input prefix-icon="icon-email" v-model="form.emails[index]" :readonly="!isAdmin" @change="emailChanged = true" :placeholder="$t('SW_EMAIL_PLACEHOLDER')"
-                  :class="email === form.email ? 'primary-email' : 'secondary-email'" class="mb-5">
+                  :class="email === form.email ? 'primary-email' : 'secondary-email'" class="mb-5" disabled>
+          <!-- Change email is disabled, waiting for api  -->
           <el-button slot="append" @click="setPrimary(email)" v-if="isAdmin && form.emails.length > 1">
             <i v-if="email === form.email" class="el-icon-star-on el-icon-left"></i>
             {{email === form.email ? $t('SW_PRIMARY') : $t('SW_SECONDARY') }}
@@ -54,8 +55,8 @@
     <!--    </el-form-item>-->
 
     <!-- Role: Admin, Staff or Student -->
-    <el-form-item :label="$t('SW_ROLE')" class="additional">
-      {{ $t('SW_' + (form.role || school.role).toUpperCase()) }}
+    <el-form-item :label="$tc('SW_ROLE', 1)" class="additional">
+      {{ $tc('SW_' + (form.role || school.role).toUpperCase()) }}
       {{ $t('SW_ROLE_AT', { school: form.organization.name[lang] }) }}
 
       <el-dropdown v-if="isAdmin" trigger="click" @command="changeRole">
@@ -64,9 +65,9 @@
               <span>{{ $t('SW_CHANGE_ROLE') }}</span>
             </el-button>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item :command="{ newRole: 'admin' }" :disabled="form.role === 'admin'">{{ $t('SW_ADMIN') }}</el-dropdown-item>
-          <el-dropdown-item :command="{ newRole: 'staff' }" :disabled="form.role === 'staff'">{{ $t('SW_STAFF') }}</el-dropdown-item>
-          <el-dropdown-item :command="{ newRole: 'student' }" :disabled="form.role === 'student'">{{ $t('SW_STUDENT') }}</el-dropdown-item>
+          <el-dropdown-item :command="{ newRole: 'admin' }" :disabled="form.role === 'admin'">{{ $tc('SW_ADMIN', 1) }}</el-dropdown-item>
+          <el-dropdown-item :command="{ newRole: 'staff' }" :disabled="form.role === 'staff'">{{ $tc('SW_STAFF', 1) }}</el-dropdown-item>
+          <el-dropdown-item :command="{ newRole: 'student' }" :disabled="form.role === 'student'">{{ $tc('SW_STUDENT', 1) }}</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </el-form-item>
@@ -84,7 +85,8 @@
       <el-button type="text" @click="finish()">{{ $t('SW_CANCEL') }}</el-button>
     </el-form-item>
 
-    <el-dialog :visible.sync="showResetForm">
+    <el-dialog :title="$t('SW_RESET_PASSWORD')" :visible.sync="showResetForm">
+      <p class="mb-20">{{ $t('SW_RESET_PASSWORD_TEXT') }}</p>
       <reset-form :hide-shadow="true"></reset-form>
     </el-dialog>
   </el-form>
@@ -98,7 +100,7 @@ import ThumbnailEdit from '../../components/ThumbnailEdit'
 
 export default {
   name: 'UserAccountForm',
-  props: ['form', 'finish'],
+  props: ['form', 'finish', 'updateUser'],
   components: { ThumbnailEdit, ResetForm },
 
   data () {
@@ -128,13 +130,21 @@ export default {
 
       this.$http.put(`users/${this.form._id}`, this.form, params)
         .then((res) => {
-          const user = res.data.list[0]
+          const user = this.$store.state.user
+          const updatedUser = res.data.list[0]
+
+          if (this.updateUser) {
+            this.updateUser(updatedUser._id, this.form)
+          }
+
           this.$message({ message: this.$i18n.t('SW_CHANGES_SAVED'), type: 'success' })
+
           if (this.form._id === this.currentUser._id) {
             // Update current user
-            user.organization = this.school
+            updatedUser.organization = user.organization
+            updatedUser.organizations = user.organizations
             loadLanguages(this.$i18n, this.form.language)
-            this.$store.dispatch('setUser', user)
+            this.$store.dispatch('setUser', updatedUser)
           }
 
           this.finish(user)
@@ -150,15 +160,20 @@ export default {
 
       this.changingRole = this.form._id
 
-      const invitations = [{
+      const student = [{
         recipientEmail: this.form.email,
         downGrade: true,
         contextId: this.school._id,
         role: newRole
       }]
 
-      this.$http.post('users/invite', { invitations })
-        .then(() => {
+      this.$http.post('users/invite', { invitations: student })
+        .then((res) => {
+
+          if (this.updateUser) {
+            this.updateUser(...res.data.list, {role: newRole})
+          }
+
           this.form.role = newRole
           this.$message({ message: this.$i18n.t('SW_ROLE_CHANGED'), type: 'success' })
         })

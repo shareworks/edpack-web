@@ -40,7 +40,7 @@
     <el-form-item :label="$t('SW_ORG_THUMB')">
       <el-button class="mb-5" @click="pickFile('thumbnailUrl')">
         <i class="icon-camera"></i>
-        <span class="mr-5">Upload</span> <small class="text-muted">(min. 200x200)</small>
+        <span class="mr-5">{{ $t('SW_UPLOAD') }}</span> <small class="text-muted">{{ $t('SW_MIN', [200, 200]) }}</small>
       </el-button>
       <a :href="form.thumbnailUrl" target="_blank">
         <thumbnail v-if="form.thumbnailUrl" :model="form" class="ml-10 thumb-42"></thumbnail>
@@ -50,7 +50,7 @@
     <el-form-item :label="$t('SW_ORG_LOGO')">
       <el-button class="mb-5" @click="pickFile('logoUrl')">
         <i class="icon-camera"></i>
-        <span class="mr-5">Upload</span> <small class="text-muted">(min. 600x200)</small>
+        <span class="mr-5">{{ $t('SW_UPLOAD') }}</span> <small class="text-muted">{{ $t('SW_MIN', [600, 200]) }}</small>
       </el-button>
       <a :href="form.logoUrl" target="_blank">
         <thumbnail v-if="form.logoUrl" :model="form.logoUrl" class="logo-org ml-10"></thumbnail>

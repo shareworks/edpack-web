@@ -21,7 +21,7 @@
 
         <!-- Email -->
         <el-form-item prop="email" required>
-          <el-input type="email" :placeholder="$t('SW_EMAIL')" v-model="form.email" name="email">
+          <el-input type="email" :placeholder="$tc('SW_EMAIL', 1)" v-model="form.email" name="email">
             <template slot="prepend">
               <i class="icon-email"></i>
             </template>
@@ -87,7 +87,7 @@ export default {
     infoContent () {
       const b = this.business
       const mapsUrl = config.mapsUrl
-      return `<p class="bold">${b.name}<br><address>${b.streetAddress}<br>${b.postAddress}<br>${b.country}</address><a href="mailto:${b.mail}">${b.mail}</a><br><a href="${mapsUrl}" class="bold" target="_blank">Get directions</a></p>`
+      return `<p class="bold">${b.name}<br><address>${b.streetAddress}<br>${b.postAddress}<br>${b.country}</address><a href="mailto:${b.mail}">${b.mail}</a><br><a href="${mapsUrl}" class="bold" target="_blank">${ this.$i18n.t('SW_GET_DIRECTION') }</a></p>`
     }
   },
 

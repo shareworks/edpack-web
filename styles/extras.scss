@@ -41,8 +41,8 @@
   display: inline-block;
   background-image: url('/images/logo.png');
   background-size: contain;
-  width: 200px;
-  height: 42px;
+  width: 280px;
+  height: 100px;
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -124,9 +124,12 @@
   }
 }
 
-@media (min-width: $--sm) {
-  .horizontal-logo {
-    width: 280px;
-    height: 80px;
+@media (max-width: $--sm) {
+  .expand-table-xs {
+    max-width: 110%;
+    width: calc(100% + 20px);
+
+    margin-left: -10px;
+    margin-right: -10px;
   }
 }

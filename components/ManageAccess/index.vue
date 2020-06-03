@@ -5,7 +5,7 @@
     <!-- Table with instructors -->
     <el-table v-if="!loading" v-show="staff.length" :data="staff" row-key="_id" ref="staffTable" :default-sort="{prop: 'activityDate', order: 'ascending'}">
       <!-- Name -->
-      <el-table-column :label="$t('SW_STAFF')" prop="name" min-width="160">
+      <el-table-column :label="$tc('SW_STAFF', 1)" prop="name" min-width="160">
         <template slot-scope="props">
           <div class="text-ellipsis">
             <thumbnail :model="props.row" class="thumb-user thumb-24 mr-5 hidden-xs hidden-sm"></thumbnail>
@@ -15,7 +15,7 @@
         </template>
       </el-table-column>
       <!-- Email address -->
-      <el-table-column property="email" :label="$t('SW_EMAIL')" min-width="180">
+      <el-table-column property="email" :label="$tc('SW_EMAIL', 1)" min-width="180">
         <template slot-scope="props">
           <a :href="'mailto:' + props.row.email" target="_blank" class="text-ellipsis">{{ props.row.email }}</a>
         </template>
@@ -23,7 +23,7 @@
       <!-- Activity date -->
       <el-table-column sortable property="activityDate" :formatter="dateFormatter" :sort-method="sortActivityDate" :label="$t('SW_ACTIVITY_DATE')" min-width="140"></el-table-column>
       <!-- Role -->
-      <el-table-column width="150" :label="$t('SW_ROLE')">
+      <el-table-column width="150" :label="$tc('SW_ROLE', 1)">
         <template slot-scope="props">
           <div class="pull-right">
             <el-dropdown trigger="click" @command="handleCommand">

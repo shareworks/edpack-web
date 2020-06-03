@@ -46,8 +46,8 @@
 <script>
 import Vue from 'vue'
 import config from 'config'
-import UserAccountForm from '../../components/UserAccountForm'
 import { removeCsrfToken } from '../../utils/csrf-handling'
+import UserAccountForm from '../../components/UserAccountForm'
 
 export default {
   name: 'UserAccount',

@@ -1,13 +1,14 @@
 <template>
   <div>
     <p v-if="!isManageStaff" class="mb-20">{{ $t('SW_ADD_USERS_TEXT') }}</p>
-    <p v-else class="mb-20"><b>{{ $t('SW_INVITE_COACHES') }}</b></p>
+    <p v-else-if="justStudents" class="mb-20">{{ $t('SW_ADD_STUDENTS_TEXT') }}</p>
+    <p v-else class="mb-10 bold">{{ $t('SW_INVITE_COACHES') }}</p>
 
     <el-alert class="mb-10" show-icon v-if="differentDomainWarningVisible" type="warning" :title="$t('SW_DIFFERENT_EMAIL_TITLE')">
       <p>{{ $t("SW_DIFFERENT_EMAIL_TEXT") }}</p>
     </el-alert>
 
-    <el-alert class="mb-10" show-icon v-if="incorrectEmails.length !== 0" type="error" title="These emails are not correct, please check them again">
+    <el-alert class="mb-10" show-icon v-if="incorrectEmails.length !== 0" type="error" :title="$t('SW_EMAILS_NOT_CORRECT')">
       <ul>
         <li v-for="email in incorrectEmails" :key="email">
           <span class="bold">{{ email }}</span>
@@ -24,7 +25,7 @@
       <!-- Role -->
       <el-form-item v-if="!isManageStaff">
         <el-select v-model="role" class="block">
-          <el-option v-for="item in ['staff', 'admin', 'student']" :key="item" :label="$t('SW_' + item.toUpperCase())" :value="item"></el-option>
+          <el-option v-for="item in ['staff', 'admin', 'student']" :key="item" :label="$tc('SW_' + item.toUpperCase(), 1)" :value="item"></el-option>
         </el-select>
       </el-form-item>
       <!-- Send to self -->
@@ -45,7 +46,7 @@
 <script>
 export default {
   name: 'UsersCreate',
-  props: ['closeDialog', 'isManageStaff'],
+  props: ['closeDialog', 'isManageStaff', 'justStudents', 'course'],
 
   data () {
     return {
@@ -80,8 +81,16 @@ export default {
     addUsers () {
       if (this.sending) return
 
+      const formRecipients = this.form.recipients.trim()
+
+      if (!formRecipients) {
+        return this.$message({ message: this.$i18n.t('SW_EMAIL_ERROR'), type: 'warning' })
+      }
+
       // Convert string to emails
+
       const emails = this.form.recipients.replace(/\n/g, ',').split(',')
+
       const self = this.form.toSelf
 
       this.emailsValidation(emails)
@@ -105,7 +114,15 @@ export default {
       }
 
       const organization = this.user.organization._id
-      const roles = emails.map(email => ({ recipientEmail: email, model: 'organization', contextId: organization, role: this.role, downgrade: false, sendEmail: true }))
+
+      // If no course is given, only add user on organization level
+      let roles = emails.map(email => ({ recipientEmail: email, model: 'organization', contextId: organization, role: this.justStudents ? 'student' : this.role, downgrade: false, sendEmail: (!this.course) }))
+
+      if (this.course) {
+        const courseRoles = emails.map(email => ({ recipientEmail: email, model: 'course', contextId: this.course._id, role: this.justStudents ? 'student' : this.role, downgrade: false, sendEmail: true }))
+        roles = roles.concat(courseRoles)
+      }
+
 
       this.sending = true
       this.$http.post('users/invite', { invitations: roles }, { params: { toSelf: self } })
