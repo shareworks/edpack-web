@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}" v-if="completionStats">
       <el-card v-for="stat in completionStats" :key="stat.prop" class="stat-counter">
 
