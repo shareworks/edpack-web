@@ -123,7 +123,6 @@ export default {
         roles = roles.concat(courseRoles)
       }
 
-
       this.sending = true
       this.$http.post('users/invite', { invitations: roles }, { params: { toSelf: self } })
         .then(() => {

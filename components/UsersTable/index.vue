@@ -332,7 +332,6 @@ export default {
     sortCaseInsensitive (a, b) { return sortCaseInsensitive(a.name, b.name) },
     updateUser (userId, user) {
       this.tableData.forEach((student, index) => {
-
         if (student._id !== userId) return
         this.tableData[index] = { ...student, ...user }
       })

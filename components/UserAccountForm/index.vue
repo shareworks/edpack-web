@@ -169,9 +169,8 @@ export default {
 
       this.$http.post('users/invite', { invitations: student })
         .then((res) => {
-
           if (this.updateUser) {
-            this.updateUser(...res.data.list, {role: newRole})
+            this.updateUser(...res.data.list, { role: newRole })
           }
 
           this.form.role = newRole
