@@ -95,7 +95,7 @@
       <!-- Name -->
       <el-table-column :label="$t('SW_NAME')" prop="name" min-width="160" sortable :sort-method="sortCaseInsensitive">
         <template slot-scope="props">
-          <a href class="text-ellipsis" @click="editUser(props.row, $event)">
+          <a href class="text-ellipsis" @click.prevent="editUser(props.row)">
             <thumbnail :model="props.row" class="thumb-user thumb-24 mr-5 hidden-xs hidden-sm"></thumbnail>
             <strong>{{props.row.name}}</strong>
           </a>
@@ -303,8 +303,7 @@ export default {
       if (this.tableData.length === 0) this.status = 'none'
       this.$emit('refreshTable')
     },
-    editUser (user, e) {
-      e.preventDefault()
+    editUser (user) {
       this.editUserForm = Vue.util.extend({}, user)
       this.editUserForm.organization = this.user.organization
       this.dialogEditUser = true

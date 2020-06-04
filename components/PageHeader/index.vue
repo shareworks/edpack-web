@@ -30,7 +30,7 @@
       {{ intro }}
 
       <!-- Show more link -->
-      <a v-if="!showMore && $slots.default" href @click="moreInfo" class="hidden-xs ml-5 bold">
+      <a v-if="!showMore && $slots.default" href @click.prevent="moreInfo" class="hidden-xs ml-5 bold">
         {{ $t('SW_MORE_INFO') }}
       </a>
 
@@ -38,7 +38,7 @@
       <el-collapse-transition>
         <div v-show="showMore">
           <slot></slot>
-          <a href @click="moreInfo" class="bold">{{ $t('SW_LESS') }}</a>
+          <a href @click.prevent="moreInfo" class="bold">{{ $t('SW_LESS') }}</a>
         </div>
       </el-collapse-transition>
     </div>
@@ -57,8 +57,7 @@ export default {
   },
 
   methods: {
-    moreInfo (e) {
-      e.preventDefault()
+    moreInfo () {
       this.showMore = !this.showMore
     }
   }

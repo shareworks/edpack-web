@@ -7,7 +7,7 @@
         <h3 class="mb-20 font-18 max-600">
           {{ $t('SW_WELCOME_ABOUT') }}
 
-          <a href @click="openAbout">
+          <a href @click.prevent="openAbout">
             <strong>{{ $t('SW_LEARN_MORE') }}</strong>
           </a>
         </h3>
@@ -21,7 +21,7 @@
 
 
         <p class="mb-20">{{ $t('SW_WELCOME_TEXT', [school.name[lang]]) }}
-          <span v-if="showChatLink">{{ $t('SW_WELCOME_TEXT1') }} <a href @click="openChat">{{ $t('SW_WELCOME_TEXT2') }}</a></span>
+          <span v-if="showChatLink">{{ $t('SW_WELCOME_TEXT1') }} <a href @click.prevent="openChat">{{ $t('SW_WELCOME_TEXT2') }}</a></span>
           <span v-else>{{ $t('SW_WELCOME_TEXT3') }}</span>.
         </p>
         <p class="mb-30">{{ $t('SW_GOOD_LUCK') }}</p>
@@ -115,14 +115,8 @@ export default {
       // If passed intro, always update user
       else this.updateUser()
     },
-    openAbout (e) {
-      e.preventDefault()
-      window.open('/about')
-    },
-    openChat (e) {
-      e.preventDefault()
-      window.fcWidget.open()
-    },
+    openAbout () { window.open('/about') },
+    openChat () { window.fcWidget.open() },
     updateUser () {
       if (this.submitting) return
       this.submitting = true

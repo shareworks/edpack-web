@@ -35,7 +35,7 @@
 
         <!-- Send or cancel -->
         <el-form-item>
-          <el-button native-type="submit" type="primary" @click="submitMessage">
+          <el-button native-type="submit" type="primary" @click.prevent="submitMessage">
             <i class="icon-send"></i>
             <strong>{{ $t('SW_SEND_MESSAGE') }}</strong>
           </el-button>
@@ -92,9 +92,7 @@ export default {
   },
 
   methods: {
-    submitMessage (e) {
-      e.preventDefault()
-
+    submitMessage () {
       // Basic validation
       if (!this.form.name || !this.form.message || this.form.email.indexOf('@') < 0) {
         return this.$message({ message: this.$i18n.t('SW_FILL_REQUIRED'), type: 'error' })

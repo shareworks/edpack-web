@@ -13,7 +13,7 @@
     <section class="static-section grey-section">
       <article>
         <!-- Go back button -->
-        <a href="" @click="goBack" class="btn-back">
+        <a href="" @click.prevent="goBack" class="btn-back">
           <i class="icon-arrow_back"></i>
           <span>{{ $t('SW_BACK') }}</span>
         </a>
@@ -61,8 +61,7 @@ export default {
   },
 
   methods: {
-    goBack (e) {
-      e.preventDefault()
+    goBack () {
       window.history.length > 1 ? this.$router.back() : this.router.push('/')
     }
   }

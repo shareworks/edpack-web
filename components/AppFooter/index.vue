@@ -9,7 +9,7 @@
     <!-- Credit -->
     <div class="credits">
       <div class="mb-20" v-if="school && school.colofon && school.colofon[lang]">{{ $t('SW_AS_CLIENT_OF') }} {{ school.name[lang] }} &centerdot;
-        <a class="footer-link" href="#" v-if="school && school.colofon" @click="toggleDialog($event)">{{ $t('SW_COLOFON') }}</a>
+        <a class="footer-link" href="#" v-if="school && school.colofon" @click.prevent="toggleDialog">{{ $t('SW_COLOFON') }}</a>
       </div>
 
       &copy; {{ (new Date()).getFullYear() }} &centerdot; <router-link class="footer-link" to="/about" target="_blank">{{ productName }}</router-link>
@@ -18,7 +18,7 @@
       <p class="mt-10">
         <router-link class="footer-link" to="/terms">{{ $t('SW_TERMS') }}</router-link> |
         <router-link class="footer-link" to="/privacy">{{ $t('SW_PRIVACY') }}</router-link> |
-        <a href="#" class="footer-link" @click="openDialog">{{ $t('SW_CONTACT_US') }}</a>
+        <a href="#" class="footer-link" @click.prevent="openDialog">{{ $t('SW_CONTACT_US') }}</a>
       </p>
     </div>
 
@@ -53,15 +53,13 @@ export default {
   },
 
   methods: {
-    openDialog (e) {
-      e.preventDefault()
+    openDialog () {
       this.dialogContact = true
     },
     closeDialog () {
       this.dialogContact = false
     },
-    toggleDialog (e) {
-      e.preventDefault()
+    toggleDialog () {
       this.dialogColofon = !this.dialogColofon
     }
   }

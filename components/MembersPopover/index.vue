@@ -18,7 +18,7 @@
       </el-button>
 
       <!-- Popover text -->
-      <a href="#" @click="preventDefault" slot="reference" class="bold">
+      <a href="#" @click.prevent slot="reference" class="bold">
         {{ (evaluation ? evaluation.staff.length : course.counts.staff) || 0 }}
         {{ $tc('SW_STAFF', instructors.length).toLowerCase() }}
       </a>
@@ -49,8 +49,7 @@ export default {
       this.$http.get('users', { params: { role: 'staff', entity: this.course._id } })
         .then((res) => { this.instructors = res.data.list })
         .catch(() => {})
-    },
-    preventDefault (e) { e.preventDefault() }
+    }
   }
 }
 </script>

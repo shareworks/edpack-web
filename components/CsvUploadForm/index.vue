@@ -12,7 +12,7 @@
     </el-upload>
 
     <!-- Download template -->
-    <el-button type="text" size="medium" class="ml-10 vertical-top" v-if="!submitting && !users.length" @click="downloadTemplate">
+    <el-button type="text" size="medium" class="ml-10 vertical-top" v-if="!submitting && !users.length" @click.prevent="downloadTemplate">
       <i class="icon-download"></i>
       <span>{{ $t('SW_DOWNLOAD_TEMPLATE') }}</span>
     </el-button>
@@ -149,8 +149,7 @@ export default {
     handleUploadExceed () {
       this.$message({ message: this.$i18n.t('SW_PLEASE_REMOVE_FIRST'), type: 'error' })
     },
-    downloadTemplate (e) {
-      e.preventDefault()
+    downloadTemplate () {
       window.open('/default-template.csv')
     }
   }

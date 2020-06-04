@@ -5,10 +5,10 @@
 
     <el-form-item class="email-item">
       <!-- Email -->
-      <el-input class="email-input" prefix-icon="icon-email" type="email" name="email" size="large" v-model="email" :placeholder="$t('SW_YOUR_EMAIL')" @keyup.enter="submitRequest" :required="true">
+      <el-input class="email-input" prefix-icon="icon-email" type="email" name="email" size="large" v-model="email" :placeholder="$t('SW_YOUR_EMAIL')" @keyup.enter.prevent="submitRequest" :required="true">
         <!--Submit request -->
         <template slot="append">
-          <el-button class="submit-button" native-type="submit" type="primary" @click="submitRequest">
+          <el-button class="submit-button" native-type="submit" type="primary" @click.prevent="submitRequest">
             <i class="icon-send"></i>
             <span class="hidden-xs">{{ $t('SW_REQUEST_ACCESS') }}</span>
           </el-button>
@@ -35,9 +35,7 @@ export default {
     }
   },
   methods: {
-    submitRequest (e) {
-      e.preventDefault()
-
+    submitRequest () {
       // Basic validation
       if (this.email.indexOf('@') < 0) return this.$message({ message: this.$i18n.t('SW_INCORRECT_EMAIL'), type: 'error' })
 
