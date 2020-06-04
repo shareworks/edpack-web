@@ -14,16 +14,28 @@
         <!-- Reset form -->
         <div class="minimum-container">
           <div class="title text-center"><strong>{{ $t('SW_FORGOT_PASSWORD') }}</strong></div>
-          <p class="mb-20 text-center">{{ $t('SW_FORGOT_PASSWORD_TEXT') }}</p>
 
-          <el-form>
-            <el-input :placeholder="$t('SW_YOUR_EMAIL')" autofocus prefix-icon="icon-email" class="mb-10" v-model="form.email"></el-input>
+          <el-collapse-transition>
+            <div v-show="!success">
+              <p class="mb-20 text-center">{{ $t('SW_FORGOT_PASSWORD_TEXT') }}</p>
 
-            <el-button class="block" :loading="submitting" type="primary" @click="submitEmail">
-              <i class="icon-send"></i>
-              {{ $t('SW_REQUEST_RESET_LINK') }}
-            </el-button>
-          </el-form>
+              <el-form>
+                <el-input :placeholder="$t('SW_YOUR_EMAIL')" autofocus prefix-icon="icon-email" class="mb-10" v-model="form.email"></el-input>
+
+                <el-button class="block" :loading="submitting" type="primary" @click="submitEmail">
+                  <i class="icon-send"></i>
+                  {{ $t('SW_REQUEST_RESET_LINK') }}
+                </el-button>
+              </el-form>
+            </div>
+          </el-collapse-transition>
+
+          <el-collapse-transition>
+            <div v-show="success" class="text-center pa-3">
+              <i class="icon-checkmark mb-2 font-32" style="color: #459b49"></i>
+              <p class="title">{{ $t('SW_MESSAGE_SENT') }}</p>
+            </div>
+          </el-collapse-transition>
         </div>
 
         <!-- Footer links -->
@@ -45,6 +57,7 @@ export default {
   data () {
     return {
       submitting: false,
+      success: false,
       form: { email: '' }
     }
   },
@@ -55,12 +68,14 @@ export default {
       this.submitting = true
 
       this.$http.post('/auth/local/recover-password', this.form)
-        .then((res) => { this.$message({ message: this.$i18n.t('SW_EMAIL_RESET_SUBMITTED'), type: 'success' }) })
+        .then(() => {
+          this.success = true
+          this.$message({ message: this.$i18n.t('SW_EMAIL_RESET_SUBMITTED'), type: 'success' })
+        })
         .catch(() => {
           this.$message({ message: this.$i18n.t('SW_EMAIL_NOT_NOT_FOUND'), type: 'error' })
         })
         .finally(() => {
-          this.form.email = ''
           this.submitting = false
         })
     }
