@@ -19,7 +19,7 @@
             <div v-show="!success">
               <p class="mb-20 text-center">{{ $t('SW_FORGOT_PASSWORD_TEXT') }}</p>
 
-              <el-form>
+              <el-form :model="form" @submit.prevent.native="submitEmail">
                 <el-input :placeholder="$t('SW_YOUR_EMAIL')" autofocus prefix-icon="icon-email" class="mb-10" v-model="form.email"></el-input>
 
                 <el-button class="block" :loading="submitting" type="primary" @click="submitEmail">
@@ -32,7 +32,7 @@
 
           <el-collapse-transition>
             <div v-show="success" class="text-center pa-3">
-              <i class="icon-checkmark mb-2 font-32" style="color: #459b49"></i>
+              <i class="icon-checkmark mb-2 font-32 text-success"></i>
               <p class="title">{{ $t('SW_MESSAGE_SENT') }}</p>
             </div>
           </el-collapse-transition>
