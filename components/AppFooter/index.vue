@@ -2,7 +2,10 @@
   <div class="app-footer">
 
     <!-- About logo -->
-    <router-link to="/about" target="_blank" aria-hidden="true" tabindex="-1">
+    <a v-if="aboutUrl" :href="aboutUrl" target="_blank">
+      <span class="footer-logo"></span>
+    </a>
+    <router-link v-else to="/about" target="_blank" aria-hidden="true" tabindex="-1">
       <span class="footer-logo"></span>
     </router-link>
 
@@ -12,7 +15,11 @@
         <a class="footer-link" href="#" v-if="school && school.colofon" @click.prevent="toggleDialog">{{ $t('SW_COLOFON') }}</a>
       </div>
 
-      &copy; {{ (new Date()).getFullYear() }} &centerdot; <router-link class="footer-link" to="/about" target="_blank">{{ productName }}</router-link>
+      &copy; {{ (new Date()).getFullYear() }} &centerdot;
+
+      <a v-if="aboutUrl" class="footer-link" target="_blank" :href="aboutUrl">{{ productName }}</a>
+      <router-link v-else to="/about" class="footer-link" target="_blank">{{ productName }}</router-link>
+
       {{ $t('SW_IS_BUILT_BY') }}
       <a :href="business.url" rel="noreferrer" class="footer-link" target="_blank">{{ business.shortName }}</a>.
       <p class="mt-10">
@@ -43,6 +50,7 @@ export default {
 
   data () {
     return {
+      aboutUrl: config.aboutUrl,
       dialogContact: false,
       dialogColofon: false,
       productName: config.name,

@@ -7,9 +7,12 @@
         <h3 class="mb-20 font-18 max-600">
           {{ $t('SW_WELCOME_ABOUT') }}
 
-          <a href @click.prevent="openAbout">
+          <a v-if="aboutUrl" :href="aboutUrl" target="_blank">
             <strong>{{ $t('SW_LEARN_MORE') }}</strong>
           </a>
+          <router-link v-else to="/about" class="inline">
+            <strong>{{ $t('SW_LEARN_MORE') }}</strong>
+          </router-link>
         </h3>
       </div>
     </page-cover>
@@ -84,6 +87,7 @@ export default {
 
   data () {
     return {
+      aboutUrl: config.aboutUrl,
       step: 0,
       steps: ['intro'],
       showChatLink: this?.school?.role !== 'student' && this.$store.state.school.enableFreshChat,
@@ -114,7 +118,6 @@ export default {
       // If passed intro, always update user
       else this.updateUser()
     },
-    openAbout () { window.open('/about') },
     openChat () { window.fcWidget.open() },
     updateUser () {
       if (this.submitting) return

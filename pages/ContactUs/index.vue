@@ -4,7 +4,8 @@
       <div class="public-background"></div>
 
       <!-- Logo -->
-      <router-link to="/about" class="inline"><span class="horizontal-logo"></span></router-link>
+      <a v-if="aboutUrl" class="inline" :href="aboutUrl" target="_blank"><span class="horizontal-logo"></span></a>
+      <router-link v-else to="/about" class="inline"><span class="horizontal-logo"></span></router-link>
 
       <!-- Text -->
       <p class="contact-title bold font-20 mb-30">{{ $t('SW_CONTACT_US') }}</p>
@@ -18,12 +19,19 @@
 </template>
 
 <script>
+import config from 'config'
 export default {
   name: 'contact-us',
   metaInfo: {
     title: 'Contact us'
   },
   components: { ContactForm: () => import('../../components/ContactForm') },
+
+  data () {
+    return {
+      aboutUrl: config.aboutUrl
+    }
+  },
   methods: {
     visibilityChanged (isVisible, entry, count) {
       const { target } = entry

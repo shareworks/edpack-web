@@ -6,7 +6,8 @@
         <div class="public-background"></div>
 
         <!-- Logo -->
-        <router-link to="/about" class="inline"><span class="horizontal-logo"></span></router-link>
+        <a v-if="aboutUrl" :href="aboutUrl" target="_blank"><span class="horizontal-logo"></span></a>
+        <router-link v-else to="/about" class="inline"><span class="horizontal-logo"></span></router-link>
 
         <!-- Text -->
         <p class="landing-text bold font-20">{{ $t('SW_SLOGAN_SHORT') }}</p>
@@ -22,6 +23,7 @@
 </template>
 
 <script>
+import config from 'config'
 import Login from '../../components/Login'
 import FooterLinks from '../../components/FooterLinks'
 import AnimatedLanding from '../../../components/AnimatedLanding'
@@ -29,7 +31,12 @@ import AnimatedLanding from '../../../components/AnimatedLanding'
 export default {
   name: 'Landing',
   metaInfo: { title: 'Sign in' },
-  components: { Login, FooterLinks, AnimatedLanding }
+  components: { Login, FooterLinks, AnimatedLanding },
+  data () {
+    return {
+      aboutUrl: config.aboutUrl
+    }
+  }
 }
 </script>
 
