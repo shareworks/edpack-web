@@ -17,7 +17,13 @@
       </div>
 
       <!-- Learn more -->
-      <router-link :to="{ name: 'about'}" :target="inLTI ? '_blank' : 'self'" v-if="$route.name !== 'about'">
+      <a v-if="aboutUrl" class="inline" :href="aboutUrl" target="_blank">
+        <el-button size="large" type="text">
+          <strong>{{ $t('SW_LEARN_MORE') }}</strong>
+        </el-button>
+      </a>
+
+      <router-link :to="{ name: 'about'}" :target="inLTI ? '_blank' : 'self'" v-if="!aboutUrl && $route.name !== 'about'">
         <el-button size="large" type="text">
           <strong>{{ $t('SW_LEARN_MORE') }}</strong>
         </el-button>
@@ -39,6 +45,7 @@
 </template>
 
 <script>
+import config from 'config'
 export default {
   name: 'FooterLinks',
   props: ['signin'],
@@ -46,6 +53,7 @@ export default {
 
   data () {
     return {
+      aboutUrl: config.aboutUrl,
       dialogContact: false,
       inLTI: this.$store.state.inLTI,
       currentUser: this.$store.state.user
