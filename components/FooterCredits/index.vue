@@ -4,7 +4,7 @@
     <!-- Built by -->
     <p class="mb-20">
       &copy; {{ (new Date()).getFullYear() }} &centerdot; {{ $t('SW_BUILT_BY') }}
-      <a :href="businessUrl" rel="noreferrer" target="_blank">{{ businessName }}</a>.
+      <a :href="aboutUrl ? aboutUrl : businessUrl" rel="noreferrer" target="_blank">{{ businessName }}</a>.
     </p>
 
     <!-- Read our terms & policy -->
@@ -25,6 +25,7 @@ export default {
       appName: config.name,
       supportMail: config.supportMail,
       businessUrl: config.business.url,
+      aboutUrl: config.aboutUrl,
       businessName: config.business.shortName
     }
   }

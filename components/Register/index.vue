@@ -54,7 +54,7 @@
 
         <div class="login-statement">
           <span class="hidden-xs">{{ $t('SW_LOGIN_STATEMENT') }} </span>
-          <a :href="businessUrl" target="_blank">{{ businessName }}</a>
+          <a :href="aboutUrl ? aboutUrl : businessUrl" target="_blank">{{ businessName }}</a>
           {{ $t('SW_LOGIN_STATEMENT2') }}
           <router-link to="/terms">{{ $t('SW_TERMS').toLowerCase() }}</router-link> & <router-link to="/privacy">{{ $t('SW_PRIVACY').toLowerCase() }}</router-link>.
         </div>
@@ -87,6 +87,7 @@ export default {
       schools: [],
       errorType: this.$route.query.error,
       businessUrl: config.business.url,
+      aboutUrl: config.aboutUrl,
       businessName: config.business.shortName,
       repeatPassword: '',
       form: { password: '' }

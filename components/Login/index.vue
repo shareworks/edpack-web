@@ -41,7 +41,7 @@
 
         <div class="login-statement">
           <span class="hidden-xs">{{ $t('SW_LOGIN_STATEMENT') }} </span>
-          <a :href="businessUrl" target="_blank">{{ businessName }}</a>
+          <a :href="aboutUrl ? aboutUrl : businessUrl" target="_blank">{{ businessName }}</a>
           {{ $t('SW_LOGIN_STATEMENT2') }}
           <router-link to="/terms">{{ $t('SW_TERMS').toLowerCase() }}</router-link> & <router-link to="/privacy">{{ $t('SW_PRIVACY').toLowerCase() }}</router-link>.
         </div>
@@ -64,14 +64,13 @@
           <div class="text-center">
             <el-button type="text" @click="$router.push({name: 'forgot'})" size="small">{{ $t('SW_FORGOT_PASSWORD') }}</el-button>
           </div>
-
         </div>
 
         <el-alert class="mt-10" type="error" show-icon v-if="errorType" :title="$t('SW_' + errorType.toUpperCase())"></el-alert>
 
         <div class="login-statement">
           <span class="hidden-xs">{{ $t('SW_LOGIN_STATEMENT') }} </span>
-          <a :href="businessUrl" target="_blank">{{ businessName }}</a>
+          <a :href="aboutUrl ? aboutUrl : businessUrl" target="_blank">{{ businessName }}</a>
           {{ $t('SW_LOGIN_STATEMENT2') }}
           <router-link to="/terms">{{ $t('SW_TERMS').toLowerCase() }}</router-link> & <router-link to="/privacy">{{ $t('SW_PRIVACY').toLowerCase() }}</router-link>.
         </div>
@@ -100,6 +99,7 @@ export default {
       schools: [],
       errorType: this.$route.query.error,
       businessUrl: config.business.url,
+      aboutUrl: config.aboutUrl,
       businessName: config.business.shortName,
       form: { email: '', password: '' }
     }
