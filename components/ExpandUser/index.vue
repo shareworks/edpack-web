@@ -47,7 +47,13 @@ export default {
   methods: {
     getUserCourses () {
       this.$http.get(`users/${this._id}/courses`)
-      .then(res => { this.userCourses = res.data.list })
+      .then(res => {
+        const result = res.data.list
+
+        // Each course should has availableLms prop
+        result.forEach(res => res.availableLms = res.availableLms ? res.availableLms : [])
+        this.userCourses = result
+      })
       .catch(err => console.log(err))
     },
   }
