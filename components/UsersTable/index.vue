@@ -65,29 +65,7 @@
       <!-- Expand -->
       <el-table-column v-if="!hideCourses" type="expand" width="30">
         <template slot-scope="props">
-          <div class="mb-10"><strong class="mr-5">ID</strong> {{ props.row._id }}</div>
-
-          <div v-if="props.row.courses && props.row.courses.length">
-            <el-table :data="props.row.courses" row-key="_id" :default-sort="{prop: 'createdDate', order: 'descending'}">
-              <el-table-column property="name" :label="$tc('SW_COURSE', 1)" min-width="180">
-                <template slot-scope="scope">
-                  <router-link  :to="{ name: 'staff', params: { course: scope.row._id, slug: school.slug } }" class="block text-ellipsis">
-                    <span v-if="scope.row.name">{{ scope.row.name }}</span>
-                    <span v-else>-</span>
-                    <lms-icon :model="scope.row"></lms-icon>
-                  </router-link>
-                </template>
-              </el-table-column>
-              <el-table-column property="role" :label="$tc('SW_ROLE', 1)" min-width="110">
-                <template slot-scope="scope">
-                  <span v-if="scope.row.role">{{ $t('SW_' + scope.row.role.toUpperCase() )}}</span>
-                  <span v-else>-</span>
-                </template>
-              </el-table-column>
-              <el-table-column property="createdDate" :formatter="dateFormatter" :sort-method="sortCreatedDate" :label="$t('SW_CREATED_DATE')" min-width="140"></el-table-column>
-            </el-table>
-          </div>
-          <div v-else>{{ $t('SW_NO_COURSES_FOUND') }}</div>
+          <expand-user :_id="props.row._id" :dateFormatter="dateFormatter" :sortCreatedDate="sortCreatedDate"></expand-user>
         </template>
       </el-table-column>
       <!-- Selection -->
@@ -165,8 +143,8 @@ import Vue from 'vue'
 import moment from 'moment'
 import config from 'config'
 import debounce from 'lodash/debounce'
-import LmsIcon from '../../components/LmsIcon'
 import dateSorter from '../../utils/date-sorter'
+import ExpandUser from '../../components/ExpandUser'
 import EmailUsers from '../../components/EmailUsers'
 import TableStatus from '../../components/TableStatus'
 import UsersCreate from '../../components/UsersCreate'
@@ -175,7 +153,7 @@ import sortCaseInsensitive from '../../utils/sort-case-insensitive'
 
 export default {
   name: 'UsersTable',
-  components: { UserAccountForm, UsersCreate, EmailUsers, LmsIcon, TableStatus },
+  components: { UserAccountForm, UsersCreate, EmailUsers, TableStatus, ExpandUser },
 
   data () {
     const roles = config.usersTableRoles
