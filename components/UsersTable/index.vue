@@ -73,7 +73,7 @@
       <!-- Name -->
       <el-table-column :label="$t('SW_NAME')" prop="name" min-width="160" sortable :sort-method="sortCaseInsensitive">
         <template slot-scope="props">
-          <a href class="text-ellipsis" @click.prevent="editUser(props.row)">
+          <a href="#" class="text-ellipsis" @click.prevent="editUser(props.row)">
             <thumbnail :model="props.row" class="thumb-user thumb-24 mr-5 hidden-xs hidden-sm"></thumbnail>
             <strong>{{props.row.name}}</strong>
           </a>
@@ -83,7 +83,7 @@
       <!-- View profile -->
       <el-table-column :label="$t('SW_PROFILE')" v-if="hasUserProfiles" min-width="70">
         <template slot-scope="props">
-          <a href @click.prevent="$router.push({ name: 'profile', params: { id: props.row._id, slug: school.slug } })">
+          <a href="#" @click.prevent="$router.push({ name: 'profile', params: { id: props.row._id, slug: school.slug } })">
             {{ $t('SW_VIEW') }}
           </a>
         </template>
