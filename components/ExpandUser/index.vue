@@ -22,7 +22,7 @@
         <el-table-column property="createdDate" :formatter="dateFormatter" :sort-method="sortCreatedDate" :label="$t('SW_CREATED_DATE')" min-width="140"></el-table-column>
       </el-table>
     </div>
-    <div>{{ $t('SW_NO_COURSES_FOUND') }}</div>
+    <div v-else>{{ $t('SW_NO_COURSES_FOUND') }}</div>
   </div>
 </template>
 
