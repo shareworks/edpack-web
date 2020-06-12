@@ -38,7 +38,7 @@
         <el-card shadow="never" class="mb-20">
           <div class="terms-window">
             <div v-if="!isComproved" v-html="school.colofon[lang]"></div>
-            <terms-text v-else></terms-text>
+            <static-terms v-else :isComproved="isComproved"></static-terms>
           </div>
         </el-card>
       </section>
@@ -80,14 +80,14 @@
 <script>
 import Vue from 'vue'
 import config from 'config'
+import StaticTerms from '../../../pages/StaticTerms'
 import ThumbnailEdit from '../../components/ThumbnailEdit'
-const TermsText = () => import('../../../components/TermsText')
 const LogoAnimation = () => import('../../../../public/images/logo-animation.svg')
 
 export default {
   name: 'WelcomeDialog',
   props: ['closeDialog'],
-  components: { LogoAnimation, ThumbnailEdit, TermsText },
+  components: { LogoAnimation, ThumbnailEdit, StaticTerms },
 
   data () {
     return {
