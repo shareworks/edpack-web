@@ -2,7 +2,9 @@
   <div>
     <page-cover>
       <div class="dialog-logo">
-        <logo-animation></logo-animation>
+        <section class="logo-wrapper">
+          <logo-animation></logo-animation>
+        </section>
 
         <h3 class="mb-20 font-18 max-600">
           {{ $t('SW_WELCOME_ABOUT') }}
