@@ -22,12 +22,12 @@
         </template>
       </el-table-column>
       <!-- Group name -->
-      <el-table-column property="groupName" :label="$tc('SW_GROUP', 1)" min-width="180">
+      <el-table-column v-if="!noGroup" property="groupName" :label="$tc('SW_GROUP', 1)" min-width="180">
         <template slot-scope="props">
           <strong>{{ props.row.groupName }}</strong>
         </template>
       </el-table-column>
-      <el-table-column property="groupName" :label="$t('SW_GROUP_INDEX')" min-width="50">
+      <el-table-column v-if="!noGroup" property="groupName" :label="$t('SW_GROUP_INDEX')" min-width="50">
         <template slot-scope="props">
           <strong>{{ props.row.groupIndex }}</strong>
         </template>
@@ -42,7 +42,7 @@
 
 export default {
   name: 'StudentsTable',
-  props: ['closeDialog', 'tableData'],
+  props: ['closeDialog', 'tableData', 'noGroup'],
 
   data () {
     return {

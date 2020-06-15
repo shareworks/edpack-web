@@ -12,15 +12,19 @@
     </el-upload>
 
     <!-- Download template -->
-    <el-button type="text" size="medium" class="ml-10 vertical-top" v-if="!submitting && !users.length" @click.prevent="downloadTemplate">
+    <el-button type="text" size="medium" class="ml-10 vertical-top" v-if="!submitting && !users.length && !hideTemplate" @click.prevent="downloadTemplate">
       <i class="icon-download"></i>
       <span>{{ $t('SW_DOWNLOAD_TEMPLATE') }}</span>
     </el-button>
 
     <!-- Successful upload -->
     <el-alert v-if="users.length && !submitting" type="success" class="normal-line-height" show-icon :closable="false" :title="$t('SW_CSV_UPLOAD_SUCCESSFUL')">
-      <p class="mb-10" v-if="!existing">{{ $t('SW_REUSE_EVAL_INFO', [users.length, groups.length]) }}</p>
-      <p class="mb-10" v-else>{{ $t('SW_CSV_CHANGES_TEXT', [existing.groups, existing.students, groups.length, users.length]) }}</p>
+      <div v-if="!noGroup">
+        <p class="mb-10" v-if="!existing">{{ $t('SW_REUSE_EVAL_INFO', [users.length, groups.length]) }}</p>
+        <p class="mb-10" v-else>{{ $t('SW_CSV_CHANGES_TEXT', [existing.groups, existing.students, groups.length, users.length]) }}</p>
+      </div>
+      <p v-else>{{ $t('SW_REUSE_EVAL_USER', [users.length]) }}</p>
+
       <el-button size="small" type="success" v-if="!existing" @click="toggleStudentsList">
         <i class="icon-users"></i>
         {{ $t('SW_VIEW_STUDENTS') }}
@@ -39,13 +43,13 @@
       <el-table :data="invalidUsers" style="width: 100%" size="small" max-height="300px" class="mt-10">
         <el-table-column prop="name" :label="$t('SW_NAME')" width="180"></el-table-column>
         <el-table-column prop="email" :label="$tc('SW_EMAIL', 1)" width="300"></el-table-column>
-        <el-table-column prop="groupName" :label="$tc('SW_GROUP', 1)"></el-table-column>
+        <el-table-column v-if="!noGroup" prop="groupName" :label="$tc('SW_GROUP', 1)"></el-table-column>
       </el-table>
     </div>
 
     <!-- students list table -->
     <el-dialog :visible.sync="usersListVisible">
-        <students-table :tableData="users" />
+        <students-table :tableData="users" :noGroup="noGroup" />
     </el-dialog>
 
   </div>
@@ -57,7 +61,7 @@ import StudentsTable from '../StudentsTable'
 
 export default {
   name: 'CsvUploadForm',
-  props: ['existing'],
+  props: ['existing', 'hideTemplate', 'noGroup'],
   components: { StudentsTable },
 
   data () {
@@ -108,23 +112,41 @@ export default {
           return newValue.trim()
         },
         complete: (results) => {
-          const filteredResults = results.data.filter(user => {
-            return user.name && user.email && (user.groupName || user.group || user.groupname)
-          })
+          let filteredResults = []
+
+          if (this.noGroup) {
+            // Without group
+            filteredResults = results.data.filter(user => {
+              return user.name && user.email
+            })
+          } else {
+            // With group
+            filteredResults = results.data.filter(user => {
+              return user.name && user.email && (user.groupName || user.group || user.groupname)
+            })
+          }
 
           // Clean up the results
           for (const user of filteredResults) {
             user.email = user.email.toLowerCase()
             user.name = user.name.replace(/\uFFFD/g, '')
 
-            const group = user.groupName || user.groupname || user.group
-            user.groupName = group.replace(/[^\x00-\x7F]/g, '')
+            if (!this.noGroup) {
+              const group = user.groupName || user.groupname || user.group
+              user.groupName = group.replace(/[^\x00-\x7F]/g, '')
+            }
 
-            if (!regexValidEmail.test(user.email)) this.invalidUsers.push(user)
+            let validDomain = true
+            if (this.school.emailDomains && this.school.emailDomains.length) {
+              validDomain = this.school.emailDomains.find(domain => user.email.includes(domain))
+            }
+
+            if (!validDomain) this.form.invalidParticipants.push(user)
+            else if (!regexValidEmail.test(user.email)) this.invalidUsers.push(user)
             else this.users.push(user)
 
             // Create array of unique groups
-            if (!this.groups.includes(user.groupName)) this.groups.push(user.groupName)
+            if (!this.groups.includes(user.groupName) && !this.noGroup) this.groups.push(user.groupName)
           }
 
           // If invalid users, stop and show the users and the problems
