@@ -125,7 +125,7 @@
           </template>
         </el-table-column>
         <!-- Custom counts -->
-        <el-table-column v-for="customCount in customCounts" :key="customCount.type" :property="'counts.' + customCount.type" :label="$t('SW_' + customCount.type.toUpperCase())" width="120">
+        <el-table-column v-for="customCount in customCounts" :key="customCount.type" :property="'counts.' + customCount.type" :label="$tc('SW_' + customCount.type.toUpperCase(), 2)" width="120" sortable>
           <template slot-scope="props">
             <i :class="customCount.icon"></i>
             {{ props.row.counts && props.row.counts[customCount.type] || 0 | numeral('0a') }}

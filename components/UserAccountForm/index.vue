@@ -19,7 +19,7 @@
     </el-form-item>
 
     <!-- Emails -->
-    <el-form-item :label="form.emails.length > 1 ? $t('SW_EMAILS') : $t('SW_EMAIL')" class="additional">
+    <el-form-item :label="$tc('SW_EMAIL', form.emails.length)" class="additional">
       <div v-for="(email, index) of form.emails" :key="index">
         <el-input prefix-icon="icon-email" v-model="form.emails[index]" :readonly="!isAdmin" @change="emailChanged = true" :placeholder="$t('SW_EMAIL_PLACEHOLDER')"
                   :class="email === form.email ? 'primary-email' : 'secondary-email'" class="mb-5" disabled>

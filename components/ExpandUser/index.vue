@@ -15,7 +15,7 @@
         </el-table-column>
         <el-table-column property="role" :label="$tc('SW_ROLE', 1)" min-width="110">
           <template slot-scope="scope">
-            <span v-if="scope.row.role">{{ $t('SW_' + scope.row.role.toUpperCase() )}}</span>
+            <span v-if="scope.row.role">{{ $tc('SW_' + scope.row.role.toUpperCase(), 1 )}}</span>
             <span v-else>-</span>
           </template>
         </el-table-column>
@@ -40,22 +40,24 @@ export default {
     }
   },
 
-  mounted() {
+  mounted () {
     this.getUserCourses()
   },
 
   methods: {
     getUserCourses () {
       this.$http.get(`users/${this._id}/courses`)
-      .then(res => {
-        const result = res.data.list
+        .then(res => {
+          const result = res.data.list
 
-        // Each course should has availableLms prop
-        result.forEach(res => res.availableLms = res.availableLms ? res.availableLms : [])
-        this.userCourses = result
-      })
-      .catch(err => console.log(err))
-    },
+          // Each course should has availableLms prop
+          result.forEach(res => {
+            res.availableLms = res.availableLms ? res.availableLms : []
+          })
+          this.userCourses = result
+        })
+        .catch(err => console.log(err))
+    }
   }
 }
 </script>

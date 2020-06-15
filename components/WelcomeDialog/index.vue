@@ -2,7 +2,9 @@
   <div>
     <page-cover>
       <div class="dialog-logo">
-        <logo-animation></logo-animation>
+        <section class="logo-wrapper">
+          <logo-animation></logo-animation>
+        </section>
 
         <h3 class="mb-20 font-18 max-600">
           {{ $t('SW_WELCOME_ABOUT') }}
@@ -35,7 +37,8 @@
 
         <el-card shadow="never" class="mb-20">
           <div class="terms-window">
-            <div v-html="school.colofon[lang]"></div>
+            <div v-if="!isComproved" v-html="school.colofon[lang]"></div>
+            <static-terms v-else :isComproved="isComproved"></static-terms>
           </div>
         </el-card>
       </section>
@@ -64,7 +67,7 @@
       </el-button>
       <el-button type="primary" @click="nextStep" :loading="submitting">
         <strong v-if="steps[step] === 'intro'">{{ $t('SW_CONTINUE') }}</strong>
-        <strong v-else-if="steps[step] === 'terms'">{{ $t('SW_ACCEPT_CLOSE') }}</strong>
+        <strong v-else-if="steps[step] === 'terms' || isComproved">{{ $t('SW_ACCEPT_CLOSE') }}</strong>
         <strong v-else-if="steps[step] === 'verify'">{{ $t('SW_SAVE_CLOSE') }}</strong>
         <i class="ml-5 icon-arrow_forward"></i>
       </el-button>
@@ -77,17 +80,19 @@
 <script>
 import Vue from 'vue'
 import config from 'config'
+import StaticTerms from '../../../pages/StaticTerms'
 import ThumbnailEdit from '../../components/ThumbnailEdit'
 const LogoAnimation = () => import('../../../../public/images/logo-animation.svg')
 
 export default {
   name: 'WelcomeDialog',
   props: ['closeDialog'],
-  components: { LogoAnimation, ThumbnailEdit },
+  components: { LogoAnimation, ThumbnailEdit, StaticTerms },
 
   data () {
     return {
       aboutUrl: config.aboutUrl,
+      isComproved: config.name === 'Comproved',
       step: 0,
       steps: ['intro'],
       showChatLink: this?.school?.role !== 'student' && this.$store.state.school.enableFreshChat,
@@ -105,6 +110,7 @@ export default {
   created () {
     if (this.acceptTerms && !this.currentUser.checks.acceptedTerms) this.steps.push('terms')
     if (this.verifyAccountInfo && !this.currentUser.checks.verifiedAccount) this.steps.push('verify')
+    if (this.isComproved) this.steps.push('terms')
   },
 
   methods: {
