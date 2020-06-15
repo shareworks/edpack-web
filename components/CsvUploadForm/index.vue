@@ -68,6 +68,7 @@ export default {
     return {
       user: this.$store.state.user,
       course: this.$store.state.course || null,
+      school: this.$store.state.school,
       lang: this.$store.state.lang,
       users: [],
       invalidUsers: [],
