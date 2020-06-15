@@ -52,7 +52,6 @@ import config from 'config'
 export default {
   name: 'AppHeader',
   props: ['openSidebar'],
-  components: { },
 
   data () {
     return {
