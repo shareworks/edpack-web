@@ -22,7 +22,8 @@
 }
 
 .terms-window {
-  max-height: calc(90vh - 250px);
+  max-height: calc(90vh - 400px);
+  min-height: 140px;
   padding: 15px;
   overflow-x: hidden;
   text-align: left;

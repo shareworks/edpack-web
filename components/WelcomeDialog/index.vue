@@ -6,16 +6,20 @@
           <logo-animation></logo-animation>
         </section>
 
+        <!-- Headers -->
         <h3 class="mb-20 font-18 max-600">
-          <p v-if="step === 0">{{ $t('SW_WELCOME_ABOUT') }}</p>
-          <p v-else>{{ $t('SW_ADD_NAME_IMAGE') }}</p>
+          <div v-if="step === 0">
+            <p>{{ $t('SW_WELCOME_ABOUT') }}</p>
 
-          <a v-if="aboutUrl" :href="aboutUrl" target="_blank">
-            <strong>{{ $t('SW_LEARN_MORE') }}</strong>
-          </a>
-          <router-link v-else to="/about" class="inline">
-            <strong>{{ $t('SW_LEARN_MORE') }}</strong>
-          </router-link>
+            <a v-if="aboutUrl" :href="aboutUrl" target="_blank">
+              <strong>{{ $t('SW_LEARN_MORE') }}</strong>
+            </a>
+            <router-link v-else to="/about" class="inline">
+              <strong>{{ $t('SW_LEARN_MORE') }}</strong>
+            </router-link>
+          </div>
+          <p v-else-if="steps[step] === 'verify'">{{ $t('SW_ADD_NAME_IMAGE') }}</p>
+          <p v-else-if="steps[step] === 'terms'">{{ $t('SW_READ_TERMS', [school.name[lang]]) }}</p>
         </h3>
       </div>
     </page-cover>
@@ -34,7 +38,6 @@
 
       <!-- Accept terms and privacy statement -->
       <section v-else-if="steps[step] === 'terms'">
-        <h3 class="font-18 mb-20">{{ $t('SW_READ_TERMS', [school.name[lang]]) }}</h3>
 
         <el-card shadow="never" class="mb-20">
           <div class="terms-window">
