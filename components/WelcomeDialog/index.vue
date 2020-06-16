@@ -7,7 +7,8 @@
         </section>
 
         <h3 class="mb-20 font-18 max-600">
-          {{ $t('SW_WELCOME_ABOUT') }}
+          <p v-if="step === 0">{{ $t('SW_WELCOME_ABOUT') }}</p>
+          <p v-else>{{ $t('SW_ADD_NAME_IMAGE') }}</p>
 
           <a v-if="aboutUrl" :href="aboutUrl" target="_blank">
             <strong>{{ $t('SW_LEARN_MORE') }}</strong>
@@ -45,7 +46,6 @@
 
       <!-- Fill student name and avatar -->
       <section v-else-if="steps[step] === 'verify'" class="mb-30">
-        <h3 class="mb-20 font-18">{{ $t('SW_ADD_NAME_IMAGE') }}</h3>
         <p class="mb-20">{{ $t('SW_ADD_NAME_TEXT') }}</p>
         <el-form ref="form" :model="form" label-width="150px" class="text-left">
           <!-- Thumbnail -->
