@@ -5,7 +5,7 @@
 
         <vc-donut background="white" foreground="lightgrey" :size="80" unit="%" :thickness="30" :sections="stat.sections">
           <div class="font-26">
-            <strong><countTo :startVal='(school.counts[stat.prop] / 2)' :endVal='school.counts[stat.prop]' :duration='4000'></countTo>%</strong>
+            <strong><countTo :startVal='(school.counts[stat.prop] / 2)' :endVal='school.counts[stat.prop]' separator="." :duration='4000'></countTo>%</strong>
           </div>
           <div class="font-14">{{ stat.name }}</div>
         </vc-donut>
@@ -16,7 +16,7 @@
       <el-card v-for="stat in userStats" :key="stat.prop" class="stat-counter">
       <div class="font-26">
         <i :class="stat.icon"></i>
-        <strong><countTo :startVal='(school.counts[stat.prop] / 2)' :endVal='school.counts[stat.prop]' :duration='4000'></countTo></strong>
+        <strong><countTo :startVal='(school.counts[stat.prop] / 2)' :endVal='school.counts[stat.prop]' separator="." :duration='4000'></countTo></strong>
       </div>
       <div>{{ stat.name }}</div>
     </el-card>
@@ -26,7 +26,7 @@
       <el-card v-for="stat in stats" :key="stat.prop" class="stat-counter">
         <div class="font-20">
           <i :class="stat.icon"></i>
-          <strong><countTo :startVal='(school.counts[stat.prop] / 2)' :endVal='school.counts[stat.prop]' :duration='4000'></countTo></strong>
+          <strong><countTo :startVal='(school.counts[stat.prop] / 2)' :endVal='school.counts[stat.prop]' separator="." :duration='4000'></countTo></strong>
         </div>
         <div>{{ $t('SW_TOTAL') }} {{ stat.name }}</div>
       </el-card>
