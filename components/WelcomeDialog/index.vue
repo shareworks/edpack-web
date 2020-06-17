@@ -93,18 +93,21 @@ export default {
   components: { LogoAnimation, ThumbnailEdit, StaticTerms },
 
   data () {
+    const isComproved = config.name === 'Comproved'
+    const acceptTerms = !!(this.$store.state.school.colofon && this.$store.state.school.colofon[this.$store.state.lang]) || isComproved
+
     return {
       aboutUrl: config.aboutUrl,
-      isComproved: config.name === 'Comproved',
+      isComproved,
+      acceptTerms,
+      school: this.$store.state.school,
       step: 0,
       steps: ['intro'],
       showChatLink: this?.school?.role !== 'student' && this.$store.state.school.enableFreshChat,
-      school: this.$store.state.school,
       currentUser: this.$store.state.user,
       lang: this.$store.state.lang,
       submitting: false,
       dontShowAgain: false,
-      acceptTerms: !!(this.$store.state.school.colofon && this.$store.state.school.colofon[this.$store.state.lang]),
       form: Vue.util.extend({}, this.$store.state.user),
       verifyAccountInfo: config.verifyAccountInfo
     }
@@ -113,7 +116,6 @@ export default {
   created () {
     if (this.acceptTerms && !this.currentUser.checks.acceptedTerms) this.steps.push('terms')
     if (this.verifyAccountInfo && !this.currentUser.checks.verifiedAccount) this.steps.push('verify')
-    if (this.isComproved) this.steps.push('terms')
   },
 
   methods: {
