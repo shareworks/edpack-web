@@ -22,8 +22,9 @@
             </el-badge>
 
             <!-- Log in as user -->
-            <el-button @click="loginAs" size="medium" v-if="multipleSelection.length === 1 && user.systemAdmin" class="hidden-xs hidden-sm ml-5">
-              <span>{{ $t('SW_LOGIN_AS') }}</span>
+            <el-button @click="loginAs" size="medium" v-if="multipleSelection.length === 1 && user.systemAdmin" class="ml-5">
+              <i class="icon-enter"></i>
+              <span class="hidden-xs hidden-sm">{{ $t('SW_LOGIN_AS') }}</span>
             </el-button>
 
             <!-- Clear selection -->
