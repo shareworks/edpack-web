@@ -23,7 +23,7 @@
         <p class="mb-10" v-if="!existing">{{ $t('SW_REUSE_EVAL_INFO', [users.length, groups.length]) }}</p>
         <p class="mb-10" v-else>{{ $t('SW_CSV_CHANGES_TEXT', [existing.groups, existing.students, groups.length, users.length]) }}</p>
       </div>
-      <p v-else>{{ $t('SW_REUSE_EVAL_USER', [users.length]) }}</p>
+      <p class="mb-10" v-else>{{ $t('SW_REUSE_EVAL_USER', [users.length]) }}</p>
 
       <el-button size="small" type="success" v-if="!existing" @click="toggleStudentsList">
         <i class="icon-users"></i>
@@ -48,7 +48,7 @@
     </div>
 
     <!-- students list table -->
-    <el-dialog :visible.sync="usersListVisible">
+    <el-dialog :visible.sync="usersListVisible" :title="$t('SW_VIEW_STUDENTS')">
         <students-table :tableData="users" :noGroup="noGroup" />
     </el-dialog>
 
