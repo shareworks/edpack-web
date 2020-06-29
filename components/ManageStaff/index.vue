@@ -4,7 +4,7 @@
 
     <el-row :gutter="10" v-if="!loading">
       <!-- Existing instructors -->
-      <el-col :span="12">
+      <el-col :span="12" :xs="24">
         <p class="mb-10 bold">{{ $t('SW_CURRENT_STAFF_TEXT') }}</p>
         <div class="instructor-list">
           <div v-for="instructor in instructors" class="text-ellipsis instructor-data" :key="instructor._id">
@@ -28,7 +28,7 @@
         </div>
       </el-col>
       <!-- Add instructors -->
-      <el-col :span="12">
+      <el-col :span="12" :xs="24">
         <users-create :isManageStaff="true" :course="course" :closeDialog="closeDialog"></users-create>
       </el-col>
     </el-row>
