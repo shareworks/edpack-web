@@ -21,6 +21,16 @@
   min-height: 80px;
 }
 
+@media (max-width: $--sm) {
+  .dialog-logo {
+    width: 90%;
+
+    svg {
+      width: 101%;
+    }
+  }
+}
+
 .terms-window {
   max-height: calc(90vh - 400px);
   min-height: 140px;
