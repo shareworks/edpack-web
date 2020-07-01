@@ -6,7 +6,7 @@
         <input type="hidden" name="form-name" value="contact">
 
         <!-- Name -->
-        <el-form-item prop="name" required>
+        <el-form-item prop="name" required class="contact-form-item">
           <el-input :placeholder="$t('SW_YOUR_NAME')" v-model="form.name" name="name">
             <template slot="prepend">
               <i class="icon-user"></i>
@@ -20,7 +20,7 @@
         </el-form-item>
 
         <!-- Email -->
-        <el-form-item prop="email" required>
+        <el-form-item prop="email" required class="contact-form-item">
           <el-input type="email" :placeholder="$tc('SW_EMAIL', 1)" v-model="form.email" name="email">
             <template slot="prepend">
               <i class="icon-email"></i>
@@ -29,12 +29,12 @@
         </el-form-item>
 
         <!-- Message -->
-        <el-form-item prop="message" required>
+        <el-form-item prop="message" required class="contact-form-item">
           <el-input name="message" :placeholder="$t('SW_MESSAGE')" type="textarea" v-model="form.message" :autosize="{ minRows: 3, maxRows: 6}"></el-input>
         </el-form-item>
 
         <!-- Send or cancel -->
-        <el-form-item>
+        <el-form-item class="contact-form-item">
           <el-button native-type="submit" type="primary" @click.prevent="submitMessage">
             <i class="icon-send"></i>
             <strong>{{ $t('SW_SEND_MESSAGE') }}</strong>

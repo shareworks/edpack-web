@@ -240,3 +240,10 @@
     right: 30px;
   }
 }
+
+// Update element-ui
+@media (max-width: $--sm) {
+  .el-message-box {
+    max-width: 90%;
+  }
+}

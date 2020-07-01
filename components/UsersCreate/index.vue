@@ -23,13 +23,13 @@
                   :placeholder="$t('SW_EMAIL_INVITES_PLACEHOLDER')" v-model="form.recipients"></el-input>
       </el-form-item>
       <!-- Role -->
-      <el-form-item v-if="!isManageStaff">
+      <el-form-item v-if="!isManageStaff" class="role-select">
         <el-select v-model="role" class="block">
           <el-option v-for="item in ['staff', 'admin', 'student']" :key="item" :label="$tc('SW_' + item.toUpperCase(), 1)" :value="item"></el-option>
         </el-select>
       </el-form-item>
       <!-- Send to self -->
-      <el-form-item>
+      <el-form-item class="send-copy">
         <el-checkbox :label="$t('SW_SEND_TO_SELF')" v-model="form.toSelf" name="type"></el-checkbox>
       </el-form-item>
     </el-form>

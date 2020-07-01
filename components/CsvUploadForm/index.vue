@@ -12,7 +12,7 @@
     </el-upload>
 
     <!-- Download template -->
-    <el-button type="text" size="medium" class="ml-10 vertical-top" v-if="!submitting && !users.length && !hideTemplate" @click.prevent="downloadTemplate">
+    <el-button type="text" size="medium" class="ml-10 vertical-top" v-if="!submitting && !users.length" @click.prevent="downloadTemplate">
       <i class="icon-download"></i>
       <span>{{ $t('SW_DOWNLOAD_TEMPLATE') }}</span>
     </el-button>
@@ -61,7 +61,7 @@ import StudentsTable from '../StudentsTable'
 
 export default {
   name: 'CsvUploadForm',
-  props: ['existing', 'hideTemplate', 'noGroup'],
+  props: ['existing', 'noGroup', 'downloadLink'],
   components: { StudentsTable },
 
   data () {
@@ -86,6 +86,8 @@ export default {
       this.$emit('clearUsers')
       this.users = []
       this.invalidUsers = []
+      this.submitting = false
+      this.$refs?.csvUpload?.clearFiles()
     },
     handleCSVChange (file) {
       const regexValidEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -173,7 +175,7 @@ export default {
       this.$message({ message: this.$i18n.t('SW_PLEASE_REMOVE_FIRST'), type: 'error' })
     },
     downloadTemplate () {
-      window.open('/default-template.csv')
+      window.open(this.downloadLink ? this.downloadLink : '/default-template.csv')
     }
   }
 }

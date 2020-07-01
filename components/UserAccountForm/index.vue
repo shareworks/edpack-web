@@ -22,7 +22,7 @@
     <el-form-item :label="$tc('SW_EMAIL', form.emails.length)" class="additional">
       <div v-for="(email, index) of form.emails" :key="index">
         <el-input prefix-icon="icon-email" v-model="form.emails[index]" :readonly="!isAdmin" @change="emailChanged = true" :placeholder="$t('SW_EMAIL_PLACEHOLDER')"
-                  :class="email === form.email ? 'primary-email' : 'secondary-email'" class="mb-5" disabled>
+                  :class="email === form.email ? 'primary-email' : 'secondary-email'" class="mb-5">
           <!-- Change email is disabled, waiting for api  -->
           <el-button slot="append" @click="setPrimary(email)" v-if="isAdmin && form.emails.length > 1">
             <i v-if="email === form.email" class="el-icon-star-on el-icon-left"></i>
