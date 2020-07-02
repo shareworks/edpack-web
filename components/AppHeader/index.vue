@@ -51,6 +51,15 @@
         </router-link>
       </div>
     </div>
+
+    <el-dialog :title="$t('SW_LIMIT_ASSESSMENT_CREATION')" append-to-body :visible.sync="dialogRemaining">
+      {{ $t('SW_ASSESSMENT_REMAINING_INFO', [school.name[lang]])}} <a href="#" @click="openChat">{{ $t('SW_CONTACT_SUPPORT') }}</a>.
+
+      <div v-if="user.assessmentLimit && user.assessmentLimit.exp">
+        <strong class="hidden-xs hidden-sm"><i class="icon-time"></i></strong>
+        <strong>{{ prettyDate(user.assessmentLimit.exp) }}</strong>
+      </div>
+    </el-dialog>
   </header>
 </template>
 
@@ -69,7 +78,8 @@ export default {
       showProfile: config.hasUserProfiles,
       selectedOrg: this.$store.state.user.organization.name[this.$store.state.user.language],
       userOrgs: this.$store.state.user.organizations,
-      payAsYouGo: config.payAsYouGo
+      payAsYouGo: config.payAsYouGo,
+      dialogRemaining: false
     }
   },
 
@@ -91,6 +101,9 @@ export default {
   },
 
   methods: {
+    prettyDate (date) {
+      return moment(new Date(date)).format('LLL')
+    },
     changeOrg (orgID) {
       this.$http.put(`session/context?organization=${orgID}`)
         .then(() => { window.location = window.location.origin })
@@ -101,7 +114,8 @@ export default {
       let route = { name: tab, params: { slug: this.school.slug } }
       if (tab === 'admin') route = '/admin'
       this.$router.push(route)
-    }
+    },
+    openChat () { window.fcWidget.open() }
   }
 }
 </script>
