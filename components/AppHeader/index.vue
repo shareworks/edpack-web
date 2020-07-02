@@ -16,8 +16,11 @@
           <span>{{ $t('SW_DASHBOARD') }}</span>
         </el-menu-item>
 
-        <el-button v-if="payAsYouGo" class="assessments-left-btn text-white" size="small">
-          <span>{{ assessmentsLeft }} {{ $t('SW_ASSESSMENTS_LEFT') }}</span>
+        <el-button :type="user.assessmentLimit && user.assessmentLimit.created < user.assessmentLimit.limit ? 'success' : 'danger'" size="small" @click="dialogRemaining = true" v-if="user.role !== 'student' && school.assessmentLimit && payAsYouGo" class="assessment-limit">
+          <strong class="visible-sm-inline visible-xs-inline"><i class="icon-done_all"></i></strong>
+          <strong v-if="user.assessmentLimit"> {{ user.assessmentLimit.created > user.assessmentLimit.limit ? 0 : user.assessmentLimit.limit - user.assessmentLimit.created }} </strong>
+          <strong v-else> 0 </strong>
+          <strong class="hidden-xs hidden-sm">{{ $t('SW_ASSESSMENTS_LEFT') }}</strong>
         </el-button>
 
         <el-menu-item index="" class="hide"></el-menu-item>
@@ -66,9 +69,7 @@ export default {
       showProfile: config.hasUserProfiles,
       selectedOrg: this.$store.state.user.organization.name[this.$store.state.user.language],
       userOrgs: this.$store.state.user.organizations,
-      payAsYouGo: config.payAsYouGo,
-      assessmentsLeft: this.$store.state.user.assessmentLimits.length
-    //  assessmentsLeft will be changed
+      payAsYouGo: config.payAsYouGo
     }
   },
 
