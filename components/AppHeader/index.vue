@@ -16,7 +16,7 @@
           <span>{{ $t('SW_DASHBOARD') }}</span>
         </el-menu-item>
 
-        <el-button class="assessments-left-btn text-white" size="small">
+        <el-button v-if="payAsYouGo" class="assessments-left-btn text-white" size="small">
           <span>{{ assessmentsLeft }} {{ $t('SW_ASSESSMENTS_LEFT') }}</span>
         </el-button>
 
@@ -66,6 +66,7 @@ export default {
       showProfile: config.hasUserProfiles,
       selectedOrg: this.$store.state.user.organization.name[this.$store.state.user.language],
       userOrgs: this.$store.state.user.organizations,
+      payAsYouGo: config.payAsYouGo,
       assessmentsLeft: this.$store.state.user.assessmentLimits.length
     //  assessmentsLeft will be changed
     }
