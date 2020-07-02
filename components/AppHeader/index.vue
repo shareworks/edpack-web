@@ -15,6 +15,11 @@
         <el-menu-item v-if="isAdmin" index="admin" @click="tabClick('admin')">
           <span>{{ $t('SW_DASHBOARD') }}</span>
         </el-menu-item>
+
+        <el-button class="assessments-left-btn text-white" size="small">
+          <span>{{ assessmentsLeft }} {{ $t('SW_ASSESSMENTS_LEFT') }}</span>
+        </el-button>
+
         <el-menu-item index="" class="hide"></el-menu-item>
       </el-menu>
 
@@ -60,7 +65,9 @@ export default {
       lang: this.$store.state.lang,
       showProfile: config.hasUserProfiles,
       selectedOrg: this.$store.state.user.organization.name[this.$store.state.user.language],
-      userOrgs: this.$store.state.user.organizations
+      userOrgs: this.$store.state.user.organizations,
+      assessmentsLeft: this.$store.state.user.assessmentLimits.length
+    //  assessmentsLeft will be changed
     }
   },
 

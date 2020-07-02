@@ -124,3 +124,16 @@ button.menu-button {
     border: none !important;
   }
 }
+
+.assessments-left-btn {
+  margin: 14px 10px !important;
+  border: none !important;
+  background-color: #ff8585 !important;
+  &:hover {
+    background-color: #f87a7a !important;
+  }
+  &:active {
+    background-color: #f65656 !important;
+  }
+
+}
