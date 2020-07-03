@@ -16,9 +16,9 @@
           <span>{{ $t('SW_DASHBOARD') }}</span>
         </el-menu-item>
 
-        <el-button :type="user.assessmentLimit && user.assessmentLimit.created < user.assessmentLimit.limit ? 'success' : 'danger'" size="small" @click="dialogRemaining = true" v-if="user.role !== 'student' && school.assessmentLimit && payAsYouGo" class="assessment-limit">
+        <el-button :type="user.credits && user.credits.used < user.credits.limit ? 'success' : 'danger'" size="small" @click="dialogRemaining = true" v-if="user.role !== 'student' && school.creditsEnabled && payAsYouGo" class="assessment-limit">
           <strong class="visible-sm-inline visible-xs-inline"><i class="icon-done_all"></i></strong>
-          <strong v-if="user.assessmentLimit"> {{ user.assessmentLimit.created > user.assessmentLimit.limit ? 0 : user.assessmentLimit.limit - user.assessmentLimit.created }} </strong>
+          <strong v-if="user.credits"> {{ user.credits.used > user.credits.limit ? 0 : user.credits.limit - user.credits.used }} </strong>
           <strong v-else> 0 </strong>
           <strong class="hidden-xs hidden-sm">{{ $t('SW_ASSESSMENTS_LEFT') }}</strong>
         </el-button>
@@ -55,9 +55,9 @@
     <el-dialog :title="$t('SW_LIMIT_ASSESSMENT_CREATION')" append-to-body :visible.sync="dialogRemaining">
       {{ $t('SW_ASSESSMENT_REMAINING_INFO', [school.name[lang]])}} <a href="#" @click="openChat">{{ $t('SW_CONTACT_SUPPORT') }}</a>.
 
-      <div v-if="user.assessmentLimit && user.assessmentLimit.exp">
+      <div v-if="user.credits && user.credits.exp">
         <strong class="hidden-xs hidden-sm"><i class="icon-time"></i></strong>
-        <strong>{{ prettyDate(user.assessmentLimit.exp) }}</strong>
+        <strong>{{ prettyDate(user.credits.exp) }}</strong>
       </div>
     </el-dialog>
   </header>

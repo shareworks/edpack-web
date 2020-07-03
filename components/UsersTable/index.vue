@@ -114,17 +114,17 @@
       </el-table-column>
 
       <!-- PayAsYouGo -->
-      <el-table-column property="assessmentLimit" v-if="school.assessmentLimit" :label="$t('SW_LIMIT_ASSESSMENT_CREATION')" width="120">
+      <el-table-column property="credits" v-if="school.creditsEnabled" :label="$t('SW_LIMIT_ASSESSMENT_CREATION')" width="120">
         <template slot-scope="props">
-          <el-button :type="isOverdue(props.row) || !props.row.assessmentLimit || props.row.assessmentLimit.created >= props.row.assessmentLimit.limit ? 'danger' : 'success'" size="mini" @click="openPayAsYouGoDialog(props.row)" v-if="props.row.role === 'Instructors'">
-            <span v-if="props.row.assessmentLimit.isNew">
+          <el-button :type="isOverdue(props.row) || !props.row.credits || props.row.credits.used >= props.row.credits.limit ? 'danger' : 'success'" size="mini" @click="openPayAsYouGoDialog(props.row)" v-if="props.row.role === 'Instructors'">
+            <span v-if="props.row.credits.isNew">
               <i class="icon-done_all"></i>
               <strong>0</strong>
             </span>
             <span v-else>
               <i class="icon-done_all"></i>
               <strong v-if="isOverdue(props.row)">0</strong>
-              <strong v-else>{{ props.row.assessmentLimit && props.row.assessmentLimit.created > props.row.assessmentLimit.limit ? 0 : props.row.assessmentLimit.limit - props.row.assessmentLimit.created }}</strong>
+              <strong v-else>{{ props.row.credits && props.row.credits.used > props.row.credits.limit ? 0 : props.row.credits.limit - props.row.credits.used }}</strong>
             </span>
           </el-button>
           <span v-else class="text-muted">-</span>
