@@ -116,7 +116,7 @@
       <!-- PayAsYouGo -->
       <el-table-column property="credits" v-if="school.creditsEnabled" :label="$t('SW_LIMIT_ASSESSMENT_CREATION')" width="120">
         <template slot-scope="props">
-          <el-button :type="isOverdue(props.row) || !props.row.credits || props.row.credits.used >= props.row.credits.limit ? 'danger' : 'success'" size="mini" @click="openPayAsYouGoDialog(props.row)" v-if="props.row.role === 'Instructors'">
+          <el-button :type="isOverdue(props.row) || !props.row.credits || props.row.credits.used >= props.row.credits.limit ? 'danger' : 'success'" size="mini" @click="openPayAsYouGoDialog(props.row)" v-if="props.row.role === 'staff'">
             <span v-if="props.row.credits.isNew">
               <i class="icon-done_all"></i>
               <strong>0</strong>
