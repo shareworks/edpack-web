@@ -116,25 +116,18 @@
       <!-- PayAsYouGo -->
       <el-table-column property="assessmentLimit" v-if="school.assessmentLimit" :label="$t('SW_LIMIT_ASSESSMENT_CREATION')" width="120">
         <template slot-scope="props">
-          <el-button :type="isOverdue(props.row) ? 'danger' : 'success'" size="mini" @click="openPayAsYouGoDialog(props.row)" v-if="props.row.role !== 'student'">
-            <span>
+          <el-button :type="isOverdue(props.row) || !props.row.assessmentLimit || props.row.assessmentLimit.created >= props.row.assessmentLimit.limit ? 'danger' : 'success'" size="mini" @click="openPayAsYouGoDialog(props.row)" v-if="props.row.role === 'Instructors'">
+            <span v-if="props.row.assessmentLimit.isNew">
               <i class="icon-done_all"></i>
               <strong>0</strong>
             </span>
+            <span v-else>
+              <i class="icon-done_all"></i>
+              <strong v-if="isOverdue(props.row)">0</strong>
+              <strong v-else>{{ props.row.assessmentLimit && props.row.assessmentLimit.created > props.row.assessmentLimit.limit ? 0 : props.row.assessmentLimit.limit - props.row.assessmentLimit.created }}</strong>
+            </span>
           </el-button>
-          <!--  TODO: until api not ready -->
-<!--          <el-button :type="isOverdue(props.row) || !props.row.assessmentLimit || props.row.assessmentLimit.created >= props.row.assessmentLimit.limit ? 'danger' : 'success'" size="mini" @click="openPayAsYouGoDialog(props.row)" v-if="props.row.role !== 'student'">-->
-<!--            <span v-if="props.row.assessmentLimit.isNew">-->
-<!--              <i class="icon-done_all"></i>-->
-<!--              <strong>0</strong>-->
-<!--            </span>-->
-<!--            <span v-else>-->
-<!--              <i class="icon-done_all"></i>-->
-<!--              <strong v-if="isOverdue(props.row)">0</strong>-->
-<!--              <strong v-else>{{ props.row.assessmentLimit && props.row.assessmentLimit.created > props.row.assessmentLimit.limit ? 0 : props.row.assessmentLimit.limit - props.row.assessmentLimit.created }}</strong>-->
-<!--            </span>-->
-<!--          </el-button>-->
-<!--          <span v-else class="text-muted">-</span>-->
+          <span v-else class="text-muted">-</span>
         </template>
       </el-table-column>
 
