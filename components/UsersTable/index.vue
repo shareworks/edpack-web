@@ -112,6 +112,32 @@
           {{ props.row.counts && props.row.counts.courses || 0 }}
         </template>
       </el-table-column>
+
+      <!-- PayAsYouGo -->
+      <el-table-column property="assessmentLimit" v-if="school.assessmentLimit" :label="$t('SW_LIMIT_ASSESSMENT_CREATION')" width="120">
+        <template slot-scope="props">
+          <el-button :type="isOverdue(props.row) ? 'danger' : 'success'" size="mini" @click="openPayAsYouGoDialog(props.row)" v-if="props.row.role !== 'student'">
+            <span>
+              <i class="icon-done_all"></i>
+              <strong>0</strong>
+            </span>
+          </el-button>
+          <!--  TODO: until api not ready -->
+<!--          <el-button :type="isOverdue(props.row) || !props.row.assessmentLimit || props.row.assessmentLimit.created >= props.row.assessmentLimit.limit ? 'danger' : 'success'" size="mini" @click="openPayAsYouGoDialog(props.row)" v-if="props.row.role !== 'student'">-->
+<!--            <span v-if="props.row.assessmentLimit.isNew">-->
+<!--              <i class="icon-done_all"></i>-->
+<!--              <strong>0</strong>-->
+<!--            </span>-->
+<!--            <span v-else>-->
+<!--              <i class="icon-done_all"></i>-->
+<!--              <strong v-if="isOverdue(props.row)">0</strong>-->
+<!--              <strong v-else>{{ props.row.assessmentLimit && props.row.assessmentLimit.created > props.row.assessmentLimit.limit ? 0 : props.row.assessmentLimit.limit - props.row.assessmentLimit.created }}</strong>-->
+<!--            </span>-->
+<!--          </el-button>-->
+<!--          <span v-else class="text-muted">-</span>-->
+        </template>
+      </el-table-column>
+
       <!-- Created date -->
       <el-table-column property="createdDate" :formatter="dateFormatter" :sort-method="sortCreatedDate" :label="$t('SW_CREATED_DATE')" min-width="120" sortable></el-table-column>
       <!-- Activity date -->
@@ -154,6 +180,7 @@ import sortCaseInsensitive from '../../utils/sort-case-insensitive'
 
 export default {
   name: 'UsersTable',
+  props: ['openPayAsYouGoDialog', 'isOverdue'],
   components: { UserAccountForm, UsersCreate, EmailUsers, TableStatus, ExpandUser },
 
   data () {
