@@ -42,7 +42,7 @@ export default {
   methods: {
     createCourse () {
       if (this.submitting) return
-      if (!this.form.name) return this.$message({ message: this.$i18n.t('SW_NO_COURSE_NAME'), type: 'error' })
+      if (!this.form.name.trim()) return this.$message({ message: this.$i18n.t('SW_NO_COURSE_NAME'), type: 'error' })
       if (!this.form.faculty) this.form.faculty = undefined
       this.submitting = true
 

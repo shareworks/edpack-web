@@ -15,6 +15,14 @@
         <el-menu-item v-if="isAdmin" index="admin" @click="tabClick('admin')">
           <span>{{ $t('SW_DASHBOARD') }}</span>
         </el-menu-item>
+
+        <el-button :type="user.credits && user.credits.used < user.credits.limit ? 'success' : 'danger'" size="small" @click="dialogRemaining = true" v-if="user.role !== 'student' && school.creditsEnabled && payAsYouGo" class="assessment-limit">
+          <strong class="visible-sm-inline visible-xs-inline"><i class="icon-done_all"></i></strong>
+          <strong v-if="user.credits"> {{ user.credits.used > user.credits.limit ? 0 : user.credits.limit - user.credits.used }} </strong>
+          <strong v-else> 0 </strong>
+          <strong class="hidden-xs hidden-sm">{{ $t('SW_ASSESSMENTS_LEFT') }}</strong>
+        </el-button>
+
         <el-menu-item index="" class="hide"></el-menu-item>
       </el-menu>
 
@@ -43,10 +51,20 @@
         </router-link>
       </div>
     </div>
+
+    <el-dialog :title="$t('SW_LIMIT_ASSESSMENT_CREATION')" append-to-body :visible.sync="dialogRemaining">
+      {{ $t('SW_ASSESSMENT_REMAINING_INFO', [school.name[lang]])}} <a href="#" @click="openChat">{{ $t('SW_CONTACT_SUPPORT') }}</a>.
+
+      <div v-if="user.credits && user.credits.exp">
+        <strong class="hidden-xs hidden-sm"><i class="icon-time"></i></strong>
+        <strong>{{ prettyDate(user.credits.exp) }}</strong>
+      </div>
+    </el-dialog>
   </header>
 </template>
 
 <script>
+import moment from 'moment'
 import config from 'config'
 
 export default {
@@ -60,7 +78,9 @@ export default {
       lang: this.$store.state.lang,
       showProfile: config.hasUserProfiles,
       selectedOrg: this.$store.state.user.organization.name[this.$store.state.user.language],
-      userOrgs: this.$store.state.user.organizations
+      userOrgs: this.$store.state.user.organizations,
+      payAsYouGo: config.payAsYouGo,
+      dialogRemaining: false
     }
   },
 
@@ -82,6 +102,9 @@ export default {
   },
 
   methods: {
+    prettyDate (date) {
+      return moment(new Date(date)).format('LLL')
+    },
     changeOrg (orgID) {
       this.$http.put(`session/context?organization=${orgID}`)
         .then(() => { window.location = window.location.origin })
@@ -92,7 +115,8 @@ export default {
       let route = { name: tab, params: { slug: this.school.slug } }
       if (tab === 'admin') route = '/admin'
       this.$router.push(route)
-    }
+    },
+    openChat () { window.fcWidget.open() }
   }
 }
 </script>
