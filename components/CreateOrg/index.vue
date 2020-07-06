@@ -49,7 +49,7 @@ export default {
     setNewName (lang, value) { this.form.name[lang] = value },
     createOrg () {
       if (this.submitting) return
-      if (!this.form.name.nl || !this.form.name.en) return this.$message({ message: this.$i18n.t('SW_NO_ORG_NAME'), type: 'error' })
+      if (!this.form.name.nl.trim() || !this.form.name.en.trim()) return this.$message({ message: this.$i18n.t('SW_NO_ORG_NAME'), type: 'error' })
       this.submitting = true
       this.form.shortName.nl = this.form.shortName.en
 
