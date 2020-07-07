@@ -78,40 +78,6 @@ export default {
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.loading = false })
     },
-    addUsers () {
-      if (this.sending) return
-      const toSelf = this.form.toSelf
-
-      // Convert string to emails
-      let emails = this.form.recipients.replace(/\n/g, ',').split(',')
-      emails = emails.map(email => email.trim())
-
-      // Filter all emails that don't have a @
-      emails = emails.filter(email => email.includes('@'))
-
-      // Do something when no emails given
-      if (!emails.length) return
-
-      const roles = []
-
-      // Add course role as staff
-      for (const email of emails) {
-        roles.push({
-          email, model: 'course', id: this.course._id, role: 'staff'
-        })
-      }
-
-      this.sending = true
-      this.$http.post('users/invite', { roles }, { params: { toSelf } })
-        .then(() => {
-          this.form.recipients = ''
-          this.$store.state.course.counts.staff = this.course.counts.staff + roles.length
-          this.getInstructors()
-          this.$message({ message: this.$i18n.t('SW_EMAILS_SENT'), type: 'success' })
-        })
-        .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
-        .finally(() => { this.sending = false })
-    },
     confirmRemove (instructor) {
       this.$confirm(this.$i18n.t('SW_REMOVE_INSTRUCTOR_CONFIRM'), this.$i18n.t('SW_REMOVE_INSTRUCTOR'), {
         confirmButtonText: this.$i18n.t('SW_REMOVE'),
