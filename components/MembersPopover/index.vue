@@ -6,7 +6,7 @@
         <div v-for="instructor in instructors" class="text-ellipsis mb-5" :key="instructor._id">
           <thumbnail :model="instructor" class="thumb-user thumb-24 mr-5"></thumbnail>
           <strong>{{instructor.name}}</strong>
-          <el-tag class="ml-5" type="info" v-if="evaluation" size="mini">{{ $t('SW_' + instructor.role.toUpperCase()) }}</el-tag>
+          <el-tag class="ml-5" type="info" v-if="evaluation" size="mini">{{ $tc('SW_' + instructor.role.toUpperCase()) }}</el-tag>
         </div>
       </div>
       <div v-else class="text-muted">{{ $t('SW_NO_STAFF_FOUND') }}</div>
@@ -39,9 +39,13 @@ export default {
     }
   },
 
-  created () {
+  mounted () {
     if (!this.evaluation) this.getInstructors()
     else this.instructors = this.evaluation.staff
+  },
+
+  watch: {
+    evaluation () { this.instructors = this.evaluation.staff }
   },
 
   methods: {

@@ -46,7 +46,7 @@
 <script>
 export default {
   name: 'UsersCreate',
-  props: ['closeDialog', 'isManageStaff', 'justStudents', 'course'],
+  props: ['closeDialog', 'isManageStaff', 'justStudents', 'course', 'updateMembers'],
 
   data () {
     return {
@@ -117,6 +117,7 @@ export default {
 
       // If no course is given, only add user on organization level
       let roles = emails.map(email => ({ recipientEmail: email, model: 'organization', contextId: organization, role: this.justStudents ? 'student' : this.role, downgrade: false, sendEmail: (!this.course) }))
+      const firstRoles = roles
 
       if (this.course) {
         const courseRoles = emails.map(email => ({ recipientEmail: email, model: 'course', contextId: this.course._id, role: this.justStudents ? 'student' : this.role, downgrade: false, sendEmail: true }))
@@ -126,6 +127,11 @@ export default {
       this.sending = true
       this.$http.post('users/invite', { invitations: roles }, { params: { toSelf: self } })
         .then(() => {
+          // return created users to parent
+          if (this.updateMembers) {
+            this.updateMembers(firstRoles)
+          }
+
           this.form.recipients = ''
           this.differentDomainWarningVisible = false
           this.$message({ message: this.$i18n.t('SW_EMAILS_SENT'), type: 'success' })
