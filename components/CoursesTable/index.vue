@@ -34,7 +34,8 @@
 
             <!-- Total courses found -->
             <span v-show="status !== 'loading' || tableData.length" class="hidden-xs hidden-sm ml-10 line-height-38">
-              {{ total }} {{ $tc('SW_COURSE', total).toLowerCase() }}
+              <template v-if="total">{{ total }} {{ $tc('SW_COURSE', total).toLowerCase() }}</template>
+              <template v-else>{{ $t('SW_NO_COURSES_YET') }}</template>
             </span>
           </div>
         </el-col>
