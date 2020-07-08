@@ -12,8 +12,6 @@ export const SET_USER = 'SET_USER'
 export const SET_LANGUAGE = 'SET_LANGUAGE'
 export const SET_LANGUAGES = 'SET_LANGUAGES'
 export const SET_COURSE = 'SET_COURSE'
-// just for Comproved
-export const SET_ASSESSMENT = 'SET_ASSESSMENT'
 
 const state = {
   navAvailable: false,
@@ -27,9 +25,7 @@ const state = {
   slug: null,
   isAdmin: false,
   languages: config.languages,
-  lang: config.defaultLanguage,
-  // just for Comproved
-  assessment: false,
+  lang: config.defaultLanguage
 }
 
 const mutations = {
@@ -67,11 +63,6 @@ const mutations = {
   },
   [SET_COURSE] (state, data) {
     state.course = data.payload
-  },
-  // just for Comproved
-  [SET_ASSESSMENT] (state, data) {
-    state.assessment = data.payload
-    state.course = data.payload.course
   }
 }
 
@@ -99,10 +90,6 @@ const actions = {
   },
   setMobileView ({ commit }, payload) {
     commit({ type: WINDOW_RESIZE, payload })
-  },
-  // just for Comproved
-  setAssessment ({ commit }, payload) {
-    commit({ type: SET_ASSESSMENT, payload })
   }
 }
 
