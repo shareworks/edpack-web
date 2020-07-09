@@ -131,7 +131,6 @@ export default {
       if (this.submitting) return
       this.submitting = true
 
-      // Post password here to API
       this.$http.post('/auth/local/login', this.form)
         .then(() => {
           const redirect = this.$route.query.redirect || 'home'
