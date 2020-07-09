@@ -43,7 +43,13 @@ export default {
 
       this.currentLanguage = newLanguage
       loadLanguages(this.$i18n, newLanguage)
-      this.$message({ message: this.$i18n.t('SW_LANGUAGE_CHANGED'), type: 'success' })
+
+      const text = {
+        en: 'Your preferred language has been changed to English',
+        nl: 'Jouw voorkeurstaal is nu ingesteld op Nederlands'
+      }
+
+      this.$message({ message: text[this.currentLanguage], type: 'success' })
 
       // If not logged in, stop here
       if (!this.currentUser) return this.$ls.set('visitorLanguage', newLanguage)
