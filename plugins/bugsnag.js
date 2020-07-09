@@ -8,6 +8,7 @@ const bugsnagClient = bugsnag({
   releaseStage: process.env.NODE_ENV
 })
 
+
 export default {
   install (Vue, options) {
     bugsnagClient.use(bugsnagVue, Vue)
