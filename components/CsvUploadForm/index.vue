@@ -87,7 +87,10 @@ export default {
       this.users = []
       this.invalidUsers = []
       this.submitting = false
-      this.$refs?.csvUpload?.clearFiles()
+
+      if (this.$refs?.csvUpload?.clearFiles) {
+        this.$refs.csvUpload.clearFiles()
+      }
     },
     handleCSVChange (file) {
       const regexValidEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
