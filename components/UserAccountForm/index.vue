@@ -12,7 +12,7 @@
 
     <!-- Reset password -->
     <el-form-item :label="$t('SW_RESET_PASSWORD')" v-if="signinByPassword" class="additional reset-password">
-      <el-button size="medium" type="primary" plain @click="showResetForm = true">
+      <el-button size="medium" type="primary" plain @click="resetPasswordEmail" :loading="resetting">
         <i class="icon-lock"></i>
         <span>{{ $t('SW_RESET') }}</span>
       </el-button>
@@ -84,16 +84,10 @@
       </el-button>
       <el-button type="text" @click="finish()">{{ $t('SW_CANCEL') }}</el-button>
     </el-form-item>
-
-    <el-dialog :title="$t('SW_RESET_PASSWORD')" :visible.sync="showResetForm">
-      <p class="mb-20">{{ $t('SW_RESET_PASSWORD_TEXT') }}</p>
-      <reset-form :hide-shadow="true"></reset-form>
-    </el-dialog>
   </el-form>
 </template>
 
 <script>
-import ResetForm from '../ResetForm'
 import config from 'config'
 import { loadLanguages } from '../../utils/load-languages'
 import ThumbnailEdit from '../../components/ThumbnailEdit'
@@ -101,7 +95,7 @@ import ThumbnailEdit from '../../components/ThumbnailEdit'
 export default {
   name: 'UserAccountForm',
   props: ['form', 'finish', 'updateUser'],
-  components: { ThumbnailEdit, ResetForm },
+  components: { ThumbnailEdit },
 
   data () {
     return {
@@ -114,7 +108,7 @@ export default {
       languages: this.$store.state.languages,
       emailChanged: false,
       changingRole: false,
-      showResetForm: false
+      resetting: false,
     }
   },
 
@@ -178,6 +172,18 @@ export default {
         })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.changingRole = false })
+    },
+    resetPasswordEmail () {
+      if (this.resetting) return
+      this.resetting = true
+
+      this.$http.post('/auth/local/recover-password', {email: this.form.email})
+        .then(() => {
+          this.success = true
+          this.$message({ message: this.$i18n.t('SW_EMAIL_RESET_SUBMITTED'), type: 'success' })
+        })
+        .catch(() => { this.$message({ message: this.$i18n.t('SW_EMAIL_NOT_NOT_FOUND'), type: 'error' }) })
+        .finally(() => { this.resetting = false })
     }
   }
 }

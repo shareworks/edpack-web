@@ -72,12 +72,8 @@ export default {
           this.success = true
           this.$message({ message: this.$i18n.t('SW_EMAIL_RESET_SUBMITTED'), type: 'success' })
         })
-        .catch(() => {
-          this.$message({ message: this.$i18n.t('SW_EMAIL_NOT_NOT_FOUND'), type: 'error' })
-        })
-        .finally(() => {
-          this.submitting = false
-        })
+        .catch(() => { this.$message({ message: this.$i18n.t('SW_EMAIL_NOT_NOT_FOUND'), type: 'error' }) })
+        .finally(() => { this.submitting = false })
     }
   }
 }

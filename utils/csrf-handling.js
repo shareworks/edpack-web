@@ -35,5 +35,5 @@ function removeCsrfToken () {
   if (inLTI) Vue.ls.remove('csrfTokenLTI')
   else Vue.ls.remove('csrfToken')
 
-  Axios.defaults.headers.common['X-CSRF-TOKEN'] = null
+  Axios.defaults.headers.common['X-CSRF-TOKEN'] = ''
 }
