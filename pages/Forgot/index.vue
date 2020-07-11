@@ -58,7 +58,7 @@ export default {
     return {
       submitting: false,
       success: false,
-      form: { email: '' }
+      form: { email: this.$route.query.email || '' }
     }
   },
 

@@ -1,5 +1,5 @@
 <template>
-  <section class="form-login bottom" v-observe-visibility="{callback: visibilityChanged, throttle: 100, once: true}">
+  <section class="form-login bottom" v-observe-visibility="{ callback: visibilityChanged, throttle: 100, once: true }">
 
     <transition name="login" mode="out-in">
       <div class="login" :key="'google'" v-if="!passwordMode">
@@ -62,7 +62,7 @@
           </el-button>
 
           <div class="text-center">
-            <el-button type="text" @click="$router.push({name: 'forgot'})" size="small">{{ $t('SW_FORGOT_PASSWORD') }}</el-button>
+            <el-button type="text" @click="$router.push({name: 'forgot', query: { email: form.email }})" size="small">{{ $t('SW_FORGOT_PASSWORD') }}</el-button>
           </div>
         </div>
 
