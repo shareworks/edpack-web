@@ -1,9 +1,10 @@
 <template>
   <section class="form-login bottom" v-observe-visibility="{ callback: visibilityChanged, throttle: 100, once: true }">
-
     <transition name="login" mode="out-in">
       <div class="login" :key="'google'" v-if="!passwordMode">
         <div>
+          <el-alert v-if="serverStatus === 'online'" class="mb-10" center :title="$t('SW_SERVER_ONLINE')" type="success" :closable="false"></el-alert>
+          <el-alert v-if="serverStatus === 'offline'" class="mb-10" center :title="$t('SW_SERVER_OFFLINE')" type="error" :closable="false"></el-alert>
           <p class="title"><strong>{{ $t('SW_LOGIN_SCHOOL') }}</strong></p>
 
           <!-- School selection -->
@@ -50,6 +51,9 @@
       <div class="login" :key="'password'" v-if="passwordMode">
         <!--  Email/password form -->
         <div>
+          <el-alert v-if="serverStatus === 'online'" class="mb-10" center :title="$t('SW_SERVER_ONLINE')" type="success" :closable="false"></el-alert>
+          <el-alert v-if="serverStatus === 'offline'" class="mb-10" center :title="$t('SW_SERVER_OFFLINE')" type="error" :closable="false"></el-alert>
+
           <el-button type="text" size="small" class="close-password" @click="passwordMode = false">&times;</el-button>
 
           <p class="title"><strong>{{$t('SW_SIGN_IN_BY_ACCOUNT') }}</strong></p>
@@ -101,17 +105,24 @@ export default {
       businessUrl: config.business.url,
       aboutUrl: config.aboutUrl,
       businessName: config.business.shortName,
-      form: { email: '', password: '' }
+      form: { email: '', password: '' },
+      serverStatus: 'loading'
     }
   },
 
   mounted () {
+    this.checkConnection()
     this.$http.get('/auth/saml/identity-providers')
       .then((res) => { this.schools = res.data.list })
       .catch(() => { this.$message({ message: this.$i18n.t('SW_COULD_NOT_GET_IDP'), type: 'error' }) })
   },
 
   methods: {
+    checkConnection () {
+      this.$http.get('status/check-connection')
+      .then(() => this.serverStatus = 'online')
+      .catch(() => this.serverStatus = 'offline')
+    },
     selectSchool (school) {
       let redirect = this.$route.query.redirect || ''
       if (redirect[0] === '/') redirect = redirect.substr(1)
