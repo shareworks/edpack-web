@@ -212,7 +212,7 @@ export default {
 
   watch: {
     searchText: debounce(function () {
-      this.$router.replace({ name: 'admin', params: { slug: this.school.slug, mode: 'courses' }, query: { query: this.searchText, filter: this.statusFilter } })
+      this.$router.replace({ params: { slug: this.school.slug, mode: 'courses' }, query: { query: this.searchText, filter: this.statusFilter } })
     }, 400),
     '$route' () {
       this.selectionChange()
