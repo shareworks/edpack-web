@@ -3,7 +3,6 @@
     <transition name="login" mode="out-in">
       <div class="login" :key="'google'" v-if="!passwordMode">
         <div>
-          <el-alert v-if="serverStatus === 'online'" class="mb-10" center :title="$t('SW_SERVER_ONLINE')" type="success" :closable="false"></el-alert>
           <el-alert v-if="serverStatus === 'offline'" class="mb-10" center :title="$t('SW_SERVER_OFFLINE')" type="error" :closable="false"></el-alert>
           <p class="title"><strong>{{ $t('SW_LOGIN_SCHOOL') }}</strong></p>
 

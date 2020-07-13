@@ -183,7 +183,7 @@ export default {
     return {
       status: false,
       searchText: this.$route.query.query || '',
-      sort: 'name',
+      sort: 'activityDate',
       order: 'ascending',
       roles,
       roleFilter,
