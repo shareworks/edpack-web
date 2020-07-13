@@ -301,7 +301,7 @@ export default {
       })
     },
     confirmRemove () {
-      this.$confirm(this.$i18n.t('SW_DELETE_COURSES_CONFIRM'), this.$i18n.tc('SW_DELETE_COURSE', this.multipleSelection.length), {
+      this.$confirm(this.$i18n.tc('SW_DELETE_COURSES_CONFIRM'), this.$i18n.tc('SW_DELETE_COURSES', this.multipleSelection.length), {
         confirmButtonText: this.$i18n.t('SW_DELETE'),
         cancelButtonText: this.$i18n.t('SW_CANCEL'),
         beforeClose: (action, instance, done) => {
