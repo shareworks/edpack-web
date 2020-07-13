@@ -119,7 +119,7 @@ export default {
 
   methods: {
     checkConnection () {
-      this.$http.get('status/check-connection')
+      this.$http.get('status')
       .then(() => this.serverStatus = 'online')
       .catch(() => this.serverStatus = 'offline')
     },
