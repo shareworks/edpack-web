@@ -247,6 +247,11 @@ export default {
       // Filter if there is search text
       if (this.searchText) params.filter = this.searchText
 
+      // Show courses with special faculty
+      if (this.$route.query.context && this.$route.query.context !== 'school') {
+        params.faculty = this.$route.query.context
+      }
+
       this.$http.get('courses', { params })
         .then((res) => {
           this.tableData = this.tableData.concat(res.data.list)
