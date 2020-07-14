@@ -86,9 +86,9 @@ export default {
     },
     removeInstructor (instructor) {
       this.removing = true
-      const roles = [{ email: instructor.email, model: 'course', id: this.course._id, role: 'none' }]
+      const invitations = [{ recipientEmail: instructor.email, downgrade: true, contextId: this.course._id, role: 'none', sendEmail: false }]
 
-      this.$http.post('users/invite', { roles })
+      this.$http.post('users/invite', { invitations })
         .then(() => {
           this.getInstructors()
           this.$store.state.course.counts.staff = this.course.counts.staff - roles.length
