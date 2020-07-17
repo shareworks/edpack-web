@@ -50,9 +50,6 @@
       <div class="login" :key="'password'" v-if="passwordMode">
         <!--  Email/password form -->
         <div>
-          <el-alert v-if="serverStatus === 'online'" class="mb-10" center :title="$t('SW_SERVER_ONLINE')" type="success" :closable="false"></el-alert>
-          <el-alert v-if="serverStatus === 'offline'" class="mb-10" center :title="$t('SW_SERVER_OFFLINE')" type="error" :closable="false"></el-alert>
-
           <el-button type="text" size="small" class="close-password" @click="passwordMode = false">&times;</el-button>
 
           <p class="title"><strong>{{$t('SW_SIGN_IN_BY_ACCOUNT') }}</strong></p>
