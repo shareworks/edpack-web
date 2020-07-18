@@ -59,7 +59,7 @@
       {{ $tc('SW_' + (form.role || school.role).toUpperCase()) }}
       {{ $t('SW_ROLE_AT', { school: form.organization.name[lang] }) }}
 
-      <el-dropdown v-if="isAdmin" trigger="click" @command="changeRole">
+      <el-dropdown v-if="isSystemAdmin" trigger="click" @command="changeRole">
             <el-button size="small" class="ml-10">
               <i class="icon-pencil"></i>
               <span>{{ $t('SW_CHANGE_ROLE') }}</span>
@@ -103,6 +103,7 @@ export default {
       lang: this.$store.state.lang,
       school: this.$store.state.school,
       isAdmin: this.$store.state.isAdmin,
+      isSystemAdmin: this.form.systemAdmin,
       submitting: false,
       signinByPassword: config.signinByPassword,
       languages: this.$store.state.languages,

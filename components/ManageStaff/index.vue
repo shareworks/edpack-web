@@ -28,7 +28,7 @@
         </div>
       </el-col>
       <!-- Add instructors -->
-      <el-col :span="12" :xs="24">
+      <el-col v-if="isSystemAdmin" :span="12" :xs="24">
         <users-create :isManageStaff="true" :course="course" :closeDialog="closeDialog" :updateMembers="updateMembers"></users-create>
       </el-col>
     </el-row>
@@ -57,6 +57,7 @@ export default {
       loading: false,
       removing: false,
       sending: false,
+      isSystemAdmin: this.$store.state.user.systemAdmin,
       form: { recipients: '', toSelf: true }
     }
   },

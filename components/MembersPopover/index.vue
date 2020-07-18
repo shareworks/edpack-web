@@ -12,7 +12,7 @@
       <div v-else class="text-muted">{{ $t('SW_NO_STAFF_FOUND') }}</div>
 
       <!-- Manage -->
-      <el-button v-if="canUpdate" type="text" size="small" @click="$emit('manageStaff')">
+      <el-button v-if="canUpdate && isSystemAdmin" type="text" size="small" @click="$emit('manageStaff')">
         <i class="icon-pencil"></i>
         {{ $t('SW_MANAGE_STAFF') }}
       </el-button>
@@ -34,6 +34,7 @@ export default {
 
   data () {
     return {
+      isSystemAdmin: this.$store.state.user.systemAdmin,
       course: this.$store.state.course,
       instructors: []
     }
@@ -52,7 +53,6 @@ export default {
     getInstructors () {
       this.$http.get('users', { params: { role: 'staff', entity: this.course._id } })
         .then((res) => { this.instructors = res.data.list })
-        .catch(() => {})
     }
   }
 }

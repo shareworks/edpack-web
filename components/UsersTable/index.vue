@@ -36,7 +36,7 @@
 
           <div v-else>
             <!-- Add users manually -->
-            <el-button type="primary" plain @click="dialogAddUsers = true" size="medium" class="button-square-xs mr-10">
+            <el-button v-if="isSystemAdmin" type="primary" plain @click="dialogAddUsers = true" size="medium" class="button-square-xs mr-10">
               <i class="icon-add"></i>
               <span class="hidden-xs">{{ $t('SW_ADD_USERS') }}</span>
             </el-button>
@@ -194,6 +194,7 @@ export default {
       multipleSelection: [],
       user: this.$store.state.user,
       isAdmin: this.$store.state.isAdmin,
+      isSystemAdmin: this.$store.state.user.systemAdmin,
       school: this.$store.state.school,
       editUserForm: false,
       hideCourses: config.hideCourses,
