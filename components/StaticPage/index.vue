@@ -21,7 +21,7 @@
         <p class="font-26 bold mb-10">
           {{ $t('SW_HEADER_' + $route.name.toUpperCase()) }}
         </p>
-        <p class="text-muted mb-30"><strong>{{ $t('SW_LAST_UPDATE', ['August', '16', '2018']) }}</strong></p>
+        <p class="text-muted mb-30"><strong>{{ $t('SW_LAST_UPDATE', lastUpdated) }}</strong></p>
       </article>
     </section>
 
@@ -47,8 +47,9 @@
 </template>
 
 <script>
-import FooterCredits from '../FooterCredits'
+import config from 'config'
 import FooterLinks from '../FooterLinks'
+import FooterCredits from '../FooterCredits'
 
 export default {
   name: 'StaticPage',
@@ -56,7 +57,8 @@ export default {
 
   data () {
     return {
-      inLTI: this.$store.state.inLTI
+      inLTI: this.$store.state.inLTI,
+      lastUpdated: config.lastUpdated
     }
   },
 
