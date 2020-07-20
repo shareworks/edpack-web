@@ -34,9 +34,9 @@ export default {
 
   data () {
     return {
-      showCoursesTemplate: config.name = 'Growflow',
       school: this.$store.state.school,
       lang: this.$store.state.lang,
+      showCourseTemplate: config.courseTemplate,
       submitting: false,
       courses: [],
       courseTemplate: '',
