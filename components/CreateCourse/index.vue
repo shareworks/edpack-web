@@ -49,14 +49,14 @@ export default {
     }
   },
 
-  mounted() {
+  mounted () {
     this.getCourses()
   },
 
   methods: {
     getCourses () {
       this.$http.get('courses')
-      .then(res => { this.courses = res.data.list })
+        .then(res => { this.courses = res.data.list })
     },
     createCourse () {
       if (this.submitting) return

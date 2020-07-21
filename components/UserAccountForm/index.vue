@@ -109,7 +109,7 @@ export default {
       languages: this.$store.state.languages,
       emailChanged: false,
       changingRole: false,
-      resetting: false,
+      resetting: false
     }
   },
 
@@ -178,7 +178,7 @@ export default {
       if (this.resetting) return
       this.resetting = true
 
-      this.$http.post('/auth/local/recover-password', {email: this.form.email})
+      this.$http.post('/auth/local/recover-password', { email: this.form.email })
         .then(() => {
           this.success = true
           this.$message({ message: this.$i18n.t('SW_EMAIL_RESET_SUBMITTED'), type: 'success' })
