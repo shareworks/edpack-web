@@ -23,8 +23,15 @@
       <div v-for="(email, index) of form.emails" :key="index">
         <el-input prefix-icon="icon-email" v-model="form.emails[index]" :readonly="!isAdmin" @change="emailChanged = true" :placeholder="$t('SW_EMAIL_PLACEHOLDER')"
                   :class="email === form.email ? 'primary-email' : 'secondary-email'" class="mb-5">
-          <!-- Change email is disabled, waiting for api  -->
-          <el-button slot="append" @click="setPrimary(email)" v-if="isAdmin && form.emails.length > 1">
+
+          <!-- Delete email -->
+          <el-button class="delete-email-button" slot="append" @click="deleteEmail(email)" v-if="form.emails.length > 1">
+            <i class="icon-delete"></i>
+            <span v-if="!isMobile">{{ $t('SW_REMOVE_EMAIL') }}</span>
+          </el-button>
+
+          <!-- Make primary -->
+          <el-button class="primary-button-toggle" slot="append" @click="setPrimary(email)" v-if="isAdmin && form.emails.length > 1">
             <i v-if="email === form.email" class="el-icon-star-on el-icon-left"></i>
             {{email === form.email ? $t('SW_PRIMARY') : $t('SW_SECONDARY') }}
           </el-button>
@@ -104,6 +111,7 @@ export default {
       school: this.$store.state.school,
       isAdmin: this.$store.state.isAdmin,
       isSystemAdmin: this.form.systemAdmin,
+      isMobile: this.$store.state.isMobile,
       submitting: false,
       signinByPassword: config.signinByPassword,
       languages: this.$store.state.languages,
@@ -114,6 +122,9 @@ export default {
   },
 
   methods: {
+    deleteEmail (email) {
+    //  TODO: add delete email functional
+    },
     setPrimary (email) {
       this.form.email = email
       this.emailChanged = true

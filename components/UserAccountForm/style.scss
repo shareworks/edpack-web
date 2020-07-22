@@ -6,3 +6,24 @@
   background-color: #ffffff;
   color: #666;
 }
+
+.primary-button-toggle {
+  width: 150px !important;
+}
+
+.delete-email-button {
+  position: relative;
+}
+
+.delete-email-button:after {
+  content: "";
+  width: 1px;
+  height: 100%;
+  position: absolute;
+  background: #2e3d49;
+  opacity: 0.25;
+  top: 53%;
+  right: 0;
+  transform: translateY(-50%);
+}
+
