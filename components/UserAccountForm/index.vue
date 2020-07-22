@@ -123,7 +123,8 @@ export default {
 
   methods: {
     deleteEmail (email) {
-    //  TODO: add delete email functional
+      this.form.emails = this.form.emails.filter(em => em !== email)
+      this.emailChanged = true
     },
     setPrimary (email) {
       this.form.email = email
