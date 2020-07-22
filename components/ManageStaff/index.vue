@@ -17,7 +17,7 @@
                 {{ instructor.activityDate | fromNow }}
               </span>
                 <span v-else>{{ $t('SW_INVITE_PENDING') }}</span> &centerdot;
-                <el-button :loading="removing" :disabled="instructors.length === 1" type="text" size="mini" @click="removeInstructor(instructor)">
+                <el-button :loading="removing" :disabled="instructors.length === 1" type="text" size="mini" @click="confirmRemove(instructor)">
                   <i class="icon-delete"></i>
                   <span class="hidden-xs hidden-sm">{{ $t('SW_REMOVE') }}</span>
                 </el-button>
@@ -91,11 +91,15 @@ export default {
 
       this.$http.post('users/invite', { invitations })
         .then(() => {
+          this.updateMembers()
           this.getInstructors()
-          this.$store.state.course.counts.staff = this.course.counts.staff - roles.length
+          this.$store.state.course.counts.staff = this.course.counts.staff
           this.$message({ message: this.$i18n.t('SW_USERS_REMOVED'), type: 'success' })
         })
-        .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
+        .catch((err) => {
+          console.log(err)
+          this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') })
+        })
         .finally(() => { this.removing = false })
     }
   }
