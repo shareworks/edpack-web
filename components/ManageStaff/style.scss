@@ -1,8 +1,22 @@
 .instructor-list {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .instructor-data {
   display: flex;
+  width: 100%;
+
+  @media (max-width: $--sm) {
+    width: 50%;
+  }
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
+
+  @media (min-width: 1200px) {
+    width: 50%;
+  }
 }
