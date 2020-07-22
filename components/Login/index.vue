@@ -116,8 +116,8 @@ export default {
   methods: {
     checkConnection () {
       this.$http.get('status')
-        .then(() => this.serverStatus = 'online')
-        .catch(() => this.serverStatus = 'offline')
+        .then(() => { this.serverStatus = 'online' })
+        .catch(() => { this.serverStatus = 'offline' })
     },
     selectSchool (school) {
       let redirect = this.$route.query.redirect || ''
