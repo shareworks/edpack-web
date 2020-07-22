@@ -293,7 +293,7 @@ export default {
         beforeClose: (action, instance, done) => {
           if (action !== 'confirm') return done()
           instance.confirmButtonLoading = true
-          this.archiveCourses().then(res => {
+          this.archiveCourses().then(() => {
             instance.confirmButtonLoading = false
             done()
           })
@@ -301,7 +301,7 @@ export default {
       })
     },
     confirmRemove () {
-      this.$confirm(this.$i18n.tc('SW_DELETE_COURSES_CONFIRM'), this.$i18n.tc('SW_DELETE_COURSES', this.multipleSelection.length), {
+      this.$confirm(this.$i18n.tc('SW_DELETE_COURSES_CONFIRM', this.multipleSelection.length), this.$i18n.tc('SW_DELETE_COURSES', this.multipleSelection.length), {
         confirmButtonText: this.$i18n.t('SW_DELETE'),
         cancelButtonText: this.$i18n.t('SW_CANCEL'),
         beforeClose: (action, instance, done) => {
@@ -320,7 +320,7 @@ export default {
 
       return this.$http.delete('courses', { params: { courses } })
         .then(() => {
-          this.$message({ message: this.$i18n.t('SW_COURSES_REMOVED'), type: 'success' })
+          this.$message({ message: this.$i18n.tc('SW_COURSES_REMOVED', this.multipleSelection.length), type: 'success' })
           this.removeFromTable(courses)
           this.selectionChange()
           this.skip = this.skip - courses.length
