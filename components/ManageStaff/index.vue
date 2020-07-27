@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import config from 'config'
 import moment from 'moment'
 import UsersCreate from '../UsersCreate'
 
@@ -93,7 +94,9 @@ export default {
           this.updateMembers()
           this.getInstructors()
           this.$store.state.course.counts.staff = this.course.counts.staff
-          this.$message({ message: this.$i18n.t('SW_USERS_REMOVED'), type: 'success' })
+
+          const message = config.name === 'Comproved' ? 'SW_INSTRUCTORS_REMOVED' : 'SW_USERS_REMOVED'
+          this.$message({ message: this.$i18n.t(message), type: 'success' })
         })
         .catch((err) => {
           console.log(err)
