@@ -143,11 +143,15 @@ export default {
             }
 
             let validDomain = true
-            if (this.school.emailDomains && this.school.emailDomains.length) {
-              validDomain = this.school.emailDomains.find(domain => user.email.includes(domain))
+
+            if (this.school?.emailDomains?.length) {
+              validDomain = this.school.emailDomains.find(domain => {
+                const result = `@${user.email.split('@')[1]}`
+                return result.includes(domain)
+              })
             }
 
-            if (!validDomain) this.form.invalidParticipants.push(user)
+            if (!validDomain) this.invalidUsers.push(user)
             else if (!regexValidEmail.test(user.email)) this.invalidUsers.push(user)
             else this.users.push(user)
 
