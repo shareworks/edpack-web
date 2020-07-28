@@ -47,6 +47,18 @@
       </el-table>
     </div>
 
+    <!-- Warn about duplicated emails -->
+    <div class="mt-10 normal-line-height" v-if="invalidDuplicatedUsers.length">
+      <el-alert :title="$t('SW_CSV_DUPLICATED_EMAIL_TITLE', [invalidDuplicatedUsers.length])" type="error" :closable="false" effect="dark" show-icon>
+        {{ $t('SW_CSV_DUPLICATED_EMAIL_TEXT') }}
+      </el-alert>
+      <el-table :data="invalidDuplicatedUsers" style="width: 100%" size="small" max-height="300px" class="mt-10">
+        <el-table-column prop="name" :label="$t('SW_NAME')" width="180"></el-table-column>
+        <el-table-column prop="email" :label="$tc('SW_EMAIL', 1)" width="300"></el-table-column>
+        <el-table-column v-if="!noGroup" prop="groupName" :label="$tc('SW_GROUP', 1)"></el-table-column>
+      </el-table>
+    </div>
+
     <!-- students list table -->
     <el-dialog :visible.sync="usersListVisible" :title="$t('SW_VIEW_STUDENTS')">
         <students-table :tableData="users" :noGroup="noGroup" />
@@ -56,6 +68,7 @@
 </template>
 
 <script>
+import config from 'config'
 import Papa from 'papaparse'
 import StudentsTable from '../StudentsTable'
 
@@ -72,6 +85,7 @@ export default {
       lang: this.$store.state.lang,
       users: [],
       invalidUsers: [],
+      invalidDuplicatedUsers: [],
       submitting: false,
       groups: false,
       usersListVisible: false
@@ -151,6 +165,16 @@ export default {
               })
             }
 
+            //check is user unique
+            if (config.name === 'Comproved') {
+
+              const isUnique = filteredResults.filter(u => u.email === user.email)
+
+              if (isUnique.length > 1) {
+                this.invalidDuplicatedUsers.push(user)
+              }
+            }
+
             if (!validDomain) this.invalidUsers.push(user)
             else if (!regexValidEmail.test(user.email)) this.invalidUsers.push(user)
             else this.users.push(user)
@@ -160,7 +184,7 @@ export default {
           }
 
           // If invalid users, stop and show the users and the problems
-          if (this.invalidUsers.length) {
+          if (this.invalidUsers.length || this.invalidDuplicatedUsers.length) {
             this.users = []
             this.submitting = false
             this.$emit('clearUsers')
