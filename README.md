@@ -2,7 +2,7 @@
 
 This repository contains generic Vue components and JS code to reduce duplicate code in our frontend apps.
 
-## How to get submodules after cloning
+## How to activate submodules after cloning a repo with Edpack-web
 
 1. Write in your terminal : ```git submodule update --init```
 and you will get the folder with files.
