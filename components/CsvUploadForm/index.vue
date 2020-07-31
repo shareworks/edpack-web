@@ -165,9 +165,8 @@ export default {
               })
             }
 
-            //check is user unique
+            // check is user unique
             if (config.name === 'Comproved') {
-
               const isUnique = filteredResults.filter(u => u.email === user.email)
 
               if (isUnique.length > 1) {
