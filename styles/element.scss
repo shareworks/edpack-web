@@ -247,3 +247,9 @@
     max-width: 90%;
   }
 }
+
+// update header cell of each table
+th .cell{
+  display: flex !important;
+  align-items: center !important;
+}
