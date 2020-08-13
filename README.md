@@ -1,15 +1,15 @@
 # Edpack-web
 
-This repository contains generic Vue components and JS code to reduce duplicate code in our frontend apps.
+This repository contains generic Vue JS and SCSS code to reduce duplicate code in educational frontend apps.
 
-## How to activate submodules after cloning a repo with Edpack-web
+## How to get submodules after cloning an existing Edpack project
 
-1. Write in your terminal : ```git submodule update --init```
-and you will get the folder with files.
+```
+git submodule update --init
+```
 
+## How to add new submodules to a new project
 
-## How to add new submodules to the project
-
-1. Go to ```src``` directory in your project.
-2. Write in your terminal : ```git submodule add %%LINK TO REPOSITORY%%```
-3. Now you can use just created folder.
+```
+git submodule add git@github.com:shareworks/edpack-web.git src/edpack-web
+```
