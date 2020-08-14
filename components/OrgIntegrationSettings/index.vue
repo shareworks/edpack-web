@@ -190,6 +190,7 @@
             <el-radio-button label="brightspace">Brightspace</el-radio-button>
             <el-radio-button label="blackboard">Blackboard</el-radio-button>
             <el-radio-button label="moodle">Moodle</el-radio-button>
+            <el-radio-button label="ilearn">Ilearn</el-radio-button>
           </el-radio-group>
         </el-form-item>
 
@@ -318,6 +319,45 @@
           </el-form-item>
         </div>
 
+        <div v-else-if="form.lastConfiguredLms === 'ilearn'">
+          <!-- Ilearn URL -->
+          <el-form-item label="ilearn URL">
+            <el-input v-model="form.ilearn.apiUrl" type="url" placeholder="ex. https://your-school.ilearn.com ..."></el-input>
+          </el-form-item>
+
+          <!-- Ilearn App ID -->
+          <el-form-item label="Application ID">
+            <el-input v-model="iLearn" :readonly="true">
+              <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
+                <el-button v-clipboard="iLearn">
+                  <i class="icon-copy"></i>
+                </el-button>
+              </el-tooltip>
+            </el-input>
+          </el-form-item>
+
+          <!-- Ilearn callback url -->
+          <el-form-item label="iLearn redirect URI" class="hide">
+            <el-input v-model="iLearnCallbackUrl" :readonly="true" type="url">
+              <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
+                <el-button v-clipboard="iLearnCallbackUrl" @success="clipboardSuccess">
+                  <i class="icon-copy"></i>
+                </el-button>
+              </el-tooltip>
+            </el-input>
+          </el-form-item>
+
+          <!-- Ilearn key -->
+          <el-form-item label="iLearn App key">
+            <el-input v-model="form.ilearn.apiId" type="text" placeholder="iLearn App key ..."></el-input>
+          </el-form-item>
+
+          <!-- Ilearn secret -->
+          <el-form-item label="iLearn App secret">
+            <el-input v-model="form.ilearn.apiSecret" :type="hideCredentials ? 'password' : 'text'" placeholder="iLearn App Secret ..."></el-input>
+          </el-form-item>
+        </div>
+
         <el-alert v-else :title="$t('SW_NO_API_INTEGRATION_YET')" class="mb-30" :description="$t('SW_NO_API_INTEGRATION_YET_TEXT')" type="warning" show-icon>
         </el-alert>
       </div>
@@ -331,7 +371,6 @@ import config from 'config'
 export default {
   name: 'OrgIntegrationSettings',
   props: ['form'],
-  components: {},
 
   data () {
     return {
@@ -356,13 +395,15 @@ export default {
       canvasCallbackUrl: `${config.api_url}/auth/canvas/callback`,
       brightspaceCallbackUrl: `${config.api_url}/auth/brightspace/callback`,
       blackboardCallbackUrl: `${config.api_url}/auth/blackboard/callback`,
+      iLearnCallbackUrl: `${config.api_url}/auth/ilearn/callback`,
 
       ltiAdvantageDomainUrl: `${config.api_url.replace('/api/v1', '')}`,
       ltiAdvantageRedirectUrl: `${config.api_url}/lti/advantage/launch`,
       ltiAdvantageLoginUrl: `${config.api_url}/lti/advantage/initiation`,
       ltiAdvantageKeysetUrl: `${config.api_url}/lti/advantage/jwks`,
 
-      blackboardAppId: config.blackboardAppId
+      blackboardAppId: config.blackboardAppId,
+      iLearn: config.iLearn
     }
   },
 
