@@ -44,6 +44,13 @@ export default {
         params.headers = { 'Lti-Forward-Token': to.query.ltiForwardToken }
       }
 
+      if (to.query.ltiAccessToken && to.query.organization) {
+        inLTI = AxiosPlugin.setInLTI(true)
+        AxiosPlugin.addLtiOrigin()
+        params.params = { organization: to.query.organization }
+        params.headers = { 'Lti-Access-Token': to.query.ltiAccessToken }
+      }
+
       return router.app.$http.get('users/self', params)
         .then((res) => {
           const user = res.data.list[0]
