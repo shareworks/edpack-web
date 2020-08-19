@@ -27,7 +27,7 @@
 
       <el-button size="small" type="success" v-if="!existing" @click="toggleStudentsList">
         <i class="icon-users"></i>
-        {{ $t('SW_VIEW_STUDENTS') }}
+        {{ $t(buttonText ? buttonText : 'SW_VIEW_STUDENTS') }}
       </el-button>
       <el-button type="success" size="small" plain @click="handleRemoveCsv">
         <i class="icon-cancel"></i>
@@ -60,8 +60,8 @@
     </div>
 
     <!-- students list table -->
-    <el-dialog :visible.sync="usersListVisible" :title="$t('SW_VIEW_STUDENTS')">
-        <students-table :tableData="users" :noGroup="noGroup" />
+    <el-dialog :visible.sync="usersListVisible" :title="$t(buttonText ? buttonText : 'SW_VIEW_STUDENTS')">
+        <students-table :tableData="users" :noGroup="noGroup" :participantTypeText="participantTypeText"/>
     </el-dialog>
 
   </div>
@@ -74,7 +74,7 @@ import StudentsTable from '../StudentsTable'
 
 export default {
   name: 'CsvUploadForm',
-  props: ['existing', 'noGroup', 'downloadLink'],
+  props: ['existing', 'noGroup', 'downloadLink', 'buttonText', 'participantTypeText'],
   components: { StudentsTable },
 
   data () {

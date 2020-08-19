@@ -11,5 +11,5 @@ git submodule update --init
 ## How to add new submodules to a new project
 
 ```
-git submodule add git@github.com:shareworks/edpack-web.git src/edpack-web
+git submodule add https://www.github.com/shareworks/edpack-web src/edpack-web
 ```
