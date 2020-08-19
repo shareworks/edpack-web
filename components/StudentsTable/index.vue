@@ -3,7 +3,7 @@
     <!-- Table with students -->
     <el-table v-show="tableValues.length" size="small" :data="getTableData" row-key="_id" ref="studentsTable" class="mb-20">
       <!-- Name -->
-      <el-table-column :label="$tc('SW_STUDENT', 1)" prop="name" min-width="160">
+      <el-table-column :label="$tc(participantTypeText ? participantTypeText : 'SW_STUDENT', 1)" prop="name" min-width="160">
         <template slot-scope="props">
           <div class="text-ellipsis">
             <el-popover width="200" trigger="click" placement="bottom">
@@ -40,7 +40,7 @@
 
 export default {
   name: 'StudentsTable',
-  props: ['closeDialog', 'tableData', 'noGroup'],
+  props: ['closeDialog', 'tableData', 'noGroup', 'participantTypeText'],
 
   data () {
     return {
