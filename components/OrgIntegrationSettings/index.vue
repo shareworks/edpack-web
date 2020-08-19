@@ -348,13 +348,28 @@
           </el-form-item>
 
           <!-- Ilearn key -->
-          <el-form-item label="iLearn App key">
+          <el-form-item label="iLearn App key" v-if="ltiVersion === 'basic'">
             <el-input v-model="form.ilearn.apiId" type="text" placeholder="iLearn App key ..."></el-input>
           </el-form-item>
 
           <!-- Ilearn secret -->
-          <el-form-item label="iLearn App secret">
+          <el-form-item label="iLearn App secret" v-if="ltiVersion === 'basic'">
             <el-input v-model="form.ilearn.apiSecret" :type="hideCredentials ? 'password' : 'text'" placeholder="iLearn App Secret ..."></el-input>
+          </el-form-item>
+
+          <!-- Brightspace Lti-advantage auth url -->
+          <el-form-item label="iLearn LTI v1.3 client id" v-if="ltiVersion === 'advantage'">
+            <el-input v-model="form.ilearn.advantageApiId" :type="'text'" placeholder="iLearn LTI v1.3 client id ..."></el-input>
+          </el-form-item>
+
+          <!-- Brightspace Lti-advantage auth secret -->
+          <el-form-item label="iLearn LTI v1.3 client secret" v-if="ltiVersion === 'advantage'">
+            <el-input v-model="form.ilearn.advantageApiSecret" :type="'text'" placeholder="iLearn LTI v1.3 client secret ..."></el-input>
+          </el-form-item>
+
+          <!-- Brightspace Lti-advantage auth url -->
+          <el-form-item label="iLearn LTI v1.3 auth" v-if="ltiVersion === 'advantage'">
+            <el-input v-model="form.ilearn.advantageAuthUrl" :type="'text'" placeholder="iLearn LTI v1.3 authorization url ..."></el-input>
           </el-form-item>
         </div>
 
