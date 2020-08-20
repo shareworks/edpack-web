@@ -1,6 +1,6 @@
 <template>
   <section>
-    <el-input v-for="language in this.$store.state.languages" :key="language" v-model="value[language]" ref="element" :name="`${name}-${language}-name`" :id="`${name}-${language}`" :placeholder="placeholder" @change="onChange" size="medium" maxlength="200">
+    <el-input v-for="(language, index) in this.$store.state.languages" :key="language" v-model="value[language]" ref="element" :name="`${name}-${language}-name`" :id="`${name}-${language}`" :placeholder="getPlaceholder(index)" @change="onChange" size="medium" maxlength="200">
       <template v-if="!isJustOneLanguage" slot="prepend"><img :src="`/images/${language}.png`" class="language-icon" alt="language-icon"></template>
     </el-input>
   </section>
@@ -18,11 +18,16 @@ export default {
   computed: {
     isJustOneLanguage () {
       return this.$store.state.languages.length === 1
-    }
+    },
   },
 
   methods: {
-    onChange (value) { this.change(this.lang, value) }
+    onChange (value) { this.change(this.lang, value) },
+
+    getPlaceholder (index) {
+      if (typeof this.placeholder === 'string') return this.placeholder
+      if (typeof this.placeholder === 'object') return this.placeholder[index]
+    }
   }
 }
 </script>
