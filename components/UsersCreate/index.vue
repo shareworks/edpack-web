@@ -46,7 +46,7 @@
 <script>
 export default {
   name: 'UsersCreate',
-  props: ['closeDialog', 'isManageStaff', 'justStudents', 'course', 'updateMembers'],
+  props: ['closeDialog', 'isManageStaff', 'justStudents', 'course', 'updateMembers', 'stopRequest'],
 
   data () {
     return {
@@ -111,6 +111,12 @@ export default {
           this.differentDomainWarningVisible = true
           return
         }
+      }
+
+      //  this code specific for Comproved, it stop sending request and return new users list
+      if (this.stopRequest) {
+        this.updateMembers(emails)
+        return
       }
 
       const organization = this.user.organization._id
