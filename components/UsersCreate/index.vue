@@ -116,6 +116,7 @@ export default {
       //  this code specific for Comproved, it stop sending request and return new users list
       if (this.stopRequest) {
         this.updateMembers(emails)
+        this.form = { toSelf: true, recipients: '' }
         return
       }
 
