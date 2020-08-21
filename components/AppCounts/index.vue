@@ -53,7 +53,7 @@ export default {
     },
     getPublicAppCounts () {
       this.$http.get('public/counts')
-        .then((res) => { this.counts = res.data.list[0] })
+        .then((res) => { this.counts = res.data })
         .catch((err) => { console.log(err) })
     }
   }
