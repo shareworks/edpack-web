@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import config from 'config'
 export default {
   name: 'Course',
   metaInfo: { title: 'Course' },
@@ -59,6 +60,11 @@ export default {
       const courseRole = this.course.role
       if (this.$route.meta.minimumCourseRole === 'staff') return courseRole === 'staff'
       if (this.$route.meta.minimumCourseRole === 'student') return courseRole === 'student'
+
+      // specific comproved code
+      if (config.isComproved && this.$route.meta.minimumCourseRole === 'assessor') {
+        return courseRole === 'assessor'
+      }
     },
     unarchiveCourse () {
       if (this.submitting) return
