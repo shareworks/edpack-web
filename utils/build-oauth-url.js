@@ -1,14 +1,14 @@
 const buildOauthUrl = ({
-  prefix,        /* Required */
-  lms,           /* Required */
-  schoolId,      /* Required */
-  courseId,      /* Required */
+  prefix, /* Required */
+  lms, /* Required */
+  schoolId, /* Required */
+  courseId, /* Required */
   isCourseFirst, /* Required */
-  $http,         /* Required */
+  $http, /* Required */
   slug = '',
-  redirectUrl,   /* Required */
-  redirectId,    /* Required */
-  tab,           /* Required */
+  redirectUrl, /* Required */
+  redirectId, /* Required */
+  tab, /* Required */
   postfix = ''
 } = {}) => {
   const params = isCourseFirst ? `?course=${courseId}&organization=${schoolId}` : `?organization=${schoolId}&course=${courseId}`
@@ -21,5 +21,3 @@ const buildOauthUrl = ({
 }
 
 export default buildOauthUrl
-
-

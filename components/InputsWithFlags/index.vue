@@ -18,7 +18,7 @@ export default {
   computed: {
     isJustOneLanguage () {
       return this.$store.state.languages.length === 1
-    },
+    }
   },
 
   methods: {
