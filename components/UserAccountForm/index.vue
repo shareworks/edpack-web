@@ -194,7 +194,10 @@ export default {
           this.success = true
           this.$message({ message: this.$i18n.t('SW_EMAIL_RESET_SUBMITTED'), type: 'success' })
         })
-        .catch((err) => { this.$message({ message: this.$i18n.t(err.data.errors[0].translation), type: 'error' }) })
+        .catch((err) => {
+          const message = err?.data?.errors && err?.data?.errors[0]?.translation ? this.$i18n.t(err.data.errors[0].translation) : this.$i18n.t('SW_GENERIC_ERROR')
+          this.$message({ message, type: 'error' })
+        })
         .finally(() => { this.resetting = false })
     }
   }
