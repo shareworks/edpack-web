@@ -194,7 +194,7 @@ export default {
           this.success = true
           this.$message({ message: this.$i18n.t('SW_EMAIL_RESET_SUBMITTED'), type: 'success' })
         })
-        .catch(() => { this.$message({ message: this.$i18n.t('SW_EMAIL_NOT_NOT_FOUND'), type: 'error' }) })
+        .catch((err) => { this.$message({ message: this.$i18n.t(err.data.errors[0].translation), type: 'error' }) })
         .finally(() => { this.resetting = false })
     }
   }
