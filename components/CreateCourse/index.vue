@@ -8,7 +8,7 @@
 
       <el-form-item class="mt-20" v-if="showCourseTemplate" :label="$t('SW_COURSE_TEMPLATE')">
         <el-select class="block" v-model="courseTemplate" :default-first-option="false" clearable>
-          <el-option v-for="course in courses" :key="course._id" :label="course.name" :value="course"></el-option>
+          <el-option v-for="course in courses" :key="course._id" :label="course.name" :value="course._id"></el-option>
         </el-select>
       </el-form-item>
 
@@ -65,9 +65,11 @@ export default {
       this.submitting = true
 
       if (this.courseTemplate !== '') {
-        this.form.goals = this.courseTemplate.goals
-        this.form.projectLabels = this.courseTemplate.projectLabels
-        this.form.enablePersonalGoals = this.courseTemplate.enablePersonalGoals
+        const course = this.courses.filter(c => c._id === this.courseTemplate)[0]
+
+        this.form.goals = course.goals
+        this.form.projectLabels = course.projectLabels
+        this.form.enablePersonalGoals = course.enablePersonalGoals
       }
 
       this.$http.post('courses', this.form)
