@@ -29,8 +29,8 @@
 
 <script>
 export default {
-  props: ['evaluation', 'canUpdate'],
   name: 'MembersPopover',
+  props: ['evaluation', 'canUpdate'],
 
   data () {
     return {
@@ -46,7 +46,7 @@ export default {
   },
 
   watch: {
-    evaluation () { this.instructors = this.evaluation.staff }
+    evaluation () { this.getInstructors() },
   },
 
   methods: {
