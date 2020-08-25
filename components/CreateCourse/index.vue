@@ -7,7 +7,7 @@
       <create-course-form :school="school" :form="form" :lang="lang"></create-course-form>
 
       <el-form-item class="mt-20" v-if="showCourseTemplate" :label="$t('SW_COURSE_TEMPLATE')">
-        <el-select class="block" v-model="courseTemplate" :default-first-option="false" clearable>
+        <el-select class="block" v-model="courseTemplate" :placeholder="$t('SW_COURSE_TEMPLATE_PLACEHOLDER')" :default-first-option="false" clearable>
           <el-option v-for="course in courses" :key="course._id" :label="course.name" :value="course._id"></el-option>
         </el-select>
       </el-form-item>
