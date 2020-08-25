@@ -37,7 +37,7 @@
 
     <!--Saml domains-->
     <el-form-item :label="$t('SW_SAML_DOMAINS')" required>
-      <el-tag v-for="samlDomain in form.saml.domains" :key="samlDomain" closable :disable-transitions="false" @close="handleClose('samlDomains', domain)">
+      <el-tag v-for="samlDomain in form.saml.domains" :key="samlDomain" closable :disable-transitions="false" @close="handleClose('samlDomains', samlDomain)">
         {{ samlDomain }}
       </el-tag>
       <el-input
@@ -197,7 +197,7 @@
         <div v-if="form.lastConfiguredLms === 'canvas'">
           <!-- Canvas URL -->
           <el-form-item label="Canvas URL">
-            <el-input v-model="form.canvas.apiUrl" type="url" placeholder="ex. https://your-school.instructure.com ..."></el-input>
+            <el-input @change="trimImportantValues" v-model="form.canvas.apiUrl" type="url" placeholder="ex. https://your-school.instructure.com ..."></el-input>
           </el-form-item>
 
           <!-- Canvas callback url -->
@@ -213,34 +213,34 @@
 
           <!-- Canvas key -->
           <el-form-item label="Canvas Key ID" v-if="ltiVersion === 'basic'">
-            <el-input v-model="form.canvas.apiId" type="text" placeholder="Canvas Developer Key ID ..."></el-input>
+            <el-input @change="trimImportantValues" v-model="form.canvas.apiId" type="text" placeholder="Canvas Developer Key ID ..."></el-input>
           </el-form-item>
 
           <!-- Canvas secret -->
           <el-form-item label="Canvas Key Secret" v-if="ltiVersion === 'basic'">
-            <el-input v-model="form.canvas.apiSecret" :type="hideCredentials ? 'password' : 'text'" placeholder="Canvas Developer Key Secret ..."></el-input>
+            <el-input @change="trimImportantValues" v-model="form.canvas.apiSecret" :type="hideCredentials ? 'password' : 'text'" placeholder="Canvas Developer Key Secret ..."></el-input>
           </el-form-item>
 
           <!-- Canvas Lti-advantage auth url -->
           <el-form-item label="Canvas LTI v1.3 Key ID" v-if="ltiVersion === 'advantage'">
-            <el-input v-model="form.canvas.advantageApiId" :type="'text'" placeholder="Canvas LTI v1.3 Key ID ..."></el-input>
+            <el-input @change="trimImportantValues" v-model="form.canvas.advantageApiId" :type="'text'" placeholder="Canvas LTI v1.3 Key ID ..."></el-input>
           </el-form-item>
 
           <!-- Canvas Lti-advantage auth secret -->
           <el-form-item label="Canvas LTI v1.3 Key Secret" v-if="ltiVersion === 'advantage'">
-            <el-input v-model="form.canvas.advantageApiSecret" :type="'text'" placeholder="Canvas LTI v1.3 Key Secret ..."></el-input>
+            <el-input @change="trimImportantValues" v-model="form.canvas.advantageApiSecret" :type="'text'" placeholder="Canvas LTI v1.3 Key Secret ..."></el-input>
           </el-form-item>
 
           <!-- Canvas Lti-advantage auth url -->
           <el-form-item label="Canvas LTI v1.3 auth" v-if="ltiVersion === 'advantage'">
-            <el-input v-model="form.canvas.advantageAuthUrl" :type="'text'" placeholder="Canvas LTI v1.3 authorization url ..."></el-input>
+            <el-input @change="trimImportantValues" v-model="form.canvas.advantageAuthUrl" :type="'text'" placeholder="Canvas LTI v1.3 authorization url ..."></el-input>
           </el-form-item>
         </div>
 
         <div v-else-if="form.lastConfiguredLms === 'brightspace'">
           <!-- Brightspace URL -->
           <el-form-item label="Brightspace URL">
-            <el-input v-model="form.brightspace.apiUrl" type="url" placeholder="ex. https://your-school.brightspace.com ..."></el-input>
+            <el-input @change="trimImportantValues" v-model="form.brightspace.apiUrl" type="url" placeholder="ex. https://your-school.brightspace.com ..."></el-input>
           </el-form-item>
 
           <!-- Brightspace callback url -->
@@ -256,34 +256,34 @@
 
           <!-- Brightspace key -->
           <el-form-item label="Brightspace API client ID" v-if="ltiVersion === 'basic'">
-            <el-input v-model="form.brightspace.apiId" type="text" placeholder="Brightspace OAuth Client ID ..."></el-input>
+            <el-input @change="trimImportantValues" v-model="form.brightspace.apiId" type="text" placeholder="Brightspace OAuth Client ID ..."></el-input>
           </el-form-item>
 
           <!-- Brightspace secret -->
           <el-form-item label="Brightspace API client secret" v-if="ltiVersion === 'basic'">
-            <el-input v-model="form.brightspace.apiSecret" :type="hideCredentials ? 'password' : 'text'" placeholder="Brightspace OAuth Client Secret ..."></el-input>
+            <el-input @change="trimImportantValues" v-model="form.brightspace.apiSecret" :type="hideCredentials ? 'password' : 'text'" placeholder="Brightspace OAuth Client Secret ..."></el-input>
           </el-form-item>
 
           <!-- Brightspace Lti-advantage auth url -->
           <el-form-item label="Brightspace LTI v1.3 client id" v-if="ltiVersion === 'advantage'">
-            <el-input v-model="form.brightspace.advantageApiId" :type="'text'" placeholder="Brightspace LTI v1.3 client id ..."></el-input>
+            <el-input @change="trimImportantValues" v-model="form.brightspace.advantageApiId" :type="'text'" placeholder="Brightspace LTI v1.3 client id ..."></el-input>
           </el-form-item>
 
           <!-- Brightspace Lti-advantage auth secret -->
           <el-form-item label="Brightspace LTI v1.3 client secret" v-if="ltiVersion === 'advantage'">
-            <el-input v-model="form.brightspace.advantageApiSecret" :type="'text'" placeholder="Brightspace LTI v1.3 client secret ..."></el-input>
+            <el-input @change="trimImportantValues" v-model="form.brightspace.advantageApiSecret" :type="'text'" placeholder="Brightspace LTI v1.3 client secret ..."></el-input>
           </el-form-item>
 
           <!-- Brightspace Lti-advantage auth url -->
           <el-form-item label="Brightspace LTI v1.3 auth" v-if="ltiVersion === 'advantage'">
-            <el-input v-model="form.brightspace.advantageAuthUrl" :type="'text'" placeholder="Brightspace LTI v1.3 authorization url ..."></el-input>
+            <el-input @change="trimImportantValues" v-model="form.brightspace.advantageAuthUrl" :type="'text'" placeholder="Brightspace LTI v1.3 authorization url ..."></el-input>
           </el-form-item>
         </div>
 
         <div v-else-if="form.lastConfiguredLms === 'blackboard'">
           <!-- Blackboard URL -->
           <el-form-item label="Blackboard URL">
-            <el-input v-model="form.blackboard.apiUrl" type="url" placeholder="ex. https://your-school.blackboard.com ..."></el-input>
+            <el-input @change="trimImportantValues" v-model="form.blackboard.apiUrl" type="url" placeholder="ex. https://your-school.blackboard.com ..."></el-input>
           </el-form-item>
 
           <!-- Blackboard App ID -->
@@ -310,19 +310,19 @@
 
           <!-- Blackboard key -->
           <el-form-item label="Blackboard App key">
-            <el-input v-model="form.blackboard.apiId" type="text" placeholder="Blackboard App key ..."></el-input>
+            <el-input @change="trimImportantValues" v-model="form.blackboard.apiId" type="text" placeholder="Blackboard App key ..."></el-input>
           </el-form-item>
 
           <!-- Blackboard secret -->
           <el-form-item label="Blackboard App secret">
-            <el-input v-model="form.blackboard.apiSecret" :type="hideCredentials ? 'password' : 'text'" placeholder="Blackboard App Secret ..."></el-input>
+            <el-input @change="trimImportantValues" v-model="form.blackboard.apiSecret" :type="hideCredentials ? 'password' : 'text'" placeholder="Blackboard App Secret ..."></el-input>
           </el-form-item>
         </div>
 
         <div v-else-if="form.lastConfiguredLms === 'ilearn'">
           <!-- Ilearn URL -->
           <el-form-item label="ilearn URL">
-            <el-input v-model="form.ilearn.apiUrl" type="url" placeholder="ex. https://your-school.ilearn.com ..."></el-input>
+            <el-input @change="trimImportantValues" v-model="form.ilearn.apiUrl" type="url" placeholder="ex. https://your-school.ilearn.com ..."></el-input>
           </el-form-item>
 
           <!-- Ilearn App ID -->
@@ -349,27 +349,27 @@
 
           <!-- Ilearn key -->
           <el-form-item label="iLearn App key" v-if="ltiVersion === 'basic'">
-            <el-input v-model="form.ilearn.apiId" type="text" placeholder="iLearn App key ..."></el-input>
+            <el-input @change="trimImportantValues" v-model="form.ilearn.apiId" type="text" placeholder="iLearn App key ..."></el-input>
           </el-form-item>
 
           <!-- Ilearn secret -->
           <el-form-item label="iLearn App secret" v-if="ltiVersion === 'basic'">
-            <el-input v-model="form.ilearn.apiSecret" :type="hideCredentials ? 'password' : 'text'" placeholder="iLearn App Secret ..."></el-input>
+            <el-input @change="trimImportantValues" v-model="form.ilearn.apiSecret" :type="hideCredentials ? 'password' : 'text'" placeholder="iLearn App Secret ..."></el-input>
           </el-form-item>
 
-          <!-- Brightspace Lti-advantage auth url -->
+          <!-- Ilearn Lti-advantage auth url -->
           <el-form-item label="iLearn LTI v1.3 client id" v-if="ltiVersion === 'advantage'">
-            <el-input v-model="form.ilearn.advantageApiId" :type="'text'" placeholder="iLearn LTI v1.3 client id ..."></el-input>
+            <el-input @change="trimImportantValues" v-model="form.ilearn.advantageApiId" :type="'text'" placeholder="iLearn LTI v1.3 client id ..."></el-input>
           </el-form-item>
 
-          <!-- Brightspace Lti-advantage auth secret -->
+          <!-- Ilearn Lti-advantage auth secret -->
           <el-form-item label="iLearn LTI v1.3 client secret" v-if="ltiVersion === 'advantage'">
-            <el-input v-model="form.ilearn.advantageApiSecret" :type="'text'" placeholder="iLearn LTI v1.3 client secret ..."></el-input>
+            <el-input @change="trimImportantValues" v-model="form.ilearn.advantageApiSecret" :type="'text'" placeholder="iLearn LTI v1.3 client secret ..."></el-input>
           </el-form-item>
 
-          <!-- Brightspace Lti-advantage auth url -->
+          <!-- Ilearn Lti-advantage auth url -->
           <el-form-item label="iLearn LTI v1.3 auth" v-if="ltiVersion === 'advantage'">
-            <el-input v-model="form.ilearn.advantageAuthUrl" :type="'text'" placeholder="iLearn LTI v1.3 authorization url ..."></el-input>
+            <el-input @change="trimImportantValues" v-model="form.ilearn.advantageAuthUrl" :type="'text'" placeholder="iLearn LTI v1.3 authorization url ..."></el-input>
           </el-form-item>
         </div>
 
@@ -429,8 +429,8 @@ export default {
 
       // Filter all emails that don't match regex:
       this.form.emailDomains.forEach(domain => {
-        const isIncorrect = !domainRegex.test(domain)
-        if (isIncorrect) { failedDomains.push(domain) }
+        const isIncorrect = !domainRegex.test(domain.trim())
+        if (isIncorrect) { failedDomains.push(domain.trim()) }
       })
 
       failedDomains = failedDomains.filter(domain => { return domain.trim() !== '' })
@@ -453,16 +453,44 @@ export default {
           .finally(() => { this.processing = false })
       })
     },
+    trimImportantValues () {
+      this.form.canvas.apiUrl = this.form.canvas.apiUrl.trim()
+      this.form.canvas.apiId = this.form.canvas.apiId.trim()
+      this.form.canvas.apiSecret = this.form.canvas.apiSecret.trim()
+      this.form.canvas.advantageApiId = this.form.canvas.advantageApiId.trim()
+      this.form.canvas.advantageApiSecret = this.form.canvas.advantageApiSecret.trim()
+      this.form.canvas.advantageAuthUrl = this.form.canvas.advantageAuthUrl.trim()
+
+      this.form.brightspace.apiUrl = this.form.brightspace.apiUrl.trim()
+      this.form.brightspace.apiId = this.form.brightspace.apiId.trim()
+      this.form.brightspace.apiSecret = this.form.brightspace.apiSecret.trim()
+      this.form.brightspace.advantageApiId = this.form.brightspace.advantageApiId.trim()
+      this.form.brightspace.advantageApiSecret = this.form.brightspace.advantageApiSecret.trim()
+      this.form.brightspace.advantageAuthUrl = this.form.brightspace.advantageAuthUrl.trim()
+
+      this.form.blackboard.apiUrl = this.form.blackboard.apiUrl.trim()
+      this.form.blackboard.apiId = this.form.blackboard.apiId.trim()
+      this.form.blackboard.apiSecret = this.form.blackboard.apiSecret.trim()
+
+      if (this.form.ilearn) {
+        this.form.ilearn.apiUrl = this.form.ilearn.apiUrl.trim()
+        this.form.ilearn.apiId = this.form.ilearn.apiId.trim()
+        this.form.ilearn.apiSecret = this.form.ilearn.apiSecret.trim()
+        this.form.ilearn.advantageApiId = this.form.ilearn.advantageApiId.trim()
+        this.form.ilearn.advantageApiSecret = this.form.ilearn.advantageApiSecret.trim()
+        this.form.ilearn.advantageAuthUrl = this.form.ilearn.advantageAuthUrl.trim()
+      }
+    },
     showInput (type) {
       this.inputVisible[type] = true
       this.$nextTick((_) => { this.$refs[type].$refs.input.focus() })
     },
     handleInputConfirm (type) {
-      const inputValue = this.inputValue[type]
+      const inputValue = this.inputValue[type].trim()
       if (inputValue) {
-        if (type === 'samlEntityIds') this.form.saml.entityIds.push(inputValue)
-        else if (type === 'samlDomains') this.form.saml.domains.push(inputValue)
-        else this.form[type].push(inputValue)
+        if (type === 'samlEntityIds') this.form.saml.entityIds.push(inputValue.trim())
+        else if (type === 'samlDomains') this.form.saml.domains.push(inputValue.trim())
+        else this.form[type].push(inputValue.trim())
       }
       this.inputVisible[type] = false
       this.inputValue[type] = ''
