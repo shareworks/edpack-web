@@ -27,7 +27,8 @@
         </div>
       </el-col>
       <!-- Add instructors -->
-      <el-col v-if="isSystemAdmin" :span="12" :xs="24">
+      <!-- user.role === 'staff' - for growflow -->
+      <el-col v-if="isSystemAdmin || user.role === 'staff'" :span="12" :xs="24">
         <users-create :isManageStaff="true" :course="course" :closeDialog="closeDialog" :updateMembers="updateMembers"></users-create>
       </el-col>
     </el-row>
