@@ -100,6 +100,7 @@ export default {
       this.$emit('clearUsers')
       this.users = []
       this.invalidUsers = []
+      this.invalidDuplicatedUsers = []
       this.submitting = false
 
       if (this.$refs?.csvUpload?.clearFiles) {
@@ -111,6 +112,7 @@ export default {
       this.submitting = true
       this.users = []
       this.invalidUsers = []
+      this.invalidDuplicatedUsers = []
       this.groups = []
 
       Papa.parse(file.raw, {
