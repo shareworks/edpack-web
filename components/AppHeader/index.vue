@@ -97,7 +97,7 @@ export default {
       return this.$store.state.user
     },
     isAdmin () {
-      return this.$store.state.user.systemAdmin || this.$store.state.user.organization.role === 'admin'
+      return this.$store.state.user.systemAdmin || this.$store.state.user.role === 'admin'
     }
   },
 

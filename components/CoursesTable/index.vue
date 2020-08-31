@@ -25,7 +25,7 @@
             </el-button>
           </div>
 
-          <div v-else-if="school.role !== 'student'">
+          <div v-else-if="user.role !== 'student'">
             <!-- Create courses manually v-show="school.manualCourses" -->
             <el-button v-if="school.enableManualCourses" type="primary" plain @click="dialogCourse = true" size="medium" class="button-square-xs">
               <i class="icon-add"></i>
@@ -42,8 +42,8 @@
 
         <!-- Search input -->
         <el-col :xs="13" :sm="8">
-          <el-input v-model="searchText" size="medium" clearable :placeholder="$t('SW_SEARCH_COURSES')" :class="{'input-with-select': school.role !== 'student'}">
-            <el-select v-model="statusFilter" slot="prepend" @change="changeFilter" v-if="school.role !== 'student'">
+          <el-input v-model="searchText" size="medium" clearable :placeholder="$t('SW_SEARCH_COURSES')" :class="{'input-with-select': user.role !== 'student'}">
+            <el-select v-model="statusFilter" slot="prepend" @change="changeFilter" v-if="user.role !== 'student'">
               <el-option v-for="item in statusOptions" :key="item" :label="$t('SW_' + item.toUpperCase())" :value="item"></el-option>
             </el-select>
           </el-input>
@@ -157,7 +157,7 @@
 
     <div v-if="status === 'none' && statusFilter === 'active'" class="mt-30">
       <!-- Notify students there is nothing to do yet -->
-      <el-alert type="info" v-if="school.role === 'student'"  show-icon :title="$t('SW_STUDENT_HOME_ALERT')">
+      <el-alert type="info" v-if="user.role === 'student'"  show-icon :title="$t('SW_STUDENT_HOME_ALERT')">
         {{ $t('SW_STUDENT_HOME_ALERT_TEXT') }}
       </el-alert>
 
@@ -181,8 +181,8 @@ import debounce from 'lodash/debounce'
 import TableStatus from '../TableStatus'
 import CreateCourse from '../CreateCourse'
 import dateSorter from '../../utils/date-sorter'
-import sortCaseInsensitive from '../../utils/sort-case-insensitive'
 import CoursesCards from '@/edpack-web/components/CoursesCards'
+import sortCaseInsensitive from '../../utils/sort-case-insensitive'
 
 export default {
   name: 'CoursesTable',

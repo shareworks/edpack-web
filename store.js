@@ -51,7 +51,7 @@ const mutations = {
     state.user = user
     state.school = user.organization
     state.slug = user.organization.slug
-    state.isAdmin = user.organization.role === 'admin' || user.systemAdmin
+    state.isAdmin = user.role === 'admin' || user.systemAdmin
     state.languages = getLanguages(user.organization.languages)
     state.lang = user.language
   },

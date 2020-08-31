@@ -53,7 +53,7 @@ export default {
   methods: {
     isAuthorized () {
       if (this.$store.state.user.systemAdmin) return true
-      if (this.$store.state.school.role === 'admin') return true
+      if (this.$store.state.user.role === 'admin') return true
 
       // Check course role
       if (!this.course) return false

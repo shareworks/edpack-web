@@ -37,7 +37,7 @@
           </el-button>
         </el-input>
       </div>
-      <el-button v-if="currentUser.systemAdmin" size="small" class="block" type="text" @click="form.emails.push('')">
+      <el-button v-if="user.systemAdmin" size="small" class="block" type="text" @click="form.emails.push('')">
         <i class="icon-add"></i>
         <span>{{ $t('SW_ADD_EMAIL') }}</span>
       </el-button>
@@ -63,7 +63,7 @@
 
     <!-- Role: Admin, Staff or Student -->
     <el-form-item :label="$tc('SW_ROLE', 1)" class="additional">
-      {{ $tc('SW_' + (form.role || school.role).toUpperCase()) }}
+      {{ $tc('SW_' + (form.role || user.role).toUpperCase()) }}
       {{ $t('SW_ROLE_AT', { school: form.organization.name[lang] }) }}
 
       <el-dropdown v-if="isAdmin" trigger="click" @command="changeRole">
@@ -106,7 +106,7 @@ export default {
 
   data () {
     return {
-      currentUser: this.$store.state.user,
+      user: this.$store.state.user,
       lang: this.$store.state.lang,
       school: this.$store.state.school,
       isAdmin: this.$store.state.isAdmin,
@@ -145,7 +145,7 @@ export default {
 
           this.$message({ message: this.$i18n.t('SW_CHANGES_SAVED'), type: 'success' })
 
-          if (this.form._id === this.currentUser._id) {
+          if (this.form._id === this.user._id) {
             // Update current user
             updatedUser.organization = user.organization
             updatedUser.organizations = user.organizations

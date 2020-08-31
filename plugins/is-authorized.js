@@ -10,12 +10,12 @@ export default {
     if (user.systemAdmin) return true
 
     // Role on org is required
-    if (!user.organization || !user.organization.role) return false
+    if (!user || !user.role) return false
 
     // Check if org role is high enough
-    if (to.meta.minimumOrgRole === 'admin') return user.organization.role === 'admin'
-    if (to.meta.minimumOrgRole === 'staff') return ['admin', 'staff'].includes(user.organization.role)
-    if (to.meta.minimumOrgRole === 'student') return ['admin', 'staff', 'student'].includes(user.organization.role)
+    if (to.meta.minimumOrgRole === 'admin') return user.role === 'admin'
+    if (to.meta.minimumOrgRole === 'staff') return ['admin', 'staff'].includes(user.role)
+    if (to.meta.minimumOrgRole === 'student') return ['admin', 'staff', 'student'].includes(user.role)
     return true
   }
 }

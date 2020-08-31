@@ -105,7 +105,7 @@ export default {
       obfuscatorActive: state => state.obfuscatorActive,
       pageOffset: state => state.route.meta.auth,
       loadFreshchat: (state) => {
-        return state.user && state.school && state.school.enableFreshChat && state.school.role !== 'student'
+        return state.user && state.school && state.school.enableFreshChat && state.user.role !== 'student'
       },
 
       navAvailable: (state) => {
