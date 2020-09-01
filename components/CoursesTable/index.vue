@@ -213,7 +213,7 @@ export default {
       statusFilter: this.$route.query.filter || 'active',
       submitting: false,
 
-      //growflow specific value
+      // growflow specific value
       showFacultyFilter: config.isGrowflow,
       facultyFilter: this.$route.query.faculty || ''
     }
@@ -391,7 +391,7 @@ export default {
 
       // Growflow specific code
       if (this.showFacultyFilter) { query.faculty = this.facultyFilter }
-      
+
       this.$router.replace({ name: 'admin', params: { slug: this.school.slug, mode: 'courses' }, query })
     },
     sortCreatedDate (a, b) { return dateSorter(a.createdDate, b.createdDate) },

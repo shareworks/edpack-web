@@ -329,7 +329,7 @@ export default {
     finishEditUser () {
       this.editUserForm = false
       this.dialogEditUser = false
-    },
+    }
   }
 }
 </script>

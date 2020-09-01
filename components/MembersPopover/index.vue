@@ -46,7 +46,7 @@ export default {
   },
 
   watch: {
-    evaluation () { this.getInstructors() },
+    evaluation () { this.getInstructors() }
   },
 
   methods: {
