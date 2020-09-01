@@ -2,7 +2,7 @@
   <div>
     <affix class="sticky-bar" relative-element-selector="#sticky-content" :offset="{ top: 148, bottom: -1000 }">
       <el-row type="flex" justify="center" align="middle">
-        <el-col :xs="11" :sm="16">
+        <el-col :xs="8" :sm="12">
           <div v-if="multipleSelection.length">
             <!-- Remove courses -->
             <el-badge :value="multipleSelection.length">
@@ -40,8 +40,13 @@
           </div>
         </el-col>
 
-        <!-- Search input -->
-        <el-col :xs="13" :sm="8">
+        <el-col :xs="16" :sm="12" class="course-header-filter">
+          <!-- Search faculty - GROWFLOW -->
+          <el-select v-model="facultyFilter" clearable class="mr-10" :placeholder="$t('SW_FACULTY')" size="medium" @change="changeFilter" v-if="user.role !== 'student' && showFacultyFilter">
+            <el-option v-for="item in school.faculties" :key="item._id" :label="item[lang]" :value="item._id"></el-option>
+          </el-select>
+
+          <!-- Search input -->
           <el-input v-model="searchText" size="medium" clearable :placeholder="$t('SW_SEARCH_COURSES')" :class="{'input-with-select': user.role !== 'student'}">
             <el-select v-model="statusFilter" slot="prepend" @change="changeFilter" v-if="user.role !== 'student'">
               <el-option v-for="item in statusOptions" :key="item" :label="$t('SW_' + item.toUpperCase())" :value="item"></el-option>
@@ -176,6 +181,7 @@
 
 <script>
 import moment from 'moment'
+import config from 'config'
 import LmsIcon from '../LmsIcon'
 import debounce from 'lodash/debounce'
 import TableStatus from '../TableStatus'
@@ -199,19 +205,28 @@ export default {
       skip: false,
       total: 0,
       multipleSelection: [],
-      school: this.$store.state.school,
       dialogCourse: false,
+      school: this.$store.state.school,
       user: this.$store.state.user,
       lang: this.$store.state.lang,
       statusOptions: ['active', 'inactive', 'archived'],
       statusFilter: this.$route.query.filter || 'active',
-      submitting: false
+      submitting: false,
+
+      //growflow specific value
+      showFacultyFilter: config.isGrowflow,
+      facultyFilter: this.$route.query.faculty || ''
     }
   },
 
   watch: {
     searchText: debounce(function () {
-      this.$router.replace({ params: { slug: this.school.slug, mode: 'courses' }, query: { query: this.searchText, filter: this.statusFilter } })
+      const query = { query: this.searchText, filter: this.statusFilter }
+
+      // Growflow specific code
+      if (this.showFacultyFilter) { query.faculty = this.facultyFilter }
+
+      this.$router.replace({ params: { slug: this.school.slug, mode: 'courses' }, query })
     }, 400),
     '$route' () {
       this.selectionChange()
@@ -249,7 +264,13 @@ export default {
 
       // Show courses with special faculty
       if (this.$route.query.context && this.$route.query.context !== 'school') {
+        // Suggesti specific code ?
         params.faculty = this.$route.query.context
+      }
+
+      if (this.showFacultyFilter && this.facultyFilter) {
+        // Growflow specific code
+        params.faculty = this.facultyFilter
       }
 
       this.$http.get('courses', { params })
@@ -365,10 +386,22 @@ export default {
       this.order = val.order
       if (this.status !== 'done') this.getCourses(true)
     },
-    changeFilter (filter) { this.$router.replace({ name: 'admin', params: { slug: this.school.slug, mode: 'courses' }, query: { query: this.searchText, filter: filter } }) },
+    changeFilter () {
+      const query = { query: this.searchText, filter: this.statusFilter }
+
+      // Growflow specific code
+      if (this.showFacultyFilter) { query.faculty = this.facultyFilter }
+      
+      this.$router.replace({ name: 'admin', params: { slug: this.school.slug, mode: 'courses' }, query })
+    },
     sortCreatedDate (a, b) { return dateSorter(a.createdDate, b.createdDate) },
     sortCaseInsensitive (a, b) { return sortCaseInsensitive(a.name, b.name) },
     dateFormatter (row, column, value) { return moment(value).fromNow() }
   }
 }
 </script>
+
+<style lang="scss">
+@import '~scss_vars';
+@import './style.scss';
+</style>
