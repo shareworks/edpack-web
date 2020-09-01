@@ -139,10 +139,6 @@ export default {
           const user = this.$store.state.user
           const updatedUser = res.data.list[0]
 
-          if (this.updateUser) {
-            this.updateUser(updatedUser._id, this.form)
-          }
-
           this.$message({ message: this.$i18n.t('SW_CHANGES_SAVED'), type: 'success' })
 
           if (this.form._id === this.user._id) {
@@ -151,6 +147,10 @@ export default {
             updatedUser.organizations = user.organizations
             loadLanguages(this.$i18n, this.form.language)
             this.$store.dispatch('setUser', updatedUser)
+          }
+
+          if (this.updateUser) {
+            this.updateUser(updatedUser._id, this.form)
           }
 
           this.finish(user)

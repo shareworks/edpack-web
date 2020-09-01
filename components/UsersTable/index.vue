@@ -235,7 +235,8 @@ export default {
 
       if (refresh) {
         this.tableData = []
-        this.skip = 0
+        this.skip = false
+        this.total = 0
       }
 
       if (this.roleFilter === 'all') delete params.role
@@ -316,25 +317,19 @@ export default {
         this.getUsers(true)
       }
     },
-    finishEditUser (updatedUser) {
-      this.editUserForm = false
-      this.dialogEditUser = false
-      if (!updatedUser) return
-
-      const index = this.tableData.findIndex(user => user._id === updatedUser._id)
-      this.tableData.splice(index, 1, updatedUser)
-    },
     changeFilter (filter) { this.$router.replace({ name: 'admin', params: { slug: this.school.slug, mode: 'users' }, query: { query: this.searchText, filter: filter } }) },
     dateFormatter (row, column, value) { return value ? moment(value).fromNow() : '-' },
     sortCreatedDate (a, b) { return dateSorter(a.createdDate, b.createdDate) },
     sortActivityDate (a, b) { return dateSorter(a.activityDate, b.activityDate) },
     sortCaseInsensitive (a, b) { return sortCaseInsensitive(a.name, b.name) },
     updateUser (userId, user) {
-      this.tableData.forEach((student, index) => {
-        if (student._id !== userId) return
-        this.tableData[index] = { ...student, ...user }
-      })
-    }
+      this.tableData = this.tableData.filter(u => u._id !== userId)
+      this.tableData.push(user)
+    },
+    finishEditUser () {
+      this.editUserForm = false
+      this.dialogEditUser = false
+    },
   }
 }
 </script>
