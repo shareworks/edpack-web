@@ -87,6 +87,13 @@ export default {
 
   setInLTI (bool) {
     if (typeof bool === 'undefined') bool = (window.self !== window.top)
+    if (!bool) {
+      const urlParams = new URLSearchParams(window.location.search)
+      const issuer = urlParams.get('issuer')
+
+      bool = (issuer === 'ilearn')
+    }
+
     this.inLTI = bool
     return this.inLTI
   },
