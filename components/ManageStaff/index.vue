@@ -28,7 +28,7 @@
       </el-col>
       <!-- Add instructors -->
       <!-- user.role === 'staff' - for growflow -->
-      <el-col v-if="isAdmin" :span="12" :xs="24">
+      <el-col v-if="canInvite" :span="12" :xs="24">
         <users-create :isManageStaff="true" :course="course" :closeDialog="closeDialog" :updateMembers="updateMembers"></users-create>
       </el-col>
     </el-row>
@@ -58,7 +58,7 @@ export default {
       loading: false,
       removing: false,
       sending: false,
-      isAdmin: this.$store.state.user.role === 'staff',
+      canInvite: this.$store.state.course.can.invite,
       form: { recipients: '', toSelf: true }
     }
   },
