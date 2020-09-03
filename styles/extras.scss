@@ -63,6 +63,13 @@
   font-size: 11px;
   opacity: .5;
   height: 16px;
+
+  &.question-circle {
+    border: 2px solid $--color-primary;
+    padding: 2px;
+    border-radius: 10px;
+    text-align: center;
+  }
 }
 
 .online-icon {
