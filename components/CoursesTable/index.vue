@@ -27,7 +27,7 @@
 
           <div v-else-if="user.role !== 'student'">
             <!-- Create courses manually v-show="school.manualCourses" -->
-            <el-button v-if="school.enableManualCourses" type="primary" plain @click="dialogCourse = true" size="medium" class="button-square-xs">
+            <el-button v-if="school.enableManualCourses || user.systemAdmin || school.role === 'admin'" type="primary" plain @click="dialogCourse = true" size="medium" class="button-square-xs">
               <i class="icon-add"></i>
               <span class="hidden-xs">{{ $t('SW_CREATE_COURSE') }}</span>
             </el-button>
