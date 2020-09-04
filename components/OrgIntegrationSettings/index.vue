@@ -374,7 +374,7 @@
 
           <!-- Ilearn Lti-advantage Deeplink-->
           <el-form-item label="iLearn LTI v1.3 deeplinking" v-if="form.lastConfiguredLtiVersion === 'advantage'">
-            <el-switch v-model="form.ilearn.deeplinking" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+            <el-switch v-model="form.ilearn.advatnageDeeplinking" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
             <span class="text-muted ml-10">{{ $t('SW_USE_DEEPLINK_TEXT' )}}</span>
           </el-form-item>
         </div>
