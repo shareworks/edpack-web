@@ -20,14 +20,14 @@
         {{ domain }}
       </el-tag>
       <el-input
-        class="inline ml-5"
-        size="small"
-        v-if="inputVisible.emailDomains"
-        v-model="inputValue.emailDomains"
-        placeholder="@role.your-school.com"
-        ref="emailDomains"
-        @keyup.enter.native="handleInputConfirm('emailDomains')"
-        @blur="handleInputConfirm('emailDomains'); domainsValidation()">
+              class="inline ml-5"
+              size="small"
+              v-if="inputVisible.emailDomains"
+              v-model="inputValue.emailDomains"
+              placeholder="@role.your-school.com"
+              ref="emailDomains"
+              @keyup.enter.native="handleInputConfirm('emailDomains')"
+              @blur="handleInputConfirm('emailDomains'); domainsValidation()">
       </el-input>
       <el-button v-else size="small" class="ml-5" @click="showInput('emailDomains')">
         <i class="icon-add"></i>
@@ -41,14 +41,14 @@
         {{ samlDomain }}
       </el-tag>
       <el-input
-        class="inline ml-5"
-        size="small"
-        v-if="inputVisible.samlDomains"
-        v-model="inputValue.samlDomains"
-        placeholder="saml-domain.edu"
-        ref="samlDomains"
-        @keyup.enter.native="handleInputConfirm('samlDomains')"
-        @blur="handleInputConfirm('samlDomains')">
+              class="inline ml-5"
+              size="small"
+              v-if="inputVisible.samlDomains"
+              v-model="inputValue.samlDomains"
+              placeholder="saml-domain.edu"
+              ref="samlDomains"
+              @keyup.enter.native="handleInputConfirm('samlDomains')"
+              @blur="handleInputConfirm('samlDomains')">
       </el-input>
       <el-button v-else size="small" class="ml-5" @click="showInput('samlDomains')">
         <i class="icon-add"></i>
@@ -62,14 +62,14 @@
         {{ entity }}
       </el-tag>
       <el-input
-        class="inline ml-5"
-        size="small"
-        v-if="inputVisible.samlEntityIds"
-        v-model="inputValue.samlEntityIds"
-        placeholder="https://www.saml-domain.edu/saml-login-url"
-        ref="samlEntityIds"
-        @keyup.enter.native="handleInputConfirm('samlEntityIds')"
-        @blur="handleInputConfirm('samlEntityIds')">
+              class="inline ml-5"
+              size="small"
+              v-if="inputVisible.samlEntityIds"
+              v-model="inputValue.samlEntityIds"
+              placeholder="https://www.saml-domain.edu/saml-login-url"
+              ref="samlEntityIds"
+              @keyup.enter.native="handleInputConfirm('samlEntityIds')"
+              @blur="handleInputConfirm('samlEntityIds')">
       </el-input>
       <el-button v-else size="small" class="ml-5" @click="showInput('samlEntityIds')">
         <i class="icon-add"></i>
@@ -79,14 +79,14 @@
 
     <!-- Set Lti version-->
     <el-form-item label="LTI version">
-      <el-radio-group v-model="ltiVersion" size="small">
+      <el-radio-group v-model="form.lastConfiguredLtiVersion" size="small">
         <el-radio-button label="basic">LTI Basic (v1.1)</el-radio-button>
         <el-radio-button label="advantage">LTI Advantage (v1.3)</el-radio-button>
       </el-radio-group>
     </el-form-item>
 
     <!-- Lti Basic configuration -->
-    <div v-if="ltiVersion === 'basic'" class="mb-20">
+    <div v-if="form.lastConfiguredLtiVersion === 'basic'" class="mb-20">
       <!-- LTI config url -->
       <el-form-item label="LTI config URL">
         <el-input v-model="ltiConfigUrl" :readonly="true" type="url">
@@ -129,7 +129,7 @@
     </div>
 
     <!-- Lti Advantage configuration -->
-    <div v-if="ltiVersion === 'advantage'" class="mb-20">
+    <div v-if="form.lastConfiguredLtiVersion === 'advantage'" class="mb-20">
       <!-- LTI config domain -->
       <el-form-item label="LTI domain url">
         <el-input v-model="ltiAdvantageDomainUrl" :readonly="true" type="url">
@@ -212,27 +212,27 @@
           </el-form-item>
 
           <!-- Canvas key -->
-          <el-form-item label="Canvas Key ID" v-if="ltiVersion === 'basic'">
+          <el-form-item label="Canvas Key ID" v-if="form.lastConfiguredLtiVersion === 'basic'">
             <el-input @change="trimImportantValues" v-model="form.canvas.apiId" type="text" placeholder="Canvas Developer Key ID ..."></el-input>
           </el-form-item>
 
           <!-- Canvas secret -->
-          <el-form-item label="Canvas Key Secret" v-if="ltiVersion === 'basic'">
+          <el-form-item label="Canvas Key Secret" v-if="form.lastConfiguredLtiVersion === 'basic'">
             <el-input @change="trimImportantValues" v-model="form.canvas.apiSecret" :type="hideCredentials ? 'password' : 'text'" placeholder="Canvas Developer Key Secret ..."></el-input>
           </el-form-item>
 
           <!-- Canvas Lti-advantage auth url -->
-          <el-form-item label="Canvas LTI v1.3 Key ID" v-if="ltiVersion === 'advantage'">
+          <el-form-item label="Canvas LTI v1.3 Key ID" v-if="form.lastConfiguredLtiVersion === 'advantage'">
             <el-input @change="trimImportantValues" v-model="form.canvas.advantageApiId" :type="'text'" placeholder="Canvas LTI v1.3 Key ID ..."></el-input>
           </el-form-item>
 
           <!-- Canvas Lti-advantage auth secret -->
-          <el-form-item label="Canvas LTI v1.3 Key Secret" v-if="ltiVersion === 'advantage'">
+          <el-form-item label="Canvas LTI v1.3 Key Secret" v-if="form.lastConfiguredLtiVersion === 'advantage'">
             <el-input @change="trimImportantValues" v-model="form.canvas.advantageApiSecret" :type="'text'" placeholder="Canvas LTI v1.3 Key Secret ..."></el-input>
           </el-form-item>
 
           <!-- Canvas Lti-advantage auth url -->
-          <el-form-item label="Canvas LTI v1.3 auth" v-if="ltiVersion === 'advantage'">
+          <el-form-item label="Canvas LTI v1.3 auth" v-if="form.lastConfiguredLtiVersion === 'advantage'">
             <el-input @change="trimImportantValues" v-model="form.canvas.advantageAuthUrl" :type="'text'" placeholder="Canvas LTI v1.3 authorization url ..."></el-input>
           </el-form-item>
         </div>
@@ -255,27 +255,27 @@
           </el-form-item>
 
           <!-- Brightspace key -->
-          <el-form-item label="Brightspace API client ID" v-if="ltiVersion === 'basic'">
+          <el-form-item label="Brightspace API client ID" v-if="form.lastConfiguredLtiVersion === 'basic'">
             <el-input @change="trimImportantValues" v-model="form.brightspace.apiId" type="text" placeholder="Brightspace OAuth Client ID ..."></el-input>
           </el-form-item>
 
           <!-- Brightspace secret -->
-          <el-form-item label="Brightspace API client secret" v-if="ltiVersion === 'basic'">
+          <el-form-item label="Brightspace API client secret" v-if="form.lastConfiguredLtiVersion === 'basic'">
             <el-input @change="trimImportantValues" v-model="form.brightspace.apiSecret" :type="hideCredentials ? 'password' : 'text'" placeholder="Brightspace OAuth Client Secret ..."></el-input>
           </el-form-item>
 
           <!-- Brightspace Lti-advantage auth url -->
-          <el-form-item label="Brightspace LTI v1.3 client id" v-if="ltiVersion === 'advantage'">
+          <el-form-item label="Brightspace LTI v1.3 client id" v-if="form.lastConfiguredLtiVersion === 'advantage'">
             <el-input @change="trimImportantValues" v-model="form.brightspace.advantageApiId" :type="'text'" placeholder="Brightspace LTI v1.3 client id ..."></el-input>
           </el-form-item>
 
           <!-- Brightspace Lti-advantage auth secret -->
-          <el-form-item label="Brightspace LTI v1.3 client secret" v-if="ltiVersion === 'advantage'">
+          <el-form-item label="Brightspace LTI v1.3 client secret" v-if="form.lastConfiguredLtiVersion === 'advantage'">
             <el-input @change="trimImportantValues" v-model="form.brightspace.advantageApiSecret" :type="'text'" placeholder="Brightspace LTI v1.3 client secret ..."></el-input>
           </el-form-item>
 
           <!-- Brightspace Lti-advantage auth url -->
-          <el-form-item label="Brightspace LTI v1.3 auth" v-if="ltiVersion === 'advantage'">
+          <el-form-item label="Brightspace LTI v1.3 auth" v-if="form.lastConfiguredLtiVersion === 'advantage'">
             <el-input @change="trimImportantValues" v-model="form.brightspace.advantageAuthUrl" :type="'text'" placeholder="Brightspace LTI v1.3 authorization url ..."></el-input>
           </el-form-item>
         </div>
@@ -348,28 +348,34 @@
           </el-form-item>
 
           <!-- Ilearn key -->
-          <el-form-item label="iLearn App key" v-if="ltiVersion === 'basic'">
+          <el-form-item label="iLearn App key" v-if="form.lastConfiguredLtiVersion === 'basic'">
             <el-input @change="trimImportantValues" v-model="form.ilearn.apiId" type="text" placeholder="iLearn App key ..."></el-input>
           </el-form-item>
 
           <!-- Ilearn secret -->
-          <el-form-item label="iLearn App secret" v-if="ltiVersion === 'basic'">
+          <el-form-item label="iLearn App secret" v-if="form.lastConfiguredLtiVersion === 'basic'">
             <el-input @change="trimImportantValues" v-model="form.ilearn.apiSecret" :type="hideCredentials ? 'password' : 'text'" placeholder="iLearn App Secret ..."></el-input>
           </el-form-item>
 
           <!-- Ilearn Lti-advantage auth url -->
-          <el-form-item label="iLearn LTI v1.3 client id" v-if="ltiVersion === 'advantage'">
+          <el-form-item label="iLearn LTI v1.3 client id" v-if="form.lastConfiguredLtiVersion === 'advantage'">
             <el-input @change="trimImportantValues" v-model="form.ilearn.advantageApiId" :type="'text'" placeholder="iLearn LTI v1.3 client id ..."></el-input>
           </el-form-item>
 
           <!-- Ilearn Lti-advantage auth secret -->
-          <el-form-item label="iLearn LTI v1.3 client secret" v-if="ltiVersion === 'advantage'">
+          <el-form-item label="iLearn LTI v1.3 client secret" v-if="form.lastConfiguredLtiVersion === 'advantage'">
             <el-input @change="trimImportantValues" v-model="form.ilearn.advantageApiSecret" :type="'text'" placeholder="iLearn LTI v1.3 client secret ..."></el-input>
           </el-form-item>
 
           <!-- Ilearn Lti-advantage auth url -->
-          <el-form-item label="iLearn LTI v1.3 auth" v-if="ltiVersion === 'advantage'">
+          <el-form-item label="iLearn LTI v1.3 auth" v-if="form.lastConfiguredLtiVersion === 'advantage'">
             <el-input @change="trimImportantValues" v-model="form.ilearn.advantageAuthUrl" :type="'text'" placeholder="iLearn LTI v1.3 authorization url ..."></el-input>
+          </el-form-item>
+
+          <!-- Ilearn Lti-advantage Deeplink-->
+          <el-form-item label="iLearn LTI v1.3 deeplinking" v-if="form.lastConfiguredLtiVersion === 'advantage'">
+            <el-switch v-model="form.ilearn.deeplinking" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+            <span class="text-muted ml-10">{{ $t('SW_USE_DEEPLINK_TEXT' )}}</span>
           </el-form-item>
         </div>
 
@@ -381,134 +387,133 @@
 </template>
 
 <script>
-import config from 'config'
+  import config from 'config'
 
-export default {
-  name: 'OrgIntegrationSettings',
-  props: ['form'],
+  export default {
+    name: 'OrgIntegrationSettings',
+    props: ['form'],
 
-  data () {
-    return {
-      school: this.$store.state.school,
-      user: this.$store.state.user,
-      lang: this.$store.state.lang,
-      ltiVersion: 'basic',
-      incorrectDomains: [],
-      processing: false,
-      inputVisible: {
-        emailDomains: false,
-        samlDomains: false,
-        samlEntityIds: false
-      },
-      inputValue: {
-        emailDomains: '',
-        samlDomains: '',
-        samlEntityIds: ''
-      },
-      hideCredentials: true,
-      ltiConfigUrl: `${config.api_url}/lti`,
-      canvasCallbackUrl: `${config.api_url}/auth/canvas/callback`,
-      brightspaceCallbackUrl: `${config.api_url}/auth/brightspace/callback`,
-      blackboardCallbackUrl: `${config.api_url}/auth/blackboard/callback`,
-      iLearnCallbackUrl: `${config.api_url}/auth/ilearn/callback`,
+    data () {
+      return {
+        school: this.$store.state.school,
+        user: this.$store.state.user,
+        lang: this.$store.state.lang,
+        incorrectDomains: [],
+        processing: false,
+        inputVisible: {
+          emailDomains: false,
+          samlDomains: false,
+          samlEntityIds: false
+        },
+        inputValue: {
+          emailDomains: '',
+          samlDomains: '',
+          samlEntityIds: ''
+        },
+        hideCredentials: true,
+        ltiConfigUrl: `${config.api_url}/lti`,
+        canvasCallbackUrl: `${config.api_url}/auth/canvas/callback`,
+        brightspaceCallbackUrl: `${config.api_url}/auth/brightspace/callback`,
+        blackboardCallbackUrl: `${config.api_url}/auth/blackboard/callback`,
+        iLearnCallbackUrl: `${config.api_url}/auth/ilearn/callback`,
 
-      ltiAdvantageDomainUrl: `${config.api_url.replace('/api/v1', '')}`,
-      ltiAdvantageRedirectUrl: `${config.api_url}/lti/advantage/launch`,
-      ltiAdvantageLoginUrl: `${config.api_url}/lti/advantage/initiation`,
-      ltiAdvantageKeysetUrl: `${config.api_url}/lti/advantage/jwks`,
+        ltiAdvantageDomainUrl: `${config.api_url.replace('/api/v1', '')}`,
+        ltiAdvantageRedirectUrl: `${config.api_url}/lti/advantage/launch`,
+        ltiAdvantageLoginUrl: `${config.api_url}/lti/advantage/initiation`,
+        ltiAdvantageKeysetUrl: `${config.api_url}/lti/advantage/jwks`,
 
-      blackboardAppId: config.blackboardAppId,
-      iLearn: config.iLearn
-    }
-  },
-
-  methods: {
-    domainsValidation () {
-      let failedDomains = []
-      const domainRegex = /^@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
-
-      // Filter all emails that don't match regex:
-      this.form.emailDomains.forEach(domain => {
-        const isIncorrect = !domainRegex.test(domain.trim())
-        if (isIncorrect) { failedDomains.push(domain.trim()) }
-      })
-
-      failedDomains = failedDomains.filter(domain => { return domain.trim() !== '' })
-      this.incorrectDomains = failedDomains
-      this.form.domainError = failedDomains.length > 0
-    },
-    generateSecret () {
-      this.$confirm(this.$i18n.t('SW_ATTENTION_SECRET_GENERATE'), this.$i18n.t('SW_ATTENTION_SECRET_GENERATE_TITLE'), {
-        confirmButtonText: this.$i18n.t('SW_GENERATE'),
-        cancelButtonText: this.$i18n.t('SW_CANCEL')
-      }).then(() => {
-        this.processing = true
-
-        this.$http.get('organizations/secret', { params: { organization: this.form._id } })
-          .then((res) => {
-            this.form.ltiBasic.secret = res.data.list[0]
-            this.$message({ message: this.$i18n.t('SW_LTISECRET_GENERATED'), type: 'success' })
-          })
-          .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
-          .finally(() => { this.processing = false })
-      })
-    },
-    trimImportantValues () {
-      this.form.canvas.apiUrl = this.form.canvas.apiUrl.trim()
-      this.form.canvas.apiId = this.form.canvas.apiId.trim()
-      this.form.canvas.apiSecret = this.form.canvas.apiSecret.trim()
-      this.form.canvas.advantageApiId = this.form.canvas.advantageApiId.trim()
-      this.form.canvas.advantageApiSecret = this.form.canvas.advantageApiSecret.trim()
-      this.form.canvas.advantageAuthUrl = this.form.canvas.advantageAuthUrl.trim()
-
-      this.form.brightspace.apiUrl = this.form.brightspace.apiUrl.trim()
-      this.form.brightspace.apiId = this.form.brightspace.apiId.trim()
-      this.form.brightspace.apiSecret = this.form.brightspace.apiSecret.trim()
-      this.form.brightspace.advantageApiId = this.form.brightspace.advantageApiId.trim()
-      this.form.brightspace.advantageApiSecret = this.form.brightspace.advantageApiSecret.trim()
-      this.form.brightspace.advantageAuthUrl = this.form.brightspace.advantageAuthUrl.trim()
-
-      this.form.blackboard.apiUrl = this.form.blackboard.apiUrl.trim()
-      this.form.blackboard.apiId = this.form.blackboard.apiId.trim()
-      this.form.blackboard.apiSecret = this.form.blackboard.apiSecret.trim()
-
-      if (this.form.ilearn) {
-        this.form.ilearn.apiUrl = this.form.ilearn.apiUrl.trim()
-        this.form.ilearn.apiId = this.form.ilearn.apiId.trim()
-        this.form.ilearn.apiSecret = this.form.ilearn.apiSecret.trim()
-        this.form.ilearn.advantageApiId = this.form.ilearn.advantageApiId.trim()
-        this.form.ilearn.advantageApiSecret = this.form.ilearn.advantageApiSecret.trim()
-        this.form.ilearn.advantageAuthUrl = this.form.ilearn.advantageAuthUrl.trim()
+        blackboardAppId: config.blackboardAppId,
+        iLearn: config.iLearn
       }
     },
-    showInput (type) {
-      this.inputVisible[type] = true
-      this.$nextTick((_) => { this.$refs[type].$refs.input.focus() })
-    },
-    handleInputConfirm (type) {
-      const inputValue = this.inputValue[type].trim()
-      if (inputValue) {
-        if (type === 'samlEntityIds') this.form.saml.entityIds.push(inputValue.trim())
-        else if (type === 'samlDomains') this.form.saml.domains.push(inputValue.trim())
-        else this.form[type].push(inputValue.trim())
+
+    methods: {
+      domainsValidation () {
+        let failedDomains = []
+        const domainRegex = /^@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
+
+        // Filter all emails that don't match regex:
+        this.form.emailDomains.forEach(domain => {
+          const isIncorrect = !domainRegex.test(domain.trim())
+          if (isIncorrect) { failedDomains.push(domain.trim()) }
+        })
+
+        failedDomains = failedDomains.filter(domain => { return domain.trim() !== '' })
+        this.incorrectDomains = failedDomains
+        this.form.domainError = failedDomains.length > 0
+      },
+      generateSecret () {
+        this.$confirm(this.$i18n.t('SW_ATTENTION_SECRET_GENERATE'), this.$i18n.t('SW_ATTENTION_SECRET_GENERATE_TITLE'), {
+          confirmButtonText: this.$i18n.t('SW_GENERATE'),
+          cancelButtonText: this.$i18n.t('SW_CANCEL')
+        }).then(() => {
+          this.processing = true
+
+          this.$http.get('organizations/secret', { params: { organization: this.form._id } })
+                  .then((res) => {
+                    this.form.ltiBasic.secret = res.data.list[0]
+                    this.$message({ message: this.$i18n.t('SW_LTISECRET_GENERATED'), type: 'success' })
+                  })
+                  .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
+                  .finally(() => { this.processing = false })
+        })
+      },
+      trimImportantValues () {
+        this.form.canvas.apiUrl = this.form.canvas.apiUrl.trim()
+        this.form.canvas.apiId = this.form.canvas.apiId.trim()
+        this.form.canvas.apiSecret = this.form.canvas.apiSecret.trim()
+        this.form.canvas.advantageApiId = this.form.canvas.advantageApiId.trim()
+        this.form.canvas.advantageApiSecret = this.form.canvas.advantageApiSecret.trim()
+        this.form.canvas.advantageAuthUrl = this.form.canvas.advantageAuthUrl.trim()
+
+        this.form.brightspace.apiUrl = this.form.brightspace.apiUrl.trim()
+        this.form.brightspace.apiId = this.form.brightspace.apiId.trim()
+        this.form.brightspace.apiSecret = this.form.brightspace.apiSecret.trim()
+        this.form.brightspace.advantageApiId = this.form.brightspace.advantageApiId.trim()
+        this.form.brightspace.advantageApiSecret = this.form.brightspace.advantageApiSecret.trim()
+        this.form.brightspace.advantageAuthUrl = this.form.brightspace.advantageAuthUrl.trim()
+
+        this.form.blackboard.apiUrl = this.form.blackboard.apiUrl.trim()
+        this.form.blackboard.apiId = this.form.blackboard.apiId.trim()
+        this.form.blackboard.apiSecret = this.form.blackboard.apiSecret.trim()
+
+        if (this.form.ilearn) {
+          this.form.ilearn.apiUrl = this.form.ilearn.apiUrl.trim()
+          this.form.ilearn.apiId = this.form.ilearn.apiId.trim()
+          this.form.ilearn.apiSecret = this.form.ilearn.apiSecret.trim()
+          this.form.ilearn.advantageApiId = this.form.ilearn.advantageApiId.trim()
+          this.form.ilearn.advantageApiSecret = this.form.ilearn.advantageApiSecret.trim()
+          this.form.ilearn.advantageAuthUrl = this.form.ilearn.advantageAuthUrl.trim()
+        }
+      },
+      showInput (type) {
+        this.inputVisible[type] = true
+        this.$nextTick((_) => { this.$refs[type].$refs.input.focus() })
+      },
+      handleInputConfirm (type) {
+        const inputValue = this.inputValue[type].trim()
+        if (inputValue) {
+          if (type === 'samlEntityIds') this.form.saml.entityIds.push(inputValue.trim())
+          else if (type === 'samlDomains') this.form.saml.domains.push(inputValue.trim())
+          else this.form[type].push(inputValue.trim())
+        }
+        this.inputVisible[type] = false
+        this.inputValue[type] = ''
+      },
+      handleClose (type, item) {
+        if (type === 'samlEntityIds') this.form.saml.entityIds.splice(this.form.saml.entityIds.indexOf(item), 1)
+        else if (type === 'samlDomains') this.form.saml.domains.splice(this.form.saml.domains.indexOf(item), 1)
+        else this.form[type].splice(this.form[type].indexOf(item), 1)
+        this.$nextTick()
+      },
+      clipboardSuccess () {
+        this.$message({ message: this.$i18n.t('SW_COPIED_TO_CLIPBOARD'), type: 'success' })
       }
-      this.inputVisible[type] = false
-      this.inputValue[type] = ''
-    },
-    handleClose (type, item) {
-      if (type === 'samlEntityIds') this.form.saml.entityIds.splice(this.form.saml.entityIds.indexOf(item), 1)
-      else if (type === 'samlDomains') this.form.saml.domains.splice(this.form.saml.domains.indexOf(item), 1)
-      else this.form[type].splice(this.form[type].indexOf(item), 1)
-      this.$nextTick()
-    },
-    clipboardSuccess () {
-      this.$message({ message: this.$i18n.t('SW_COPIED_TO_CLIPBOARD'), type: 'success' })
     }
   }
-}
 </script>
 
 <style lang="scss">
-@import '~scss_vars';
-@import './style.scss';
+  @import '~scss_vars';
+  @import './style.scss';
 </style>
