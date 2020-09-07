@@ -79,6 +79,12 @@
       </el-dropdown>
     </el-form-item>
 
+    <el-form-item v-if="isAdmin" :label="$t('SW_FACULTY_MANAGER')" class="additional">
+      <el-select class="block" v-model="form.facultyManager" multiple :placeholder="$t('SW_FACULTY_MANAGER_PLACEHOLDER')" size="large">
+        <el-option v-for="faculty in faculties" :key="faculty._id" :label="faculty[lang]" :value="faculty._id"/>
+      </el-select>
+    </el-form-item>
+
     <!-- Newsletter -->
     <el-form-item :label="$t('SW_NEWSLETTER')" class="additional">
       <el-checkbox class="newsletter" :label="$t('SW_NEWSLETTER_TEXT')" v-model="form.newsletter"></el-checkbox>
@@ -113,6 +119,8 @@ export default {
       isMobile: this.$store.state.isMobile,
       submitting: false,
       signinByPassword: config.signinByPassword,
+      faculties: this.$store.state.school.faculties,
+      hasFacultyManagers: config.hasFacultyManagers,
       languages: this.$store.state.languages,
       emailChanged: false,
       changingRole: false,
