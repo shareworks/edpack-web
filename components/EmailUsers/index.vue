@@ -35,7 +35,7 @@
 <script>
 export default {
   name: 'EmailUsers',
-  props: ['closeDialog', 'selectedUsers'],
+  props: ['closeDialog', 'selectedUsers', 'course'],
 
   data () {
     return {
@@ -68,7 +68,11 @@ export default {
       const self = this.form.toSelf
       const message = this.form.message
       const subject = this.form.subject
+
       const body = { message, subject, recipients }
+
+      // If course context is given, add course _id to body payload
+      if (this.course) body.course = this.course._id
 
       this.$http.post('messages/personal', body, { params: { toSelf: self } })
         .then(() => {
