@@ -128,7 +128,6 @@ export default {
   },
 
   mounted () {
-    console.log('this is edpack manage groups')
     this.getStudents()
   },
 
