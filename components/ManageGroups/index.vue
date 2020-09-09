@@ -11,7 +11,7 @@
           </el-button>
 
           <!-- Save button -->
-          <el-button type="success" size="medium" :plain="!isChanged" @click="submitChanges">
+          <el-button type="success" size="medium" :plain="!isChanged" :disabled="!isChanged" @click="confirmSubmitChanges">
             <i class="icon-ok-sign"></i>
             <span v-if="!isMobile">{{ $t('SW_SAVE_CHANGES') }}</span>
           </el-button>
@@ -245,6 +245,13 @@ export default {
         // Unsuccess
         this.$message({ message: this.$i18n.t('SW_GROUP_NOT_UNIQUE'), type: 'error' })
       }
+    },
+
+    confirmSubmitChanges () {
+      this.$confirm(this.$i18n.t('SW_MANAGE_STAFF_EFFECT'), this.$i18n.t('SW_SUBMIT_MANAGE_GROUP_TITLE'), {
+        confirmButtonText: this.$i18n.t('SW_SAVE_CHANGES'),
+        cancelButtonText: this.$i18n.t('SW_CANCEL')
+      }).then(() => { this.submitChanges() })
     },
 
     submitChanges () {

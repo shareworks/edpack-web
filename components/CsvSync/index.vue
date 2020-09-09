@@ -49,7 +49,7 @@
     </div>
 
     <div class="mt-20">
-      <el-button type="primary" size="medium" @click="syncWithCsv" :disabled="!csvUsers.length || loading || loadingStats" :loading="processingCsv">
+      <el-button type="primary" size="medium" @click="confirmSync" :disabled="!csvUsers.length || loading || loadingStats" :loading="processingCsv">
         <i class="icon-repeat"></i>{{ $t('SW_SYNC_NOW') }}</el-button>
       <el-button class="ml-10" type="text" @click="closeDialog()">{{ $t('SW_CANCEL') }}</el-button>
     </div>
@@ -110,6 +110,12 @@ export default {
         .then((res) => { this.currentUsers = res.data.list })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.loading = false })
+    },
+    confirmSync () {
+      this.$confirm(this.$i18n.t('SW_MANAGE_STAFF_EFFECT'), this.$i18n.t('SW_SUBMIT_MANAGE_GROUP_TITLE'), {
+        confirmButtonText: this.$i18n.t('SW_SYNC_NOW'),
+        cancelButtonText: this.$i18n.t('SW_CANCEL')
+      }).then(() => { this.syncWithCsv() })
     },
     syncWithCsv () {
       if (!this.csvUsers.length) return this.$message({ message: this.$i18n.t('SW_NO_USERS'), type: 'error' })
