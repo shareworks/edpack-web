@@ -36,8 +36,7 @@
         <el-col :span="6" class="unsorted-row">
           <!-- Unsorted users -->
           <h3 class="collapse-header">
-            <p class="question-sentence groups-header">{{ $t('SW_WITHOUT_GROUP') }}</p>
-            <el-tag type="info" size="large">{{ unSorterStudents.length }} {{ $tc('SW_STUDENT', unSorterStudents.length).toLowerCase() }}</el-tag>
+            <p class="question-sentence groups-header"><strong>{{ $t('SW_WITHOUT_GROUP') }}</strong> <el-tag size="mini" class="ml-5">{{ unSorterStudents.length }}</el-tag></p>
           </h3>
           <!-- Draggable unsorted students group list -->
           <groups-item :checkIsChanged="checkIsChanged" :students="unSorterStudents"></groups-item>
@@ -45,8 +44,7 @@
 
       <el-col :span="18">
         <h3 class="collapse-header">
-          <p class="question-sentence groups-header">{{ $tc('SW_GROUPS', 2) }}</p>
-          <el-tag type="info" size="large">{{ students.length }} {{ $tc('SW_GROUPS', students.length).toLowerCase() }}</el-tag>
+          <p class="question-sentence groups-header"><strong>{{ $tc('SW_GROUPS', 2) }}</strong> <el-tag class="ml-5" size="mini">{{ students.length }}</el-tag></p>
         </h3>
 
         <el-collapse class="group-collapse" v-if="students.length">
@@ -56,7 +54,7 @@
             <template slot="title">
               <h3 class="collapse-header">
                 <div class="question-number">{{ index + 1 }}</div>
-                <div class="question-sentence capitalize">{{ group.groupName }}</div>
+                <div class="question-sentence capitalize bold">{{ group.groupName }}</div>
                 <el-tag class="question-tag-info" type="info">{{ group.length }} {{ $tc('SW_STUDENT', group.length).toLowerCase() }}</el-tag>
               </h3>
             </template>
