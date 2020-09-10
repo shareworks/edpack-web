@@ -259,7 +259,7 @@ export default {
         params.faculty = this.$route.query.context
       }
 
-      if (this.showFacultyFilter && this.facultyFilter) {
+      if (this.school.faculties.length > 1 && this.facultyFilter) {
         // Growflow specific code
         params.faculty = this.facultyFilter
       }
@@ -381,7 +381,7 @@ export default {
       const query = { query: this.searchText, filter: this.statusFilter }
 
       // Growflow specific code
-      if (this.showFacultyFilter) { query.faculty = this.facultyFilter }
+      if (this.school.faculties.length > 1) { query.faculty = this.facultyFilter }
 
       this.$router.replace({ name: 'admin', params: { slug: this.school.slug, mode: 'courses' }, query })
     },
