@@ -40,8 +40,8 @@
         </el-col>
 
         <el-col :xs="16" :sm="12" class="course-header-filter">
-          <!-- Search faculty - GROWFLOW -->
-          <el-select v-model="facultyFilter" clearable class="mr-10" :placeholder="$t('SW_FACULTY')" size="medium" @change="changeFilter" v-if="user.role !== 'student' && showFacultyFilter">
+          <!-- Search faculty -->
+          <el-select v-model="facultyFilter" clearable class="mr-10" :placeholder="$t('SW_FACULTY')" size="medium" @change="changeFilter" v-if="user.role !== 'student' && school.faculties.length > 1">
             <el-option v-for="item in school.faculties" :key="item._id" :label="item[lang]" :value="item._id"></el-option>
           </el-select>
 
@@ -144,7 +144,7 @@
           </template>
         </el-table-column>
         <!-- Faculty -->
-        <el-table-column v-if="school.faculties && school.faculties.length" property="faculty" :label="school.terminology.faculty[lang]" min-width="100">
+        <el-table-column v-if="school.faculties && school.faculties.length" property="faculty" :label="school.terminology.faculty[lang]" min-width="140">
           <template slot-scope="props">
             <div v-if="props.row.faculty" class="text-ellipsis">{{ getFaculty(props.row.faculty) }}</div>
             <div v-else class="text-muted">-</div>
@@ -180,7 +180,6 @@
 
 <script>
 import moment from 'moment'
-import config from 'config'
 import LmsIcon from '../LmsIcon'
 import debounce from 'lodash/debounce'
 import TableStatus from '../TableStatus'
@@ -211,20 +210,13 @@ export default {
       statusOptions: ['active', 'inactive', 'archived'],
       statusFilter: this.$route.query.filter || 'active',
       submitting: false,
-
-      // growflow specific value
-      showFacultyFilter: config.isGrowflow,
       facultyFilter: this.$route.query.faculty || ''
     }
   },
 
   watch: {
     searchText: debounce(function () {
-      const query = { query: this.searchText, filter: this.statusFilter }
-
-      // Growflow specific code
-      if (this.showFacultyFilter) { query.faculty = this.facultyFilter }
-
+      const query = { query: this.searchText, filter: this.statusFilter, faculty: this.facultyFilter }
       this.$router.replace({ params: { slug: this.school.slug, mode: 'courses' }, query })
     }, 400),
     '$route' () {
