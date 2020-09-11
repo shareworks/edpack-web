@@ -10,8 +10,7 @@ export default {
 
   mounted () {
     router.onError(error => {
-      const pattern = /chunk ?.*(\d.*) failed\./
-      const isChunkLoadFailure = error.message.match(pattern)
+      const isChunkLoadFailure = error.message.toLowerCase().includes('chunkloaderror')
 
       if (isChunkLoadFailure) {
         const reloadedDate = this.$ls.get('reloaded')
