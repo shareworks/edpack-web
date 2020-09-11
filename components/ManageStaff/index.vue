@@ -86,7 +86,7 @@ export default {
     },
     removeInstructor (instructor) {
       this.removing = true
-      const invitations = [{ recipientEmail: instructor.email, downGrade: true, contextId: this.course._id, role: 'none', sendEmail: false }]
+      const invitations = [{ recipientEmail: instructor.email, downgrade: true, contextId: this.course._id, role: 'none', sendEmail: false }]
 
       this.$http.post('users/invite', { invitations })
         .then(() => {

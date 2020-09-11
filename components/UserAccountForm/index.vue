@@ -176,7 +176,7 @@ export default {
 
       const student = [{
         recipientEmail: this.form.email,
-        downGrade: true,
+        downgrade: true,
         contextId: this.school._id,
         role: newRole
       }]
