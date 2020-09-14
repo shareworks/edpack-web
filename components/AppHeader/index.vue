@@ -71,7 +71,7 @@
     </div>
 
     <el-dialog :title="$t('SW_CREDITS_INFO')" append-to-body :visible.sync="dialogRemaining" v-if="payAsYouGo">
-      {{ $t('SW_CREDITS_REMAINING_INFO', [school.name[lang]])}} <a href="#" @click="openChat">{{ $t('SW_CONTACT_SUPPORT') }}</a>.
+      {{ $t('SW_CREDITS_REMAINING_INFO', [school.name[lang]])}} <a href="#" @click.prevent="openChat">{{ $t('SW_CONTACT_SUPPORT') }}</a>.
 
       <div v-if="user.credits && user.credits.exp">
         <strong class="hidden-xs hidden-sm"><i class="icon-time"></i></strong>
