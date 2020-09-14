@@ -1,7 +1,7 @@
 <template>
   <div>
     <page-cover>
-      <page-header :title="$t('SW_MY_ACCOUNT')" :intro="$t('SW_MY_ACCOUNT_SHORT')"></page-header>
+      <page-header :title="$t('SW_MY_ACCOUNT')" :intro="$t(school.manageAccountEnabled || school.role === 'admin' || form.systemAdmin ? 'SW_MY_ACCOUNT_SHORT' : '')"></page-header>
 
       <!-- View your profile -->
       <el-button size="small" type="primary" v-if="hasUserProfiles" @click="$router.push({ name: 'profile', params: { id: form._id, slug: school.slug } })" class="mt-10">
