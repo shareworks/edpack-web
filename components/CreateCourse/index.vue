@@ -51,7 +51,7 @@ export default {
         faculty: '',
         status: this.$store.state.inLTI ? 'inactive' : 'active',
         ilearn: {
-          integration: this.$store.state.school.availableLms.includes('ilearn-advantage'),
+          integration: this.$store.state.school.availableLms.includes('ilearn-advantage')
         }
       }
     }

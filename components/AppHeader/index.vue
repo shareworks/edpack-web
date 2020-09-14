@@ -112,12 +112,12 @@ export default {
     }
   },
 
-  created() {
-    window.addEventListener("resize", this.resizeHandler)
+  created () {
+    window.addEventListener('resize', this.resizeHandler)
     this.resizeHandler()
   },
-  destroyed() {
-    window.removeEventListener("resize", this.resizeHandler)
+  destroyed () {
+    window.removeEventListener('resize', this.resizeHandler)
   },
 
   computed: {
