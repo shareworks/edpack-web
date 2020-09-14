@@ -66,11 +66,11 @@
       {{ $tc('SW_' + (form.role || user.role).toUpperCase()) }}
       {{ $t('SW_ROLE_AT', { school: form.organization.name[lang] }) }}
 
-      <el-dropdown v-if="isAdmin" trigger="click" @command="changeRole">
-            <el-button size="small" class="ml-10">
-              <i class="icon-pencil"></i>
-              <span>{{ $t('SW_CHANGE_ROLE') }}</span>
-            </el-button>
+      <el-dropdown v-if="isAdmin" trigger="click" @command="changeRole" :disabled="changingRole">
+        <el-button size="small" class="ml-10" :loading="changingRole">
+          <i class="icon-pencil"></i>
+          <span>{{ $t('SW_CHANGE_ROLE') }}</span>
+        </el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item :command="{ newRole: 'admin' }" :disabled="form.role === 'admin'">{{ $tc('SW_ADMIN', 1) }}</el-dropdown-item>
           <el-dropdown-item :command="{ newRole: 'staff' }" :disabled="form.role === 'staff'">{{ $tc('SW_STAFF', 1) }}</el-dropdown-item>
@@ -79,8 +79,8 @@
       </el-dropdown>
     </el-form-item>
 
-    <el-form-item v-if="isAdmin" :label="$t('SW_FACULTY_MANAGER')" class="additional">
-      <el-select class="block" v-model="form.facultyManager" multiple :placeholder="$t('SW_FACULTY_MANAGER_PLACEHOLDER')" size="large">
+    <el-form-item v-if="isAdmin" :label="$t('SW_FACULTY_MANAGER')" class="additional" :loading="changingRole">
+      <el-select class="block" v-model="facultyManager" multiple :disabled="changingRole" @change="changeFacultyRole" :placeholder="$t('SW_FACULTY_MANAGER_PLACEHOLDER')" size="large">
         <el-option v-for="faculty in faculties" :key="faculty._id" :label="faculty[lang]" :value="faculty._id"/>
       </el-select>
     </el-form-item>
@@ -104,6 +104,7 @@
 import config from 'config'
 import { loadLanguages } from '../../utils/load-languages'
 import ThumbnailEdit from '../../components/ThumbnailEdit'
+import Vue from 'vue'
 
 export default {
   name: 'UserAccountForm',
@@ -124,8 +125,14 @@ export default {
       languages: this.$store.state.languages,
       emailChanged: false,
       changingRole: false,
-      resetting: false
+      resetting: false,
+      facultyManager: [],
+      formClone: Vue.util.extend({}, this.form)
     }
+  },
+
+  created () {
+    if (this.form.faculties) for (const faculty of this.form.faculties) this.facultyManager.push(faculty._id)
   },
 
   methods: {
@@ -172,7 +179,7 @@ export default {
       if (this.changingRole) return
       if (!newRole) return
 
-      this.changingRole = this.form._id
+      this.changingRole = true
 
       const student = [{
         recipientEmail: this.form.email,
@@ -184,10 +191,42 @@ export default {
       this.$http.post('users/invite', { invitations: student })
         .then((res) => {
           if (this.updateUser) {
-            this.updateUser(...res.data.list, { role: newRole })
+            this.updateUser(res.data.list[0], { ...this.formClone, role: newRole })
           }
 
           this.form.role = newRole
+          this.$message({ message: this.$i18n.t('SW_ROLE_CHANGED'), type: 'success' })
+        })
+        .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
+        .finally(() => { this.changingRole = false })
+    },
+    changeFacultyRole (faculties) {
+      const map = {}
+      const result = []
+      for (const faculty of faculties) map[faculty] = 1
+
+      if (this.changingRole) return
+      this.changingRole = true
+
+      const invitations = []
+      for (const faculty of this.faculties) {
+        invitations.push({
+          recipientEmail: this.form.email,
+          downgrade: true,
+          contextId: faculty._id,
+          role: map[faculty._id] ? 'manager' : 'none'
+        })
+
+        if (map[faculty._id]) result.push({ ...faculty, role: 'manager' })
+      }
+      this.$http.post('users/invite', { invitations: invitations })
+        .then((res) => {
+          if (this.updateUser) {
+            this.updateUser(res.data.list[0], { ...this.formClone, faculties: result })
+          }
+
+          this.form.faculties = result
+
           this.$message({ message: this.$i18n.t('SW_ROLE_CHANGED'), type: 'success' })
         })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
