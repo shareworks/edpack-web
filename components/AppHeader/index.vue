@@ -27,10 +27,21 @@
       </el-menu>
 
       <!-- Header logo or text -->
-      <router-link to="/home" aria-hidden="true" tabindex="-1">
+      <router-link v-if="!showSchoolSelect" to="/home" aria-hidden="true" tabindex="-1">
         <div v-if="school.appName" class="app-header-title">{{ school.appName }}</div>
         <div v-else class="header-logo"></div>
       </router-link>
+
+      <div class="header-school-container visible-xs visible-sm" v-else>
+        <div class="org-select">
+          <el-select size="small" v-model="selectedOrg" :filterable="userOrgs.length > 5" :placeholder="$t('SW_SELECT_SCHOOL')" @change="changeOrg">
+            <el-option v-for="org in userOrgs" :key="org._id" :label="org.name[lang]" :value="org._id">
+              <i class="icon-school"></i>
+              <span>{{ org.name[lang] }}</span>
+            </el-option>
+          </el-select>
+        </div>
+      </div>
 
       <!-- User dropdown menu -->
       <div class="header-user-container" v-if="user">
@@ -42,6 +53,13 @@
               <span>{{ org.name[lang] }}</span>
             </el-option>
           </el-select>
+        </div>
+
+        <div class="org-select" v-if="showOrgButton && userOrgs.length > 1">
+          <el-button type="primary" plain size="small" @click="showSchoolSelect = !showSchoolSelect">
+            <i class="icon-list"></i>
+            {{ $t('SW_ORGANIZATIONS') }}
+          </el-button>
         </div>
 
         <!-- User account -->
@@ -79,6 +97,8 @@ export default {
       showProfile: config.hasUserProfiles,
       selectedOrg: this.$store.state.user.organization.name[this.$store.state.user.language],
       userOrgs: this.$store.state.user.organizations,
+      showSchoolSelect: false,
+      showOrgButton: false,
       payAsYouGo: config.payAsYouGo,
       dialogRemaining: false
     }
@@ -92,6 +112,14 @@ export default {
     }
   },
 
+  created() {
+    window.addEventListener("resize", this.resizeHandler)
+    this.resizeHandler()
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.resizeHandler)
+  },
+
   computed: {
     user () {
       return this.$store.state.user
@@ -102,6 +130,14 @@ export default {
   },
 
   methods: {
+    resizeHandler () {
+      if (document.documentElement.clientWidth >= 991) {
+        this.showSchoolSelect = false
+        this.showOrgButton = false
+      } else {
+        this.showOrgButton = true
+      }
+    },
     prettyDate (date) {
       return moment(new Date(date)).format('LLL')
     },

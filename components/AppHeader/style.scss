@@ -85,6 +85,14 @@ button.menu-button {
   position: absolute;
 }
 
+.header-school-container {
+  height: 100%;
+  padding: calc((#{$--header-height} / 2) - 12px);
+  right: 33%;
+  top: 0;
+  position: absolute;
+}
+
 .app-header-title {
   position: absolute;
   top: 50%;
@@ -115,7 +123,7 @@ button.menu-button {
 }
 
 .org-select {
-  display: inline-block;
+  display: inline-block !important;
   margin-right: 20px;
   margin-top: -6px;
 
