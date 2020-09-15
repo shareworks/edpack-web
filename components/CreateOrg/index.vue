@@ -49,9 +49,16 @@ export default {
     setNewName (lang, value) { this.form.name[lang] = value },
     createOrg () {
       if (this.submitting) return
-      if (!this.form.name.nl.trim() || !this.form.name.en.trim()) return this.$message({ message: this.$i18n.t('SW_NO_ORG_NAME'), type: 'error' })
+
+      if (!this.form.name.nl.trim() && !this.form.name.en.trim()) return this.$message({ message: this.$i18n.t('SW_NO_ORG_NAME'), type: 'error' })
+      if (this.form.name.nl.trim() && !this.form.name.en.trim()) this.form.name.en = this.form.name.nl.trim()
+      if (!this.form.name.nl.trim() && this.form.name.en.trim()) this.form.name.nl = this.form.name.en.trim()
+
+      if (!this.form.shortName.nl.trim() && !this.form.shortName.en.trim()) return this.$message({ message: this.$i18n.t('SW_NO_ORG_NAME'), type: 'error' })
+      if (this.form.shortName.nl.trim() && !this.form.shortName.en.trim()) this.form.shortName.en = this.form.shortName.nl.trim()
+      if (!this.form.shortName.nl.trim() && this.form.shortName.en.trim()) this.form.shortName.nl = this.form.shortName.en.trim()
+
       this.submitting = true
-      this.form.shortName.nl = this.form.shortName.en
 
       this.$http.post('organizations', this.form)
         .then((res) => {
