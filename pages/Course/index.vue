@@ -1,5 +1,7 @@
 <template>
   <div>
+    <el-alert type="warning" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE')" v-if="!serverOnline"></el-alert>
+
     <router-view v-if="status === 'done'"></router-view>
 
     <div class="mt-30 text-muted text-center">
@@ -30,11 +32,14 @@ export default {
     return {
       course: false,
       status: 'loading',
-      submitting: false
+      submitting: false,
+      serverOnline: true
     }
   },
 
   created () {
+    this.checkConnection()
+
     return this.$http.get(`courses/${this.$route.params.course}`)
       .then((res) => {
         this.$store.dispatch('setCourse', res.data.list[0])
@@ -51,6 +56,11 @@ export default {
   },
 
   methods: {
+    checkConnection () {
+      this.$http.get('status')
+        .then(() => { this.serverOnline = true })
+        .catch(() => { this.serverOnline = false })
+    },
     isAuthorized () {
       if (this.$store.state.user.systemAdmin) return true
       if (this.$store.state.user.role === 'admin') return true

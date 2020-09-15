@@ -12,6 +12,7 @@
 
       <!-- Contact form -->
       <div class="contact-form-wrapper invisible text-left" v-observe-visibility="{callback: visibilityChanged, throttle: 200, once: true}">
+        <el-alert class="mb-20" type="warning" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE')" v-if="!serverOnline"></el-alert>
         <contact-form></contact-form>
       </div>
     </el-col>
@@ -29,10 +30,21 @@ export default {
 
   data () {
     return {
-      aboutUrl: config.aboutUrl
+      aboutUrl: config.aboutUrl,
+      serverOnline: true
     }
   },
+
+  mounted() {
+    this.checkConnection()
+  },
+
   methods: {
+    checkConnection () {
+      this.$http.get('status')
+        .then(() => { this.serverOnline = true })
+        .catch(() => { this.serverOnline = false })
+    },
     visibilityChanged (isVisible, entry, count) {
       const { target } = entry
 

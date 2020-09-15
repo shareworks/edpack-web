@@ -9,6 +9,7 @@
         <div class="horizontal-logo"></div>
 
         <!-- Log in panel -->
+        <el-alert type="warning" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE')" v-if="!serverOnline"></el-alert>
         <register class="mb-30"></register>
 
         <!-- Footer links -->
@@ -26,7 +27,25 @@ import AnimatedLanding from '../../../components/AnimatedLanding'
 export default {
   name: 'Invitation',
   metaInfo: { title: 'Accept invitation' },
-  components: { Register, FooterLinks, AnimatedLanding }
+  components: { Register, FooterLinks, AnimatedLanding },
+
+  data () {
+    return {
+      serverOnline: true
+    }
+  },
+
+  mounted() {
+    this.checkConnection()
+  },
+
+  methods: {
+    checkConnection () {
+      this.$http.get('status')
+        .then(() => { this.serverOnline = true })
+        .catch(() => { this.serverOnline = false })
+    }
+  }
 }
 </script>
 

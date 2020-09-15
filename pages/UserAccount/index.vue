@@ -2,6 +2,7 @@
   <div>
     <page-cover>
       <page-header :title="$t('SW_MY_ACCOUNT')" :intro="$t(school.manageAccountEnabled || school.role === 'admin' || form.systemAdmin ? 'SW_MY_ACCOUNT_SHORT' : '')"></page-header>
+      <el-alert type="warning" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE')" v-if="!serverOnline"></el-alert>
 
       <!-- View your profile -->
       <el-button size="small" type="primary" v-if="hasUserProfiles" @click="$router.push({ name: 'profile', params: { id: form._id, slug: school.slug } })" class="mt-10">
@@ -60,11 +61,21 @@ export default {
       hasUserProfiles: config.hasUserProfiles,
       school: this.$store.state.school,
       form: Vue.util.extend({}, this.$store.state.user),
-      inLTI: this.$store.state.inLTI
+      inLTI: this.$store.state.inLTI,
+      serverOnline: true
     }
   },
 
+  mounted() {
+    this.checkConnection()
+  },
+
   methods: {
+    checkConnection () {
+      this.$http.get('status')
+        .then(() => { this.serverOnline = true })
+        .catch(() => { this.serverOnline = false })
+    },
     logout () {
       this.$http.post('users/logout', {})
         .then(() => {
