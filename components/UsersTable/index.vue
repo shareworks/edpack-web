@@ -66,7 +66,7 @@
       <!-- Expand -->
       <el-table-column v-if="!hideCourses" type="expand" width="30">
         <template slot-scope="props">
-          <expand-user :_id="props.row._id" :dateFormatter="dateFormatter" :sortCreatedDate="sortCreatedDate"></expand-user>
+          <expand-user :_id="props.row._id" :user="props.row" :dateFormatter="dateFormatter" :sortCreatedDate="sortCreatedDate"></expand-user>
         </template>
       </el-table-column>
       <!-- Selection -->

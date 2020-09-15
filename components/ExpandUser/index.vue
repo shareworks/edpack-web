@@ -2,6 +2,13 @@
   <div>
     <div class="mb-10"><strong class="mr-5">ID</strong> {{ _id }}</div>
 
+    <div v-if="user.faculties.length" class="mb-10">
+      <p>
+        <strong>{{ $t('SW_FACULTY_MANAGER') }}</strong>
+        <el-tag v-for="fac in facultiesManager" class="ml-5" :key="fac">{{ fac }}</el-tag>
+      </p>
+    </div>
+
     <div v-if="userCourses && userCourses.length">
       <el-table :data="userCourses" row-key="_id" :default-sort="{prop: 'createdDate', order: 'descending'}">
         <el-table-column property="name" :label="$tc('SW_COURSE', 1)" min-width="180">
@@ -28,15 +35,28 @@
 
 <script>
 import LmsIcon from '../../components/LmsIcon'
+
 export default {
   name: 'ExpandUser',
-  props: ['_id', 'dateFormatter', 'sortCreatedDate'],
+  props: ['_id', 'dateFormatter', 'sortCreatedDate', 'user'],
   components: { LmsIcon },
 
   data () {
     return {
       userCourses: [],
+      lang: this.$store.state.lang,
       school: this.$store.state.school
+    }
+  },
+
+  computed: {
+    facultiesManager () {
+      const faculties = this.school.faculties.map(fac => {
+        const faculty = this.user.faculties.find(userFaculty => userFaculty._id === fac._id)
+        if (faculty) return fac[this.lang]
+      })
+
+      return faculties.filter(Boolean)
     }
   },
 
