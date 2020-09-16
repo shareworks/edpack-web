@@ -8,7 +8,15 @@ export function loadLanguages (i18n, lang) {
   if (i18n.locale !== lang) {
     if (!loadedLanguages.includes(lang)) {
       return import(/* webpackChunkName: "lang-[request]" */ `root/${lang}.json`).then(msgs => {
-        i18n.setLocaleMessage(lang, msgs.default)
+
+        let basicLangPack
+        try {
+          basicLangPack = require(`../${lang}.json`)
+        } catch (ex) {
+          basicLangPack = {}
+        }
+
+        i18n.setLocaleMessage(lang, { ...basicLangPack, ...msgs.default })
         loadedLanguages.push(lang)
         return setI18nLanguage(i18n, lang)
       })
