@@ -108,7 +108,7 @@
   "SW_COURSES": "Cursussen",
   "SW_COURSES_ARCHIVED": "Cursussen zijn gearchiveerd.",
   "SW_COURSES_REMOVED": "Cursus is verwijderd! | Cursussen zijn verwijderd!",
-  "SW_COURSE_ACTIVATED": "{} is geactiveerd voor deze cursus!",
+  "SW_COURSE_ACTIVATED": "{0} is geactiveerd voor deze cursus!",
   "SW_COURSE_ARCHIVED": "Cursus is gearchiveerd.",
   "SW_COURSE_CREATED": "Cursus is toegevoegd. Klik op je cursus en ga aan de slag met je eerste evaluatie!",
   "SW_COURSE_ID": "ID",
