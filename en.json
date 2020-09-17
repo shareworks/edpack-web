@@ -21,7 +21,7 @@
   "SW_ADJUSTED_FACTOR": "Capped adjustment factor",
   "SW_ADJUST_POSITIVE_ENABLED": "Only change scores when affected positive",
   "SW_ADJUST_POSITIVE_ENABLED_TIP": "Scores who are negative affected by the adjustment Factor will not be changed",
-  "SW_ADMIN": "Administrator",
+  "SW_ADMIN": "Administrator | Admins",
   "SW_ADMINS": "Admins",
   "SW_ADMIN_ONLY": "Admins only",
   "SW_ADOPT": "Adopted a user session",
