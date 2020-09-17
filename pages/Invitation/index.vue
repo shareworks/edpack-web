@@ -9,7 +9,7 @@
         <div class="horizontal-logo"></div>
 
         <!-- Log in panel -->
-        <el-alert type="warning" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE')" v-if="!serverOnline"></el-alert>
+        <el-alert type="warning" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE', [appName])" v-if="!serverOnline"></el-alert>
         <register class="mb-30"></register>
 
         <!-- Footer links -->
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import config from 'config'
 import Register from '../../components/Register'
 import FooterLinks from '../../components/FooterLinks'
 import AnimatedLanding from '../../../components/AnimatedLanding'
@@ -31,7 +32,8 @@ export default {
 
   data () {
     return {
-      serverOnline: true
+      serverOnline: true,
+      appName: config.name
     }
   },
 

@@ -1,7 +1,7 @@
 <template>
   <div v-loading="loading" element-loading-text= "Loading groups">
     <div>
-      <p class="mb-20">{{ $t('SW_CSV_SYNC_EXPLAIN_TEXT') }}</p>
+      <p class="mb-20">{{ $t('SW_CSV_SYNC_EXPLAIN_TEXT', [appName]) }}</p>
 
       <!-- Upload csv file -->
       <csv-upload-form @addUsers="addUsers" @clearUsers="clearUsers" :existing="{students: currentUsers.length, groups: statsBeforeSync.groups.length}"></csv-upload-form>
@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import config from 'config'
 import CsvUploadForm from '../CsvUploadForm'
 
 const statsBeforeSync = { groups: [], groupsMap: {} }
@@ -85,6 +86,7 @@ export default {
 
   data () {
     return {
+      appName: config.name,
       processing: false,
       user: this.$store.state.user,
       course: this.$store.state.course || null,

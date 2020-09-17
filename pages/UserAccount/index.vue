@@ -2,7 +2,7 @@
   <div>
     <page-cover>
       <page-header :title="$t('SW_MY_ACCOUNT')" :intro="$t(school.manageAccountEnabled || school.role === 'admin' || form.systemAdmin ? 'SW_MY_ACCOUNT_SHORT' : '')"></page-header>
-      <el-alert type="warning" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE')" v-if="!serverOnline"></el-alert>
+      <el-alert type="warning" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE', [appName])" v-if="!serverOnline"></el-alert>
 
       <!-- View your profile -->
       <el-button size="small" type="primary" v-if="hasUserProfiles" @click="$router.push({ name: 'profile', params: { id: form._id, slug: school.slug } })" class="mt-10">
@@ -62,7 +62,8 @@ export default {
       school: this.$store.state.school,
       form: Vue.util.extend({}, this.$store.state.user),
       inLTI: this.$store.state.inLTI,
-      serverOnline: true
+      serverOnline: true,
+      appName: config.name
     }
   },
 
@@ -94,7 +95,7 @@ export default {
       else this.confirmClear()
     },
     confirmDelete () {
-      this.$confirm(this.$i18n.t('SW_DELETE_ACCOUNT_CONFIRM'), this.$i18n.t('SW_DELETE_ACCOUNT'), {
+      this.$confirm(this.$i18n.t('SW_DELETE_ACCOUNT_CONFIRM', [this.appName]), this.$i18n.t('SW_DELETE_ACCOUNT'), {
         confirmButtonText: this.$i18n.t('SW_DELETE'),
         cancelButtonText: this.$i18n.t('SW_CANCEL')
       }).then(() => { this.deleteAccount() })
