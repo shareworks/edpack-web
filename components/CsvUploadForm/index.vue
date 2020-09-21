@@ -39,6 +39,7 @@
     <div class="mt-10 normal-line-height" v-if="invalidUsers.length">
       <el-alert :title="$t('SW_CSV_INVALID_EMAIL_TITLE', [invalidUsers.length])" type="error" :closable="false" effect="dark" show-icon>
         {{ $t('SW_CSV_INVALID_EMAIL_TEXT') }}
+        <p v-if="invalidDomain">{{ $t('SW_DOMAIN_ISSUE') }}</p>
       </el-alert>
       <el-table :data="invalidUsers" style="width: 100%" size="small" max-height="300px" class="mt-10">
         <el-table-column prop="name" :label="$t('SW_NAME')" width="180"></el-table-column>
@@ -88,6 +89,7 @@ export default {
       invalidDuplicatedUsers: [],
       submitting: false,
       groups: false,
+      invalidDomain: false,
       usersListVisible: false
     }
   },
@@ -114,6 +116,7 @@ export default {
       this.invalidUsers = []
       this.invalidDuplicatedUsers = []
       this.groups = []
+      this.invalidDomain = false
 
       Papa.parse(file.raw, {
         download: true,
@@ -176,7 +179,10 @@ export default {
               }
             }
 
-            if (!validDomain) this.invalidUsers.push(user)
+            if (!validDomain) {
+              this.invalidUsers.push(user)
+              this.invalidDomain = true
+            }
             else if (!regexValidEmail.test(user.email)) this.invalidUsers.push(user)
             else this.users.push(user)
 
