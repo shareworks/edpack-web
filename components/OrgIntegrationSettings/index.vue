@@ -125,6 +125,8 @@
             </el-button>
           </el-tooltip>
         </el-input>
+
+        <el-alert v-if="generatedSecretAlert && form.isChanged" class="mt-10" show-icon center :title="$t('SW_GENERATED_KEY_ALERT')" type="warning" :closable="false"/>
       </el-form-item>
     </div>
 
@@ -400,6 +402,7 @@ export default {
       user: this.$store.state.user,
       lang: this.$store.state.lang,
       incorrectDomains: [],
+      generatedSecretAlert: false,
       processing: false,
       inputVisible: {
         emailDomains: false,
@@ -472,6 +475,7 @@ export default {
           .then((res) => {
             this.form.ltiBasic.secret = res.data.list[0]
             this.$message({ message: this.$i18n.t('SW_LTISECRET_GENERATED'), type: 'success' })
+            this.generatedSecretAlert = true
           })
           .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
           .finally(() => { this.processing = false })
