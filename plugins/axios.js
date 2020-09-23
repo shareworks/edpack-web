@@ -60,7 +60,7 @@ export default {
         }
 
         // Server crashed
-        if (status === 503) errorMessage = i18n.t('SW_SERVER_MAINTENANCE')
+        if (status === 503) errorMessage = i18n.t('SW_SERVER_MAINTENANCE', [config.name])
 
         // Server error
         if (status >= 500 && status !== 503) errorMessage = i18n.t('SW_ERROR_LOADING')

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-alert type="warning" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE')" v-if="!serverOnline"></el-alert>
+    <el-alert type="warning" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE', [appName])" v-if="!serverOnline"></el-alert>
 
     <router-view v-if="status === 'done'"></router-view>
 
@@ -33,7 +33,8 @@ export default {
       course: false,
       status: 'loading',
       submitting: false,
-      serverOnline: true
+      serverOnline: true,
+      appName: config.name
     }
   },
 
@@ -82,7 +83,7 @@ export default {
 
       this.$http.put(`courses/${this.course._id}/status`, {}, { params: { status: 'active' } })
         .then(() => {
-          this.$message({ message: this.$i18n.t('SW_COURSE_ACTIVATED'), type: 'success' })
+          this.$message({ message: this.$i18n.t('SW_COURSE_ACTIVATED', [this.appName]), type: 'success' })
           this.course.archivedDate = false
           this.status = 'done'
         })

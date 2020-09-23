@@ -3,7 +3,7 @@
 
     <!-- Built by -->
     <p class="mb-20">
-      &copy; {{ (new Date()).getFullYear() }} &centerdot; {{ $t('SW_BUILT_BY') }}
+      &copy; {{ (new Date()).getFullYear() }} &centerdot; {{ $t('SW_BUILT_BY', [appName]) }}
       <a :href="aboutUrl ? aboutUrl : businessUrl" rel="noreferrer" target="_blank">{{ businessName }}</a>.
     </p>
 

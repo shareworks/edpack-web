@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-alert :title="$t('SW_INTEGRATIONS_INFO_TITLE')" class="mb-30" :description="$t('SW_INTEGRATIONS_INFO_TEXT')" type="info" show-icon></el-alert>
+    <el-alert :title="$t('SW_INTEGRATIONS_INFO_TITLE', [appName])" class="mb-30" :description="$t('SW_INTEGRATIONS_INFO_TEXT', [appName])" type="info" show-icon></el-alert>
 
     <!-- Show credentials in UI -->
     <el-switch v-model="hideCredentials" active-color="#13ce66" inactive-color="#ff4949" class="mb-20" :active-text="$t('SW_VIEW_CREDENTIALS')"></el-switch>
@@ -395,6 +395,7 @@ export default {
 
   data () {
     return {
+      appName: config.name,
       school: this.$store.state.school,
       user: this.$store.state.user,
       lang: this.$store.state.lang,

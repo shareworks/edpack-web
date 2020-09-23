@@ -162,12 +162,12 @@
     <div v-if="status === 'none' && statusFilter === 'active'" class="mt-30">
       <!-- Notify students there is nothing to do yet -->
       <el-alert type="info" v-if="user.role === 'student'"  show-icon :title="$t('SW_STUDENT_HOME_ALERT')">
-        {{ $t('SW_STUDENT_HOME_ALERT_TEXT') }}
+        {{ $t('SW_STUDENT_HOME_ALERT_TEXT', [appName]) }}
       </el-alert>
 
       <!-- Notify teachers they need to create a course to get started -->
       <el-alert type="info" v-else show-icon :title="$t('SW_STUDENT_HOME_ALERT')">
-        {{ $t('SW_STAFF_HOME_ALERT_TEXT') }}
+        {{ $t('SW_STAFF_HOME_ALERT_TEXT', [appName]) }}
       </el-alert>
     </div>
 
@@ -179,6 +179,7 @@
 </template>
 
 <script>
+import config from 'config'
 import moment from 'moment'
 import LmsIcon from '../LmsIcon'
 import debounce from 'lodash/debounce'
@@ -195,6 +196,7 @@ export default {
 
   data () {
     return {
+      appName: config.name,
       status: false,
       searchText: this.$route.query.query || '',
       sort: 'createdDate',

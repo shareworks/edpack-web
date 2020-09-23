@@ -27,7 +27,7 @@
           <!-- Delete email -->
           <el-button class="delete-email-button" slot="append" @click="deleteEmail(email)" v-if="form.emails.length > 1">
             <i class="icon-delete"></i>
-            <span v-if="!isMobile">{{ $t('SW_REMOVE_EMAIL') }}</span>
+            <span v-if="!isMobile">{{ $t('SW_REMOVE') }}</span>
           </el-button>
 
           <!-- Make primary -->

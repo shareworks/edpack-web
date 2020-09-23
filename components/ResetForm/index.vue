@@ -1,6 +1,6 @@
 <template>
     <el-form>
-      <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_YOUR_PASSWORD')" autofocus prefix-icon="icon-password" id="password" v-model="form.password"></el-input>
+      <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_YOUR_PASSWORD', [appName])" autofocus prefix-icon="icon-password" id="password" v-model="form.password"></el-input>
       <password v-model="form.password" :strengthMeterOnly="true"/>
       <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_REPEAT_YOUR_PASSWORD')" prefix-icon="icon-lock" id="reset-password" class="mb-10" v-model="repeatPassword"></el-input>
 
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import config from 'config'
 import Password from 'vue-password-strength-meter'
 
 export default {
@@ -19,6 +20,7 @@ export default {
   components: { Password },
   data () {
     return {
+      appName: config.name,
       submitting: false,
       accessToken: this.$route.query.accessToken || '',
       recoverToken: this.$route.query.recoverToken || '',

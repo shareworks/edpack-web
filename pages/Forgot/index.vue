@@ -17,7 +17,7 @@
 
           <el-collapse-transition>
             <div v-show="!success">
-              <p class="mb-20 text-center">{{ $t('SW_FORGOT_PASSWORD_TEXT') }}</p>
+              <p class="mb-20 text-center">{{ $t('SW_FORGOT_PASSWORD_TEXT', [appName]) }}</p>
 
               <el-form :model="form" @submit.prevent.native="submitEmail">
                 <el-input :placeholder="$t('SW_YOUR_EMAIL')" autofocus prefix-icon="icon-email" class="mb-10" v-model="form.email"></el-input>
@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import config from 'config'
 import FooterLinks from '../../components/FooterLinks'
 import AnimatedLanding from '../../../components/AnimatedLanding'
 
@@ -58,6 +59,7 @@ export default {
     return {
       submitting: false,
       success: false,
+      appName: config.name,
       form: { email: this.$route.query.email || '' }
     }
   },

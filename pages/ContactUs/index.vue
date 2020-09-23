@@ -12,7 +12,7 @@
 
       <!-- Contact form -->
       <div class="contact-form-wrapper invisible text-left" v-observe-visibility="{callback: visibilityChanged, throttle: 200, once: true}">
-        <el-alert class="mb-20" type="warning" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE')" v-if="!serverOnline"></el-alert>
+        <el-alert class="mb-20" type="warning" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE', [appName])" v-if="!serverOnline"></el-alert>
         <contact-form></contact-form>
       </div>
     </el-col>
@@ -30,6 +30,7 @@ export default {
 
   data () {
     return {
+      appName: config.name,
       aboutUrl: config.aboutUrl,
       serverOnline: true
     }

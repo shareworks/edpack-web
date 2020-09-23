@@ -13,7 +13,7 @@
 
         <div class="minimum-container">
           <div class="title text-center"><strong>{{ $t('SW_RESET_PASSWORD') }}</strong></div>
-          <p class="mb-20 text-center">{{ $t('SW_RESET_PASSWORD_TEXT') }}</p>
+          <p class="mb-20 text-center">{{ $t('SW_RESET_PASSWORD_TEXT', [appName]) }}</p>
 
           <!-- Reset Form -->
         <reset-form></reset-form>
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import config from 'config'
 import ResetForm from '../../components/ResetForm'
 import FooterLinks from '../../components/FooterLinks'
 import AnimatedLanding from '../../../components/AnimatedLanding'
@@ -35,6 +36,11 @@ import AnimatedLanding from '../../../components/AnimatedLanding'
 export default {
   name: 'Reset',
   metaInfo: { title: 'Reset password' },
-  components: { FooterLinks, AnimatedLanding, ResetForm }
+  components: { FooterLinks, AnimatedLanding, ResetForm },
+  data () {
+    return {
+      appName: config.name,
+    }
+  }
 }
 </script>

@@ -35,7 +35,7 @@
       <!-- Header text -->
       <page-header :title="$t('SW_DASHBOARD')" :intro="$t('SW_DASHBOARD_SHORT', { school: currentUser.organization.name[lang] })" icon="icon-lock" :area="$t('SW_ADMIN_ONLY')">
         <p class="mt-10" v-if="school.counts">
-          {{ $t('SW_DASHBOARD_LONG', [ school.counts.users || 0, school.counts.admins || 0, school.counts.staff || 0, school.counts.students || 0 ]) }}
+          {{ $t('SW_DASHBOARD_LONG', [ school.counts.users || 0, school.counts.admins || 0, school.counts.staff || 0, school.counts.students || 0, appName ]) }}
           {{ $t('SW_ORG_SUMMARY', [school.counts.usersThisYear || 0]) }}
         </p>
       </page-header>
@@ -71,6 +71,7 @@ export default {
     return {
       loading: true,
       dialogStats: false,
+      appName: config.name,
       lang: this.$store.state.lang
     }
   },

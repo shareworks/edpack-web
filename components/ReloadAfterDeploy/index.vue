@@ -4,9 +4,15 @@
 
 <script>
 import moment from 'moment'
+import config from 'config'
 import { router } from '../../../router'
 export default {
   name: 'ReloadAfterDeploy',
+  data () {
+    return {
+      appName: config.name
+    }
+  },
 
   mounted () {
     router.onError(error => {
@@ -24,7 +30,7 @@ export default {
 
   methods: {
     askForReload () {
-      this.$confirm(this.$i18n.t('SW_APP_JUST_UPDATED_TEXT'), this.$i18n.t('SW_APP_JUST_UPDATED'), {
+      this.$confirm(this.$i18n.t('SW_APP_JUST_UPDATED_TEXT', [this.appName]), this.$i18n.t('SW_APP_JUST_UPDATED'), {
         confirmButtonText: this.$i18n.t('SW_RELOAD'),
         cancelButtonText: this.$i18n.t('SW_CANCEL')
       }).then(() => {

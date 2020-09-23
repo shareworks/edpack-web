@@ -31,7 +31,7 @@
         <el-button @click="sendEmail(true)" :loading="sending">
           <strong>{{ $t('SW_SEND_TO_SELF_FIRST') }}</strong>
         </el-button>
-        <el-button type="text" @click="closeDialog(false)">{{ $t('SW_CANCEL') }}</el-button>
+        <el-button type="text" class="ml-10" @click="closeDialog(false)">{{ $t('SW_CANCEL') }}</el-button>
       </el-form-item>
     </el-form>
   </div>

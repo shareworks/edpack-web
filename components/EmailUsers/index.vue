@@ -1,7 +1,7 @@
 <template>
   <div>
     <slot></slot>
-    <p class="mb-30" v-if="!hasSlotData">{{ $t('SW_EMAIL_DIALOG_USERS_TEXT') }}</p>
+    <p class="mb-30" v-if="!hasSlotData">{{ $t('SW_EMAIL_DIALOG_USERS_TEXT', [appName]) }}</p>
 
     <el-form label-position="top">
       <!-- Subject -->
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import config from 'config'
 export default {
   name: 'EmailUsers',
   props: ['closeDialog', 'selectedUsers', 'course'],
@@ -44,6 +45,7 @@ export default {
       form: {
         subject: '',
         message: '',
+        appName: config.name,
         toSelf: true
       }
     }

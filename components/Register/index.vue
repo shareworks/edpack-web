@@ -4,7 +4,7 @@
     <transition name="login" mode="out-in">
       <div class="login" :key="'google'" v-if="!passwordMode">
         <div>
-          <p class="mb-20">{{ $t('SW_REGISTER_TEXT') }}</p>
+          <p class="mb-20">{{ $t('SW_REGISTER_TEXT', [appName]) }}</p>
 
           <p class="title"><strong>{{ $t('SW_REGISTER_SCHOOL') }}</strong></p>
 
@@ -28,9 +28,9 @@
 
           <!-- Register with new password -->
           <div v-if="signinByPassword">
-            <p class="title"><strong>{{$t(recoverToken ? 'SW_RESET_BY_ACCOUNT' : 'SW_ACCEPT_BY_ACCOUNT') }}</strong></p>
+            <p class="title"><strong>{{$t(recoverToken ? 'SW_RESET_BY_ACCOUNT' : 'SW_ACCEPT_BY_ACCOUNT', [appName]) }}</strong></p>
 
-            <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_YOUR_PASSWORD')" prefix-icon="icon-lock" id="password" v-model="form.password"></el-input>
+            <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_YOUR_PASSWORD', [appName])" prefix-icon="icon-lock" id="password" v-model="form.password"></el-input>
             <password v-model="form.password" :strengthMeterOnly="true"/>
             <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_REPEAT_YOUR_PASSWORD')" prefix-icon="icon-lock" id="reset-password" class="mb-10"  v-model="repeatPassword"></el-input>
 
@@ -53,7 +53,7 @@
         <el-alert class="mt-10" type="error" show-icon v-if="errorType" :title="$t('SW_' + errorType.toUpperCase())"></el-alert>
 
         <div class="login-statement">
-          <span class="hidden-xs">{{ $t('SW_LOGIN_STATEMENT') }} </span>
+          <span class="hidden-xs">{{ $t('SW_LOGIN_STATEMENT', [appName]) }} </span>
           <a :href="aboutUrl ? aboutUrl : businessUrl" target="_blank">{{ businessName }}</a>
           {{ $t('SW_LOGIN_STATEMENT2') }}
           <router-link to="/terms">{{ $t('SW_TERMS').toLowerCase() }}</router-link> & <router-link to="/privacy">{{ $t('SW_PRIVACY').toLowerCase() }}</router-link>.
@@ -88,6 +88,7 @@ export default {
       errorType: this.$route.query.error,
       businessUrl: config.business.url,
       aboutUrl: config.aboutUrl,
+      appName: config.name,
       businessName: config.business.shortName,
       repeatPassword: '',
       form: { password: '' }
@@ -129,7 +130,7 @@ export default {
       // Post password here to API
       this.$http.post('/auth/local/password', this.form, { params: { accessToken: this.accessToken, organization: this.organizationId } })
         .then(() => {
-          this.$message({ message: this.$i18n.t('SW_INVITATION_COMPLETED'), type: 'success' })
+          this.$message({ message: this.$i18n.t('SW_INVITATION_COMPLETED', [this.appName]), type: 'success' })
           this.$router.push('/')
         })
         .catch(() => {

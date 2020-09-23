@@ -15,7 +15,7 @@
           <p class="title"><strong>{{ $t('SW_COOKIES_TITLE') }}</strong></p>
 
           <el-alert v-for="cookie in cookies" :key="cookie.status" v-show="loading === cookie.status" :title="$t(cookie.title)" :center="true" :closable="false" :type="cookie.type" class="mt-20 message-text">
-            <p class="mb-20">{{ $t(cookie.paragraph) }}</p>
+            <p class="mb-20">{{ $t(cookie.paragraph, [appName]) }}</p>
           </el-alert>
         </div>
 
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import config from 'config'
 import FooterLinks from '../../components/FooterLinks'
 
 export default {
@@ -38,6 +39,7 @@ export default {
   data () {
     return {
       loading: 'pending',
+      appName: config.name,
       inLTI: this.$store.state.inLTI,
       cookies: [
         { status: 'pending', title: 'SW_COOKIES_LOADING', paragraph: 'SW_COOKIES_CHECKING_TEXT', type: 'info' },
