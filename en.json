@@ -28,6 +28,7 @@
   "SW_ADMIN_ONLY": "Admins only",
   "SW_ADOPT": "Adopted a member session",
   "SW_ALL": "All",
+  "SW_GROUP_INDEX": "Group index",
   "SW_ALLOW_BRIGHTSPACE_ADVANCED_GRADING": "Brightspace grades",
   "SW_ALLOW_BRIGHTSPACE_ADVANCED_GRADING_TEXT": "Allow adjustment of factor from each student into Brightspace grades.",
   "SW_ALLOW_BRIGHTSPACE_AVG_GRADING": "Brightspace avg grades",

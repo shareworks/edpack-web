@@ -15,6 +15,7 @@
   "SW_ADD_EMAIL": "E-mailadres toevoegen",
   "SW_ADD_FACULTY": "Voeg {0} toe",
   "SW_ADD_GROUP": "Groep toevoegen",
+  "SW_GROUP_INDEX": "Groep index",
   "SW_GET_DIRECTION": "Routebeschrijving",
   "SW_ADD_RULE": "Regel toevoegen",
   "SW_ADD_STAFF_TEXT": "Nodig docenten uit per e-mail (Één adres per regel)",
