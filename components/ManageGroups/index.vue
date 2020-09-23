@@ -114,6 +114,7 @@ export default {
       searchText: this.$route.query.query || '',
       isMobile: this.$store.state.isMobile,
       newGroupName: '',
+      inLTI: this.$store.state.inLTI,
       duplicatedStudents: []
     }
   },
@@ -126,6 +127,9 @@ export default {
   },
 
   mounted () {
+    if (this.inLTI) {
+      window.history.length > 1 ? this.$router.back() : this.router.push('/')
+    }
     this.getStudents()
   },
 
