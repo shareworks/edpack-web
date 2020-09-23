@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="normal-line-height mb-10 font-13 text-muted" v-if="!existing && !users.length">{{ $t('SW_CSV_IMPORT_TEXT') }}</p>
+    <p class="normal-line-height mb-10 font-13 text-muted" v-if="!existing && !users.length">{{ $t('SW_CSV_IMPORT_TEXT', [school.emailDomains.length ? `student-name${school.emailDomains[0]}` : 'student-name@school-name.com']) }}</p>
 
     <!-- Upload csv file -->
     <el-upload v-if="!users.length" class="inline" ref="csvUpload" action="" :show-file-list="false" :on-change="handleCSVChange"

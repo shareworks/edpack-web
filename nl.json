@@ -132,7 +132,7 @@
   "SW_CREATE_EXPLAIN": "Studenten en groepen worden geimporteerd/synced uit de leeromgeving. Dit gebeurt direct nadat je een evaluatie aanmaakt.",
   "SW_CREATE_ORG": "School toevoegen",
   "SW_CSV_CHANGES_TEXT": "Nu zijn er {0} groepen en {1} studenten. Na de sync heeft deze evaluatie {2} groepen en {3} studenten in totaal.",
-  "SW_CSV_IMPORT_TEXT": "Importeren van studenten en groepen werkt alleen met een CSV in het correcte formaat. Gebruik de template zodat het bestand correct wordt ingeladen. Voeg studenten toe met e-mailadressen van je school, zoals naam-student@naam-school.nl.",
+  "SW_CSV_IMPORT_TEXT": "Importeren van studenten en groepen werkt alleen met een CSV in het correcte formaat. Gebruik de template zodat het bestand correct wordt ingeladen. Voeg studenten toe met e-mailadressen van je school, zoals {0}.",
   "SW_CSV_INVALID_EMAIL_TEXT": "Herstel de onderstaande studenten in het .csv bestand en upload deze opnieuw.",
   "SW_CSV_INVALID_EMAIL_TITLE": "{0} ongeldige e-mailadressen",
   "SW_CSV_SYNC_EXPLAIN_TEXT": "Upload een .csv bestand met aanpassingen om de groepen en studenten in deze evaluatie up te daten. {0} zorgt dat alle veranderingen verwerkt worden. Als de evaluatie al is begonnen, zorgt {0} dat studenten indien noodzakelijk een notificatie krijgen.",

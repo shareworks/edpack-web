@@ -133,7 +133,7 @@
   "SW_CREATE_EXPLAIN": "Students and group data will be imported/synced from the learning environment after you create an evaluation.",
   "SW_CREATE_ORG": "Add school",
   "SW_CSV_CHANGES_TEXT": "Currently there are {0} groups with {1} students. After sync, this evaluation will have {2} groups with {3} students in total.",
-  "SW_CSV_IMPORT_TEXT": "Importing students and groups only works with a CSV in the correct format. Please use the template to make sure all columns are exactly like the template. Also use school email addresses, such as student-name@school-name.com.",
+  "SW_CSV_IMPORT_TEXT": "Importing students and groups only works with a CSV in the correct format. Please use the template to make sure all columns are exactly like the template. Also use school email addresses, such as {0}.",
   "SW_CSV_INVALID_EMAIL_TEXT": "Please correct the students below in your .csv file and upload it again.",
   "SW_CSV_INVALID_EMAIL_TITLE": "{0} invalid email addresses",
   "SW_CSV_SYNC_EXPLAIN_TEXT": "By uploading your updated .csv file you can make changes to the student & group composition. {0} will automatically take care of all changes. If the evaluation already started, {0} will notify students accordingly.",
