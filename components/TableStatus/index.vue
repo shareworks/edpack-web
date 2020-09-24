@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-30 text-muted text-center">
+  <div class="text-muted text-center" :class="{'mt-30': status !== 'done'}">
     <!-- Loading -->
     <spinner v-if="status === 'loading'"></spinner>
 
