@@ -586,5 +586,8 @@
   "SW_YOUR_ROLE": "Your role",
   "SW_YOU_ARE_ADMIN_NOW": "You are now an admin of this school!",
   "SW_GENERATED_KEY_ALERT": "Attention: please save changes below to activate the new LTI secret.",
-  "SW_NO_USERS_FOUND_IN_CSV": "No users found in file"
+  "SW_NO_USERS_FOUND_IN_CSV": "No users found in file",
+  "SW_DELETE_GROUP": "All students will be moved to 'Without group' section.",
+  "SW_MANAGE_STAFF_EFFECT": "Please be aware that students will loose existing actions and feedback if they are moved to another group.",
+  "SW_SUBMIT_MANAGE_GROUP_TITLE": "Are you sure you want to save changes?"
 }

@@ -55,6 +55,16 @@
               <h3 class="collapse-header">
                 <div class="question-number">{{ index + 1 }}</div>
                 <div class="question-sentence capitalize bold">{{ group.groupName }}</div>
+
+                <!-- Remove group -->
+                <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @onConfirm="removeGroup(group)"
+                               class="button-square-xs delete-group-button" hideIcon :title="$t('SW_DELETE_GROUP')">
+                  <el-button slot="reference" plain size="small" @click.stop class="button-square-xs mr-10 delete-group-button" type="danger">
+                    <i class="icon-delete"></i>
+                    <span class="hidden-xs hidden-sm">{{ $t('SW_REMOVE') }}</span>
+                  </el-button>
+                </el-popconfirm>
+
                 <el-tag class="question-tag-info" type="info">{{ group.length }} {{ $tc('SW_STUDENT', group.length).toLowerCase() }}</el-tag>
               </h3>
             </template>
@@ -134,6 +144,17 @@ export default {
   },
 
   methods: {
+    removeGroup (group) {
+      const cleanedStudents = group.map(stud => {
+        delete stud.group
+        delete stud.groupName
+        return stud
+      })
+
+      cleanedStudents.forEach(stud => { this.unSorterStudents.push(stud) })
+      this.students = this.students.filter(g => g.groupName !== group.groupName)
+      this.setIsChanged(true)
+    },
     copyStudent (action) {
       if (!action.added.element.groupName) {
         // can't clone unsorted student

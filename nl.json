@@ -580,5 +580,8 @@
   "SW_YOUR_ROLE": "Je rol",
   "SW_YOU_ARE_ADMIN_NOW": "Je bent nu admin van deze school!",
   "SW_GENERATED_KEY_ALERT": "Let op: sla onderstaande wijzigingen op om het nieuwe LTI-geheim te activeren.",
-  "SW_NO_USERS_FOUND_IN_CSV": "Geen gebruikers gevonden in bestand"
+  "SW_NO_USERS_FOUND_IN_CSV": "Geen gebruikers gevonden in bestand",
+  "SW_DELETE_GROUP": "Alle studenten worden verplaatst naar de sectie 'Zonder groep'.",
+  "SW_MANAGE_STAFF_EFFECT": "Waarschuwing: studenten verliezen bestaande acties en feedback als ze naar een andere groep worden verplaatst.",
+  "SW_SUBMIT_MANAGE_GROUP_TITLE": "Weet u zeker dat u wijzigingen wilt opslaan?"
 }
