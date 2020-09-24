@@ -585,5 +585,6 @@
   "SW_YOUR_PHOTO": "Your picture",
   "SW_YOUR_ROLE": "Your role",
   "SW_YOU_ARE_ADMIN_NOW": "You are now an admin of this school!",
-  "SW_GENERATED_KEY_ALERT": "Attention: please save changes below to activate the new LTI secret."
+  "SW_GENERATED_KEY_ALERT": "Attention: please save changes below to activate the new LTI secret.",
+  "SW_NO_USERS_FOUND_IN_CSV": "No users found in file"
 }
