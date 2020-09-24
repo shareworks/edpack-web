@@ -235,7 +235,7 @@
   "SW_GROUPS": "Groepen",
   "SW_GROUP_ID": "Groep ID",
   "SW_GROUP_MEMBERS": "Groepsleden",
-  "SW_GROUP_NAME": "Groep",
+  "SW_GROUP_NAME": "Groepsnaam",
   "SW_GROUP_NOT_UNIQUE": "De groepsnaam is niet uniek.",
   "SW_GROUP_REQUIRED": "The groepsnaam is verplicht.",
   "SW_GROUP_SETS": "Groepensets",
@@ -581,7 +581,7 @@
   "SW_YOU_ARE_ADMIN_NOW": "Je bent nu admin van deze school!",
   "SW_GENERATED_KEY_ALERT": "Let op: sla onderstaande wijzigingen op om het nieuwe LTI-geheim te activeren.",
   "SW_NO_USERS_FOUND_IN_CSV": "Geen gebruikers gevonden in bestand",
-  "SW_DELETE_GROUP": "Alle studenten worden verplaatst naar de sectie 'Zonder groep'.",
+  "SW_DELETE_GROUP": "Alle studenten worden verplaatst naar 'Studenten zonder groep'.",
   "SW_MANAGE_STAFF_EFFECT": "Waarschuwing: studenten verliezen bestaande acties en feedback als ze naar een andere groep worden verplaatst.",
   "SW_SUBMIT_MANAGE_GROUP_TITLE": "Weet u zeker dat u wijzigingen wilt opslaan?"
 }

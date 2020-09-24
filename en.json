@@ -237,7 +237,7 @@
   "SW_GROUPS": "Groups",
   "SW_GROUP_ID": "Group ID",
   "SW_GROUP_MEMBERS": "Group members",
-  "SW_GROUP_NAME": "Group",
+  "SW_GROUP_NAME": "Group name",
   "SW_GROUP_NOT_UNIQUE": "The group name is not unique.",
   "SW_GROUP_REQUIRED": "The group name is required.",
   "SW_GROUP_SETS": "Group sets",
@@ -587,7 +587,7 @@
   "SW_YOU_ARE_ADMIN_NOW": "You are now an admin of this school!",
   "SW_GENERATED_KEY_ALERT": "Attention: please save changes below to activate the new LTI secret.",
   "SW_NO_USERS_FOUND_IN_CSV": "No users found in file",
-  "SW_DELETE_GROUP": "All students will be moved to 'Without group' section.",
+  "SW_DELETE_GROUP": "All students will be moved to 'Students without group'.",
   "SW_MANAGE_STAFF_EFFECT": "Please be aware that students will loose existing actions and feedback if they are moved to another group.",
   "SW_SUBMIT_MANAGE_GROUP_TITLE": "Are you sure you want to save changes?"
 }

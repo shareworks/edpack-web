@@ -24,7 +24,7 @@
           </div>
         </el-col>
 
-        <el-col :xs="0" :sm="8" class="hidden-xs">
+        <el-col :xs="0" :sm="8" class="hidden-xs hidden-sm">
           <!-- Search input -->
           <el-input prefix-icon="icon-search" :placeholder="$t('SW_SEARCH_STUDENTS')" size="medium" v-model="searchText" clearable></el-input>
         </el-col>
@@ -58,10 +58,9 @@
 
                 <!-- Remove group -->
                 <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @onConfirm="removeGroup(group)"
-                               class="button-square-xs delete-group-button" hideIcon :title="$t('SW_DELETE_GROUP')">
-                  <el-button slot="reference" plain size="small" @click.stop class="button-square-xs mr-10 delete-group-button" type="danger">
+                               class="delete-group-button" hideIcon :title="$t('SW_DELETE_GROUP')">
+                  <el-button slot="reference" plain size="small" @click.stop class="button-square mr-10 delete-group-button" type="danger">
                     <i class="icon-delete"></i>
-                    <span class="hidden-xs hidden-sm">{{ $t('SW_REMOVE') }}</span>
                   </el-button>
                 </el-popconfirm>
 
@@ -79,19 +78,17 @@
     <!-- Add group dialog -->
     <el-dialog :title="$t('SW_ADD_GROUP')" append-to-body :visible.sync="addGroupDialog">
       <!-- Group name -->
-      <el-form label-position="top">
-        <el-form>
-          <el-form-item required :label="`${$t('SW_GROUP_NAME')}:`">
-            <el-input placeholder="The Kangaroos" v-model="newGroupName"></el-input>
-          </el-form-item>
-        </el-form>
+      <el-form>
+        <el-form-item required :label="`${$t('SW_GROUP_NAME')}`">
+          <el-input placeholder="The Kangaroos" v-model="newGroupName"></el-input>
+        </el-form-item>
 
         <el-form-item class="mt-20">
           <el-button type="primary" @click="addNewGroup">
             {{ $t('SW_ADD_GROUP') }}
             <i class="icon-arrow_forward"></i>
           </el-button>
-          <el-button type="text" @click="addGroupDialog = false">{{ $t('SW_CANCEL') }}</el-button>
+          <el-button type="text" class="ml-10" @click="addGroupDialog = false">{{ $t('SW_CANCEL') }}</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
