@@ -19,7 +19,7 @@
           </el-button>
         </el-col>
 
-        <el-col :xs="0" :sm="8" class="hidden-xs to-left">
+        <el-col :xs="0" :sm="8" class="hidden-xs hidden-sm to-left">
           <!-- Search input -->
           <el-input prefix-icon="icon-search" :placeholder="$t('SW_SEARCH_STUDENTS')" size="medium" v-model="searchText" clearable></el-input>
         </el-col>
