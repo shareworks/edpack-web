@@ -1,8 +1,10 @@
 <template>
   <div>
     <affix class="sticky-bar" relative-element-selector=".groups" :offset="{ top: 130, bottom: -1000 }">
+
+      <transition-group name="drag-items-animation">
       <!-- Filter -->
-      <el-row type="flex" align="middle">
+      <el-row type="flex" align="middle" v-show="!dragging" :key="1">
         <el-col :xs="24" :sm="8">
           <!-- Add group button -->
           <el-button type="primary" plain class="mr-5" size="medium" @click="addGroupDialog = true">
@@ -17,18 +19,28 @@
           </el-button>
         </el-col>
 
-        <el-col :xs="0" :span="8">
-          <div class="draggable-wrapper ml-10">
-            <span class="text-muted copy-user-title">{{ $t('SW_COPY_USER') }}</span>
-            <draggable ghost-class="ghost" class="group-students copy-students" :list="unSorterStudents" group="students" @change="copyStudent"></draggable>
-          </div>
-        </el-col>
 
-        <el-col :xs="0" :sm="8" class="hidden-xs">
+        <el-col :xs="0" :sm="8" class="hidden-xs to-left">
           <!-- Search input -->
           <el-input prefix-icon="icon-search" :placeholder="$t('SW_SEARCH_STUDENTS')" size="medium" v-model="searchText" clearable></el-input>
         </el-col>
       </el-row>
+
+      <el-row type="flex" align="middle" v-show="dragging" :key="2">
+          <el-col :xs="0" :span="24">
+            <div class="draggable-wrapper ml-10">
+              <span class="text-muted copy-user-title">{{ $t('SW_COPY_USER') }}</span>
+              <draggable ghost-class="ghost" class="group-students copy-students" :list="unSorterStudents" group="students" @change="copyStudent"></draggable>
+            </div>
+
+            <div class="draggable-wrapper ml-10">
+              <span class="text-muted copy-user-title">{{ $tc('SW_REMOVE_STUDENTS', 1) }}</span>
+              <draggable ghost-class="ghost" class="group-students copy-students" :list="removedStudents" group="students" @change="removeUser"></draggable>
+            </div>
+          </el-col>
+      </el-row>
+      </transition-group>
+
     </affix>
     <div class="bar-placeholder"></div>
 
@@ -39,7 +51,7 @@
             <p class="question-sentence groups-header"><strong>{{ $t('SW_WITHOUT_GROUP') }}</strong> <el-tag size="mini" class="ml-5">{{ unSorterStudents.length }}</el-tag></p>
           </h3>
           <!-- Draggable unsorted students group list -->
-          <groups-item :checkIsChanged="checkIsChanged" :students="unSorterStudents"></groups-item>
+          <groups-item :setDragging="setDragging" :checkIsChanged="checkIsChanged" :students="unSorterStudents"></groups-item>
         </el-col>
 
       <el-col :span="18">
@@ -70,7 +82,7 @@
             </template>
 
               <!-- Draggable student group list -->
-              <groups-item :checkIsChanged="checkIsChanged" :students="group"></groups-item>
+              <groups-item :setDragging="setDragging" :checkIsChanged="checkIsChanged" :students="group"></groups-item>
             </el-collapse-item>
           </el-collapse>
         </el-col>
@@ -119,8 +131,10 @@ export default {
       addGroupDialog: false,
       status: '',
       students: [],
+      removedStudents: [],
       unSorterStudents: [],
       fullStudentsList: [],
+      dragging: false,
       searchText: this.$route.query.query || '',
       isMobile: this.$store.state.isMobile,
       newGroupName: '',
@@ -144,6 +158,7 @@ export default {
   },
 
   methods: {
+    setDragging (value) { this.dragging = value },
     removeGroup (group) {
       const cleanedStudents = group.map(stud => {
         delete stud.group
@@ -154,6 +169,22 @@ export default {
       cleanedStudents.forEach(stud => { this.unSorterStudents.push(stud) })
       this.students = this.students.filter(g => g.groupName !== group.groupName)
       this.setIsChanged(true)
+    },
+    removeUser (action) {
+      // probably can delete this - need to test after api /sync-users fix
+
+      // this.students = this.students.map(group => {
+      //   if (group.groupName !== action.added.element.groupName) {
+      //     return group
+      //   }
+      //
+      //   return group.filter(student => {
+      //     return student._id !==  action.added.element._id
+      //   })
+      // })
+
+      this.setIsChanged(true)
+      this.removedStudents = []
     },
     copyStudent (action) {
       if (!action.added.element.groupName) {
