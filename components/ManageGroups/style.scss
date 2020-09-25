@@ -84,7 +84,15 @@
   }
 }
 
-.copy-user-title {
+.draggable-wrapper.copy {
+  background-color: rgba(#0073a7, 0.3);
+}
+
+.draggable-wrapper.remove {
+  background-color: rgba(#F56C6C, 0.3);
+}
+
+.copy-remove-user-title {
   position: absolute;
   width: 80%;
   text-align: center;
@@ -96,7 +104,7 @@
 
 @keyframes loop-visible {
   0% {opacity: 0.3;}
-  50% {opacity: 1;}
+  50% {opacity: 0.8;}
   100% {opacity: 0.3;}
 }
 
@@ -160,4 +168,28 @@
 .drag-items-animation-leave-active {
   transform-origin: left center;
   animation: scale-to-left .2s linear;
+}
+
+.can-drag-in {
+  border-radius: 10px;
+  border: 1px rgba(145, 145, 145, 0.5) dashed;
+}
+
+.unsorted-list {
+  min-height: 50px;
+
+  .group-students {
+    min-height: 50px;
+  }
+
+  .student-card-item {
+    width: 100%;
+  }
+}
+
+.can-drag-in {
+  .group-students {
+    opacity: 0.5;
+    background: rgba(204, 244, 197, 0.82) !important;
+  }
 }
