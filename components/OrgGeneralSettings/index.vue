@@ -87,7 +87,7 @@ import convertDiacritics from '../../utils/convert-diacritics'
 
 export default {
   name: 'OrgGeneralSettings',
-  props: ['form','showIntro'],
+  props: ['form', 'showIntro'],
   components: { InputsWithFlags, Redactor: () => import('@/edpack-web/components/Redactor') },
 
   data () {

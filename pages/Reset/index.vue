@@ -39,7 +39,7 @@ export default {
   components: { FooterLinks, AnimatedLanding, ResetForm },
   data () {
     return {
-      appName: config.name,
+      appName: config.name
     }
   }
 }
