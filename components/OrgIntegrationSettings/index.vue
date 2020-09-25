@@ -290,9 +290,9 @@
 
           <!-- Blackboard App ID -->
           <el-form-item label="Application ID">
-            <el-input v-model="blackboardAppId" :readonly="true">
+            <el-input v-model="form.blackboard.appId">
               <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
-                <el-button v-clipboard="blackboardAppId">
+                <el-button v-clipboard="form.blackboard.appId">
                   <i class="icon-copy"></i>
                 </el-button>
               </el-tooltip>
