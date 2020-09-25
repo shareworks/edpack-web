@@ -584,5 +584,7 @@
   "SW_NO_USERS_FOUND_IN_CSV": "Geen gebruikers gevonden in bestand",
   "SW_DELETE_GROUP": "Alle studenten worden verplaatst naar 'Studenten zonder groep'.",
   "SW_MANAGE_STAFF_EFFECT": "Waarschuwing: studenten verliezen bestaande acties en feedback als ze naar een andere groep worden verplaatst.",
-  "SW_SUBMIT_MANAGE_GROUP_TITLE": "Weet u zeker dat u wijzigingen wilt opslaan?"
+  "SW_SUBMIT_MANAGE_GROUP_TITLE": "Weet u zeker dat u wijzigingen wilt opslaan?",
+  "SW_MIN": "min.",
+  "SW_MAX": "max."
 }
