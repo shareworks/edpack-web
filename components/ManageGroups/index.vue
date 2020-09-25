@@ -29,12 +29,12 @@
             <el-col :xs="0" :span="24">
               <div class="draggable-wrapper ml-10">
                 <span class="text-muted copy-user-title">{{ $t('SW_COPY_USER') }}</span>
-                <draggable ghost-class="ghost" class="group-students copy-students" :list="unSorterStudents" group="students" @change="copyStudent"></draggable>
+                <draggable ghost-class="ghost" class="copy-students" :list="unSorterStudents" group="students" @change="copyStudent"></draggable>
               </div>
 
               <div class="draggable-wrapper ml-10">
-                <span class="text-muted copy-user-title">{{ $tc('SW_REMOVE_STUDENTS', 1) }}</span>
-                <draggable ghost-class="ghost" class="group-students copy-students" :list="removedStudents" group="students" @change="removeUser"></draggable>
+                <span class="text-muted copy-user-title">{{ $t('SW_DRAG_REMOVE_STUDENTS') }}</span>
+                <draggable ghost-class="ghost" class="remove-students" :list="removedStudents" group="students" @change="removeUser"></draggable>
               </div>
             </el-col>
         </el-row>
