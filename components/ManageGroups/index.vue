@@ -2,42 +2,42 @@
   <div>
     <affix class="sticky-bar" relative-element-selector=".groups" :offset="{ top: 130, bottom: -1000 }">
 
-      <transition-group name="drag-items-animation">
-      <!-- Filter -->
-      <el-row type="flex" align="middle" v-show="!dragging" :key="1">
-        <el-col :xs="24" :sm="8">
-          <!-- Add group button -->
-          <el-button type="primary" plain class="mr-5" size="medium" @click="addGroupDialog = true">
-            <i class="icon-add"></i>
-            <span v-if="!isMobile">{{ $t('SW_ADD_GROUP') }}</span>
-          </el-button>
+      <transition-group name="drag-items-animation" mode="out-in">
+        <!-- Filter -->
+        <el-row type="flex" align="middle" v-if="!dragging" :key="1">
+          <el-col :xs="24" :sm="8">
+            <!-- Add group button -->
+            <el-button type="primary" plain class="mr-5" size="medium" @click="addGroupDialog = true">
+              <i class="icon-add"></i>
+              <span v-if="!isMobile">{{ $t('SW_ADD_GROUP') }}</span>
+            </el-button>
 
-          <!-- Save button -->
-          <el-button type="success" size="medium" :plain="!isChanged" :disabled="!isChanged" @click="confirmSubmitChanges">
-            <i class="icon-ok-sign"></i>
-            <span v-if="!isMobile">{{ $t('SW_SAVE_CHANGES') }}</span>
-          </el-button>
-        </el-col>
-
-        <el-col :xs="0" :sm="8" class="hidden-xs hidden-sm to-left">
-          <!-- Search input -->
-          <el-input prefix-icon="icon-search" :placeholder="$t('SW_SEARCH_STUDENTS')" size="medium" v-model="searchText" clearable></el-input>
-        </el-col>
-      </el-row>
-
-      <el-row type="flex" align="middle" v-show="dragging" :key="2">
-          <el-col :xs="0" :span="24">
-            <div class="draggable-wrapper ml-10">
-              <span class="text-muted copy-user-title">{{ $t('SW_COPY_USER') }}</span>
-              <draggable ghost-class="ghost" class="group-students copy-students" :list="unSorterStudents" group="students" @change="copyStudent"></draggable>
-            </div>
-
-            <div class="draggable-wrapper ml-10">
-              <span class="text-muted copy-user-title">{{ $tc('SW_REMOVE_STUDENTS', 1) }}</span>
-              <draggable ghost-class="ghost" class="group-students copy-students" :list="removedStudents" group="students" @change="removeUser"></draggable>
-            </div>
+            <!-- Save button -->
+            <el-button type="success" size="medium" :plain="!isChanged" :disabled="!isChanged" @click="confirmSubmitChanges">
+              <i class="icon-ok-sign"></i>
+              <span v-if="!isMobile">{{ $t('SW_SAVE_CHANGES') }}</span>
+            </el-button>
           </el-col>
-      </el-row>
+
+          <el-col :xs="0" :sm="8" class="hidden-xs hidden-sm to-left">
+            <!-- Search input -->
+            <el-input prefix-icon="icon-search" :placeholder="$t('SW_SEARCH_STUDENTS')" size="medium" v-model="searchText" clearable></el-input>
+          </el-col>
+        </el-row>
+
+        <el-row type="flex" align="middle" v-else :key="2">
+            <el-col :xs="0" :span="24">
+              <div class="draggable-wrapper ml-10">
+                <span class="text-muted copy-user-title">{{ $t('SW_COPY_USER') }}</span>
+                <draggable ghost-class="ghost" class="group-students copy-students" :list="unSorterStudents" group="students" @change="copyStudent"></draggable>
+              </div>
+
+              <div class="draggable-wrapper ml-10">
+                <span class="text-muted copy-user-title">{{ $tc('SW_REMOVE_STUDENTS', 1) }}</span>
+                <draggable ghost-class="ghost" class="group-students copy-students" :list="removedStudents" group="students" @change="removeUser"></draggable>
+              </div>
+            </el-col>
+        </el-row>
       </transition-group>
 
     </affix>
