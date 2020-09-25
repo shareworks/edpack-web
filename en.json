@@ -416,7 +416,7 @@
   "SW_REMOVE_EMAIL": "Remove email",
   "SW_REMOVE_INSTRUCTOR": "Remove instructor",
   "SW_REMOVE_INSTRUCTOR_CONFIRM": "Are you sure you want to remove this instructor from this course?",
-  "SW_REMOVE_STUDENTS": "Remove students",
+  "SW_REMOVE_STUDENTS": "Remove student | Remove students",
   "SW_REMOVE_STUDENTS_CONFIRM": "Sure you want to remove these students from this evaluation? These students can't complete their evaluation and won't receive an email. You cannot undo this action.",
   "SW_REMOVE_UNSUCCESSFUL": "Unable to remove. Please try again later or contact support.",
   "SW_REPEAT_YOUR_PASSWORD": "Repeat password",

@@ -413,7 +413,7 @@
   "SW_REMOVE_EMAIL": "E-mail verwijderen",
   "SW_REMOVE_INSTRUCTOR": "Verwijder docent",
   "SW_REMOVE_INSTRUCTOR_CONFIRM": "Weet je zeker dat je deze docent uit deze cursus wilt halen?",
-  "SW_REMOVE_STUDENTS": "Verwijder studenten",
+  "SW_REMOVE_STUDENTS": "Verwijder student | Verwijder studenten",
   "SW_REMOVE_STUDENTS_CONFIRM": "Weet je zeker dat je deze studenten uit de evaluatie wilt halen? Ze kunnen de evaluatie niet meer inleveren en ontvangen geen e-mail van deze actie. Je kan dit niet ongedaan maken.",
   "SW_REMOVE_UNSUCCESSFUL": "Kan niet worden verwijderd. Probeer het nogmaals of contact support.",
   "SW_REPEAT_YOUR_PASSWORD": "Herhaal wachtwoord",
