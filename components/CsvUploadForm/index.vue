@@ -23,6 +23,7 @@
         <p class="mb-10" v-if="!existing">{{ $t('SW_REUSE_EVAL_INFO', [users.length, groups.length]) }}</p>
         <p class="mb-10" v-else>{{ $t('SW_CSV_CHANGES_TEXT', [existing.groups, existing.students, groups.length, users.length]) }}</p>
       </div>
+      <p class="mb-10" v-else-if="isComproved && assessors">{{ $t('SW_REUSE_EVAL_INFO_ASSESSORS', [users.length]) }}</p>
       <p class="mb-10" v-else>{{ $t('SW_REUSE_EVAL_USER', [users.length]) }}</p>
 
       <el-button size="small" type="success" v-if="!existing" @click="toggleStudentsList">
@@ -78,7 +79,7 @@ import StudentsTable from '../StudentsTable'
 
 export default {
   name: 'CsvUploadForm',
-  props: ['existing', 'noGroup', 'downloadLink', 'buttonText', 'participantTypeText', 'isGroups'],
+  props: ['existing', 'noGroup', 'downloadLink', 'buttonText', 'participantTypeText', 'isGroups', 'assessors'],
   components: { StudentsTable },
 
   data () {
