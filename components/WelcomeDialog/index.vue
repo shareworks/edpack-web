@@ -14,7 +14,7 @@
             <a v-if="aboutUrl" :href="aboutUrl" target="_blank">
               <strong>{{ $t('SW_LEARN_MORE') }}</strong>
             </a>
-            <router-link v-else to="/about" class="inline">
+            <router-link v-else to="/about" target="_blank" class="inline">
               <strong>{{ $t('SW_LEARN_MORE') }}</strong>
             </router-link>
           </div>
