@@ -45,8 +45,8 @@ export default {
       loadLanguages(this.$i18n, newLanguage)
 
       const text = {
-        en: 'Your preferred language has been changed to English',
-        nl: 'Jouw voorkeurstaal is nu ingesteld op Nederlands'
+        en: 'Your preferred language has been changed to English.',
+        nl: 'Jouw voorkeurstaal is nu ingesteld op Nederlands.'
       }
 
       this.$message({ message: text[this.currentLanguage], type: 'success' })
