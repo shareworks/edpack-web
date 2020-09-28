@@ -248,6 +248,7 @@
   "SW_HOME_SHORT": "An overview of your courses at {school} that use {app}.",
   "SW_HOW_HEADER": "How it works",
   "SW_IMPORT": "Import",
+  "SW_FACULTY_MANAGER_TEXT": "Is this member a manager? Please select the appropriate {0}.",
   "SW_IMPORTANT": "Important: ",
   "SW_IMPORT_EXPLAIN_TEXT": "Here you can import questions from an existing course in which you have a role. Select a course and you will see the questions you can import. Select one or more questions and click 'Import'. After import you can optionally edit each question.",
   "SW_IMPORT_FROM": "Import from",
