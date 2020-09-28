@@ -75,6 +75,14 @@
                   </el-button>
                 </el-popconfirm>
 
+                <el-popover trigger="click" class="edit-group-button" :close-delay="0" :ref="`edit_${index}`" :title="$tc('SW_CHANGE_GROUP_NAME')" placement="top-end">
+                  <el-input v-model="temporaryGroupName" @input="updateGroupName($event, index)" :placeholder="$t('SW_GROUP_NAME')" :label="$t('SW_GROUP_NAME')"></el-input>
+
+                  <el-button slot="reference" @click="afterLeave($event, index)" plain size="small" @click.stop class="button-square mr-10 delete-group-button">
+                    <i class="icon-pencil"></i>
+                  </el-button>
+                </el-popover>
+
                 <el-tag class="question-tag-info" type="info">{{ group.length }} {{ $tc('SW_STUDENT', group.length).toLowerCase() }}</el-tag>
               </h3>
             </template>
@@ -124,6 +132,7 @@ export default {
 
   data () {
     return {
+      temporaryGroupName: '',
       addGroupDialog: false,
       status: '',
       students: [],
@@ -154,6 +163,26 @@ export default {
   },
 
   methods: {
+    afterLeave (value, index) {
+      this.students.forEach((st, i) => {
+        if (index !== i) {
+          this.$refs[`edit_${i}`][0].doClose()
+        }
+      })
+      this.temporaryGroupName = this.students[index].groupName
+    },
+    updateGroupName (result, index) {
+      this.setIsChanged(true)
+
+      this.students[index] = this.students[index].map(stud => {
+        //add new group name to the each student
+        stud.groupName = result
+        stud.group.name = result
+        return stud
+      })
+
+      this.students[index].groupName = result
+    },
     setDragging (value) { this.dragging = value },
     removeGroup (group) {
       const cleanedStudents = group.map(stud => {
