@@ -31,7 +31,10 @@
       </el-button>
       <el-button type="success" size="small" plain @click="handleRemoveCsv">
         <i class="icon-cancel"></i>
-        {{ $t('SW_UPLOAD_NEW_CSV') }}
+        <span v-if="!isComproved">{{ $t('SW_UPLOAD_NEW_CSV') }}</span>
+        <!-- Comproved specific code -->
+        <span v-else-if="isComproved && isGroups">{{ $t('SW_UPLOAD_NEW_CSV') }}</span>
+        <span v-else>{{ $t('SW_UPLOAD_NEW_CSV_PARTICIPANTS') }}</span>
       </el-button>
     </el-alert>
 
@@ -75,11 +78,12 @@ import StudentsTable from '../StudentsTable'
 
 export default {
   name: 'CsvUploadForm',
-  props: ['existing', 'noGroup', 'downloadLink', 'buttonText', 'participantTypeText'],
+  props: ['existing', 'noGroup', 'downloadLink', 'buttonText', 'participantTypeText', 'isGroups'],
   components: { StudentsTable },
 
   data () {
     return {
+      isComproved: config.name === 'Comproved',
       user: this.$store.state.user,
       course: this.$store.state.course || null,
       school: this.$store.state.school,
@@ -171,7 +175,7 @@ export default {
             }
 
             // check is user unique
-            if (config.name === 'Comproved') {
+            if (this.isComproved) {
               const isUnique = filteredResults.filter(u => u.email === user.email)
 
               if (isUnique.length > 1) {
