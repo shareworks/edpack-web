@@ -209,6 +209,7 @@
   "SW_FRESH_CHAT_TEXT": "Chat support voor docenten en admins weergeven.",
   "SW_FROM_GROUP": "Van groep",
   "SW_FUNCTIONALITY": "Functionaliteit",
+  "SW_FACULTY_MANAGER_TEXT": "Is dit lid een manager? Selecteer hieronder de relevante {0}.",
   "SW_FUNCTIONALITY_HEADER": "Beheer optionele functionaliteiten",
   "SW_FUNCTIONALITY_TEXT": "Gebruik de schakelaars hieronder om optionele functionaliteit uit of aan te zetten voor de gehele school. Voor sommige functionaliteiten moet je eerst contact opnemen met {0} support.",
   "SW_GENERAL": "Algemeen",

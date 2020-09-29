@@ -82,7 +82,9 @@
       </el-dropdown>
     </el-form-item>
 
-    <el-form-item v-if="isAdmin" :label="$t('SW_FACULTY_MANAGER')" class="additional" :loading="changingRole">
+    <!-- Faculty manager -->
+    <el-form-item v-if="isAdmin && school.enableFacultyManagers" :label="$t('SW_FACULTY_MANAGER')" class="additional" :loading="changingRole">
+      <p class="form-help-text">{{ $t('SW_FACULTY_MANAGER_TEXT', [school.terminology.faculty[lang].toLowerCase()]) }}</p>
       <el-select class="block" v-model="facultyManager" multiple :disabled="changingRole" @change="changeFacultyRole" :placeholder="$t('SW_FACULTY_MANAGER_PLACEHOLDER', [school.terminology.faculty[lang].toLowerCase()])" size="large">
         <el-option v-for="faculty in faculties" :key="faculty._id" :label="faculty[lang]" :value="faculty._id"/>
       </el-select>
