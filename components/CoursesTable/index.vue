@@ -185,8 +185,8 @@ import LmsIcon from '../LmsIcon'
 import debounce from 'lodash/debounce'
 import TableStatus from '../TableStatus'
 import CreateCourse from '../CreateCourse'
+import CoursesCards from '../CoursesCards'
 import dateSorter from '../../utils/date-sorter'
-import CoursesCards from '@/edpack-web/components/CoursesCards'
 import sortCaseInsensitive from '../../utils/sort-case-insensitive'
 
 export default {
@@ -257,6 +257,10 @@ export default {
       if (refresh) {
         this.tableData = []
         this.skip = false
+      }
+
+      if (this.cards || this.$route.query.context !== '' || this.$route.query.context !== 'school') {
+        params.faculty = this.$route.query.context
       }
 
       // Add elements on existing elements
