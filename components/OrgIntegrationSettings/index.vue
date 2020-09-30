@@ -125,6 +125,8 @@
             </el-button>
           </el-tooltip>
         </el-input>
+
+        <el-alert v-if="generatedSecretAlert && form.isChanged" class="mt-10" show-icon center :title="$t('SW_GENERATED_KEY_ALERT')" type="warning" :closable="false"/>
       </el-form-item>
     </div>
 
@@ -197,7 +199,7 @@
         <div v-if="form.lastConfiguredLms === 'canvas'">
           <!-- Canvas URL -->
           <el-form-item label="Canvas URL">
-            <el-input @change="trimImportantValues" v-model="form.canvas.apiUrl" type="url" placeholder="ex. https://your-school.instructure.com ..."></el-input>
+            <el-input @change="processHttp" v-model="form.canvas.apiUrl" type="url" placeholder="ex. https://your-school.instructure.com ..."></el-input>
           </el-form-item>
 
           <!-- Canvas callback url -->
@@ -240,7 +242,7 @@
         <div v-else-if="form.lastConfiguredLms === 'brightspace'">
           <!-- Brightspace URL -->
           <el-form-item label="Brightspace URL">
-            <el-input @change="trimImportantValues" v-model="form.brightspace.apiUrl" type="url" placeholder="ex. https://your-school.brightspace.com ..."></el-input>
+            <el-input @change="processHttp" v-model="form.brightspace.apiUrl" type="url" placeholder="ex. https://your-school.brightspace.com ..."></el-input>
           </el-form-item>
 
           <!-- Brightspace callback url -->
@@ -283,14 +285,14 @@
         <div v-else-if="form.lastConfiguredLms === 'blackboard'">
           <!-- Blackboard URL -->
           <el-form-item label="Blackboard URL">
-            <el-input @change="trimImportantValues" v-model="form.blackboard.apiUrl" type="url" placeholder="ex. https://your-school.blackboard.com ..."></el-input>
+            <el-input @change="processHttp" v-model="form.blackboard.apiUrl" type="url" placeholder="ex. https://your-school.blackboard.com ..."></el-input>
           </el-form-item>
 
           <!-- Blackboard App ID -->
           <el-form-item label="Application ID">
-            <el-input v-model="blackboardAppId" :readonly="true">
+            <el-input v-model="form.blackboard.appId">
               <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
-                <el-button v-clipboard="blackboardAppId">
+                <el-button v-clipboard="form.blackboard.appId">
                   <i class="icon-copy"></i>
                 </el-button>
               </el-tooltip>
@@ -322,7 +324,7 @@
         <div v-else-if="form.lastConfiguredLms === 'ilearn'">
           <!-- Ilearn URL -->
           <el-form-item label="ilearn URL">
-            <el-input @change="trimImportantValues" v-model="form.ilearn.apiUrl" type="url" placeholder="ex. https://your-school.ilearn.com ..."></el-input>
+            <el-input @change="processHttp" v-model="form.ilearn.apiUrl" type="url" placeholder="ex. https://your-school.ilearn.com ..."></el-input>
           </el-form-item>
 
           <!-- Ilearn App ID -->
@@ -400,6 +402,7 @@ export default {
       user: this.$store.state.user,
       lang: this.$store.state.lang,
       incorrectDomains: [],
+      generatedSecretAlert: false,
       processing: false,
       inputVisible: {
         emailDomains: false,
@@ -429,6 +432,24 @@ export default {
   },
 
   methods: {
+    changeHttpToHttps (urlString) {
+      if (!urlString) return
+
+      const url = new URL(urlString)
+      if (url.protocol === 'http:') {
+        url.protocol = 'https:'
+      }
+
+      return url.toString()
+    },
+    processHttp () {
+      this.form.canvas.apiUrl = this.changeHttpToHttps(this.form.canvas.apiUrl)
+      this.form.brightspace.apiUrl = this.changeHttpToHttps(this.form.brightspace.apiUrl)
+      this.form.blackboard.apiUrl = this.changeHttpToHttps(this.form.blackboard.apiUrl)
+      this.form.ilearn.apiUrl = this.changeHttpToHttps(this.form.ilearn.apiUrl)
+
+      this.trimImportantValues()
+    },
     domainsValidation () {
       let failedDomains = []
       const domainRegex = /^@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
@@ -454,37 +475,38 @@ export default {
           .then((res) => {
             this.form.ltiBasic.secret = res.data.list[0]
             this.$message({ message: this.$i18n.t('SW_LTISECRET_GENERATED'), type: 'success' })
+            this.generatedSecretAlert = true
           })
           .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
           .finally(() => { this.processing = false })
       })
     },
     trimImportantValues () {
-      this.form.canvas.apiUrl = this.form.canvas.apiUrl.trim()
-      this.form.canvas.apiId = this.form.canvas.apiId.trim()
-      this.form.canvas.apiSecret = this.form.canvas.apiSecret.trim()
-      this.form.canvas.advantageApiId = this.form.canvas.advantageApiId.trim()
-      this.form.canvas.advantageApiSecret = this.form.canvas.advantageApiSecret.trim()
-      this.form.canvas.advantageAuthUrl = this.form.canvas.advantageAuthUrl.trim()
+      this.form.canvas.apiUrl = this.form.canvas.apiUrl?.trim()
+      this.form.canvas.apiId = this.form.canvas.apiId?.trim()
+      this.form.canvas.apiSecret = this.form.canvas.apiSecret?.trim()
+      this.form.canvas.advantageApiId = this.form.canvas.advantageApiId?.trim()
+      this.form.canvas.advantageApiSecret = this.form.canvas.advantageApiSecret?.trim()
+      this.form.canvas.advantageAuthUrl = this.form.canvas.advantageAuthUrl?.trim()
 
-      this.form.brightspace.apiUrl = this.form.brightspace.apiUrl.trim()
-      this.form.brightspace.apiId = this.form.brightspace.apiId.trim()
-      this.form.brightspace.apiSecret = this.form.brightspace.apiSecret.trim()
-      this.form.brightspace.advantageApiId = this.form.brightspace.advantageApiId.trim()
-      this.form.brightspace.advantageApiSecret = this.form.brightspace.advantageApiSecret.trim()
-      this.form.brightspace.advantageAuthUrl = this.form.brightspace.advantageAuthUrl.trim()
+      this.form.brightspace.apiUrl = this.form.brightspace.apiUrl?.trim()
+      this.form.brightspace.apiId = this.form.brightspace.apiId?.trim()
+      this.form.brightspace.apiSecret = this.form.brightspace.apiSecret?.trim()
+      this.form.brightspace.advantageApiId = this.form.brightspace.advantageApiId?.trim()
+      this.form.brightspace.advantageApiSecret = this.form.brightspace.advantageApiSecret?.trim()
+      this.form.brightspace.advantageAuthUrl = this.form.brightspace.advantageAuthUrl?.trim()
 
-      this.form.blackboard.apiUrl = this.form.blackboard.apiUrl.trim()
-      this.form.blackboard.apiId = this.form.blackboard.apiId.trim()
-      this.form.blackboard.apiSecret = this.form.blackboard.apiSecret.trim()
+      this.form.blackboard.apiUrl = this.form.blackboard.apiUrl?.trim()
+      this.form.blackboard.apiId = this.form.blackboard.apiId?.trim()
+      this.form.blackboard.apiSecret = this.form.blackboard.apiSecret?.trim()
 
       if (this.form.ilearn) {
-        this.form.ilearn.apiUrl = this.form.ilearn.apiUrl.trim()
-        this.form.ilearn.apiId = this.form.ilearn.apiId.trim()
-        this.form.ilearn.apiSecret = this.form.ilearn.apiSecret.trim()
-        this.form.ilearn.advantageApiId = this.form.ilearn.advantageApiId.trim()
-        this.form.ilearn.advantageApiSecret = this.form.ilearn.advantageApiSecret.trim()
-        this.form.ilearn.advantageAuthUrl = this.form.ilearn.advantageAuthUrl.trim()
+        this.form.ilearn.apiUrl = this.form.ilearn.apiUrl?.trim()
+        this.form.ilearn.apiId = this.form.ilearn.apiId?.trim()
+        this.form.ilearn.apiSecret = this.form.ilearn.apiSecret?.trim()
+        this.form.ilearn.advantageApiId = this.form.ilearn.advantageApiId?.trim()
+        this.form.ilearn.advantageApiSecret = this.form.ilearn.advantageApiSecret?.trim()
+        this.form.ilearn.advantageAuthUrl = this.form.ilearn.advantageAuthUrl?.trim()
       }
     },
     showInput (type) {

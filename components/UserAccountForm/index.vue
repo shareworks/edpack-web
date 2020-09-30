@@ -21,14 +21,17 @@
     <!-- Emails -->
     <el-form-item :label="$tc('SW_EMAIL', form.emails.length)" class="additional">
       <div v-for="(email, index) of form.emails" :key="index">
-        <el-input prefix-icon="icon-email" v-model="form.emails[index]" :readonly="!isAdmin" @change="emailChanged = true" :placeholder="$t('SW_EMAIL_PLACEHOLDER')"
+        <el-input prefix-icon="icon-email" v-model="form.emails[index]" :readonly="emailsCopy.includes(email)" @change="emailChanged = true" :placeholder="$t('SW_EMAIL_PLACEHOLDER')"
                   :class="email === form.email ? 'primary-email' : 'secondary-email'" class="mb-5">
 
           <!-- Delete email -->
-          <el-button class="delete-email-button" slot="append" @click="deleteEmail(email)" v-if="form.emails.length > 1">
-            <i class="icon-delete"></i>
-            <span v-if="!isMobile">{{ $t('SW_REMOVE') }}</span>
-          </el-button>
+          <el-popconfirm v-if="form.emails.length > 1" slot="append" :confirmButtonText="$t('SW_DELETE')" :cancelButtonText="$t('SW_CANCEL')"
+                         @onConfirm="deleteEmail(email)" hideIcon :title="$t('SW_DELETE_QUESTION_CONFIRM')">
+            <el-button slot="reference" class="delete-email-button mr-5">
+              <i class="icon-delete"></i>
+              <span v-if="!isMobile">{{ $t('SW_REMOVE') }}</span>
+            </el-button>
+          </el-popconfirm>
 
           <!-- Make primary -->
           <el-button class="primary-button-toggle" slot="append" @click="setPrimary(email)" v-if="isAdmin && form.emails.length > 1">
@@ -79,8 +82,10 @@
       </el-dropdown>
     </el-form-item>
 
-    <el-form-item v-if="isAdmin" :label="$t('SW_FACULTY_MANAGER')" class="additional" :loading="changingRole">
-      <el-select class="block" v-model="facultyManager" multiple :disabled="changingRole" @change="changeFacultyRole" :placeholder="$t('SW_FACULTY_MANAGER_PLACEHOLDER')" size="large">
+    <!-- Faculty manager -->
+    <el-form-item v-if="isAdmin && school.enableFacultyManagers" :label="$t('SW_FACULTY_MANAGER')" class="additional" :loading="changingRole">
+      <p class="form-help-text">{{ $t('SW_FACULTY_MANAGER_TEXT', [school.terminology.faculty[lang].toLowerCase()]) }}</p>
+      <el-select class="block" v-model="facultyManager" multiple :disabled="changingRole" @change="changeFacultyRole" :placeholder="$t('SW_FACULTY_MANAGER_PLACEHOLDER', [school.terminology.faculty[lang].toLowerCase()])" size="large">
         <el-option v-for="faculty in faculties" :key="faculty._id" :label="faculty[lang]" :value="faculty._id"/>
       </el-select>
     </el-form-item>
@@ -122,6 +127,7 @@ export default {
       signinByPassword: config.signinByPassword,
       faculties: this.$store.state.school.faculties,
       hasFacultyManagers: config.hasFacultyManagers,
+      emailsCopy: [...this.form.emails],
       languages: this.$store.state.languages,
       emailChanged: false,
       changingRole: false,
@@ -137,6 +143,11 @@ export default {
 
   methods: {
     deleteEmail (email) {
+      // make another email primary
+      if (this.form.email === email) {
+        this.form.email = this.form.emails[0]
+      }
+
       this.form.emails = this.form.emails.filter(em => em !== email)
       this.emailChanged = true
     },

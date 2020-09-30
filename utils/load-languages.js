@@ -8,7 +8,6 @@ export function loadLanguages (i18n, lang) {
   if (i18n.locale !== lang) {
     if (!loadedLanguages.includes(lang)) {
       return import(/* webpackChunkName: "lang-[request]" */ `root/${lang}.json`).then(msgs => {
-
         let basicLangPack
         try {
           basicLangPack = require(`../${lang}.json`)

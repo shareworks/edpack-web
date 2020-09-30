@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="normal-line-height mb-10 font-13 text-muted" v-if="!existing && !users.length">{{ $t('SW_CSV_IMPORT_TEXT') }}</p>
+    <p class="normal-line-height mb-10 font-13 text-muted" v-if="!existing && !users.length">{{ $t('SW_CSV_IMPORT_TEXT', [school.emailDomains.length ? `student-name${school.emailDomains[0]}` : 'student-name@school-name.com']) }}</p>
 
     <!-- Upload csv file -->
     <el-upload v-if="!users.length" class="inline" ref="csvUpload" action="" :show-file-list="false" :on-change="handleCSVChange"
@@ -23,6 +23,7 @@
         <p class="mb-10" v-if="!existing">{{ $t('SW_REUSE_EVAL_INFO', [users.length, groups.length]) }}</p>
         <p class="mb-10" v-else>{{ $t('SW_CSV_CHANGES_TEXT', [existing.groups, existing.students, groups.length, users.length]) }}</p>
       </div>
+      <p class="mb-10" v-else-if="isComproved && assessors">{{ $t('SW_REUSE_EVAL_INFO_ASSESSORS', [users.length]) }}</p>
       <p class="mb-10" v-else>{{ $t('SW_REUSE_EVAL_USER', [users.length]) }}</p>
 
       <el-button size="small" type="success" v-if="!existing" @click="toggleStudentsList">
@@ -31,7 +32,10 @@
       </el-button>
       <el-button type="success" size="small" plain @click="handleRemoveCsv">
         <i class="icon-cancel"></i>
-        {{ $t('SW_UPLOAD_NEW_CSV') }}
+        <span v-if="!isComproved">{{ $t('SW_UPLOAD_NEW_CSV') }}</span>
+        <!-- Comproved specific code -->
+        <span v-else-if="isComproved && isGroups">{{ $t('SW_UPLOAD_NEW_CSV') }}</span>
+        <span v-else>{{ $t('SW_UPLOAD_NEW_CSV_PARTICIPANTS') }}</span>
       </el-button>
     </el-alert>
 
@@ -75,11 +79,12 @@ import StudentsTable from '../StudentsTable'
 
 export default {
   name: 'CsvUploadForm',
-  props: ['existing', 'noGroup', 'downloadLink', 'buttonText', 'participantTypeText'],
+  props: ['existing', 'noGroup', 'downloadLink', 'buttonText', 'participantTypeText', 'isGroups', 'assessors'],
   components: { StudentsTable },
 
   data () {
     return {
+      isComproved: config.name === 'Comproved',
       user: this.$store.state.user,
       course: this.$store.state.course || null,
       school: this.$store.state.school,
@@ -171,7 +176,7 @@ export default {
             }
 
             // check is user unique
-            if (config.name === 'Comproved') {
+            if (this.isComproved) {
               const isUnique = filteredResults.filter(u => u.email === user.email)
 
               if (isUnique.length > 1) {
@@ -182,8 +187,7 @@ export default {
             if (!validDomain) {
               this.invalidUsers.push(user)
               this.invalidDomain = true
-            }
-            else if (!regexValidEmail.test(user.email)) this.invalidUsers.push(user)
+            } else if (!regexValidEmail.test(user.email)) this.invalidUsers.push(user)
             else this.users.push(user)
 
             // Create array of unique groups

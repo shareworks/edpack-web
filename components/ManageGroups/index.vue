@@ -1,34 +1,45 @@
 <template>
   <div>
     <affix class="sticky-bar" relative-element-selector=".groups" :offset="{ top: 130, bottom: -1000 }">
-      <!-- Filter -->
-      <el-row type="flex" align="middle">
-        <el-col :xs="24" :sm="8">
-          <!-- Add group button -->
-          <el-button type="primary" plain class="mr-5" size="medium" @click="addGroupDialog = true">
-            <i class="icon-add"></i>
-            <span v-if="!isMobile">{{ $t('SW_ADD_GROUP') }}</span>
-          </el-button>
 
-          <!-- Save button -->
-          <el-button type="success" size="medium" :plain="!isChanged" :disabled="!isChanged" @click="confirmSubmitChanges">
-            <i class="icon-ok-sign"></i>
-            <span v-if="!isMobile">{{ $t('SW_SAVE_CHANGES') }}</span>
-          </el-button>
-        </el-col>
+      <transition-group name="drag-items-animation" mode="out-in">
+        <!-- Filter -->
+        <el-row type="flex" align="middle" v-if="!dragging" :key="1">
+          <el-col :xs="24" :sm="8">
+            <!-- Add group button -->
+            <el-button type="primary" plain class="mr-5" size="medium" @click="addGroupDialog = true">
+              <i class="icon-add"></i>
+              <span v-if="!isMobile">{{ $t('SW_ADD_GROUP') }}</span>
+            </el-button>
 
-        <el-col :xs="0" :span="8">
-          <div class="draggable-wrapper ml-10">
-            <span class="text-muted copy-user-title">{{ $t('SW_COPY_USER') }}</span>
-            <draggable ghost-class="ghost" class="group-students copy-students" :list="unSorterStudents" group="students" @change="copyStudent"></draggable>
-          </div>
-        </el-col>
+            <!-- Save button -->
+            <el-button type="success" size="medium" :plain="!isChanged" :disabled="!isChanged" @click="confirmSubmitChanges">
+              <i class="icon-ok-sign"></i>
+              <span v-if="!isMobile">{{ $t('SW_SAVE_CHANGES') }}</span>
+            </el-button>
+          </el-col>
 
-        <el-col :xs="0" :sm="8" class="hidden-xs">
-          <!-- Search input -->
-          <el-input prefix-icon="icon-search" :placeholder="$t('SW_SEARCH_STUDENTS')" size="medium" v-model="searchText" clearable></el-input>
-        </el-col>
-      </el-row>
+          <el-col :xs="0" :sm="8" class="hidden-xs hidden-sm to-left">
+            <!-- Search input -->
+            <el-input prefix-icon="icon-search" :placeholder="$t('SW_SEARCH_STUDENTS')" size="medium" v-model="searchText" clearable></el-input>
+          </el-col>
+        </el-row>
+
+        <el-row type="flex" align="middle" v-else :key="2">
+            <el-col :xs="0" :span="24">
+              <div class="draggable-wrapper copy ml-10">
+                <span class="copy-remove-user-title">{{ $t('SW_COPY_USER') }}</span>
+                <draggable ghost-class="ghost" class="copy-students" :list="unSorterStudents" group="students" @change="copyStudent"></draggable>
+              </div>
+
+              <div class="draggable-wrapper remove ml-10">
+                <span class="copy-remove-user-title">{{ $t('SW_DRAG_REMOVE_STUDENTS') }}</span>
+                <draggable ghost-class="ghost" class="remove-students" :list="removedStudents" group="students" @change="removeUser"></draggable>
+              </div>
+            </el-col>
+        </el-row>
+      </transition-group>
+
     </affix>
     <div class="bar-placeholder"></div>
 
@@ -39,7 +50,7 @@
             <p class="question-sentence groups-header"><strong>{{ $t('SW_WITHOUT_GROUP') }}</strong> <el-tag size="mini" class="ml-5">{{ unSorterStudents.length }}</el-tag></p>
           </h3>
           <!-- Draggable unsorted students group list -->
-          <groups-item :checkIsChanged="checkIsChanged" :students="unSorterStudents"></groups-item>
+          <groups-item class="unsorted-list" :class="{'can-drag-in': dragging}" :setDragging="setDragging" :checkIsChanged="checkIsChanged" :students="unSorterStudents"></groups-item>
         </el-col>
 
       <el-col :span="18">
@@ -55,12 +66,29 @@
               <h3 class="collapse-header">
                 <div class="question-number">{{ index + 1 }}</div>
                 <div class="question-sentence capitalize bold">{{ group.groupName }}</div>
+
+                <!-- Remove group -->
+                <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @onConfirm="removeGroup(group)"
+                               class="delete-group-button" hideIcon :title="$t('SW_DELETE_GROUP')">
+                  <el-button slot="reference" plain size="small" @click.stop class="button-square mr-10 delete-group-button" type="danger">
+                    <i class="icon-delete"></i>
+                  </el-button>
+                </el-popconfirm>
+
+                <el-popover trigger="click" class="edit-group-button" :close-delay="0" :ref="`edit_${index}`" :title="$tc('SW_CHANGE_GROUP_NAME')" placement="top-end">
+                  <el-input v-model="temporaryGroupName" @input="updateGroupName($event, index)" :placeholder="$t('SW_GROUP_NAME')" :label="$t('SW_GROUP_NAME')"></el-input>
+
+                  <el-button slot="reference" @click="afterLeave($event, index)" plain size="small" @click.stop class="button-square mr-10 delete-group-button">
+                    <i class="icon-pencil"></i>
+                  </el-button>
+                </el-popover>
+
                 <el-tag class="question-tag-info" type="info">{{ group.length }} {{ $tc('SW_STUDENT', group.length).toLowerCase() }}</el-tag>
               </h3>
             </template>
 
               <!-- Draggable student group list -->
-              <groups-item :checkIsChanged="checkIsChanged" :students="group"></groups-item>
+              <groups-item :setDragging="setDragging" :checkIsChanged="checkIsChanged" :students="group"></groups-item>
             </el-collapse-item>
           </el-collapse>
         </el-col>
@@ -69,19 +97,17 @@
     <!-- Add group dialog -->
     <el-dialog :title="$t('SW_ADD_GROUP')" append-to-body :visible.sync="addGroupDialog">
       <!-- Group name -->
-      <el-form label-position="top">
-        <el-form>
-          <el-form-item required :label="`${$t('SW_GROUP_NAME')}:`">
-            <el-input placeholder="The Kangaroos" v-model="newGroupName"></el-input>
-          </el-form-item>
-        </el-form>
+      <el-form>
+        <el-form-item required :label="`${$t('SW_GROUP_NAME')}`">
+          <el-input placeholder="The Kangaroos" v-model="newGroupName"></el-input>
+        </el-form-item>
 
         <el-form-item class="mt-20">
           <el-button type="primary" @click="addNewGroup">
             {{ $t('SW_ADD_GROUP') }}
             <i class="icon-arrow_forward"></i>
           </el-button>
-          <el-button type="text" @click="addGroupDialog = false">{{ $t('SW_CANCEL') }}</el-button>
+          <el-button type="text" class="ml-10" @click="addGroupDialog = false">{{ $t('SW_CANCEL') }}</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -106,14 +132,18 @@ export default {
 
   data () {
     return {
+      temporaryGroupName: '',
       addGroupDialog: false,
       status: '',
       students: [],
+      removedStudents: [],
       unSorterStudents: [],
       fullStudentsList: [],
+      dragging: false,
       searchText: this.$route.query.query || '',
       isMobile: this.$store.state.isMobile,
       newGroupName: '',
+      inLTI: this.$store.state.inLTI,
       duplicatedStudents: []
     }
   },
@@ -126,10 +156,61 @@ export default {
   },
 
   mounted () {
+    if (this.inLTI) {
+      window.history.length > 1 ? this.$router.back() : this.router.push('/')
+    }
     this.getStudents()
   },
 
   methods: {
+    afterLeave (value, index) {
+      this.students.forEach((st, i) => {
+        if (index !== i) {
+          this.$refs[`edit_${i}`][0].doClose()
+        }
+      })
+      this.temporaryGroupName = this.students[index].groupName
+    },
+    updateGroupName (result, index) {
+      this.setIsChanged(true)
+
+      this.students[index] = this.students[index].map(stud => {
+        //add new group name to the each student
+        stud.groupName = result
+        stud.group.name = result
+        return stud
+      })
+
+      this.students[index].groupName = result
+    },
+    setDragging (value) { this.dragging = value },
+    removeGroup (group) {
+      const cleanedStudents = group.map(stud => {
+        delete stud.group
+        delete stud.groupName
+        return stud
+      })
+
+      cleanedStudents.forEach(stud => { this.unSorterStudents.push(stud) })
+      this.students = this.students.filter(g => g.groupName !== group.groupName)
+      this.setIsChanged(true)
+    },
+    removeUser (action) {
+      // probably can delete this - need to test after api /sync-users fix
+
+      // this.students = this.students.map(group => {
+      //   if (group.groupName !== action.added.element.groupName) {
+      //     return group
+      //   }
+      //
+      //   return group.filter(student => {
+      //     return student._id !==  action.added.element._id
+      //   })
+      // })
+
+      this.setIsChanged(true)
+      this.removedStudents = []
+    },
     copyStudent (action) {
       if (!action.added.element.groupName) {
         // can't clone unsorted student

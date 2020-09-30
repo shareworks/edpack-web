@@ -37,7 +37,7 @@ export default {
     }
   },
 
-  mounted() {
+  mounted () {
     this.checkConnection()
   },
 

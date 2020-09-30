@@ -58,7 +58,7 @@
         <div class="org-select" v-if="showOrgButton && userOrgs.length > 1">
           <el-button type="primary" plain size="small" @click="showSchoolSelect = !showSchoolSelect">
             <i class="icon-list"></i>
-            {{ $t('SW_ORGANIZATIONS') }}
+            {{ $tc('SW_ORGANIZATION', 2) }}
           </el-button>
         </div>
 
