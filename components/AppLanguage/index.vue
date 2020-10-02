@@ -58,6 +58,7 @@ export default {
       this.currentUser.language = newLanguage
       this.$http.put(`users/${this.currentUser._id}`, this.currentUser)
         .then(() => { this.$store.dispatch('setUser', this.currentUser) })
+        .catch(e => console.log(e))
     }
   }
 }

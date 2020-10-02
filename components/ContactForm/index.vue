@@ -114,6 +114,7 @@ export default {
           this.form = { email: '', name: '', message: '' }
           this.closeDialog()
         })
+        .catch(e => { console.log(e) })
     },
     cancel () {
       if (this.closeDialog) return this.closeDialog()

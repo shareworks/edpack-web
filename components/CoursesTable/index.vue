@@ -335,7 +335,7 @@ export default {
         beforeClose: (action, instance, done) => {
           if (action !== 'confirm') return done()
           instance.confirmButtonLoading = true
-          this.removeCourses().then(res => {
+          this.removeCourses().then(() => {
             instance.confirmButtonLoading = false
             done()
           })

@@ -65,6 +65,7 @@ export default {
     getCourses () {
       this.$http.get('courses')
         .then(res => { this.courses = res.data.list })
+        .catch(e => console.log(e))
     },
     createCourse () {
       if (this.submitting) return

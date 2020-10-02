@@ -142,7 +142,7 @@ export default {
       const params = { params: { entity: this.school._id } }
 
       this.$http.put(`users/${this.currentUser._id}`, this.form, params)
-        .then((res) => {
+        .then(() => {
           const user = this.$store.state.user
 
           // Update current user

@@ -52,6 +52,7 @@ export default {
     getInstructors () {
       this.$http.get('users', { params: { role: 'staff', entity: this.course._id } })
         .then((res) => { this.instructors = res.data.list })
+        .catch(e => console.log(e))
     }
   }
 }
