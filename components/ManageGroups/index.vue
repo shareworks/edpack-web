@@ -5,7 +5,7 @@
       <transition-group name="drag-items-animation" mode="out-in">
         <!-- Filter -->
         <el-row type="flex" align="middle" v-if="!dragging" :key="1">
-          <el-col :xs="24" :sm="8">
+          <el-col :xs="24" :sm="12">
             <!-- Add group button -->
             <el-button type="primary" plain class="mr-5" size="medium" @click="addGroupDialog = true">
               <i class="icon-add"></i>
@@ -19,7 +19,7 @@
             </el-button>
           </el-col>
 
-          <el-col :xs="0" :sm="8" class="hidden-xs hidden-sm to-left">
+          <el-col :xs="0" :sm="12" class="hidden-xs hidden-sm to-left">
             <!-- Search input -->
             <el-input prefix-icon="icon-search" :placeholder="$t('SW_SEARCH_STUDENTS')" size="medium" v-model="searchText" clearable></el-input>
           </el-col>
@@ -70,7 +70,7 @@
                 <!-- Remove group -->
                 <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @onConfirm="removeGroup(group)"
                                class="delete-group-button" hideIcon :title="$t('SW_DELETE_GROUP')">
-                  <el-button slot="reference" plain size="small" @click.stop class="button-square mr-10 delete-group-button" type="danger">
+                  <el-button v-if="!isMobile" slot="reference" plain size="small" @click.stop class="button-square mr-10 delete-group-button hidden-xs" type="danger">
                     <i class="icon-delete"></i>
                   </el-button>
                 </el-popconfirm>
@@ -78,12 +78,12 @@
                 <el-popover trigger="click" class="edit-group-button" :close-delay="0" :ref="`edit_${index}`" :title="$tc('SW_CHANGE_GROUP_NAME')" placement="top-end">
                   <el-input v-model="temporaryGroupName" @input="updateGroupName($event, index)" :placeholder="$t('SW_GROUP_NAME')" :label="$t('SW_GROUP_NAME')"></el-input>
 
-                  <el-button slot="reference" @click="afterLeave($event, index)" plain size="small" @click.stop class="button-square mr-10 delete-group-button">
+                  <el-button slot="reference" @click="afterLeave($event, index)" plain size="small" @click.stop class="button-square mr-10 delete-group-button hidden-xs">
                     <i class="icon-pencil"></i>
                   </el-button>
                 </el-popover>
 
-                <el-tag class="question-tag-info" type="info">{{ group.length }} {{ $tc('SW_STUDENT', group.length).toLowerCase() }}</el-tag>
+                <el-tag class="question-tag-info hidden-xs" type="info">{{ group.length }} {{ $tc('SW_STUDENT', group.length).toLowerCase() }}</el-tag>
               </h3>
             </template>
 
