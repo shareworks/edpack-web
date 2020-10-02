@@ -42,10 +42,10 @@ export default {
     return {
       user: this.$store.state.user,
       sending: false,
+      appName: config.name,
       form: {
         subject: '',
         message: '',
-        appName: config.name,
         toSelf: true
       }
     }
