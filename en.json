@@ -568,5 +568,6 @@
   "SW_MANAGE_STAFF_EFFECT": "Please be aware that students will loose existing actions and feedback if they are moved to another group.",
   "SW_SUBMIT_MANAGE_GROUP_TITLE": "Are you sure you want to save changes?",
   "SW_MIN": "min.",
-  "SW_MAX": "max."
+  "SW_MAX": "max.",
+  "SW_SUCCESSFULLY_CONFIGURED": "Course successfully configured with LMS"
 }
