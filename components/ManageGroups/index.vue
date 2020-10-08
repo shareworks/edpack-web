@@ -196,17 +196,15 @@ export default {
       this.setIsChanged(true)
     },
     removeUser (action) {
-      // probably can delete this - need to test after api /sync-users fix
+      this.students = this.students.map(group => {
+        if (group.groupName !== action.added.element.groupName) {
+          return group
+        }
 
-      // this.students = this.students.map(group => {
-      //   if (group.groupName !== action.added.element.groupName) {
-      //     return group
-      //   }
-      //
-      //   return group.filter(student => {
-      //     return student._id !==  action.added.element._id
-      //   })
-      // })
+        return group.filter(student => {
+          return student._id !==  action.added.element._id
+        })
+      })
 
       this.setIsChanged(true)
       this.removedStudents = []
