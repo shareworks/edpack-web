@@ -44,7 +44,7 @@
             <p class="block"><el-checkbox v-model="showWithoutGroups">{{ $t('SW_WITHOUT_GROUP') }}</el-checkbox></p>
           </h3>
           <!-- Draggable unsorted students group list -->
-          <groups-item class="unsorted-list" :class="{'can-drag-in': dragging}" :setDragging="setDragging" :checkIsChanged="checkIsChanged" :students="showWithoutGroups ? unSorterStudents : filteredStudentList"></groups-item>
+          <groups-item class="unsorted-list" :class="{'can-drag-in': dragging}" :removedStudents="true" :setDragging="setDragging" :checkIsChanged="checkIsChanged" :students="showWithoutGroups ? unSorterStudents : filteredStudentList"></groups-item>
         </el-col>
 
       <el-col :span="18">
