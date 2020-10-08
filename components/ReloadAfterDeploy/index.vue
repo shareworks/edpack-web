@@ -19,6 +19,8 @@ export default {
       const isChunkLoadFailure = error.message.toLowerCase().includes('chunkloaderror')
 
       if (isChunkLoadFailure) {
+        console.log(error)
+
         const reloadedDate = this.$ls.get('reloaded')
         const justReloaded = reloadedDate && (moment(new Date()).diff(moment(reloadedDate), 'seconds' < 60))
 
@@ -31,8 +33,8 @@ export default {
   methods: {
     askForReload () {
       this.$confirm(this.$i18n.t('SW_APP_JUST_UPDATED_TEXT', [this.appName]), this.$i18n.t('SW_APP_JUST_UPDATED'), {
-        confirmButtonText: this.$i18n.t('SW_RELOAD'),
-        cancelButtonText: this.$i18n.t('SW_CANCEL')
+        showCancelButton: false,
+        confirmButtonText: this.$i18n.t('SW_RELOAD')
       }).then(() => {
         const now = new Date()
         this.$ls.set('reloaded', now)
