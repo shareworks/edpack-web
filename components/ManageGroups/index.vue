@@ -1,7 +1,6 @@
 <template>
   <div>
     <affix class="sticky-bar" relative-element-selector=".groups" :offset="{ top: 130, bottom: -1000 }">
-
       <transition-group name="drag-items-animation" mode="out-in">
         <!-- Filter -->
         <el-row type="flex" align="middle" v-if="!dragging" :key="1">
@@ -34,7 +33,6 @@
             </el-col>
         </el-row>
       </transition-group>
-
     </affix>
     <div class="bar-placeholder"></div>
 
@@ -84,7 +82,7 @@
             </template>
 
               <!-- Draggable student group list -->
-              <groups-item :setDragging="setDragging" :checkIsChanged="checkIsChanged" :students="group"></groups-item>
+              <groups-item :setDragging="setDragging" :checkIsChanged="checkIsChanged" :students="group" :class="{'can-drag-in': dragging}"></groups-item>
             </el-collapse-item>
           </el-collapse>
         </el-col>
@@ -155,7 +153,7 @@ export default {
 
   mounted () {
     if (this.inLTI) {
-      window.history.length > 1 ? this.$router.back() : this.router.push('/')
+      return window.history.length > 1 ? this.$router.back() : this.router.push('/')
     }
     this.getStudents()
   },
@@ -218,6 +216,7 @@ export default {
         }
       })
     },
+
     copyStudent (action) {
       if (!action.added.element.groupName) {
         // can't clone unsorted student
