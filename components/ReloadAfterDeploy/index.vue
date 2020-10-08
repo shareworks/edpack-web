@@ -19,8 +19,6 @@ export default {
       const isChunkLoadFailure = error.message.toLowerCase().includes('chunkloaderror')
 
       if (isChunkLoadFailure) {
-        console.log(error)
-
         const reloadedDate = this.$ls.get('reloaded')
         const justReloaded = reloadedDate && (moment(new Date()).diff(moment(reloadedDate), 'seconds' < 60))
 
