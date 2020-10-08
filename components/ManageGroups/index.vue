@@ -27,12 +27,7 @@
 
         <el-row type="flex" align="middle" v-else :key="2">
             <el-col :xs="0" :span="24">
-              <div class="draggable-wrapper copy ml-10">
-                <span class="copy-remove-user-title">{{ $t('SW_COPY_USER') }}</span>
-                <draggable ghost-class="ghost" class="copy-students" :list="unSorterStudents" group="students" @change="copyStudent"></draggable>
-              </div>
-
-              <div class="draggable-wrapper remove ml-10">
+              <div class="remove-draggable-wrapper">
                 <span class="copy-remove-user-title">{{ $t('SW_DRAG_REMOVE_STUDENTS') }}</span>
                 <draggable ghost-class="ghost" class="remove-students" :list="removedStudents" group="students" @change="removeUser"></draggable>
               </div>
