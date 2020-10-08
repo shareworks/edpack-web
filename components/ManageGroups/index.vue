@@ -41,11 +41,12 @@
       <el-row class="groups mt-20" justify="center" :gutter="20">
         <el-col :span="6" class="unsorted-row">
           <!-- Unsorted users -->
-          <h3 class="collapse-header">
-            <p class="question-sentence groups-header"><strong>{{ $t('SW_WITHOUT_GROUP') }}</strong> <el-tag size="mini" class="ml-5">{{ unSorterStudents.length }}</el-tag></p>
+          <h3 class="collapse-header block">
+            <p class="question-sentence groups-header"><strong>{{ $tc('SW_STUDENT', 2) }}</strong> <el-tag size="mini" class="ml-5">{{ showWithoutGroups ? unSorterStudents.length : filteredStudentList.length }}</el-tag></p>
+            <p class="block"><el-checkbox v-model="showWithoutGroups">{{ $t('SW_WITHOUT_GROUP') }}</el-checkbox></p>
           </h3>
           <!-- Draggable unsorted students group list -->
-          <groups-item class="unsorted-list" :class="{'can-drag-in': dragging}" :setDragging="setDragging" :checkIsChanged="checkIsChanged" :students="unSorterStudents"></groups-item>
+          <groups-item class="unsorted-list" :class="{'can-drag-in': dragging}" :setDragging="setDragging" :checkIsChanged="checkIsChanged" :students="showWithoutGroups ? unSorterStudents : filteredStudentList"></groups-item>
         </el-col>
 
       <el-col :span="18">
@@ -127,6 +128,8 @@ export default {
 
   data () {
     return {
+      filteredStudentList: [],
+      showWithoutGroups: false,
       temporaryGroupName: '',
       addGroupDialog: false,
       status: '',
@@ -204,6 +207,17 @@ export default {
       this.setIsChanged(true)
       this.removedStudents = []
     },
+    setFilteredStudentsList (students) {
+      this.filteredStudentList = []
+
+      students.forEach(student => {
+        const studentAlreadyExist = this.filteredStudentList.find(stud => { return stud._id === student._id })
+
+        if (!studentAlreadyExist) {
+          this.filteredStudentList.push(student)
+        }
+      })
+    },
     copyStudent (action) {
       if (!action.added.element.groupName) {
         // can't clone unsorted student
@@ -236,6 +250,7 @@ export default {
         res => {
           this.fullStudentsList = res.data.list
           this.separateGroup(res.data.list)
+          this.setFilteredStudentsList(res.data.list)
 
           this.status = res.data.total ? (res.data.done ? 'done' : 'incomplete') : (this.searchText ? 'noResults' : 'none')
         }).catch(
