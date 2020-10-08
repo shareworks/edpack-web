@@ -226,8 +226,8 @@ export default {
       })
 
       // for original element which will be moved to students without group
-      delete action.added.element.group
-      delete action.added.element.groupName
+      action.added.element.group = {}
+      action.added.element.groupName = ''
 
       this.checkIsChanged()
     },
