@@ -281,6 +281,7 @@ export default {
       }
 
       this.students = studentsArray
+      this.students.sort(this.groupNameSort)
       this.duplicatedStudents = [...this.students.flat(2)]
     },
 
@@ -315,6 +316,12 @@ export default {
         confirmButtonText: this.$i18n.t('SW_SAVE_CHANGES'),
         cancelButtonText: this.$i18n.t('SW_CANCEL')
       }).then(() => { this.submitChanges() })
+    },
+
+    groupNameSort (a, b) {
+      if (a.groupName < b.groupName) { return -1 }
+      if (a.groupName > b.groupName) { return 1 }
+      return 0
     },
 
     submitChanges () {
