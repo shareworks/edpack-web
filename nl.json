@@ -568,5 +568,6 @@
   "SW_CHANGE_GROUP_NAME": "Wijzig de groepsnaam",
   "SW_REMOVE_PARTICIPANT": "Student verwijderen | Studenten verwijderen",
   "SW_REMOVE_PARTICIPANT_TEXT": "Weet u zeker dat u deze student uit deze assessment wilt verwijderen? U kunt dit niet ongedaan maken en er worden GEEN e-mails verzonden. | Weet u zeker dat u deze studenten uit deze assessment wilt verwijderen? U kunt dit niet ongedaan maken en er worden GEEN e-mails verzonden.",
-  "SW_REMOVE_SHOW_NEVER": "Verwijderen en niet meer weergeven"
+  "SW_REMOVE_SHOW_NEVER": "Verwijderen en niet meer weergeven",
+  "SW_ADD_PARTICIPANT": "Deelnemer student"
 }
