@@ -165,10 +165,6 @@
 .unsorted-list {
   min-height: 50px;
 
-  .group-students {
-    min-height: 50px;
-  }
-
   .student-card-item {
     width: 100%;
   }
@@ -179,4 +175,8 @@
     opacity: 0.5;
     background: rgba(204, 244, 197, 0.82) !important;
   }
+}
+
+.group-students {
+  min-height: 50px;
 }
