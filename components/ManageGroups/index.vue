@@ -217,29 +217,6 @@ export default {
       })
     },
 
-    copyStudent (action) {
-      if (!action.added.element.groupName) {
-        // can't clone unsorted student
-        return
-      }
-
-      // clone student
-      const studentCopy = cloneDeep(action.added.element)
-
-      this.students.forEach(group => {
-        if (group.groupName === studentCopy.groupName) {
-          // return student copy to the group
-          group.push(studentCopy)
-        }
-      })
-
-      // for original element which will be moved to students without group
-      action.added.element.group = {}
-      action.added.element.groupName = ''
-
-      this.checkIsChanged()
-    },
-
     getStudents () {
       if (this.status === 'loading') return
       this.status = 'loading'
