@@ -115,9 +115,9 @@ import Affix from '../Affix'
 import isEqual from 'lodash/isEqual'
 import draggable from 'vuedraggable'
 import debounce from 'lodash/debounce'
+import GroupsItem from '../GroupsItem'
 import cloneDeep from 'lodash/cloneDeep'
 import TableStatus from '../TableStatus'
-import GroupsItem from '@/components/GroupsItem'
 
 export default {
   name: 'ManageGroups',

@@ -51,6 +51,8 @@ export default {
       if (action.added) {
         if (!groupName) {
           delete action.added.element.group
+          // TODO: delete element.groups just for buddycheck - check do we need it!
+          delete action.added.element.groups
         }
 
         action.added.element.groupName = groupName
