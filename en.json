@@ -575,5 +575,7 @@
   "SW_REMOVE_PARTICIPANT": "Remove student | Remove students",
   "SW_REMOVE_PARTICIPANT_TEXT": "Are you sure you want to remove this student from this assessment? You cannot undo this and NO emails will be sent. | Are you sure you want to remove these students from this assessment? You cannot undo this and NO emails will be sent.",
   "SW_REMOVE_SHOW_NEVER": "Remove and don't show anymore",
-  "SW_ADD_PARTICIPANT": "Add student"
+  "SW_ADD_PARTICIPANT": "Add student",
+  "SW_FACULTY_MANAGERS": "{0} managers",
+  "SW_FACULTY_MANAGERS_TEXT": "Give each {0} their own manager."
 }
