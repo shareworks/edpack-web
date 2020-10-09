@@ -9,7 +9,7 @@
         <div class="inline">
           <thumbnail :model="student" class="thumb-user mr-10 hidden-xs thumb-24 thumbnail"></thumbnail>
         </div>
-        <p class="student-name text-ellipsis">{{ student.name | truncate(50)}}</p>
+        <p class="student-name text-ellipsis">{{ student.name ? student.name : student.email | truncate(50)}}</p>
       </el-card>
     </draggable>
   </section>
