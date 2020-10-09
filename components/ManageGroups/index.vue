@@ -116,7 +116,6 @@ import isEqual from 'lodash/isEqual'
 import draggable from 'vuedraggable'
 import debounce from 'lodash/debounce'
 import GroupsItem from '../GroupsItem'
-import cloneDeep from 'lodash/cloneDeep'
 import TableStatus from '../TableStatus'
 
 export default {
@@ -159,6 +158,13 @@ export default {
   },
 
   methods: {
+    confirmSubmitChanges () {
+      this.$confirm(this.$i18n.t('SW_MANAGE_STAFF_EFFECT'), this.$i18n.t('SW_SUBMIT_MANAGE_GROUP_TITLE'), {
+        confirmButtonText: this.$i18n.t('SW_SAVE_CHANGES'),
+        cancelButtonText: this.$i18n.t('SW_CANCEL')
+      }).then(() => { this.submitChanges() })
+    },
+
     afterLeave (value, index) {
       this.students.forEach((st, i) => {
         if (index !== i) {
@@ -309,13 +315,6 @@ export default {
         // Unsuccess
         this.$message({ message: this.$i18n.t('SW_GROUP_NOT_UNIQUE'), type: 'error' })
       }
-    },
-
-    confirmSubmitChanges () {
-      this.$confirm(this.$i18n.t('SW_MANAGE_STAFF_EFFECT'), this.$i18n.t('SW_SUBMIT_MANAGE_GROUP_TITLE'), {
-        confirmButtonText: this.$i18n.t('SW_SAVE_CHANGES'),
-        cancelButtonText: this.$i18n.t('SW_CANCEL')
-      }).then(() => { this.submitChanges() })
     },
 
     groupNameSort (a, b) {
