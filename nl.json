@@ -564,5 +564,6 @@
   "SW_MAX": "max.",
   "SW_SUCCESSFULLY_CONFIGURED": "Cursus succesvol geconfigureerd met LMS",
   "SW_USER_COPIED": "Student is gekopieerd.",
-  "SW_USER_MOVED": "Student is verplaatst."
+  "SW_USER_MOVED": "Student is verplaatst.",
+  "SW_CHANGE_GROUP_NAME": "Wijzig de groepsnaam"
 }

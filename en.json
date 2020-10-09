@@ -570,5 +570,6 @@
   "SW_MAX": "max.",
   "SW_SUCCESSFULLY_CONFIGURED": "Course successfully configured with LMS",
   "SW_USER_COPIED": "Student has been copied.",
-  "SW_USER_MOVED": "Student has been moved."
+  "SW_USER_MOVED": "Student has been moved.",
+  "SW_CHANGE_GROUP_NAME": "Change group name"
 }
