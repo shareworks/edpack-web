@@ -244,7 +244,12 @@ export default {
         const studentAlreadyExist = this.filteredStudentList.find(stud => { return stud._id === student._id })
 
         if (!studentAlreadyExist) {
-          this.filteredStudentList.push(student)
+
+          const updateStudent = { ...student }
+          delete updateStudent.group
+          updateStudent.groupName = ''
+
+          this.filteredStudentList.push(updateStudent)
         }
       })
     },
