@@ -11,6 +11,12 @@
               <span v-if="!isMobile">{{ $t('SW_ADD_GROUP') }}</span>
             </el-button>
 
+            <!-- Add participant button -->
+            <el-button type="primary" plain @click="dialogAddUsers = true" size="medium" class="button-square-xs" :disabled="addUserDisabled">
+              <i class="icon-add"></i>
+              <span class="hidden-xs">{{ $t('SW_ADD_PARTICIPANT') }}</span>
+            </el-button>
+
             <!-- Save button -->
             <el-button type="success" size="medium" :plain="!isChanged" :disabled="!isChanged" @click="confirmSubmitChanges">
               <i class="icon-ok-sign"></i>
@@ -106,6 +112,11 @@
       </el-form>
     </el-dialog>
 
+    <!-- Add users dialog -->
+    <el-dialog :title="$t('SW_ADD_USERS')" append-to-body class="small-dialog" :visible.sync="dialogAddUsers">
+      <users-create :justStudents="true" :isManageStaff="true" :course="courseId" :stop-request="true" :closeDialog="closeDialog" :update-members="updateStudents"></users-create>
+    </el-dialog>
+
     <table-status :status="status" :noneText="$t('SW_NO_STUDENTS_FOUND')" @clearSearch="clearSearch"></table-status>
   </div>
 </template>
@@ -117,11 +128,12 @@ import draggable from 'vuedraggable'
 import debounce from 'lodash/debounce'
 import GroupsItem from '../GroupsItem'
 import TableStatus from '../TableStatus'
+import UsersCreate from '@/edpack-web/components/UsersCreate'
 
 export default {
   name: 'ManageGroups',
-  props: ['setIsChanged', 'isChanged', 'url'],
-  components: { TableStatus, Affix, GroupsItem, draggable },
+  props: ['setIsChanged', 'isChanged', 'url', 'addUserDisabled', 'courseId', 'LTI_status', 'isComproved', 'assessment'],
+  components: { TableStatus, Affix, GroupsItem, UsersCreate, draggable },
 
   data () {
     return {
@@ -139,8 +151,9 @@ export default {
       searchText: this.$route.query.query || '',
       isMobile: this.$store.state.isMobile,
       newGroupName: '',
-      inLTI: this.$store.state.inLTI,
-      duplicatedStudents: []
+      school: this.$store.state.school,
+      duplicatedStudents: [],
+      dialogAddUsers: false
     }
   },
 
@@ -152,9 +165,11 @@ export default {
   },
 
   mounted () {
-    if (this.inLTI) {
-      return window.history.length > 1 ? this.$router.back() : this.router.push('/')
+    if (this.LTI_status) {
+      // can't get here in lms
+      return this.$router.push({ name: 'home', params: { slug: this.school.slug } })
     }
+
     this.getStudents()
   },
 
@@ -182,6 +197,23 @@ export default {
 
       this.removedStudents = []
     },
+    removeUser (action) {
+      this.removeUserDialogActivated = true
+
+      this.students = this.students.map(group => {
+        if (group.groupName !== action.added.element.groupName) {
+          return group
+        }
+
+        return group.filter(student => {
+          return student._id !== action.added.element._id
+        })
+      })
+
+      this.setIsChanged(true)
+      this.removedStudents = []
+      this.$message({ message: this.$i18n.t('SW_USER_DELETED'), type: 'success' })
+    },
     confirmSubmitChanges () {
       this.$confirm(this.$i18n.t('SW_MANAGE_STAFF_EFFECT'), this.$i18n.t('SW_SUBMIT_MANAGE_GROUP_TITLE'), {
         confirmButtonText: this.$i18n.t('SW_SAVE_CHANGES'),
@@ -201,7 +233,7 @@ export default {
       this.setIsChanged(true)
 
       this.students[index] = this.students[index].map(stud => {
-        //add new group name to the each student
+        // add new group name to the each student
         stud.groupName = result
         stud.group.name = result
         return stud
@@ -220,22 +252,6 @@ export default {
       this.students = this.students.filter(g => g.groupName !== group.groupName)
       this.setIsChanged(true)
     },
-    removeUser (action) {
-      this.removeUserDialogActivated = true
-
-      this.students = this.students.map(group => {
-        if (group.groupName !== action.added.element.groupName) {
-          return group
-        }
-
-        return group.filter(student => {
-          return student._id !==  action.added.element._id
-        })
-      })
-
-      this.setIsChanged(true)
-      this.removedStudents = []
-    },
     setFilteredStudentsList (students) {
       this.filteredStudentList = []
 
@@ -243,7 +259,6 @@ export default {
         const studentAlreadyExist = this.filteredStudentList.find(stud => { return stud._id === student._id })
 
         if (!studentAlreadyExist) {
-
           const updateStudent = { ...student }
           delete updateStudent.group
           updateStudent.groupName = ''
@@ -253,18 +268,29 @@ export default {
       })
     },
     setDragging (value) { this.dragging = value },
+    closeDialog () { this.dialogAddUsers = false },
     getStudents () {
       if (this.status === 'loading') return
       this.status = 'loading'
 
       const params = { filter: this.searchText }
+
+      if (this.isComproved) {
+        params.course = this.assessment.course._id
+      }
+
       this.$http.get(`${this.url}/users`, { params }).then(
         res => {
           this.fullStudentsList = res.data.list
           this.separateGroup(res.data.list)
           this.setFilteredStudentsList(res.data.list)
 
-          this.status = res.data.total ? (res.data.done ? 'done' : 'incomplete') : (this.searchText ? 'noResults' : 'none')
+          if (this.isComproved) {
+            this.status = res.data.done ? 'done' : 'incomplete'
+          } else {
+            this.status = res.data.total ? (res.data.done ? 'done' : 'incomplete') : (this.searchText ? 'noResults' : 'none')
+          }
+
         }).catch(
         err => {
           console.log(err)
@@ -272,9 +298,23 @@ export default {
           this.$message({ message: this.$i18n.t('SW_GENERIC_ERROR'), type: 'error' })
         })
     },
+    updateStudents (students) {
+      const studentsList = []
 
+      students.forEach(student => {
+        studentsList.push({
+          email: student,
+          emails: [student],
+          group: {},
+          groupName: '',
+          name: ''
+        })
+      })
+
+      this.unSorterStudents = [...this.unSorterStudents, ...studentsList]
+      this.closeDialog()
+    },
     clearSearch () { this.searchText = '' },
-
     filterStudents () {
       const regExpression = new RegExp(this.searchText.toLowerCase())
 
@@ -387,7 +427,8 @@ export default {
         })
       }
 
-      this.$http.put(`${this.url}/sync-users`, { participants }).then(
+      const url = this.isComproved ? `assessments/${this.assessment._id}/sync-users` : `${this.url}/sync-users`
+      this.$http.put(url, { participants }).then(
         () => {
           this.students = []
           this.unSorterStudents = []
