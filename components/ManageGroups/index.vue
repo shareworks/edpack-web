@@ -258,7 +258,7 @@ export default {
       students.forEach(student => {
         const studentAlreadyExist = this.filteredStudentList.find(stud => { return stud._id === student._id })
 
-        if (!studentAlreadyExist) {
+        if (!studentAlreadyExist || !student._id) {
           const updateStudent = { ...student }
           delete updateStudent.group
           updateStudent.groupName = ''
@@ -312,6 +312,7 @@ export default {
       })
 
       this.unSorterStudents = [...this.unSorterStudents, ...studentsList]
+      this.setFilteredStudentsList([...this.filteredStudentList, ...studentsList])
       this.closeDialog()
     },
     clearSearch () { this.searchText = '' },
