@@ -4,7 +4,7 @@
       <transition-group name="drag-items-animation" mode="out-in">
         <!-- Filter -->
         <el-row type="flex" align="middle" v-if="!dragging" :key="1">
-          <el-col :xs="24" :sm="12">
+          <el-col :xs="24" :sm="16">
             <!-- Add group button -->
             <el-button type="primary" plain class="mr-5" size="medium" @click="addGroupDialog = true">
               <i class="icon-add"></i>
@@ -18,7 +18,7 @@
             </el-button>
           </el-col>
 
-          <el-col :xs="0" :sm="12" class="hidden-xs hidden-sm to-left">
+          <el-col :xs="0" :sm="8" class="hidden-xs hidden-sm to-left">
             <!-- Search input -->
             <el-input prefix-icon="icon-search" :placeholder="$t('SW_SEARCH_STUDENTS')" size="medium" v-model="searchText" clearable></el-input>
           </el-col>
@@ -91,9 +91,9 @@
     <!-- Add group dialog -->
     <el-dialog :title="$t('SW_ADD_GROUP')" append-to-body :visible.sync="addGroupDialog">
       <!-- Group name -->
-      <el-form>
-        <el-form-item required :label="`${$t('SW_GROUP_NAME')}`">
-          <el-input placeholder="The Kangaroos" v-model="newGroupName"></el-input>
+      <el-form label-position="top">
+        <el-form-item required :label="`${$t('SW_GROUP_NAME')}:`">
+          <el-input placeholder="The Kangaroos" v-model="newGroupName" @keydown.enter.native.prevent="addNewGroup"></el-input>
         </el-form-item>
 
         <el-form-item class="mt-20">
@@ -117,8 +117,7 @@ import draggable from 'vuedraggable'
 import debounce from 'lodash/debounce'
 import GroupsItem from '../GroupsItem'
 import TableStatus from '../TableStatus'
-
-// TODO: fix message when move to delete user wrapper
+// TODO: fix message when user move to delete user wrapper
 
 export default {
   name: 'ManageGroups',
@@ -172,6 +171,18 @@ export default {
       }).then(() => { this.removeUser(action) })
         .catch(() => { this.returnUserToGroup(action) })
     },
+    returnUserToGroup (action) {
+      this.students = this.students.map(group => {
+        if (group.groupName !== action.added.element.groupName) {
+          return group
+        }
+
+        group.push(action.added.element)
+        return group
+      })
+
+      this.removedStudents = []
+    },
     confirmSubmitChanges () {
       this.$confirm(this.$i18n.t('SW_MANAGE_STAFF_EFFECT'), this.$i18n.t('SW_SUBMIT_MANAGE_GROUP_TITLE'), {
         confirmButtonText: this.$i18n.t('SW_SAVE_CHANGES'),
@@ -199,7 +210,6 @@ export default {
 
       this.students[index].groupName = result
     },
-    setDragging (value) { this.dragging = value },
     removeGroup (group) {
       const cleanedStudents = group.map(stud => {
         delete stud.group
@@ -210,18 +220,6 @@ export default {
       cleanedStudents.forEach(stud => { this.unSorterStudents.push(stud) })
       this.students = this.students.filter(g => g.groupName !== group.groupName)
       this.setIsChanged(true)
-    },
-    returnUserToGroup (action) {
-      this.students = this.students.map(group => {
-        if (group.groupName !== action.added.element.groupName) {
-          return group
-        }
-
-        group.push(action.added.element)
-        return group
-      })
-
-      this.removedStudents = []
     },
     removeUser (action) {
       this.removeUserDialogActivated = true
@@ -250,7 +248,7 @@ export default {
         }
       })
     },
-
+    setDragging (value) { this.dragging = value },
     getStudents () {
       if (this.status === 'loading') return
       this.status = 'loading'
