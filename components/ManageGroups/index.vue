@@ -28,7 +28,7 @@
             <el-col :xs="0" :span="24">
               <div class="remove-draggable-wrapper">
                 <span class="copy-remove-user-title">{{ $t('SW_DRAG_REMOVE_STUDENTS') }}</span>
-                <draggable ghost-class="ghost" class="remove-students" :list="removedStudents" group="students" @change="removeUser"></draggable>
+                <draggable ghost-class="ghost" class="remove-students" :list="removedStudents" group="students" @change="confirmRemoveUser"></draggable>
               </div>
             </el-col>
         </el-row>
@@ -118,6 +118,8 @@ import debounce from 'lodash/debounce'
 import GroupsItem from '../GroupsItem'
 import TableStatus from '../TableStatus'
 
+// TODO: fix message when move to delete user wrapper
+
 export default {
   name: 'ManageGroups',
   props: ['setIsChanged', 'isChanged', 'url'],
@@ -126,6 +128,7 @@ export default {
   data () {
     return {
       filteredStudentList: [],
+      removeUserDialogActivated: false,
       showWithoutGroups: false,
       temporaryGroupName: '',
       addGroupDialog: false,
@@ -158,6 +161,17 @@ export default {
   },
 
   methods: {
+    confirmRemoveUser (action) {
+      if (this.removeUserDialogActivated) {
+        return this.removeUser(action)
+      }
+
+      this.$confirm(this.$i18n.tc('SW_REMOVE_PARTICIPANT_TEXT', 1), this.$i18n.tc('SW_REMOVE_PARTICIPANT', 1), {
+        confirmButtonText: this.$i18n.t('SW_REMOVE_SHOW_NEVER'),
+        cancelButtonText: this.$i18n.t('SW_CANCEL')
+      }).then(() => { this.removeUser(action) })
+        .catch(() => { this.returnUserToGroup(action) })
+    },
     confirmSubmitChanges () {
       this.$confirm(this.$i18n.t('SW_MANAGE_STAFF_EFFECT'), this.$i18n.t('SW_SUBMIT_MANAGE_GROUP_TITLE'), {
         confirmButtonText: this.$i18n.t('SW_SAVE_CHANGES'),
@@ -197,7 +211,21 @@ export default {
       this.students = this.students.filter(g => g.groupName !== group.groupName)
       this.setIsChanged(true)
     },
+    returnUserToGroup (action) {
+      this.students = this.students.map(group => {
+        if (group.groupName !== action.added.element.groupName) {
+          return group
+        }
+
+        group.push(action.added.element)
+        return group
+      })
+
+      this.removedStudents = []
+    },
     removeUser (action) {
+      this.removeUserDialogActivated = true
+
       this.students = this.students.map(group => {
         if (group.groupName !== action.added.element.groupName) {
           return group

@@ -571,5 +571,8 @@
   "SW_SUCCESSFULLY_CONFIGURED": "Course successfully configured with LMS",
   "SW_USER_COPIED": "Student has been copied.",
   "SW_USER_MOVED": "Student has been moved.",
-  "SW_CHANGE_GROUP_NAME": "Change group name"
+  "SW_CHANGE_GROUP_NAME": "Change group name",
+  "SW_REMOVE_PARTICIPANT": "Remove student | Remove students",
+  "SW_REMOVE_PARTICIPANT_TEXT": "Are you sure you want to remove this student from this assessment? You cannot undo this and NO emails will be sent. | Are you sure you want to remove these students from this assessment? You cannot undo this and NO emails will be sent.",
+  "SW_REMOVE_SHOW_NEVER": "Remove and don't show anymore"
 }
