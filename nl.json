@@ -562,5 +562,7 @@
   "SW_SUBMIT_MANAGE_GROUP_TITLE": "Weet u zeker dat u wijzigingen wilt opslaan?",
   "SW_MIN": "min.",
   "SW_MAX": "max.",
-  "SW_SUCCESSFULLY_CONFIGURED": "Cursus succesvol geconfigureerd met LMS"
+  "SW_SUCCESSFULLY_CONFIGURED": "Cursus succesvol geconfigureerd met LMS",
+  "SW_USER_COPIED": "Student is gekopieerd.",
+  "SW_USER_MOVED": "Student is verplaatst."
 }
