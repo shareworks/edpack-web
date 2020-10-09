@@ -117,7 +117,6 @@ import draggable from 'vuedraggable'
 import debounce from 'lodash/debounce'
 import GroupsItem from '../GroupsItem'
 import TableStatus from '../TableStatus'
-// TODO: fix message when user move to delete user wrapper
 
 export default {
   name: 'ManageGroups',

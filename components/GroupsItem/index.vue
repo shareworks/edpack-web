@@ -30,6 +30,10 @@ export default {
         return
       }
 
+      if (draggableEvent.to.className === 'remove-students') {
+        return
+      }
+
       if (draggableEvent.from.className === 'group-students totalStudentsList') {
         this.$message({ message: this.$i18n.t('SW_USER_COPIED'), type: 'success' })
       } else {
