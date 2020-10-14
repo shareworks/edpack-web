@@ -571,5 +571,6 @@
   "SW_REMOVE_SHOW_NEVER": "Verwijderen en niet meer weergeven",
   "SW_ADD_PARTICIPANT": "Deelnemer student",
   "SW_FACULTY_MANAGERS": "{0} managers",
-  "SW_FACULTY_MANAGERS_TEXT": "Geef elk {0} zijn eigen manager."
+  "SW_FACULTY_MANAGERS_TEXT": "Geef elk {0} zijn eigen manager.",
+  "SW_DOWNLOAD_PDF_FILE": "Download als PDF"
 }

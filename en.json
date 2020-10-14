@@ -577,5 +577,6 @@
   "SW_REMOVE_SHOW_NEVER": "Remove and don't show anymore",
   "SW_ADD_PARTICIPANT": "Add student",
   "SW_FACULTY_MANAGERS": "{0} managers",
-  "SW_FACULTY_MANAGERS_TEXT": "Give each {0} their own manager."
+  "SW_FACULTY_MANAGERS_TEXT": "Give each {0} their own manager.",
+  "SW_DOWNLOAD_PDF_FILE": "Download as PDF"
 }
