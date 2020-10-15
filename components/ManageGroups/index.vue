@@ -162,9 +162,7 @@ export default {
       this.$router.replace({ query: { query: this.searchText } })
     }, 400),
     $route () { this.filterStudents() },
-    students () { setTimeout(() => {
-      this.updateStudentGroupsAmount()
-    }, 1000) }
+    students () { setTimeout(() => { this.updateStudentGroupsAmount() }, 0) }
   },
 
   mounted () {
