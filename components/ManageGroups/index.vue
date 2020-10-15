@@ -214,6 +214,14 @@ export default {
         return filteredGroup
       })
 
+      // additionally decrease group amount
+      this.filteredStudentList.forEach(stud => {
+        if (stud._id === action.added.element._id) {
+          stud.groupCount--
+          return
+        }
+      })
+
       this.setIsChanged(true)
       this.removedStudents = []
       this.$message({ message: this.$i18n.t('SW_USER_DELETED'), type: 'success' })
