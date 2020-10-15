@@ -206,9 +206,12 @@ export default {
           return group
         }
 
-        return group.filter(student => {
+        const filteredGroup = group.filter(student => {
           return student._id !== action.added.element._id
         })
+
+        filteredGroup.groupName = group.groupName
+        return filteredGroup
       })
 
       this.setIsChanged(true)
@@ -253,6 +256,7 @@ export default {
       this.students = this.students.filter(g => g.groupName !== group.groupName)
       this.setIsChanged(true)
     },
+
     setFilteredStudentsList (students) {
       this.filteredStudentList = []
 
