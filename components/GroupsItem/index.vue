@@ -54,6 +54,13 @@ export default {
       }
 
       if (action.added) {
+        // check that there is no two same users in the group
+        const sameStudentsInGroup = this.students.filter(stud => { return stud._id === action.added.element._id })
+        if (sameStudentsInGroup.length > 1) {
+          const removeStudentIndex = this.students.findIndex(stud => { return stud._id === action.added.element._id })
+          this.students.splice(removeStudentIndex, 1)
+        }
+
         if (!groupName) {
           delete action.added.element.group
         }
