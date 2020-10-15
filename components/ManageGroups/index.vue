@@ -161,7 +161,10 @@ export default {
     searchText: debounce(function () {
       this.$router.replace({ query: { query: this.searchText } })
     }, 400),
-    $route () { this.filterStudents() }
+    $route () { this.filterStudents() },
+    students () { setTimeout(() => {
+      this.updateStudentGroupsAmount()
+    }, 1000) }
   },
 
   mounted () {
@@ -262,10 +265,36 @@ export default {
           const updateStudent = { ...student }
           delete updateStudent.group
           updateStudent.groupName = ''
+          updateStudent.groupCount = 0
 
           this.filteredStudentList.push(updateStudent)
         }
       })
+
+      this.updateStudentGroupsAmount()
+    },
+    updateStudentGroupsAmount () {
+      const studentIdAmountPairs = {}
+      const flattedStudents = [...this.students.flat(2)]
+
+      // count student group amount
+      flattedStudents.forEach(stud => {
+
+        if (!studentIdAmountPairs[stud._id]) {
+          // Student exist
+          studentIdAmountPairs[stud._id] = { _id: stud._id, groupCount: 1 }
+        } else {
+          // Student not exist
+          studentIdAmountPairs[stud._id].groupCount++
+        }
+      })
+
+      // update student group amount in filteredStudentList
+      for (const studentIdKey in studentIdAmountPairs) {
+        const studentIndex = this.filteredStudentList.findIndex(stud => { return stud._id === studentIdKey })
+
+        this.filteredStudentList[studentIndex].groupCount = studentIdAmountPairs[studentIdKey].groupCount
+      }
     },
     setDragging (value) { this.dragging = value },
     closeDialog () { this.dialogAddUsers = false },

@@ -10,6 +10,7 @@
           <thumbnail :model="student" class="thumb-user mr-10 hidden-xs thumb-24 thumbnail"></thumbnail>
         </div>
         <p class="student-name text-ellipsis">{{ student.name ? student.name : student.email | truncate(50)}}</p>
+        <p v-if="totalStudentsList" class="ml-5">Groups: {{ student.groupCount }}</p>
       </el-card>
     </draggable>
   </section>
