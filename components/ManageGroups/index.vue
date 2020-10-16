@@ -139,7 +139,6 @@ export default {
       status: false,
       students: [],
       removedStudents: [],
-      // TODO - maybe can move unSorterStudents to the FullStudentList component
       unSorterStudents: [],
       fullStudentsList: [],
       dragging: false,
@@ -216,7 +215,6 @@ export default {
         cancelButtonText: this.$i18n.t('SW_CANCEL')
       }).then(() => { this.submitChanges() })
     },
-
     afterLeave (value, index) {
       this.students.forEach((st, i) => {
         if (index !== i) {
@@ -248,7 +246,6 @@ export default {
       this.students = this.students.filter(g => g.groupName !== group.groupName)
       this.setIsChanged(true)
     },
-
     setDragging (value) { this.dragging = value },
     closeDialog () { this.dialogAddUsers = false },
     getStudents () {
@@ -306,7 +303,6 @@ export default {
 
       this.separateGroup(students)
     },
-
     separateGroup (students) {
       const groups = {}
 
@@ -342,11 +338,9 @@ export default {
       this.students.sort(this.groupNameSort)
       this.duplicatedStudents = [...this.students.flat(2)]
     },
-
     checkIsChanged () {
       this.setIsChanged(!isEqual(this.duplicatedStudents, this.students.flat(2)))
     },
-
     addNewGroup () {
       const group = []
       const newName = this.newGroupName.trim()
