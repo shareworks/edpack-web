@@ -44,13 +44,8 @@
 
       <el-row class="groups mt-20" justify="center" :gutter="20">
         <el-col :span="6" class="unsorted-row">
-          <!-- Unsorted users -->
-          <h3 class="collapse-header block">
-            <p class="question-sentence groups-header"><strong>{{ $tc('SW_STUDENT', 2) }}</strong> <el-tag size="mini" class="ml-5">{{ showWithoutGroups ? unSorterStudents.length : filteredStudentList.length }}</el-tag></p>
-            <p class="block"><el-checkbox v-model="showWithoutGroups">{{ $t('SW_WITHOUT_GROUP') }}</el-checkbox></p>
-          </h3>
-          <!-- Draggable unsorted students group list -->
-          <groups-item class="unsorted-list" :class="{'can-drag-in': dragging && showWithoutGroups}" :totalStudentsList="!showWithoutGroups" :setDragging="setDragging" :checkIsChanged="checkIsChanged" :students="showWithoutGroups ? unSorterStudents : filteredStudentList"></groups-item>
+          <full-student-list :unSorterStudents="unSorterStudents" :checkIsChanged="checkIsChanged" :setDragging="setDragging"
+                             :filteredStudentList="filteredStudentList" :dragging="dragging" />
         </el-col>
 
       <el-col :span="18">
@@ -128,18 +123,18 @@ import draggable from 'vuedraggable'
 import debounce from 'lodash/debounce'
 import GroupsItem from '../GroupsItem'
 import TableStatus from '../TableStatus'
+import FullStudentList from '../FullStudentList'
 import UsersCreate from '@/edpack-web/components/UsersCreate'
 
 export default {
   name: 'ManageGroups',
   props: ['setIsChanged', 'isChanged', 'url', 'addUserDisabled', 'courseId', 'LTI_status', 'isComproved', 'assessment'],
-  components: { TableStatus, Affix, GroupsItem, UsersCreate, draggable },
+  components: { TableStatus, Affix, GroupsItem, UsersCreate, FullStudentList, draggable },
 
   data () {
     return {
       filteredStudentList: [],
       removeUserDialogActivated: false,
-      showWithoutGroups: false,
       temporaryGroupName: '',
       addGroupDialog: false,
       status: '',
