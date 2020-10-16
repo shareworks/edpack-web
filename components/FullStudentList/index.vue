@@ -15,10 +15,45 @@ import GroupsItem from '../GroupsItem'
 export default {
   name: 'FullStudentList',
   components: { GroupsItem },
-  props: ['unSorterStudents', 'filteredStudentList', 'dragging', 'setDragging', 'checkIsChanged'],
+  props: ['unSorterStudents', 'checkIsChanged', 'allStudents', 'studentsWithGroups',  'dragging', 'setDragging'],
   data () {
     return {
       showWithoutGroups: false,
+      filteredStudentList: []
+    }
+  },
+
+  watch: {
+    studentsWithGroups () { setTimeout(() => { this.setFilteredStudentsList(this.allStudents) }, 0) },
+    unSorterStudents () { setTimeout(() => { this.setFilteredStudentsList(this.allStudents) }, 0) }
+  },
+
+  methods: {
+    setFilteredStudentsList (students) {
+      this.filteredStudentList = []
+
+      students.forEach(student => {
+        const studentAlreadyExist = this.filteredStudentList.find(stud => { return stud._id === student._id })
+
+        if (!studentAlreadyExist || !student._id) {
+          const updateStudent = { ...student }
+          delete updateStudent.group
+          updateStudent.groupName = ''
+          updateStudent.groupCount = 0
+
+          this.filteredStudentList.push(updateStudent)
+        }
+      })
+
+      this.updateStudentGroupsAmount()
+    },
+
+    updateStudentGroupsAmount () {
+      const flattedStudentsWithGroups = this.studentsWithGroups.flat(2)
+      this.filteredStudentList.forEach(stud => {
+        const takeParticipantsInGroups = flattedStudentsWithGroups.filter(st => { return stud._id === st._id })
+        stud.groupCount = takeParticipantsInGroups.length
+      })
     }
   }
 }

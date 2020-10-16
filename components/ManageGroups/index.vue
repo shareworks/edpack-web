@@ -45,7 +45,7 @@
       <el-row class="groups mt-20" justify="center" :gutter="20">
         <el-col :span="6" class="unsorted-row">
           <full-student-list :unSorterStudents="unSorterStudents" :checkIsChanged="checkIsChanged" :setDragging="setDragging"
-                             :filteredStudentList="filteredStudentList" :dragging="dragging" />
+             :allStudents="fullStudentsList" :studentsWithGroups="students" :filteredStudentList="filteredStudentList" :dragging="dragging" />
         </el-col>
 
       <el-col :span="18">
@@ -109,7 +109,7 @@
 
     <!-- Add users dialog -->
     <el-dialog :title="$t('SW_ADD_USERS')" append-to-body class="small-dialog" :visible.sync="dialogAddUsers">
-      <users-create :justStudents="true" :isManageStaff="true" :course="courseId" :stop-request="true" :closeDialog="closeDialog" :update-members="updateStudents"></users-create>
+      <users-create :justStudents="true" :isManageStaff="true" :course="courseId" :stop-request="true" :closeDialog="closeDialog" :update-members="addNewlyCreatedUsers"></users-create>
     </el-dialog>
 
     <table-status :status="status" :noneText="$t('SW_NO_STUDENTS_FOUND')" @clearSearch="clearSearch"></table-status>
@@ -156,8 +156,7 @@ export default {
     searchText: debounce(function () {
       this.$router.replace({ query: { query: this.searchText } })
     }, 400),
-    $route () { this.filterStudents() },
-    students () { setTimeout(() => { this.updateStudentGroupsAmount() }, 0) }
+    $route () { this.filterStudents() }
   },
 
   mounted () {
@@ -209,14 +208,6 @@ export default {
         return filteredGroup
       })
 
-      // additionally decrease group amount
-      this.filteredStudentList.forEach(stud => {
-        if (stud._id === action.added.element._id) {
-          stud.groupCount--
-          return
-        }
-      })
-
       this.setIsChanged(true)
       this.removedStudents = []
       this.$message({ message: this.$i18n.t('SW_USER_DELETED'), type: 'success' })
@@ -260,47 +251,6 @@ export default {
       this.setIsChanged(true)
     },
 
-    setFilteredStudentsList (students) {
-      this.filteredStudentList = []
-
-      students.forEach(student => {
-        const studentAlreadyExist = this.filteredStudentList.find(stud => { return stud._id === student._id })
-
-        if (!studentAlreadyExist || !student._id) {
-          const updateStudent = { ...student }
-          delete updateStudent.group
-          updateStudent.groupName = ''
-          updateStudent.groupCount = 0
-
-          this.filteredStudentList.push(updateStudent)
-        }
-      })
-
-      this.updateStudentGroupsAmount()
-    },
-    updateStudentGroupsAmount () {
-      const studentIdAmountPairs = {}
-      const flattedStudents = [...this.students.flat(2)]
-
-      // count student group amount
-      flattedStudents.forEach(stud => {
-
-        if (!studentIdAmountPairs[stud._id]) {
-          // Student exist
-          studentIdAmountPairs[stud._id] = { _id: stud._id, groupCount: 1 }
-        } else {
-          // Student not exist
-          studentIdAmountPairs[stud._id].groupCount++
-        }
-      })
-
-      // update student group amount in filteredStudentList
-      for (const studentIdKey in studentIdAmountPairs) {
-        const studentIndex = this.filteredStudentList.findIndex(stud => { return stud._id === studentIdKey })
-
-        this.filteredStudentList[studentIndex].groupCount = studentIdAmountPairs[studentIdKey].groupCount
-      }
-    },
     setDragging (value) { this.dragging = value },
     closeDialog () { this.dialogAddUsers = false },
     getStudents () {
@@ -317,7 +267,6 @@ export default {
         res => {
           this.fullStudentsList = res.data.list
           this.separateGroup(res.data.list)
-          this.setFilteredStudentsList(res.data.list)
 
           if (this.isComproved) {
             this.status = res.data.done ? 'done' : 'incomplete'
@@ -332,7 +281,7 @@ export default {
           this.$message({ message: this.$i18n.t('SW_GENERIC_ERROR'), type: 'error' })
         })
     },
-    updateStudents (students) {
+    addNewlyCreatedUsers (students) {
       const studentsList = []
 
       students.forEach(student => {
@@ -346,7 +295,7 @@ export default {
       })
 
       this.unSorterStudents = [...this.unSorterStudents, ...studentsList]
-      this.setFilteredStudentsList([...this.filteredStudentList, ...studentsList])
+      this.fullStudentsList = [...this.fullStudentsList, ...studentsList]
       this.closeDialog()
     },
     clearSearch () { this.searchText = '' },
