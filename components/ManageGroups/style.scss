@@ -180,3 +180,13 @@
 .group-students {
   min-height: 50px;
 }
+
+.manage-groups-bar:not(.affix-top) {
+  padding: 10px 10px !important;
+  max-width: $--max-content-width !important;
+  margin: 0 auto !important;
+
+  @media (min-width: $--md) {
+    padding: 10px 20px !important;
+  }
+}

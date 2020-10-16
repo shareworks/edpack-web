@@ -1,6 +1,6 @@
 <template>
   <div>
-    <affix class="sticky-bar" relative-element-selector=".groups" :offset="{ top: 130, bottom: -1000 }">
+    <affix class="sticky-bar manage-groups-bar" relative-element-selector=".groups" :offset="{ top: 130, bottom: -1000 }">
       <transition-group name="drag-items-animation" mode="out-in">
         <!-- Filter -->
         <el-row type="flex" align="middle" v-if="!dragging" :key="1">

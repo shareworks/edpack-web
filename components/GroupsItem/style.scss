@@ -33,6 +33,7 @@
 
     .student-name {
       word-break: break-all;
+      text-transform: capitalize;
     }
 
     .button-drag {
@@ -55,4 +56,8 @@
 .ghost {
   opacity: 0.5;
   background: rgba(204, 244, 197, 0.82) !important;
+}
+
+.group-amount-tag {
+  margin-left: auto;
 }
