@@ -8,19 +8,19 @@
             <!-- Add group button -->
             <el-button type="primary" plain class="mr-5" size="medium" @click="addGroupDialog = true">
               <i class="icon-add"></i>
-              <span v-if="!isMobile">{{ $t('SW_ADD_GROUP') }}</span>
+              <span>{{ $t('SW_ADD_GROUP') }}</span>
             </el-button>
 
             <!-- Add participant button -->
             <el-button type="primary" plain @click="dialogAddUsers = true" size="medium" class="button-square-xs" :disabled="addUserDisabled">
               <i class="icon-add"></i>
-              <span class="hidden-xs">{{ $t('SW_ADD_PARTICIPANT') }}</span>
+              <span>{{ $t('SW_ADD_PARTICIPANT') }}</span>
             </el-button>
 
             <!-- Save button -->
             <el-button type="success" size="medium" :plain="!isChanged" :disabled="!isChanged" @click="confirmSubmitChanges">
               <i class="icon-ok-sign"></i>
-              <span v-if="!isMobile">{{ $t('SW_SAVE_CHANGES') }}</span>
+              <span>{{ $t('SW_SAVE_CHANGES') }}</span>
             </el-button>
           </el-col>
 
@@ -45,7 +45,7 @@
       <el-row class="groups mt-20" justify="center" :gutter="20">
         <el-col :span="6" class="unsorted-row">
           <full-student-list :unSorterStudents="unSorterStudents" :checkIsChanged="checkIsChanged" :setDragging="setDragging"
-             :allStudents="fullStudentsList" :studentsWithGroups="students" :filteredStudentList="filteredStudentList" :dragging="dragging" />
+             :allStudents="fullStudentsList" :studentsWithGroups="students" :dragging="dragging" />
         </el-col>
 
       <el-col :span="18">
@@ -65,7 +65,7 @@
                 <!-- Remove group -->
                 <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @onConfirm="removeGroup(group)"
                                class="delete-group-button" hideIcon :title="$t('SW_DELETE_GROUP')">
-                  <el-button v-if="!isMobile" slot="reference" plain size="small" @click.stop class="button-square mr-10 delete-group-button hidden-xs" type="danger">
+                  <el-button slot="reference" plain size="small" @click.stop class="button-square mr-10 delete-group-button hidden-xs" type="danger">
                     <i class="icon-delete"></i>
                   </el-button>
                 </el-popconfirm>
@@ -133,20 +133,18 @@ export default {
 
   data () {
     return {
-      filteredStudentList: [],
       removeUserDialogActivated: false,
       temporaryGroupName: '',
       addGroupDialog: false,
-      status: '',
+      status: false,
       students: [],
       removedStudents: [],
+      // TODO - maybe can move unSorterStudents to the FullStudentList component
       unSorterStudents: [],
       fullStudentsList: [],
       dragging: false,
       searchText: this.$route.query.query || '',
-      isMobile: this.$store.state.isMobile,
       newGroupName: '',
-      school: this.$store.state.school,
       duplicatedStudents: [],
       dialogAddUsers: false
     }
@@ -162,7 +160,7 @@ export default {
   mounted () {
     if (this.LTI_status) {
       // can't get here in lms
-      return this.$router.push({ name: 'home', params: { slug: this.school.slug } })
+      return this.$router.push({ name: 'home', params: { slug: this.$store.state.school.slug } })
     }
 
     this.getStudents()
