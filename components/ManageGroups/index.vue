@@ -6,13 +6,13 @@
         <el-row type="flex" align="middle" v-if="!dragging" :key="1">
           <el-col :xs="24" :sm="16">
             <!-- Add group button -->
-            <el-button type="primary" plain class="mr-5" size="medium" @click="addGroupDialog = true">
+            <el-button type="primary" plain size="medium" @click="addGroupDialog = true">
               <i class="icon-add"></i>
               <span>{{ $t('SW_ADD_GROUP') }}</span>
             </el-button>
 
             <!-- Add participant button -->
-            <el-button type="primary" plain @click="dialogAddUsers = true" size="medium" class="button-square-xs" :disabled="addUserDisabled">
+            <el-button @click="dialogAddUsers = true" size="medium" class="button-square-xs" :disabled="addUserDisabled">
               <i class="icon-add"></i>
               <span>{{ $t('SW_ADD_PARTICIPANT') }}</span>
             </el-button>
