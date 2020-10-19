@@ -1,44 +1,46 @@
 <template>
   <div>
-    <affix class="sticky-bar manage-groups-bar" relative-element-selector=".groups" :offset="{ top: 130, bottom: -1000 }">
-      <transition-group name="drag-items-animation" mode="out-in">
-        <!-- Filter -->
-        <el-row type="flex" align="middle" v-if="!dragging" :key="1">
-          <el-col :xs="24" :sm="16">
-            <!-- Add group button -->
-            <el-button type="primary" plain size="medium" @click="addGroupDialog = true">
-              <i class="icon-add"></i>
-              <span>{{ $t('SW_ADD_GROUP') }}</span>
-            </el-button>
+    <affix class="sticky-bar" relative-element-selector=".groups" :offset="{ top: 130, bottom: -1000 }">
+      <div class="manage-groups-bar">
+        <transition-group name="drag-items-animation" mode="out-in">
+          <!-- Filter -->
+          <el-row type="flex" align="middle" v-if="!dragging" :key="1">
+            <el-col :xs="24" :sm="16">
+              <!-- Add group button -->
+              <el-button type="primary" plain size="medium" @click="addGroupDialog = true">
+                <i class="icon-add"></i>
+                <span>{{ $t('SW_ADD_GROUP') }}</span>
+              </el-button>
 
-            <!-- Add participant button -->
-            <el-button @click="dialogAddUsers = true" size="medium" class="button-square-xs" :disabled="addUserDisabled">
-              <i class="icon-add"></i>
-              <span>{{ $t('SW_ADD_PARTICIPANT') }}</span>
-            </el-button>
+              <!-- Add participant button -->
+              <el-button @click="dialogAddUsers = true" size="medium" class="button-square-xs" :disabled="addUserDisabled">
+                <i class="icon-add"></i>
+                <span>{{ $t('SW_ADD_PARTICIPANT') }}</span>
+              </el-button>
 
-            <!-- Save button -->
-            <el-button type="success" size="medium" :plain="!isChanged" :disabled="!isChanged" @click="confirmSubmitChanges">
-              <i class="icon-ok-sign"></i>
-              <span>{{ $t('SW_SAVE_CHANGES') }}</span>
-            </el-button>
-          </el-col>
+              <!-- Save button -->
+              <el-button type="success" size="medium" :plain="!isChanged" :disabled="!isChanged" @click="confirmSubmitChanges">
+                <i class="icon-ok-sign"></i>
+                <span>{{ $t('SW_SAVE_CHANGES') }}</span>
+              </el-button>
+            </el-col>
 
-          <el-col :xs="0" :sm="8" class="hidden-xs hidden-sm to-left">
-            <!-- Search input -->
-            <el-input prefix-icon="icon-search" :placeholder="$t('SW_SEARCH_STUDENTS')" size="medium" v-model="searchText" clearable></el-input>
-          </el-col>
-        </el-row>
+            <el-col :xs="0" :sm="8" class="hidden-xs hidden-sm to-left">
+              <!-- Search input -->
+              <el-input prefix-icon="icon-search" :placeholder="$t('SW_SEARCH_STUDENTS')" size="medium" v-model="searchText" clearable></el-input>
+            </el-col>
+          </el-row>
 
-        <el-row type="flex" align="middle" v-else :key="2">
+          <el-row type="flex" align="middle" v-else :key="2">
             <el-col :xs="0" :span="24">
               <div class="remove-draggable-wrapper">
                 <span class="copy-remove-user-title">{{ $t('SW_DRAG_REMOVE_STUDENTS') }}</span>
                 <draggable ghost-class="ghost" class="remove-students" :list="removedStudents" group="students" @change="confirmRemoveUser"></draggable>
               </div>
             </el-col>
-        </el-row>
-      </transition-group>
+          </el-row>
+        </transition-group>
+      </div>
     </affix>
     <div class="bar-placeholder"></div>
 
