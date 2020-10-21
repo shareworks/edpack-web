@@ -579,5 +579,7 @@
   "SW_FACULTY_MANAGERS": "{0} managers",
   "SW_FACULTY_MANAGERS_TEXT": "Give each {0} their own manager.",
   "SW_DOWNLOAD_PDF_FILE": "Download as PDF",
-  "SW_DUPLICATED_USER_REMOVED": "The duplicated user has been noticed and deleted."
+  "SW_DUPLICATED_USER_REMOVED": "The duplicated user has been noticed and deleted.",
+  "SW_STAFFS": "Instructors",
+  "SW_STUDENTS": "Students"
 }
