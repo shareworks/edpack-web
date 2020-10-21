@@ -15,7 +15,7 @@ import GroupsItem from '../GroupsItem'
 export default {
   name: 'FullStudentList',
   components: { GroupsItem },
-  props: ['unSorterStudents', 'checkIsChanged', 'allStudents', 'studentsWithGroups',  'dragging', 'setDragging'],
+  props: ['unSorterStudents', 'checkIsChanged', 'allStudents', 'studentsWithGroups', 'dragging', 'setDragging'],
   data () {
     return {
       showWithoutGroups: false,

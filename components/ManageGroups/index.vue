@@ -270,7 +270,6 @@ export default {
           } else {
             this.status = res.data.total ? (res.data.done ? 'done' : 'incomplete') : (this.searchText ? 'noResults' : 'none')
           }
-
         }).catch(
         err => {
           console.log(err)
