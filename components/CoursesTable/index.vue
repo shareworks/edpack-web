@@ -108,9 +108,9 @@
         <el-table-column property="name" :label="$tc('SW_COURSE', 1)" min-width="180" sortable :sort-method="sortCaseInsensitive">
           <template slot-scope="props">
             <router-link :to="{ name: (props.row.role || 'staff'), params: { course: props.row._id, slug: school.slug } }" class="block text-ellipsis">
+              <lms-icon :model="props.row"></lms-icon>
               <strong v-if="props.row.name">{{ props.row.name }}</strong>
               <span v-else>-</span>
-              <lms-icon :model="props.row"></lms-icon>
             </router-link>
           </template>
         </el-table-column>
