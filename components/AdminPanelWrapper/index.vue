@@ -69,7 +69,6 @@ export default {
 
   data () {
     return {
-      loading: true,
       dialogStats: false,
       appName: config.name,
       lang: this.$store.state.lang
@@ -97,7 +96,6 @@ export default {
           this.$store.dispatch('setUser', this.$store.state.user)
         })
         .catch((err) => { if (err.status === 404) this.$router.replace({ name: 'error', query: { type: 'not_found' } }) })
-        .finally(() => { this.loading = false })
     },
     handleCommand (command) { if (command.type === 'uptime') window.open(config.business.uptimeUrl, '_blank') },
     toggleStats () { this.dialogStats = !this.dialogStats }
