@@ -43,7 +43,7 @@ Vue.use(Donut)
 
 export default {
   name: 'Statistics',
-  props: ['closeDialog', 'completionStats', 'userStats', 'stats'],
+  props: ['completionStats', 'userStats', 'stats'],
   components: { countTo },
 
   data () {
