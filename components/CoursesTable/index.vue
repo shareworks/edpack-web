@@ -26,8 +26,8 @@
           </div>
 
           <div v-else-if="user.role !== 'student'">
-            <!-- Create courses manually v-show="school.manualCourses" -->
-            <el-button v-if="school.enableManualCourses || user.systemAdmin || school.role === 'admin'" type="primary" plain @click="dialogCourse = true" size="medium" class="button-square-xs">
+            <!-- Create courses manually -->
+            <el-button v-if="!hideCreateCourseButton && (school.enableManualCourses || user.systemAdmin || school.role === 'admin')" type="primary" plain @click="dialogCourse = true" size="medium" class="button-square-xs">
               <i class="icon-add"></i>
               <span class="hidden-xs">{{ $t('SW_CREATE_COURSE') }}</span>
             </el-button>
@@ -191,7 +191,7 @@ import sortCaseInsensitive from '../../utils/sort-case-insensitive'
 
 export default {
   name: 'CoursesTable',
-  props: ['member', 'customCounts', 'cards'],
+  props: ['member', 'customCounts', 'cards', 'hideCreateCourseButton'],
   components: { CoursesCards, CreateCourse, LmsIcon, TableStatus },
 
   data () {
