@@ -581,5 +581,6 @@
   "SW_DOWNLOAD_PDF_FILE": "Download as PDF",
   "SW_DUPLICATED_USER_REMOVED": "The duplicated user has been noticed and deleted.",
   "SW_STAFFS": "Instructors",
-  "SW_STUDENTS": "Students"
+  "SW_STUDENTS": "Students",
+  "SW_FULLSCREEN": "Fullscreen"
 }
