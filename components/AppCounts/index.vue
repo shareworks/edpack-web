@@ -10,7 +10,7 @@
             </countTo>
           </strong>
         </div>
-        <div class="">{{ stat.name }}</div>
+        <div>{{ $tc(stat.name, 2) }}</div>
       </el-card>
     </masonry>
   </div>
