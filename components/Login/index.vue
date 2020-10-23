@@ -144,8 +144,17 @@ export default {
           const redirect = this.$route.query.redirect || 'home'
           this.$router.push(redirect)
         })
-        .catch(() => {
-          this.$message({ message: this.$i18n.t('SW_EMAIL_PASSWORD_INCORRECT'), type: 'error' })
+        .catch((err) => {
+          if (err.status === 401) {
+            // SignInByPassword is false
+            this.$message({ message: this.$i18n.t('SW_NO_SIGNIN_FOR_SCHOOL'), type: 'error' })
+          } else if (err.status === 404) {
+            // Password/email is wrong
+            this.$message({ message: this.$i18n.t('SW_EMAIL_PASSWORD_INCORRECT'), type: 'error' })
+          } else {
+            // Generic error
+            this.$message({ message: this.$i18n.t('SW_GENERIC_ERROR'), type: 'error' })
+          }
           this.form.password = ''
         })
         .finally(() => { this.submitting = false })

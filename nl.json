@@ -577,5 +577,6 @@
   "SW_STAFFS": "Docenten",
   "SW_STUDENTS": "Studenten",
   "SW_FULLSCREEN": "Fullscreen",
-  "SW_AGO": "geleden"
+  "SW_AGO": "geleden",
+  "SW_NO_SIGNIN_FOR_SCHOOL": "De school heeft de mogelijkheid om in te loggen met een wachtwoord uitgeschakeld."
 }

@@ -583,5 +583,6 @@
   "SW_STAFFS": "Instructors",
   "SW_STUDENTS": "Students",
   "SW_FULLSCREEN": "Fullscreen",
-  "SW_AGO": "ago"
+  "SW_AGO": "ago",
+  "SW_NO_SIGNIN_FOR_SCHOOL": "School turned off opportunity to login by password."
 }
