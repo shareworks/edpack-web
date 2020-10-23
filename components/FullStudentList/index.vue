@@ -3,7 +3,7 @@
     <!-- Unsorted users -->
     <h3 class="collapse-header block">
       <p class="question-sentence groups-header"><strong>{{ $tc('SW_STUDENT', 2) }}</strong> <el-tag size="mini" class="ml-5">{{ showWithoutGroups ? unSorterStudents.length : filteredStudentList.length }}</el-tag></p>
-      <p class="block mb-10 ml-10 font-13"><el-checkbox v-model="showWithoutGroups">{{ $t('SW_WITHOUT_GROUP') }}</el-checkbox></p>
+      <p class="block mb-10 mt-10 ml-10 font-13"><el-checkbox v-model="showWithoutGroups">{{ $t('SW_WITHOUT_GROUP') }}</el-checkbox></p>
     </h3>
     <!-- Draggable unsorted students group list -->
     <groups-item class="unsorted-list" :class="{'can-drag-in': dragging && showWithoutGroups}" :totalStudentsList="!showWithoutGroups" :setDragging="setDragging" :checkIsChanged="checkIsChanged" :students="showWithoutGroups ? unSorterStudents : filteredStudentList"></groups-item>

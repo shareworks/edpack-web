@@ -67,7 +67,7 @@
                 <!-- Remove group -->
                 <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @onConfirm="removeGroup(group)"
                                class="delete-group-button" hideIcon :title="$t('SW_DELETE_GROUP')">
-                  <el-button slot="reference" plain size="small" @click.stop class="button-square mr-10 delete-group-button hidden-xs" type="danger">
+                  <el-button slot="reference" plain size="small" @click.stop class="button-square mr-5 delete-group-button hidden-xs" type="danger">
                     <i class="icon-delete"></i>
                   </el-button>
                 </el-popconfirm>
