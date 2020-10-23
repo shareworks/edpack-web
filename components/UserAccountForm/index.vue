@@ -11,7 +11,7 @@
     </el-form-item>
 
     <!-- Reset password -->
-    <el-form-item :label="$t('SW_RESET_PASSWORD')" v-if="signinByPassword" class="additional reset-password">
+    <el-form-item :label="$t('SW_RESET_PASSWORD')" v-if="school.loginByPassword" class="additional reset-password">
       <el-button size="medium" type="primary" plain @click="resetPasswordEmail" :loading="resetting">
         <i class="icon-lock"></i>
         <span>{{ $t('SW_RESET') }}</span>
@@ -124,7 +124,6 @@ export default {
       isAdmin: this.$store.state.isAdmin,
       isMobile: this.$store.state.isMobile,
       submitting: false,
-      signinByPassword: config.signinByPassword,
       faculties: this.$store.state.school.faculties,
       hasFacultyManagers: config.hasFacultyManagers,
       emailsCopy: [...this.form.emails],
