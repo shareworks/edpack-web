@@ -576,5 +576,6 @@
   "SW_DUPLICATED_USER_REMOVED": "De gedupliceerde gebruiker is opgemerkt en verwijderd.",
   "SW_STAFFS": "Docenten",
   "SW_STUDENTS": "Studenten",
-  "SW_FULLSCREEN": "Fullscreen"
+  "SW_FULLSCREEN": "Fullscreen",
+  "SW_AGO": "geleden"
 }
