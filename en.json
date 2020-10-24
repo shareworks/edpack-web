@@ -584,5 +584,7 @@
   "SW_STUDENTS": "Students",
   "SW_FULLSCREEN": "Fullscreen",
   "SW_AGO": "ago",
-  "SW_NO_SIGNIN_FOR_SCHOOL": "School turned off opportunity to login by password."
+  "SW_NO_SIGNIN_FOR_SCHOOL": "School turned off opportunity to login by password.",
+  "SW_SEND_EMAIL_TO_INSTRUCTORS": "Email instructors",
+  "SW_SEND_EMAIL_TO_INSTRUCTORS_TEXT": "In each email at the bottom will be added information about the group and school."
 }

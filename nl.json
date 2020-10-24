@@ -578,5 +578,7 @@
   "SW_STUDENTS": "Studenten",
   "SW_FULLSCREEN": "Fullscreen",
   "SW_AGO": "geleden",
-  "SW_NO_SIGNIN_FOR_SCHOOL": "De school heeft de mogelijkheid om in te loggen met een wachtwoord uitgeschakeld."
+  "SW_NO_SIGNIN_FOR_SCHOOL": "De school heeft de mogelijkheid om in te loggen met een wachtwoord uitgeschakeld.",
+  "SW_SEND_EMAIL_TO_INSTRUCTORS": "E-mail docenten",
+  "SW_SEND_EMAIL_TO_INSTRUCTORS_TEXT": "In elke e-mail onderaan zal informatie over de groep en school worden toegevoegd."
 }

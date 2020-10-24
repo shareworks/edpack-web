@@ -36,7 +36,7 @@
 import config from 'config'
 export default {
   name: 'EmailUsers',
-  props: ['closeDialog', 'selectedUsers', 'course'],
+  props: ['closeDialog', 'selectedUsers', 'course', 'needSupport'],
 
   data () {
     return {
@@ -70,8 +70,9 @@ export default {
       const self = this.form.toSelf
       const message = this.form.message
       const subject = this.form.subject
+      const needSupport = this.needSupport
 
-      const body = { message, subject, recipients }
+      const body = { message, subject, recipients, needSupport }
 
       // If course context is given, add course _id to body payload
       if (this.course) body.course = this.course._id
