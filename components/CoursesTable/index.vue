@@ -40,9 +40,9 @@
         </el-col>
 
         <el-col :xs="16" :sm="12" class="course-header-filter">
-          <!-- Search faculty -->
-          <el-select v-model="facultyFilter" clearable class="mr-10" :placeholder="$t('SW_FACULTY', [school.terminology.faculty[lang].toLowerCase()])" size="medium" @change="changeFilter" v-if="facultiesManager.length && !cards && school.faculties.length > 1">
-            <el-option v-for="item in facultiesManager" :key="item._id" :label="item[lang]" :value="item._id"></el-option>
+          <!-- Select a faculty -->
+          <el-select v-model="facultyFilter" clearable class="mr-10" :placeholder="$t('SW_FACULTY', [school.terminology.faculty[lang].toLowerCase()])" size="medium" @change="changeFilter" v-if="school.faculties.length > 1">
+            <el-option v-for="item in school.faculties" :key="item._id" :label="item[lang]" :value="item._id"></el-option>
           </el-select>
 
           <!-- Search input -->
@@ -210,7 +210,7 @@ export default {
       user: this.$store.state.user,
       lang: this.$store.state.lang,
       statusOptions: ['active', 'inactive', 'archived'],
-      statusFilter: this.$route.query.filter || 'active',
+      statusFilter: this.$route.query.statusFilter || 'active',
       submitting: false,
       facultyFilter: this.$route.query.faculty || ''
     }
@@ -224,16 +224,6 @@ export default {
     '$route' () {
       this.selectionChange()
       this.getCourses(true)
-    }
-  },
-
-  computed: {
-    facultiesManager () {
-      const faculties = this.user.faculties.map(fac => {
-        return this.school.faculties.find(schoolFaculty => schoolFaculty._id === fac._id)
-      })
-
-      return faculties.filter(Boolean)
     }
   },
 
@@ -259,25 +249,15 @@ export default {
         this.skip = false
       }
 
-      if (this.cards || this.$route.query.context !== '' || this.$route.query.context !== 'school') {
-        params.faculty = this.$route.query.context
-      }
-
       // Add elements on existing elements
       if (this.skip) params.skip = this.skip
 
       // Filter if there is search text
       if (this.searchText) params.filter = this.searchText
 
-      // Show courses with special faculty
+      // Show courses within a faculty
       if (this.$route.query.context && this.$route.query.context !== 'school') {
-        // Suggesti specific code ?
         params.faculty = this.$route.query.context
-      }
-
-      if (this.school.faculties.length > 1 && this.facultyFilter) {
-        // Growflow specific code
-        params.faculty = this.facultyFilter
       }
 
       this.$http.get('courses', { params })
@@ -394,11 +374,7 @@ export default {
       if (this.status !== 'done') this.getCourses(true)
     },
     changeFilter () {
-      const query = { query: this.searchText, filter: this.statusFilter }
-
-      // Growflow specific code
-      if (this.school.faculties.length > 1) { query.faculty = this.facultyFilter }
-
+      const query = { query: this.searchText, filter: this.statusFilter, context: this.facultyFilter }
       this.$router.replace({ name: 'admin', params: { slug: this.school.slug, mode: 'courses' }, query })
     },
     sortCreatedDate (a, b) { return dateSorter(a.createdDate, b.createdDate) },
