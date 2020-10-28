@@ -84,6 +84,17 @@
           <span v-else class="text-muted">{{ $t('SW_NONE') }}</span>
         </template>
       </el-table-column>
+      <!-- LTI version -->
+      <el-table-column property="lastConfiguredLms" :label="$t('SW_LTI_VERSION')" min-width="140">
+        <template>
+          <span v-if="school.availableLms.length === 0" class="text-muted">{{ $t('SW_NONE') }}</span>
+          <span v-else-if="school.availableLms.length === 1 && school.availableLms[0] === 'ltiBasic'" class="block text-ellipsis capitalize">1.1</span>
+          <span v-else-if="school.availableLms.length === 1 && school.availableLms[0] !== 'ltiBasic'" class="block text-ellipsis capitalize">1.3</span>
+          <span v-else-if="school.availableLms.length > 1 && school.availableLms.includes('ltiBasic')" class="block text-ellipsis capitalize">1.1, 1.3</span>
+          <span v-else class="block text-ellipsis capitalize">1.3</span>
+
+        </template>
+      </el-table-column>
       <!-- User count -->
       <el-table-column property="counts.users" :label="$tc('SW_USERS', 2)" width="120" sortable>
         <template slot-scope="props">
