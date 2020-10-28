@@ -92,7 +92,13 @@
           <span v-else-if="school.availableLms.length === 1 && school.availableLms[0] !== 'ltiBasic'" class="block text-ellipsis capitalize">1.3</span>
           <span v-else-if="school.availableLms.length > 1 && school.availableLms.includes('ltiBasic')" class="block text-ellipsis capitalize">1.1, 1.3</span>
           <span v-else class="block text-ellipsis capitalize">1.3</span>
-
+        </template>
+      </el-table-column>
+      <!-- API -->
+      <el-table-column property="lastConfiguredLms" label="API" min-width="140">
+        <template>
+          <span class="active-api" v-if="school.lmsApiIntegration">{{ $t('SW_YES') }}</span>
+          <span class="not-active-api" v-else>{{ $t('SW_NO') }}</span>
         </template>
       </el-table-column>
       <!-- User count -->
@@ -298,3 +304,8 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+@import '~scss_vars';
+@import './style.scss';
+</style>

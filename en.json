@@ -588,5 +588,7 @@
   "SW_NO_SIGNIN_FOR_SCHOOL": "School turned off opportunity to login by password.",
   "SW_SEND_EMAIL_TO_INSTRUCTORS": "Email instructors",
   "SW_SEND_EMAIL_TO_INSTRUCTORS_TEXT": "In each email will be added group information.",
-  "SW_LTI_VERSION": "LTI version"
+  "SW_LTI_VERSION": "LTI version",
+  "SW_YES": "Yes",
+  "SW_NO":"No"
 }
