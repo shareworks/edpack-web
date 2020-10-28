@@ -88,11 +88,10 @@ export default {
       store.dispatch('setUser', user)
       loadLanguages(i18n, user.language)
 
-      // Redirect to admin
+      // Redirect to home or admin
       let redirectTo = { name: 'home', params: { slug: user.organization.slug } }
       if (store.state.isAdmin) redirectTo = '/admin'
-
-      if (to.name === 'landing' || to.name === 'root') return router.push(redirectTo)
+      if (['landing', 'root', 'home'].includes(to.name)) return router.push(redirectTo)
 
       // Check authorization
       if (isAuthorized.check(user, to)) return next()
