@@ -16,7 +16,7 @@
             <router-link :to="{ name: 'staff', params: { course: scope.row._id, slug: school.slug } }" class="block text-ellipsis">
               <span v-if="scope.row.name">{{ scope.row.name }}</span>
               <span v-else>-</span>
-              <lms-icon :model="scope.row"></lms-icon>
+              <lms-icon class="ml-5" :model="scope.row"></lms-icon>
             </router-link>
           </template>
         </el-table-column>
