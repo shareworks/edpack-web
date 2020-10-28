@@ -554,6 +554,7 @@
   "SW_YOUR_PASSWORD": "{0} wachtwoord",
   "SW_YOUR_PHOTO": "Je afbeelding",
   "SW_YOUR_ROLE": "Je rol",
+  "SW_FACULTY": "Kies {0} ...",
   "SW_YOU_ARE_ADMIN_NOW": "Je bent nu admin van deze school!",
   "SW_GENERATED_KEY_ALERT": "Let op: sla onderstaande wijzigingen op om het nieuwe LTI-geheim te activeren.",
   "SW_NO_USERS_FOUND_IN_CSV": "Geen gebruikers gevonden in bestand",
