@@ -50,3 +50,9 @@
     display: none !important;
   }
 }
+
+@media (max-width: ($--lg - 1)) {
+  .hidden-md {
+    display: none !important;
+  }
+}
