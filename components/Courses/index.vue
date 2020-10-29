@@ -274,7 +274,7 @@ export default {
       this.sort = val.prop
       this.order = val.order
       if (this.status !== 'done') this.getCourses(true)
-    },
+    }
   }
 }
 </script>
