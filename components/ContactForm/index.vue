@@ -77,6 +77,7 @@ export default {
       position: config.map.position,
       centerMap: config.map.centerMap,
       infoWinOpen: true,
+      user: this.$store.state.user,
       form: { email: '', name: '', message: '' },
       infoOptions: { pixelOffset: { width: 0, height: -38 } },
       business: config.business
@@ -107,6 +108,11 @@ export default {
         timeout: 10000,
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       })
+
+      formData.set('fullPath', this.$route.fullPath)
+      if (this.user?._id) {
+        formData.set('userId', this.user._id)
+      }
 
       netlify.post(formAction, formData)
         .then(() => {
