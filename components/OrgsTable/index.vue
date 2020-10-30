@@ -78,27 +78,25 @@
         </template>
       </el-table-column>
       <!-- LMS -->
-      <el-table-column property="lastConfiguredLms" label="LMS" min-width="140">
+      <el-table-column property="lastConfiguredLms" label="LMS" min-width="120">
         <template slot-scope="props">
           <span v-if="props.row.lastConfiguredLms && props.row.lmsApiIntegration" class="block text-ellipsis capitalize">{{ props.row.lastConfiguredLms }}</span>
           <span v-else class="text-muted">{{ $t('SW_NONE') }}</span>
         </template>
       </el-table-column>
       <!-- LTI version -->
-      <el-table-column property="lastConfiguredLms" :label="$t('SW_LTI_VERSION')" min-width="140">
+      <el-table-column property="lastConfiguredLms" :label="$t('SW_LTI_VERSION')" width="100">
         <template>
           <span v-if="school.availableLms.length === 0" class="text-muted">{{ $t('SW_NONE') }}</span>
-          <span v-else-if="school.availableLms.length === 1 && school.availableLms[0] === 'ltiBasic'" class="block text-ellipsis capitalize">1.1</span>
-          <span v-else-if="school.availableLms.length === 1 && school.availableLms[0] !== 'ltiBasic'" class="block text-ellipsis capitalize">1.3</span>
-          <span v-else-if="school.availableLms.length > 1 && school.availableLms.includes('ltiBasic')" class="block text-ellipsis capitalize">1.1, 1.3</span>
+          <span v-else-if="school.lastConfiguredLtiVersion === 'basic'" class="block text-ellipsis capitalize">1.1</span>
           <span v-else class="block text-ellipsis capitalize">1.3</span>
         </template>
       </el-table-column>
       <!-- API -->
-      <el-table-column property="lastConfiguredLms" label="API" min-width="140">
+      <el-table-column property="lastConfiguredLms" label="API" width="70">
         <template>
-          <span class="active-api" v-if="school.lmsApiIntegration">{{ $t('SW_YES') }}</span>
-          <span class="not-active-api" v-else>{{ $t('SW_NO') }}</span>
+          <span class="text-success" v-if="school.lmsApiIntegration">{{ $t('SW_YES') }}</span>
+          <span class="text-danger" v-else>{{ $t('SW_NO') }}</span>
         </template>
       </el-table-column>
       <!-- User count -->
