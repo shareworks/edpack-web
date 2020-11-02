@@ -46,7 +46,7 @@ export default {
         const course = res.data.list[0]
 
         // If no access, stop here
-        if (!this.isAuthorized(course)) return this.$router.push({ name: 'error', query: { type: 'restricted_access' } })
+        if (!this.isAuthorized(course)) return this.$router.replace({ name: 'error', query: { type: 'restricted_access' } })
 
         // Set course
         this.$store.dispatch('setCourse', course)
