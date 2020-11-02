@@ -266,8 +266,8 @@ export default {
         .finally(() => { this.submitting = false })
     },
     changeFilter () {
-      const query = { query: this.searchText, filter: this.statusFilter, context: this.facultyFilter }
-      this.$router.replace({ name: 'admin', params: { slug: this.school.slug, mode: 'courses' }, query })
+      const route = { params: { slug: this.school.slug, mode: 'courses' }, query: { query: this.searchText, filter: this.statusFilter, context: this.facultyFilter } }
+      this.$router.push(route)
     },
     sortChange (val) {
       if (val.prop === this.sort && val.order === this.order) return

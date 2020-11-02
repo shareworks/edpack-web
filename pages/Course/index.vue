@@ -38,15 +38,20 @@ export default {
     }
   },
 
-  created () {
+  mounted () {
     this.checkConnection()
 
     return this.$http.get(`courses/${this.$route.params.course}`)
       .then((res) => {
-        this.$store.dispatch('setCourse', res.data.list[0])
-        this.course = res.data.list[0]
+        const course = res.data.list[0]
+
+        // If no access, stop here
+        if (!this.isAuthorized(course)) return this.$router.push({ name: 'error', query: { type: 'restricted_access' } })
+
+        // Set course
+        this.$store.dispatch('setCourse', course)
+        this.course = course
         this.status = this.course ? 'done' : 'error'
-        if (!this.isAuthorized()) this.$router.replace({ name: 'error', query: { type: 'restricted_access' } })
         if (this.course.archivedDate) this.status = 'archived'
       })
       .catch((err) => {
@@ -62,20 +67,15 @@ export default {
         .then(() => { this.serverOnline = true })
         .catch(() => { this.serverOnline = false })
     },
-    isAuthorized () {
+    isAuthorized (course) {
       if (this.$store.state.user.systemAdmin) return true
       if (this.$store.state.user.role === 'admin') return true
 
       // Check course role
-      if (!this.course) return false
-      const courseRole = this.course.role
-      if (this.$route.meta.minimumCourseRole === 'staff') return courseRole === 'staff'
-      if (this.$route.meta.minimumCourseRole === 'student') return courseRole === 'student'
-
-      // specific comproved code
-      if (config.isComproved && this.$route.meta.minimumCourseRole === 'assessor') {
-        return courseRole === 'assessor'
-      }
+      if (!course || !course.role) return false
+      if (this.$route.meta.minimumCourseRole === 'staff') return course.role === 'staff'
+      if (this.$route.meta.minimumCourseRole === 'student') return course.role === 'student'
+      if (this.$route.meta.minimumCourseRole === 'assessor') return course.role === 'assessor'
     },
     unarchiveCourse () {
       if (this.submitting) return

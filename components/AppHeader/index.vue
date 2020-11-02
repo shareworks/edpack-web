@@ -148,9 +148,8 @@ export default {
     },
     tabClick (tab) {
       this.activeTab = tab
-      let route = { name: tab, params: { slug: this.school.slug } }
-      if (tab === 'admin') route = '/admin'
-      this.$router.push(route)
+      const route = { name: tab, params: { slug: this.school.slug } }
+      if (this.$route.name !== tab) this.$router.push(route)
     },
     openChat () { window.fcWidget.open() }
   }

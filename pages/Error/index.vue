@@ -12,8 +12,8 @@
 
         <!-- Error title and text -->
         <div class="minimum-container">
-          <div class="title text-center"><strong>{{ $t('SW_' + errorType.toUpperCase()) }}</strong></div>
-          <p class="mt-10 text-center">{{ $t('SW_' + errorType.toUpperCase() + '_HELP') }}</p>
+          <div class="title text-center"><strong>{{ $t('SW_' + errorType.toUpperCase(), [appName]) }}</strong></div>
+          <p class="mt-10 text-center">{{ $t('SW_' + errorType.toUpperCase() + '_HELP', [appName]) }}</p>
 
           <!-- Cookies blocked warning -->
           <el-alert v-if="errorType === 'lti_error'" type="warning" class="mt-20 text-left" :closable="false">
@@ -53,6 +53,7 @@ export default {
 
   data () {
     return {
+      appName: config.name,
       webUrl: config.web_url,
       inLTI: this.$store.state.inLTI,
       errorType: this.$route.query.tl || this.$route.query.type || this.$route.query.code || 'UNKNOWN_ERROR'

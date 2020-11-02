@@ -90,7 +90,7 @@ export default {
 
       // Redirect to home or admin
       let redirectTo = { name: 'home', params: { slug: user.organization.slug } }
-      if (store.state.isAdmin) redirectTo = '/admin'
+      if (store.state.isAdmin) redirectTo = { name: 'admin', params: { slug: user.organization.slug } }
       if (['landing', 'root', 'home'].includes(to.name)) return router.push(redirectTo)
 
       // Check authorization
