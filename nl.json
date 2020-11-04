@@ -115,6 +115,7 @@
   "SW_COURSE_CREATED": "U heeft een cursus nodig om door te gaan.",
   "SW_COURSE_ID": "ID",
   "SW_COURSE_INACTIVE": "{0} nog inactief!",
+  "SW_COURSE_INACTIVE_HELP": "Neem contact op met je instructeur (s).",
   "SW_COURSE_IS_ARCHIVED": "Deze cursus is gearchiveerd.",
   "SW_COURSE_NAME": "Cursusnaam",
   "SW_COURSE_NAME_PLACEHOLDER": "Naam van de cursus ...",
