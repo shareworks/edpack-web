@@ -64,6 +64,10 @@
           <div class="text-center">
             <el-button type="text" @click="$router.push({name: 'forgot', query: { email: form.email }})" size="small">{{ $t('SW_FORGOT_PASSWORD') }}</el-button>
           </div>
+
+          <div class="text-center" v-if="showRequestPasswordLink">
+            <el-button type="text" @click="$router.push({name: 'forgot', query: { email: form.email, requestPassword: 'true' }})" size="small">{{ $t('SW_REQUEST_PASSWORD') }}</el-button>
+          </div>
         </div>
 
         <el-alert class="mt-10" type="error" show-icon v-if="errorType" :title="$t('SW_' + errorType.toUpperCase())"></el-alert>
@@ -86,13 +90,13 @@ import config from 'config'
 
 export default {
   name: 'Login',
-  components: {},
 
   data () {
     return {
       appName: config.name,
       apiUrl: config.api_url,
       signinByPassword: config.signinByPassword,
+      showRequestPasswordLink: config.showRequestPasswordLink,
       passwordMode: false,
       submitting: false,
       selectedSchool: '',

@@ -13,7 +13,7 @@
 
         <!-- Reset form -->
         <div class="minimum-container">
-          <div class="title text-center"><strong>{{ $t('SW_FORGOT_PASSWORD') }}</strong></div>
+          <div class="title text-center"><strong>{{ $t(requestPassword ? 'SW_REQUEST_PASSWORD' : 'SW_FORGOT_PASSWORD') }}</strong></div>
 
           <el-collapse-transition>
             <div v-show="!success">
@@ -60,7 +60,8 @@ export default {
       submitting: false,
       success: false,
       appName: config.name,
-      form: { email: this.$route.query.email || '' }
+      form: { email: this.$route.query.email || '' },
+      requestPassword: this.$route.query.requestPassword || false
     }
   },
 

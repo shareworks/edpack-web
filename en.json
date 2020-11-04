@@ -202,6 +202,7 @@
   "SW_FEEL_FREE": "If you have questions or want a walkthrough, feel free to ",
   "SW_FORGOT_PASSWORD": "Forgot password",
   "SW_FORGOT_PASSWORD_TEXT": "You will receive an email with a reset link. With this, you can create a new password for your {0} account.",
+  "SW_REQUEST_PASSWORD": "Request password",
   "SW_FRESH_CHAT": "Chat support",
   "SW_FRESH_CHAT_TEXT": "Enable chat support for staff and admin members.",
   "SW_FROM_GROUP": "From group",

@@ -199,6 +199,7 @@
   "SW_FEATURE_OPTIONS": "Mogelijkheden",
   "SW_FEEL_FREE": "Als, je advies of hulp nodig hebt, kun je",
   "SW_FORGOT_PASSWORD": "Wachtwoord vergeten",
+  "SW_REQUEST_PASSWORD": "Wachtwoord opvragen",
   "SW_FORGOT_PASSWORD_TEXT": "Je ontvangt een e-mail met reset link. Hiermee kan je een nieuw wachtwoord kunt aanmaken voor je {0} account.",
   "SW_FRESH_CHAT": "Chat support",
   "SW_FRESH_CHAT_TEXT": "Chat support voor docenten en admins weergeven.",
