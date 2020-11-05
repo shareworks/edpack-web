@@ -1,7 +1,7 @@
 <template>
   <div class="app-language hidden-xs" v-if="canSwitch">
     <el-dropdown @command="handleLanguage">
-      <el-button :type="big ? 'default' : 'text'" :size="big ? '': 'medium'">
+      <el-button aria-label="Choose language" :type="big ? 'default' : 'text'" :size="big ? '': 'medium'">
         <img :src="'/images/' + currentLanguage + '.png'" class="language-icon" alt="language-icon">
         <span v-if="big" class="ml-5">{{ $t('SW_DEFAULT_' + currentLanguage.toUpperCase()) }}</span>
 

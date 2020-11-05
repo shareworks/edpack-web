@@ -5,7 +5,8 @@
 
     <el-form-item class="email-item">
       <!-- Email -->
-      <el-input class="email-input" prefix-icon="icon-email" type="email" name="email" size="large" v-model="email" :placeholder="$t('SW_YOUR_EMAIL')" @keyup.enter.prevent="submitRequest" :required="true">
+      <label for="request-email" class="visually-hidden"></label>
+      <el-input class="email-input" id="request-email" prefix-icon="icon-email" type="email" name="email" size="large" v-model="email" :placeholder="$t('SW_YOUR_EMAIL')" @keyup.enter.prevent="submitRequest" :required="true">
         <!--Submit request -->
         <template slot="append">
           <el-button class="submit-button" native-type="submit" type="primary" @click.prevent="submitRequest">
