@@ -65,7 +65,7 @@ export default {
 
   methods: {
     goBack () {
-      window.history.length > 1 ? this.$router.back() : this.router.push('/')
+      window.history.length > 1 ? this.$router.back() : this.$router.push('/')
     }
   }
 }
