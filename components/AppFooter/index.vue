@@ -18,14 +18,22 @@
       &copy; {{ (new Date()).getFullYear() }} &centerdot;
 
       <a v-if="aboutUrl" class="footer-link" target="_blank" :href="aboutUrl">{{ productName }}</a>
-      <router-link v-else to="/about" class="footer-link" target="_blank">{{ productName }}</router-link>
+      <el-button v-else type="text" class="footer-link" @click="openAbout">
+        {{ productName }}
+      </el-button>
 
       {{ $t('SW_IS_BUILT_BY') }}
       <a :href="business.url" rel="noreferrer" class="footer-link" target="_blank">{{ business.shortName }}</a>.
-      <p class="mt-10">
-        <router-link class="footer-link" to="/terms">{{ $t('SW_TERMS') }}</router-link> |
-        <router-link class="footer-link" to="/privacy">{{ $t('SW_PRIVACY') }}</router-link> |
-        <a href="#" class="footer-link" @click.prevent="openDialog">{{ $t('SW_CONTACT_US') }}</a>
+      <p>
+        <el-button type="text" aria-label="Open terms page" class="footer-link" @click="openTerms">
+          {{ $t('SW_TERMS') }}
+        </el-button> |
+        <el-button type="text" aria-label="Open privacy page" class="footer-link" @click="openPrivacy">
+          {{ $t('SW_PRIVACY') }}
+        </el-button> |
+        <el-button type="text" aria-label="Open contact us dialog" class="footer-link" @click="openDialog">
+          {{ $t('SW_CONTACT_US') }}
+        </el-button>
       </p>
     </div>
 
@@ -61,9 +69,10 @@ export default {
   },
 
   methods: {
-    openDialog () {
-      this.dialogContact = true
-    },
+    openAbout () { this.$router.push({ name: 'about' }) },
+    openTerms () { this.$router.push({ name: 'terms' }) },
+    openPrivacy () { this.$router.push({ name: 'privacy' }) },
+    openDialog () { this.dialogContact = true },
     closeDialog () {
       this.dialogContact = false
     },

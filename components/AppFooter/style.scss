@@ -27,9 +27,11 @@
 }
 
 .footer-link {
-  color: #222;
+  color: #222 !important;
+  font-weight: 400 !important;
+  font-size: 13px !important;
 
   &:hover {
-    color: #000;
+    color: #000 !important;
   }
 }
