@@ -13,6 +13,12 @@
 
     <section class="static-section grey-section">
       <article>
+        <!-- Go back button -->
+        <el-button  type="text" @click="goBack" aria-label="Go back" class="btn-back">
+          <i class="icon-arrow_back"></i>
+          <span>{{ $t('SW_BACK') }}</span>
+        </el-button>
+        
         <p class="font-26 bold mb-10">
           {{ $t('SW_HEADER_' + $route.name.toUpperCase()) }}
         </p>
@@ -54,6 +60,11 @@ export default {
     return {
       inLTI: this.$store.state.inLTI,
       lastUpdated: config.lastUpdated
+    }
+  },
+  methods: {
+    goBack () {
+      window.history.length > 1 ? this.$router.back() : this.$router.push('/')
     }
   }
 }
