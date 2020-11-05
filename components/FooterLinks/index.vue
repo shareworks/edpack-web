@@ -24,7 +24,7 @@
       </a>
 
       <router-link :to="{ name: 'about'}" :target="inLTI ? '_blank' : 'self'" v-if="!aboutUrl && $route.name !== 'about'">
-        <el-button tabindex="-1" size="large" type="text">
+        <el-button size="large" type="text">
           <strong>{{ $t('SW_LEARN_MORE') }}</strong>
         </el-button>
       </router-link>
