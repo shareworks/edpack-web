@@ -66,6 +66,7 @@ export default {
 
   created () {
     this.$router.beforeEach((to, from, next) => {
+      console.log(to, from)
       this.$Progress.start()
       next()
     })
