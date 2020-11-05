@@ -7,9 +7,9 @@
         <div class="public-background"></div>
 
         <!-- Logo -->
-        <div class="text-center">
-            <div class="horizontal-logo"></div>
-        </div>
+        <router-link to="/" :aria-label="$t('SW_LOGO_IMAGE')">
+          <div class="horizontal-logo position-relative"></div>
+        </router-link>
 
         <div class="minimum-container">
           <div class="title text-center"><strong>{{ $t('SW_RESET_PASSWORD') }}</strong></div>

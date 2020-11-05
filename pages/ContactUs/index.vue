@@ -4,8 +4,8 @@
       <div class="public-background"></div>
 
       <!-- Logo -->
-      <a v-if="aboutUrl" class="inline" :href="aboutUrl" target="_blank"><span class="horizontal-logo"></span></a>
-      <router-link v-else to="/about" class="inline"><span class="horizontal-logo"></span></router-link>
+      <a v-if="aboutUrl" class="inline" :href="aboutUrl" target="_blank" :aria-label="$t('SW_LOGO_IMAGE')"><span class="horizontal-logo"></span></a>
+      <router-link v-else to="/about" class="inline" :aria-label="$t('SW_LOGO_IMAGE')"><span class="horizontal-logo"></span></router-link>
 
       <!-- Text -->
       <p class="contact-title bold font-20 mb-30">{{ $t('SW_CONTACT_US') }}</p>

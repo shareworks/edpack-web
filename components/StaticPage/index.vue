@@ -3,8 +3,9 @@
     <section class="static-section" :class="{ 'theme-section': !inLTI }">
       <article class="text-center">
 
-        <router-link to="/">
-          <div class="horizontal-logo"></div>
+        <!-- Logo -->
+        <router-link to="/" :aria-label="$t('SW_LOGO_IMAGE')">
+          <div class="horizontal-logo position-relative"></div>
         </router-link>
 
       </article>

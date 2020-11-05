@@ -30,15 +30,17 @@
       {{ intro }}
 
       <!-- Show more link -->
-      <a v-if="!showMore && $slots.default"  href="#" @click.prevent="moreInfo" class="hidden-xs ml-5 bold">
+      <el-button type="text" v-if="!showMore && $slots.default" @click.prevent="moreInfo" class="hidden-xs ml-5 bold">
         {{ $t('SW_MORE_INFO') }}
-      </a>
+      </el-button>
 
       <!-- Detailed text -->
       <el-collapse-transition>
         <div v-show="showMore">
           <slot></slot>
-          <a href="#" @click.prevent="moreInfo" class="bold">{{ $t('SW_LESS') }}</a>
+          <el-button type="text" @click.prevent="moreInfo" class="bold">
+            {{ $t('SW_LESS') }}
+          </el-button>
         </div>
       </el-collapse-transition>
     </div>

@@ -6,7 +6,9 @@
         <div class="public-background"></div>
 
         <!-- Logo -->
-        <div class="horizontal-logo"></div>
+        <router-link to="/" :aria-label="$t('SW_LOGO_IMAGE')">
+          <div class="horizontal-logo position-relative"></div>
+        </router-link>
 
         <!-- Log in panel -->
         <el-alert type="warning" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE', [appName])" v-if="!serverOnline"></el-alert>

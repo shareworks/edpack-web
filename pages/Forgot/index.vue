@@ -7,9 +7,9 @@
         <div class="public-background"></div>
 
         <!-- Logo -->
-        <div class="text-center">
-            <div class="horizontal-logo"></div>
-        </div>
+        <router-link to="/" :aria-label="$t('SW_LOGO_IMAGE')">
+          <div class="horizontal-logo position-relative"></div>
+        </router-link>
 
         <!-- Reset form -->
         <div class="minimum-container">
@@ -20,7 +20,7 @@
               <p class="mb-20 text-center">{{ $t('SW_FORGOT_PASSWORD_TEXT', [appName]) }}</p>
 
               <el-form :model="form" @submit.prevent.native="submitEmail">
-                <el-input :placeholder="$t('SW_YOUR_EMAIL')" autofocus prefix-icon="icon-email" class="mb-10" v-model="form.email"></el-input>
+                <el-input :placeholder="$t('SW_YOUR_EMAIL')" autofocus prefix-icon="icon-email" class="mb-10" name="email" v-model="form.email"></el-input>
 
                 <el-button class="block" :loading="submitting" type="primary" @click="submitEmail">
                   <i class="icon-send"></i>

@@ -592,5 +592,7 @@
   "SW_SEND_EMAIL_TO_INSTRUCTORS_TEXT": "In each email will be added group information.",
   "SW_LTI_VERSION": "LTI version",
   "SW_YES": "Yes",
-  "SW_NO":"No"
+  "SW_NO":"No",
+  "SW_APPLICATION_SCREENSHOT": "Application screenshot",
+  "SW_LOGO_IMAGE": "Logo image"
 }

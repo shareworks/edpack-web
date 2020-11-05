@@ -6,8 +6,8 @@
         <div class="public-background"></div>
 
         <!-- Logo -->
-        <a v-if="aboutUrl" :href="aboutUrl" target="_blank"><span class="horizontal-logo"></span></a>
-        <router-link v-else to="/about" class="inline"><span class="horizontal-logo"></span></router-link>
+        <a v-if="aboutUrl" :href="aboutUrl" :aria-label="$t('SW_LOGO_IMAGE')" target="_blank"><span class="horizontal-logo"></span></a>
+        <router-link v-else to="/about" class="inline" :aria-label="$t('SW_LOGO_IMAGE')"><span class="horizontal-logo"></span></router-link>
 
         <!-- Text -->
         <p class="landing-text bold font-20">{{ $t('SW_SLOGAN_SHORT') }}</p>

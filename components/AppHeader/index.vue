@@ -64,8 +64,8 @@
 
         <!-- User account -->
         <router-link class="user-account-link" :to="{ name: showProfile ? 'profile' : 'account', params: { slug: school.slug, id: user._id } }" aria-label="Account page">
-          <thumbnail :model="user" class="thumb-user mr-5 thumb-24"></thumbnail>
-          <strong class="hidden-sm-inline user-name">{{user.name}}</strong>
+            <thumbnail tabindex="0" :model="user" class="thumb-user mr-5 thumb-24"></thumbnail>
+            <strong class="hidden-sm-inline user-name">{{user.name}}</strong>
         </router-link>
       </div>
     </div>

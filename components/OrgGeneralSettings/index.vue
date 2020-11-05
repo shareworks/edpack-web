@@ -27,7 +27,7 @@
         <el-option v-for="language in languages" :key="language"
                    :label="$t('SW_DEFAULT_' + language.toUpperCase())"
                    :value="language">
-          <img :src="'/images/' + language + '.png'" class="language-icon mr-5" alt="">
+          <img :src="'/images/' + language + '.png'" class="language-icon mr-5" alt="language-icon">
           <span>{{ $t('SW_DEFAULT_' + language.toUpperCase()) }}</span>
         </el-option>
       </el-select>

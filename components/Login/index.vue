@@ -62,11 +62,11 @@
           </el-button>
 
           <div class="text-center">
-            <el-button type="text" @click="$router.push({name: 'forgot', query: { email: form.email }})" size="small">{{ $t('SW_FORGOT_PASSWORD') }}</el-button>
+            <el-button type="text" @click="$router.push({name: 'forgot', query: { email: form.email }})" size="small" :aria-label="$t('SW_FORGOT_PASSWORD')">{{ $t('SW_FORGOT_PASSWORD') }}</el-button>
           </div>
 
           <div class="text-center" v-if="showRequestPasswordLink">
-            <el-button type="text" @click="$router.push({name: 'forgot', query: { email: form.email, requestPassword: 'true' }})" size="small">{{ $t('SW_REQUEST_PASSWORD') }}</el-button>
+            <el-button type="text" @click="$router.push({name: 'forgot', query: { email: form.email, requestPassword: 'true' }})" size="small" :aria-label="$t('SW_REQUEST_PASSWORD')">{{ $t('SW_REQUEST_PASSWORD') }}</el-button>
           </div>
         </div>
 

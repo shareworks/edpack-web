@@ -7,7 +7,7 @@
 
         <!-- Name -->
         <el-form-item prop="name" required class="contact-form-item">
-          <el-input :placeholder="$t('SW_YOUR_NAME')" v-model="form.name" name="name">
+          <el-input ref="nameInput" :placeholder="$t('SW_YOUR_NAME')" v-model="form.name" name="name">
             <template slot="prepend">
               <i class="icon-user"></i>
             </template>
@@ -90,6 +90,10 @@ export default {
       const mapsUrl = config.mapsUrl
       return `<p class="bold">${b.name}<br><address>${b.streetAddress}<br>${b.postAddress}<br>${b.country}</address><a href="mailto:${b.mail}">${b.mail}</a><br><a href="${mapsUrl}" class="bold" target="_blank">${ this.$i18n.t('SW_GET_DIRECTION') }</a></p>`
     }
+  },
+
+  mounted () {
+    this.$nextTick(() => this.$refs.nameInput.focus())
   },
 
   methods: {

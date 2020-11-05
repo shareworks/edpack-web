@@ -2,14 +2,14 @@
   <div class="app-language hidden-xs" v-if="canSwitch">
     <el-dropdown @command="handleLanguage">
       <el-button :type="big ? 'default' : 'text'" :size="big ? '': 'medium'">
-        <img :src="'/images/' + currentLanguage + '.png'" class="language-icon" alt="">
+        <img :src="'/images/' + currentLanguage + '.png'" class="language-icon" alt="language-icon">
         <span v-if="big" class="ml-5">{{ $t('SW_DEFAULT_' + currentLanguage.toUpperCase()) }}</span>
 
         <i class="el-icon-caret-bottom el-icon--right"></i>
       </el-button>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item v-for="language in languages" :key="language" :command="language">
-          <img :src="'/images/' + language + '.png'" class="language-icon" alt="">
+          <img :src="'/images/' + language + '.png'" class="language-icon" alt="language-icon">
           <span class="ml-5">{{ $t('SW_DEFAULT_' + language.toUpperCase()) }}</span>
         </el-dropdown-item>
       </el-dropdown-menu>

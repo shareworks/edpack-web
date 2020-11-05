@@ -9,7 +9,7 @@
         <el-col :span="calcSpan" v-if="form.languages.en">
           <strong class="mb-10" v-if="form.languages.en && form.languages.nl">
             {{ $t('SW_DEFAULT_EN') }}
-            <img :src="'/images/en.png'" class="ml-5 language-icon" alt="">
+            <img :src="'/images/en.png'" class="ml-5 language-icon" alt="language-icon">
           </strong>
           <div v-for="(faculty, index) in form.faculties" :key="index">
             <div class="mb-10">
@@ -22,7 +22,7 @@
         <el-col :span="calcSpan" v-if="form.languages.nl">
           <strong class="mb-10" v-if="form.languages.en && form.languages.nl">
             {{ $t('SW_DEFAULT_NL') }}
-            <img :src="'/images/nl.png'" class="ml-5 language-icon" alt="">
+            <img :src="'/images/nl.png'" class="ml-5 language-icon" alt="language-icon">
           </strong>
           <div v-for="(faculty, index) in form.faculties" :key="index">
             <div class="mb-10">

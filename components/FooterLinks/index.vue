@@ -18,13 +18,13 @@
 
       <!-- Learn more -->
       <a v-if="aboutUrl" class="inline" :href="aboutUrl" target="_blank">
-        <el-button size="large" type="text">
+        <el-button tabindex="-1" size="large" type="text">
           <strong>{{ $t('SW_LEARN_MORE') }}</strong>
         </el-button>
       </a>
 
       <router-link :to="{ name: 'about'}" :target="inLTI ? '_blank' : 'self'" v-if="!aboutUrl && $route.name !== 'about'">
-        <el-button size="large" type="text">
+        <el-button tabindex="-1" size="large" type="text">
           <strong>{{ $t('SW_LEARN_MORE') }}</strong>
         </el-button>
       </router-link>
