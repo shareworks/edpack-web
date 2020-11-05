@@ -62,6 +62,11 @@ export default {
   mounted () {
     // Handle resize events
     window.addEventListener('resize', this.handleResize)
+
+    // TODO: Fix for sometimes not updating view when history back or forward is called
+    window.addEventListener('popstate', () => {
+      this.resetKey++
+    })
   },
 
   created () {
