@@ -14,10 +14,10 @@
     <section class="static-section grey-section">
       <article>
         <!-- Go back button -->
-        <a href="#" @click.prevent="goBack" class="btn-back">
+        <el-button type="text" @click="goBack" aria-label="Go back" class="btn-back">
           <i class="icon-arrow_back"></i>
           <span>{{ $t('SW_BACK') }}</span>
-        </a>
+        </el-button>
 
         <p class="font-26 bold mb-10">
           {{ $t('SW_HEADER_' + $route.name.toUpperCase()) }}

@@ -22,7 +22,7 @@
         {{ productName }}
       </el-button>
 
-      {{ $t('SW_IS_BUILT_BY') }}
+      <span> {{ $t('SW_IS_BUILT_BY') }} </span>
       <a :href="business.url" rel="noreferrer" class="footer-link" target="_blank">{{ business.shortName }}</a>.
       <p>
         <el-button type="text" aria-label="Open terms page" class="footer-link" @click="openTerms">

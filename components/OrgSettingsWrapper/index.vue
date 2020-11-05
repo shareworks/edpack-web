@@ -4,10 +4,10 @@
       <!-- App language -->
       <app-language class="pull-right"></app-language>
       <!-- Go back button -->
-      <router-link to="/admin" class="btn-back">
+      <el-button type="text" @click="goBack" aria-label="Go back" class="btn-back">
         <i class="icon-arrow_back"></i>
         <span>{{ $t('SW_BACK') }}</span>
-      </router-link>
+      </el-button>
 
       <!-- Header -->
       <page-header :title="$t('SW_SETTINGS')" icon="icon-lock" :area="$t('SW_ADMIN_ONLY')" :intro="$t('SW_SETTINGS_SHORT', { school: form.name.en })"></page-header>
@@ -84,6 +84,7 @@ export default {
   },
 
   methods: {
+    goBack () { this.$router.push({ name: 'admin' }) },
     getOrg () {
       this.$http.get(`organizations/${this.school._id}`)
         .then((res) => {
