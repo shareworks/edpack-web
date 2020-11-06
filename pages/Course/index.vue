@@ -40,28 +40,30 @@ export default {
 
   mounted () {
     this.checkConnection()
-
-    return this.$http.get(`courses/${this.$route.params.course}`)
-      .then((res) => {
-        const course = res.data.list[0]
-
-        // If no access, stop here
-        if (!this.isAuthorized(course)) return this.$router.replace({ name: 'error', query: { type: 'restricted_access' } })
-
-        // Set course
-        this.$store.dispatch('setCourse', course)
-        this.course = course
-        this.status = this.course ? 'done' : 'error'
-        if (this.course.archivedDate) this.status = 'archived'
-      })
-      .catch((err) => {
-        this.status = 'error'
-        if (this.$route.name === 'student') this.$router.replace({ name: 'error', query: { type: 'course_inactive' } })
-        else if (err.status === 404) this.$router.replace({ name: 'error', query: { type: 'not_found' } })
-      })
+    this.getCourse()
   },
 
   methods: {
+    getCourse () {
+      return this.$http.get(`courses/${this.$route.params.course}`)
+        .then((res) => {
+          const course = res.data.list[0]
+
+          // If no access, stop here
+          if (!this.isAuthorized(course)) return this.$router.replace({ name: 'error', query: { type: 'restricted_access' } })
+
+          // Set course
+          this.$store.dispatch('setCourse', course)
+          this.course = course
+          this.status = this.course ? 'done' : 'error'
+          if (this.course.archivedDate) this.status = 'archived'
+        })
+        .catch((err) => {
+          this.status = 'error'
+          if (this.$route.name === 'student') this.$router.replace({ name: 'error', query: { type: 'course_inactive' } })
+          else if (err.status === 404) this.$router.replace({ name: 'error', query: { type: 'not_found' } })
+        })
+    },
     checkConnection () {
       this.$http.get('status')
         .then(() => { this.serverOnline = true })
