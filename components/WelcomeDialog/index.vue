@@ -33,7 +33,15 @@
           <span v-if="showChatLink">{{ $t('SW_WELCOME_TEXT1') }} <a href="#" @click.prevent="openChat">{{ $t('SW_WELCOME_TEXT2') }}</a></span>
           <span v-else>{{ $t('SW_WELCOME_TEXT3') }}</span>.
         </p>
-        <p class="mb-30">{{ $t('SW_GOOD_LUCK') }}</p>
+        <p>{{ $t('SW_GOOD_LUCK') }}</p>
+
+        <el-form class="mb-30">
+          <el-form-item :label="$t('SW_CONTRAST_MODE')">
+            <el-switch v-model="form.contrastMode" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+            <span class="text-muted ml-10">{{ $t('SW_CONTRAST_MODE_TEXT') }}</span>
+            <i class="icon-eye ml-5"></i>
+          </el-form-item>
+        </el-form>
       </section>
 
       <!-- Accept terms and privacy statement -->
@@ -121,7 +129,9 @@ export default {
   methods: {
     nextStep () {
       // If only intro and no check on dont show again, just close
-      if (this.step === 0 && this.steps.length === 1 && !this.dontShowAgain) return this.closeDialog()
+      if (this.step === 0 && this.steps.length === 1 && !this.dontShowAgain) {
+        this.updateUser()
+      }
 
       // If more then intro, just continue to next one
       if (this.step === 0 && this.steps.length > 1) return this.step++

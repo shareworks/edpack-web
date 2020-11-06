@@ -588,5 +588,7 @@
   "SW_YES": "Ja",
   "SW_NO":"Nee",
   "SW_APPLICATION_SCREENSHOT": "Schermafbeelding van de toepassing",
-  "SW_LOGO_IMAGE": "Logo afbeelding"
+  "SW_LOGO_IMAGE": "Logo afbeelding",
+  "SW_CONTRAST_MODE": "Hoge contrastmodus",
+  "SW_CONTRAST_MODE_TEXT": "Verhoog het contrast van interface-elementen voor mensen met een verminderd gezichtsvermogen."
 }

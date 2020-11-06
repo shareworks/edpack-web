@@ -594,5 +594,7 @@
   "SW_YES": "Yes",
   "SW_NO":"No",
   "SW_APPLICATION_SCREENSHOT": "Application screenshot",
-  "SW_LOGO_IMAGE": "Logo image"
+  "SW_LOGO_IMAGE": "Logo image",
+  "SW_CONTRAST_MODE": "High contrast mode",
+  "SW_CONTRAST_MODE_TEXT": "Increase contrast of interface elements for people with low vision."
 }
