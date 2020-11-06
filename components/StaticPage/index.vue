@@ -18,7 +18,7 @@
           <i class="icon-arrow_back"></i>
           <span>{{ $t('SW_BACK') }}</span>
         </el-button>
-        
+
         <p class="font-26 bold mb-10">
           {{ $t('SW_HEADER_' + $route.name.toUpperCase()) }}
         </p>
