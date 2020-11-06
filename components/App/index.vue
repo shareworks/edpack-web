@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="currentUser.contrastMode ? 'contrast-mode' : ''">
     <vue-progress-bar></vue-progress-bar>
     <app-sidebar v-if="navAvailable" :closeSidebar="closeSidebar" :active="sidebarOpened" />
     <app-header v-if="navAvailable" :openSidebar="openSidebar"/>

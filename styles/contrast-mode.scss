@@ -1,0 +1,45 @@
+body #app.contrast-mode {
+  .text-muted {
+    color: #4a4a4a !important;
+  }
+
+  .text-danger {
+    color: #965b03;
+  }
+
+  .text-warning {
+    color: #a20000;
+  }
+
+  .el-menu-item {
+    color: #2d2d2d;
+  }
+
+  .credits {
+    color: #4a4a4a !important;
+  }
+
+  .is-required .el-form-item__label::before {
+    font-size: 20px !important;
+  }
+
+  .cell {
+    color: #4a4a4a !important;
+  }
+
+  .el-button.is-disabled {
+    color: #8f8f8f;
+  }
+
+  .custom-grey-text {
+    color: #4a4a4a !important;
+  }
+
+  .is-disabled .el-textarea__inner {
+    color: #4a4a4a !important;
+  }
+
+  .el-button.btn-back {
+    color: #4a4a4a !important;
+  }
+}
