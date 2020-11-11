@@ -41,7 +41,7 @@
 
       <el-row class="groups mt-20" justify="center" :gutter="30">
         <el-col :span="5" class="unsorted-row">
-          <full-student-list :setDragging="setDragging" :allStudents="allStudents" :dragging="dragging" />
+          <full-student-list :key="fullKey" :setDragging="setDragging" :updateGroupCount="updateGroupCount" :allStudents="allStudents" :dragging="dragging" />
         </el-col>
 
         <el-col :span="19" class="groups-row">
@@ -80,7 +80,7 @@
                 </template>
 
                 <!-- Draggable student group list -->
-                <groups-item :setDragging="setDragging" :group="{name: group.name, _id: group._id}" :students="group.students" :class="{'can-drag-in': dragging}"></groups-item>
+                <groups-item :setDragging="setDragging" @updateGroupCount="updateGroupCount" :group="{name: group.name, _id: group._id}" :students="group.students" :class="{'can-drag-in': dragging}"/>
               </el-collapse-item>
             </el-collapse>
           </section>
@@ -132,7 +132,8 @@ export default {
       allStudents: [],
       dragging: false,
       searchText: this.$route.query.query || '',
-      newGroupName: ''
+      newGroupName: '',
+      fullKey: 0
     }
   },
 
@@ -154,6 +155,7 @@ export default {
         .then(res => {
           this.allStudents = res.data.list
           this.sortStudentsByGroup(res.data.list)
+          this.updateGroupCount()
           this.status = res.data.total ? (res.data.done ? 'done' : 'incomplete') : (this.searchText ? 'noResults' : 'none')
         })
         .catch(err => {
@@ -161,6 +163,21 @@ export default {
           this.status = 'error'
           this.$message({ message: this.$i18n.t('SW_GENERIC_ERROR'), type: 'error' })
         })
+    },
+    updateGroupCount () {
+      const studentsGroupAmount = {}
+      const students = this.studentsByGroup.map(group => { return group.students }).flat(1)
+      this.fullKey += 1
+
+      // count each student group amount
+      students.forEach(student => {
+        if (studentsGroupAmount.hasOwnProperty(student._id)) { studentsGroupAmount[student._id]++ }
+        else { studentsGroupAmount[student._id] = 1 }
+      })
+
+      this.allStudents.forEach(student => {
+        student.groupCount = studentsGroupAmount[student._id] || 0
+      })
     },
     sortStudentsByGroup (unsortedStudents) {
       const groups = []
@@ -184,7 +201,15 @@ export default {
         confirmButtonText: this.$i18n.t('SW_REMOVE_SHOW_NEVER'),
         cancelButtonText: this.$i18n.t('SW_CANCEL')
       }).then(() => { this.removeUser(action) })
-        .catch(() => { })
+        .catch(() => { this.returnUserToGroup(action) })
+    },
+    returnUserToGroup (action) {
+      this.studentsByGroup = this.studentsByGroup.map(group => {
+        if (group.name === action.added.element.groupName) {
+          group.students.push(action.added.element)
+        }
+        return group
+      })
     },
     removeUser (action) {
       this.muteRemoveWarning = true
@@ -203,7 +228,7 @@ export default {
       })
 
       this.setIsChanged(true)
-      this.removedStudents = []
+      this.updateGroupCount()
       this.$message({ message: this.$i18n.t('SW_USER_DELETED'), type: 'success' })
     },
     confirmSubmitChanges () {
@@ -213,10 +238,9 @@ export default {
       }).then(() => { this.submitChanges() })
     },
     removeGroup (group) {
-      // @TODO: Only move to without group if not in another group
-      group.students.forEach(stud => { this.studentsWithoutGroup.push(stud) })
       this.studentsByGroup = this.studentsByGroup.filter(g => g.name !== group.name)
       this.setIsChanged(true)
+      this.updateGroupCount()
     },
     setDragging (value) { this.dragging = value },
     addNewGroup () {
@@ -225,10 +249,11 @@ export default {
 
       if (!newName) return this.$message({ message: this.$i18n.t('SW_GROUP_REQUIRED'), type: 'error' })
 
-      // @TODO check if name is unique
-      const filtered = true // this.studentsByGroup.filter(({ groupName }) => groupName.toLowerCase() === newName.toLowerCase())
+      const filtered = this.studentsByGroup.filter(group => {
+        return group.temporaryGroupName.toLowerCase() === newName.toLowerCase()
+      })
 
-      if (filtered) {
+      if (!filtered.length) {
         // Success
         this.studentsByGroup.push(group)
         this.newGroupName = ''
@@ -249,7 +274,7 @@ export default {
       const participants = []
 
       // get students from groups
-      const students = [...this.studentsByGroup, this.studentsWithoutGroup].flat(1)
+      const students = [...this.studentsByGroup].flat(1)
 
       // process all participants form request
       for (const student of students) {
@@ -259,7 +284,7 @@ export default {
         })
       }
 
-      // @TODO comproved specific fix?
+      // @TODO comproved specific fix? -- yes
       const url = this.assessment ? `assessments/${this.assessment._id}/sync-users` : `${this.url}/sync-users`
 
       this.$http.put(url, { participants })

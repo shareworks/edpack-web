@@ -15,7 +15,7 @@
     </h3>
 
     <!-- Draggable students list -->
-    <groups-item :class="{'can-drag-in': dragging && noGroup}" :mode="noGroup ? 'without' : 'all'" :setDragging="setDragging" :students="noGroup ? studentsWithoutGroup : studentsSorted "></groups-item>
+    <groups-item @updateGroupCount="updateGroupCount" :class="{'can-drag-in': dragging && noGroup}" :mode="noGroup ? 'without' : 'all'" :setDragging="setDragging" :students="noGroup ? studentsWithoutGroup : studentsSorted"></groups-item>
   </section>
 </template>
 <script>
@@ -24,7 +24,7 @@ import GroupsItem from '../GroupsItem'
 export default {
   name: 'FullStudentList',
   components: { GroupsItem },
-  props: ['allStudents', 'dragging', 'setDragging'],
+  props: ['allStudents', 'dragging', 'setDragging', 'updateGroupCount'],
   data () {
     return {
       noGroup: false,
@@ -37,16 +37,15 @@ export default {
     this.sortStudents()
   },
 
+  watch: {
+    allStudents () { this.sortStudents() }
+  },
+
   methods: {
     sortStudents () {
       const studentsSorted = []
-
       this.allStudents.forEach(user => {
         if (!user.groupName) return studentsSorted.push(user)
-
-        const studentIndex = studentsSorted.findIndex(student => student._id === user._id)
-        if (studentIndex > -1) return studentsSorted[studentIndex].groupCount++
-        user.groupCount = 1
         studentsSorted.push(user)
       })
 

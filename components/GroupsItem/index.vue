@@ -1,9 +1,8 @@
 <template>
   <section>
-    <!-- be careful when editing styles names - they used in js code - canDragUserInside function -->
     <draggable ghost-class="ghost" class="group-students" :list="students"
-               :group="mode ? {name: 'students', pull: 'clone', put: false} : {name: 'students', pull: true, put: true }"
-               @start="setDragging(true)" @end="onEnd" :sort="false" @change="changeStudentGroup($event)">
+               :group="mode === 'all' ? {name: 'students', pull: 'clone', put: false} : {name: 'students', pull: true, put: true }"
+               @start="setDragging(true)" @end="onEnd" :sort="false" @change="changeStudentGroup">
 
       <el-card v-for="(student, index) in students" class="student-card-item" :key="student._id + '_' + index">
         <!-- Drag handle -->
@@ -39,9 +38,21 @@ export default {
   methods: {
     onEnd (draggableEvent) {
       this.setDragging(false)
+      // Drag to same element
+      if (draggableEvent.to === draggableEvent.from) {
+        return
+      }
+      // Drag to delete zone should show any message
+      if (draggableEvent.to.className === 'remove-students') {
+        return
+      }
+
       const message = draggableEvent.pullMode === 'clone' ? this.$i18n.t('SW_USER_COPIED') : this.$i18n.t('SW_USER_MOVED')
       this.$message({ message, type: 'success' })
-      if (draggableEvent.pullMode === 'clone') this.$emit('updateGroupCount')
+
+      if (draggableEvent.pullMode === 'clone') {
+        this.$emit('updateGroupCount')
+      }
     },
     changeStudentGroup (action) {
       if (action.added) {
