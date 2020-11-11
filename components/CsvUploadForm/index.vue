@@ -66,7 +66,7 @@
 
     <!-- students list table -->
     <el-dialog :visible.sync="usersListVisible" :title="$t(buttonText ? buttonText : 'SW_VIEW_STUDENTS')">
-        <students-table :tableData="users" :noGroup="noGroup" :participantTypeText="participantTypeText"/>
+        <students-table v-if="usersListVisible" :tableData="users" :noGroup="noGroup" :participantTypeText="participantTypeText"/>
     </el-dialog>
 
   </div>
