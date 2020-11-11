@@ -184,3 +184,27 @@
     padding: 0 20px !important;
   }
 }
+
+.groups {
+  height: 80vh;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+}
+
+.groups-wrapper {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.unsorted-row {
+  height: 100%;
+  overflow-y: scroll;
+
+  .student-card-item {
+    width: 100%;
+  }
+}
+
+.groups-row {
+  height: 100%;
+  overflow-y: scroll;
+}

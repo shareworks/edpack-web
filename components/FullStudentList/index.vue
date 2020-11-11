@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="mb-5 mt-5 unsorted-row">
     <h3 class="collapse-header block">
       <!-- Amount of students -->
       <p class="question-sentence groups-header">
@@ -15,7 +15,7 @@
     </h3>
 
     <!-- Draggable students list -->
-    <groups-item class="unsorted-list" :class="{'can-drag-in': dragging && noGroup}" :mode="noGroup ? 'without' : 'all'" :setDragging="setDragging" :students="noGroup ? studentsWithoutGroup : studentsSorted "></groups-item>
+    <groups-item :class="{'can-drag-in': dragging && noGroup}" :mode="noGroup ? 'without' : 'all'" :setDragging="setDragging" :students="noGroup ? studentsWithoutGroup : studentsSorted "></groups-item>
   </section>
 </template>
 <script>
@@ -56,7 +56,3 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import '~scss_vars';
-@import 'style';
-</style>

@@ -39,49 +39,51 @@
       </affix>
       <div class="bar-placeholder"></div>
 
-      <el-row class="groups mt-20" justify="center" :gutter="20">
+      <el-row class="groups mt-20" justify="center" :gutter="30">
         <el-col :span="5" class="unsorted-row">
           <full-student-list :setDragging="setDragging" :allStudents="allStudents" :dragging="dragging" />
         </el-col>
 
-        <el-col :span="19">
-          <h3 class="collapse-header">
-            <p class="question-sentence groups-header"><strong>{{ $tc('SW_GROUPS', 2) }}</strong> <el-tag class="ml-5" size="mini">{{ studentsByGroup.length }}</el-tag></p>
-          </h3>
+        <el-col :span="19" class="groups-row">
+          <section class="groups-wrapper">
+            <h3 class="collapse-header">
+              <p class="question-sentence groups-header"><strong>{{ $tc('SW_GROUPS', 2) }}</strong> <el-tag class="ml-5" size="mini">{{ studentsByGroup.length }}</el-tag></p>
+            </h3>
 
-          <el-collapse class="group-collapse" v-if="studentsByGroup.length">
-            <el-collapse-item v-for="(group, index) in studentsByGroup" :key="index">
+            <el-collapse class="group-collapse" v-if="studentsByGroup.length">
+              <el-collapse-item v-for="(group, index) in studentsByGroup" :key="index">
 
-              <!-- Question title and number -->
-              <template slot="title">
-                <h3 class="collapse-header">
-                  <div class="question-number">{{ index + 1 }}</div>
-                  <div class="question-sentence capitalize bold">{{ group.temporaryGroupName }}</div>
+                <!-- Question title and number -->
+                <template slot="title">
+                  <h3 class="collapse-header">
+                    <div class="question-number">{{ index + 1 }}</div>
+                    <div class="question-sentence capitalize bold">{{ group.temporaryGroupName }}</div>
 
-                  <!-- Remove group -->
-                  <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @onConfirm="removeGroup(group)"
-                                 class="delete-group-button" hideIcon :title="$t('SW_DELETE_GROUP')">
-                    <el-button slot="reference" plain size="small" @click.stop class="button-square mr-5 delete-group-button hidden-xs" type="danger">
-                      <i class="icon-delete"></i>
-                    </el-button>
-                  </el-popconfirm>
+                    <!-- Remove group -->
+                    <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @onConfirm="removeGroup(group)"
+                                   class="delete-group-button" hideIcon :title="$t('SW_DELETE_GROUP')">
+                      <el-button slot="reference" plain size="small" @click.stop class="button-square mr-5 delete-group-button hidden-xs" type="danger">
+                        <i class="icon-delete"></i>
+                      </el-button>
+                    </el-popconfirm>
 
-                  <el-popover trigger="click" class="edit-group-button" :close-delay="0" :ref="`edit_${index}`" :title="$tc('SW_CHANGE_GROUP_NAME')" placement="top-end">
-                    <el-input v-model="group.temporaryGroupName" :placeholder="$t('SW_GROUP_NAME')" :label="$t('SW_GROUP_NAME')"></el-input>
+                    <el-popover trigger="click" class="edit-group-button" :close-delay="0" :ref="`edit_${index}`" :title="$tc('SW_CHANGE_GROUP_NAME')" placement="top-end">
+                      <el-input v-model="group.temporaryGroupName" :placeholder="$t('SW_GROUP_NAME')" :label="$t('SW_GROUP_NAME')"></el-input>
 
-                    <el-button slot="reference" plain size="small" @click.stop class="button-square mr-10 delete-group-button hidden-xs">
-                      <i class="icon-pencil"></i>
-                    </el-button>
-                  </el-popover>
+                      <el-button slot="reference" plain size="small" @click.stop class="button-square mr-10 delete-group-button hidden-xs">
+                        <i class="icon-pencil"></i>
+                      </el-button>
+                    </el-popover>
 
-                  <el-tag class="question-tag-info hidden-xs" type="info">{{ group.students.length }} {{ $tc('SW_STUDENT', group.students.length).toLowerCase() }}</el-tag>
-                </h3>
-              </template>
+                    <el-tag class="question-tag-info hidden-xs" type="info">{{ group.students.length }} {{ $tc('SW_STUDENT', group.students.length).toLowerCase() }}</el-tag>
+                  </h3>
+                </template>
 
-              <!-- Draggable student group list -->
-              <groups-item :setDragging="setDragging" :group="{name: group.name, _id: group._id}" :students="group.students" :class="{'can-drag-in': dragging}"></groups-item>
-            </el-collapse-item>
-          </el-collapse>
+                <!-- Draggable student group list -->
+                <groups-item :setDragging="setDragging" :group="{name: group.name, _id: group._id}" :students="group.students" :class="{'can-drag-in': dragging}"></groups-item>
+              </el-collapse-item>
+            </el-collapse>
+          </section>
         </el-col>
       </el-row>
     </div>
@@ -96,7 +98,7 @@
           <el-input placeholder="The Kangaroos" v-model="newGroupName" @keydown.enter.native.prevent="addNewGroup"></el-input>
         </el-form-item>
 
-        <el-form-item class="mt-20">
+        <el-form-item>
           <el-button type="primary" @click="addNewGroup">
             {{ $t('SW_ADD_GROUP') }}
             <i class="icon-arrow_forward"></i>
