@@ -4,7 +4,7 @@
     <p v-else-if="justStudents" class="mb-20">{{ $t('SW_ADD_STUDENTS_TEXT') }}</p>
     <p v-else class="mb-10 bold">{{ $t('SW_INVITE_COACHES') }}</p>
 
-    <el-alert class="mb-10" show-icon v-if="differentDomainWarningVisible" type="warning" :title="$t('SW_DIFFERENT_EMAIL_TITLE')">
+    <el-alert class="mb-10" show-icon v-if="showDomainWarning" type="warning" :title="$t('SW_DIFFERENT_EMAIL_TITLE')">
       <p>{{ $t("SW_DIFFERENT_EMAIL_TEXT") }}</p>
     </el-alert>
 
@@ -46,7 +46,7 @@
 <script>
 export default {
   name: 'UsersCreate',
-  props: ['closeDialog', 'isManageStaff', 'justStudents', 'course', 'updateMembers', 'stopRequest'],
+  props: ['closeDialog', 'isManageStaff', 'justStudents', 'course'],
 
   data () {
     return {
@@ -55,7 +55,7 @@ export default {
       role: 'staff',
       sending: false,
       form: { toSelf: true, recipients: '' },
-      differentDomainWarningVisible: false,
+      showDomainWarning: false,
       incorrectEmails: []
     }
   },
@@ -88,7 +88,6 @@ export default {
       }
 
       // Convert string to emails
-
       const emails = this.form.recipients.replace(/\n/g, ',').split(',')
 
       const self = this.form.toSelf
@@ -96,35 +95,27 @@ export default {
       this.emailsValidation(emails)
       if (this.incorrectEmails.length !== 0) return
 
-      // Optionally check for proper org emails
+      // Check for proper org emails
       if (this.school.emailDomains.length) {
-        let missingDomains = false
+        let invalidDomains = false
 
         emails.forEach(email => {
           const emailDomain = email.replace(/.*@/, '@').trim()
           if (this.school.emailDomains.includes(emailDomain)) return
-          missingDomains = true
+          invalidDomains = true
         })
 
-        // if user use another domain - this warning message will be visible just one time
-        if (missingDomains && !this.differentDomainWarningVisible) {
-          this.differentDomainWarningVisible = true
+        // if non-org domains is used, show warning message one time
+        if (invalidDomains && !this.showDomainWarning) {
+          this.showDomainWarning = true
           return
         }
       }
 
-      //  this code specific for Comproved, it stop sending request and return new users list
-      if (this.stopRequest) {
-        this.updateMembers(emails)
-        this.form = { toSelf: true, recipients: '' }
-        return
-      }
-
+      // If no course, only add user on organization level
       const organization = this.user.organization._id
 
-      // If no course is given, only add user on organization level
       let roles = emails.map(email => ({ recipientEmail: email, model: 'organization', contextId: organization, role: this.justStudents ? 'student' : this.role, downgrade: false, sendEmail: (!this.course) }))
-      const firstRoles = roles
 
       if (this.course) {
         const courseRoles = emails.map(email => ({ recipientEmail: email, model: 'course', contextId: this.course._id, role: this.justStudents ? 'student' : this.role, downgrade: false, sendEmail: true }))
@@ -134,13 +125,8 @@ export default {
       this.sending = true
       this.$http.post('users/invite', { invitations: roles }, { params: { toSelf: self } })
         .then(() => {
-          // return created users to parent
-          if (this.updateMembers) {
-            this.updateMembers(firstRoles)
-          }
-
           this.form.recipients = ''
-          this.differentDomainWarningVisible = false
+          this.showDomainWarning = false
           this.$message({ message: this.$i18n.t('SW_EMAILS_SENT'), type: 'success' })
           this.closeDialog(true)
         })

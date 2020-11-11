@@ -1,16 +1,28 @@
 <template>
   <section>
     <!-- be careful when editing styles names - they used in js code - canDragUserInside function -->
-    <draggable ghost-class="ghost" :move="canDragUserInside" class="group-students" :class="{ totalStudentsList }" :list="students" group="students" @start="setDragging(true)" @end="onEnd" @change="changeStudentGroup($event, students.groupName)">
-      <el-card v-for="student in students" class="student-card-item" :key="student._id">
+    <draggable ghost-class="ghost" class="group-students" :list="students"
+               :group="mode ? {name: 'students', pull: 'clone', put: false} : {name: 'students', pull: true, put: true }"
+               @start="setDragging(true)" @end="onEnd" :sort="false" @change="changeStudentGroup($event)">
+
+      <el-card v-for="(student, index) in students" class="student-card-item" :key="student._id + '_' + index">
+        <!-- Drag handle -->
         <el-button class="button-drag" type="text">
           <i class="icon-drag_handle"></i>
         </el-button>
+
+        <!-- Student avatar -->
         <div class="inline">
           <thumbnail :model="student" class="thumb-user mr-10 hidden-xs thumb-24 thumbnail"></thumbnail>
         </div>
-        <p class="student-name text-ellipsis">{{ student.name ? student.name : student.email | truncate(50)}}</p>
-        <el-tag v-if="totalStudentsList" class="group-amount-tag text-muted hidden-sm hidden-xs" size="small" type="info">{{ student.groupCount }} {{ $tc('SW_GROUP', student.groupCount).toLowerCase() }}</el-tag>
+
+        <!-- Student name -->
+        <p class="student-name text-ellipsis">{{ student.name ? student.name : student.email }}</p>
+
+        <!-- Amount of groups -->
+        <el-tag v-if="mode === 'all'" class="group-amount-tag text-muted hidden-sm hidden-xs" size="small" type="info">
+          {{ student.groupCount || 0 }} {{ $tc('SW_GROUP', student.groupCount || 0).toLowerCase() }}
+        </el-tag>
       </el-card>
     </draggable>
   </section>
@@ -18,55 +30,29 @@
 
 <script>
 import draggable from 'vuedraggable'
+
 export default {
   name: 'GroupsItem',
   components: { draggable },
-  props: ['students', 'checkIsChanged', 'setDragging', 'totalStudentsList'],
+  props: ['students', 'setDragging', 'mode', 'group'],
 
   methods: {
     onEnd (draggableEvent) {
       this.setDragging(false)
-
-      if (draggableEvent.to === draggableEvent.from) {
-        return
-      }
-
-      if (draggableEvent.to.className === 'remove-students') {
-        return
-      }
-
-      if (draggableEvent.from.className === 'group-students totalStudentsList') {
-        this.$message({ message: this.$i18n.t('SW_USER_COPIED'), type: 'success' })
-      } else {
-        this.$message({ message: this.$i18n.t('SW_USER_MOVED'), type: 'success' })
-      }
+      const message = draggableEvent.pullMode === 'clone' ? this.$i18n.t('SW_USER_COPIED') : this.$i18n.t('SW_USER_MOVED')
+      this.$message({ message, type: 'success' })
+      if (draggableEvent.pullMode === 'clone') this.$emit('updateGroupCount')
     },
-    canDragUserInside (draggableEvent) {
-      return draggableEvent.to.className !== 'group-students totalStudentsList'
-    },
-    returnUserToGroup (action) {
-      this.students.splice(action.removed.oldIndex, 0, action.removed.element)
-    },
-    changeStudentGroup (action, groupName) {
-      if (this.totalStudentsList && action.removed) {
-        // when copy user - return original to the list on the same position
-        this.returnUserToGroup(action)
-      }
-
+    changeStudentGroup (action) {
       if (action.added) {
-        // check that there is no two same users in the group
+        // @TODO make simpler to prevent duplicate students
         const sameStudentsInGroup = this.students.filter(stud => { return stud._id === action.added.element._id })
         if (sameStudentsInGroup.length > 1) {
           const removeStudentIndex = this.students.findIndex(stud => { return stud._id === action.added.element._id })
           this.students.splice(removeStudentIndex, 1)
         }
-
-        if (!groupName) {
-          delete action.added.element.group
-        }
-
-        action.added.element.groupName = groupName
-        this.checkIsChanged()
+        action.added.element.groupName = this.group.name
+        action.added.element.group = this.group
       }
     }
   }
