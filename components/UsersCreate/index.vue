@@ -68,12 +68,9 @@ export default {
   methods: {
     emailsValidation (emails) {
       let failedEmails = []
-      console.log('failedEmails', failedEmails)
 
       // Filter all emails that don't match regex:
-      emails.forEach(email => { emailsValidation(email, failedEmails) })
-
-      console.log('failedEmails', failedEmails)
+      emails.forEach(email => { emailsValidation(email, failedEmails, [], email, email) })
 
       failedEmails = failedEmails.filter(email => { return email.trim() !== '' })
       this.incorrectEmails = failedEmails

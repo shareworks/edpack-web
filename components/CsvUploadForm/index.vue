@@ -187,8 +187,9 @@ export default {
             if (!validDomain) {
               this.invalidUsers.push(user)
               this.invalidDomain = true
-            } else if (!emailsValidation(user.email, a)) this.invalidUsers.push(user)
-            else this.users.push(user)
+            } else {
+              emailsValidation(user.email, this.invalidUsers, this.users, user, user)
+            }
 
             // Create array of unique groups
             if (!this.groups.includes(user.groupName) && !this.noGroup) this.groups.push(user.groupName)
