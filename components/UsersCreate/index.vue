@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import emailsValidation from '@/edpack-web/utils/emails-validation'
 export default {
   name: 'UsersCreate',
   props: ['closeDialog', 'isManageStaff', 'justStudents', 'course', 'updateMembers', 'stopRequest'],
@@ -67,13 +68,12 @@ export default {
   methods: {
     emailsValidation (emails) {
       let failedEmails = []
-      const emailRegex = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
+      console.log('failedEmails', failedEmails)
 
       // Filter all emails that don't match regex:
-      emails.forEach(email => {
-        const isIncorrect = !emailRegex.test(email)
-        if (isIncorrect) { failedEmails.push(email) }
-      })
+      emails.forEach(email => { emailsValidation(email, failedEmails) })
+
+      console.log('failedEmails', failedEmails)
 
       failedEmails = failedEmails.filter(email => { return email.trim() !== '' })
       this.incorrectEmails = failedEmails

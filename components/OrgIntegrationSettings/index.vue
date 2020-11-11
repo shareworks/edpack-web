@@ -6,7 +6,6 @@
     <el-switch v-model="hideCredentials" active-color="#13ce66" inactive-color="#ff4949" class="mb-20" :active-text="$t('SW_VIEW_CREDENTIALS')"></el-switch>
 
     <!--Email domains-->
-
     <el-alert class="mb-10" show-icon v-if="incorrectDomains.length !== 0" type="error" :title="$tc('SW_DOMAINS_NOT_CORRECT', incorrectDomains.length)">
       <ul>
         <li v-for="domain in incorrectDomains" :key="domain">

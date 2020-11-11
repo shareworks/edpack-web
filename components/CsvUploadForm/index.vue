@@ -76,6 +76,7 @@
 import config from 'config'
 import Papa from 'papaparse'
 import StudentsTable from '../StudentsTable'
+import emailsValidation from '../../utils/emails-validation'
 
 export default {
   name: 'CsvUploadForm',
@@ -115,7 +116,6 @@ export default {
       }
     },
     handleCSVChange (file) {
-      const regexValidEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       this.submitting = true
       this.users = []
       this.invalidUsers = []
@@ -187,7 +187,7 @@ export default {
             if (!validDomain) {
               this.invalidUsers.push(user)
               this.invalidDomain = true
-            } else if (!regexValidEmail.test(user.email)) this.invalidUsers.push(user)
+            } else if (!emailsValidation(user.email, a)) this.invalidUsers.push(user)
             else this.users.push(user)
 
             // Create array of unique groups
