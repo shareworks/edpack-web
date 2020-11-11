@@ -45,12 +45,12 @@
     <div class="bar-placeholder"></div>
 
       <el-row class="groups mt-20" justify="center" :gutter="20">
-        <el-col :span="6" class="unsorted-row">
+        <el-col :span="5" class="unsorted-row">
           <full-student-list :unSorterStudents="unSorterStudents" :checkIsChanged="checkIsChanged" :setDragging="setDragging"
              :allStudents="fullStudentsList" :studentsWithGroups="students" :dragging="dragging" />
         </el-col>
 
-      <el-col :span="18">
+      <el-col :span="19">
         <h3 class="collapse-header">
           <p class="question-sentence groups-header"><strong>{{ $tc('SW_GROUPS', 2) }}</strong> <el-tag class="ml-5" size="mini">{{ students.length }}</el-tag></p>
         </h3>
