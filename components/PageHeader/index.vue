@@ -27,20 +27,18 @@
       </span>
 
       <!-- Intro text -->
-      {{ intro }}
+      <span>{{ intro }}</span>
 
       <!-- Show more link -->
-      <el-button type="text" v-if="!showMore && $slots.default" @click.prevent="moreInfo" class="hidden-xs ml-5 bold">
+      <a v-if="!showMore && $slots.default"  href="#" @click.prevent="moreInfo" class="hidden-xs ml-5 bold">
         {{ $t('SW_MORE_INFO') }}
-      </el-button>
+      </a>
 
       <!-- Detailed text -->
       <el-collapse-transition>
         <div v-show="showMore">
           <slot></slot>
-          <el-button type="text" @click.prevent="moreInfo" class="bold">
-            {{ $t('SW_LESS') }}
-          </el-button>
+          <a href="#" @click.prevent="moreInfo" class="bold">{{ $t('SW_LESS') }}</a>
         </div>
       </el-collapse-transition>
     </div>

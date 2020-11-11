@@ -1,6 +1,6 @@
 <template>
   <div class="inline">
-    <el-popover :tabindex="0" :title="$tc('SW_STAFF', instructors.length)" placement="bottom-start">
+    <el-popover :title="$tc('SW_STAFF', instructors.length)" placement="bottom-start">
       <!-- List of instructors -->
       <div v-if="instructors.length" class="mb-10">
         <div v-for="instructor in instructors" class="text-ellipsis mb-5" :key="instructor._id">
@@ -18,12 +18,12 @@
       </el-button>
 
       <!-- Popover text -->
-      <el-button type="text" @click.prevent slot="reference" class="bold">
+      <a href="#" @click.prevent slot="reference" class="bold">
         {{ (evaluation ? evaluation.staff.length : course.counts.staff) || 0 }}
         {{ $tc('SW_STAFF', instructors.length).toLowerCase() }}
-      </el-button>
+      </a>
     </el-popover>
-    <span v-if="evaluation">{{ $t('SW_CAN_ACCESS_RESULTS')}}</span>
+    <span v-if="evaluation"> {{ $t('SW_CAN_ACCESS_RESULTS')}}</span>
   </div>
 </template>
 
