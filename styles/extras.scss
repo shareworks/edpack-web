@@ -148,3 +148,8 @@
   height: 1px;
   margin: -1px;
 }
+
+a:focus {
+  color: $--color-primary;
+  text-decoration: underline;
+}
