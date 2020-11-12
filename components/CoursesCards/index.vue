@@ -5,7 +5,7 @@
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <router-link :to="{ name: (course.role || 'staff'), params: { course: course._id, slug: school.slug } }" class="block text-ellipsis">
-              <strong tabindex="0">{{course.name}}</strong>
+              <strong>{{course.name}}</strong>
               <lms-icon class="ml-5" :model="course"></lms-icon>
             </router-link>
           </div>

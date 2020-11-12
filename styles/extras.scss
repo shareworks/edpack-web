@@ -47,15 +47,6 @@
   background-position: center;
 }
 
-*:focus {
-  outline: 1px dotted #ff9039 !important;
-}
-
-input:focus,
-textarea:focus {
-  outline: none !important;
-}
-
 .form-help-text {
   line-height: 20px;
   padding: 10px 0;

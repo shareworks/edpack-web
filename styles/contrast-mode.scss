@@ -1,4 +1,13 @@
 body #app.contrast-mode {
+  *:focus {
+    outline: 1px dotted #ff9039 !important;
+  }
+
+  input:focus,
+  textarea:focus {
+    outline: none !important;
+  }
+
   .text-muted {
     color: #4a4a4a !important;
   }
