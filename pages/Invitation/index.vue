@@ -37,18 +37,6 @@ export default {
       serverOnline: true,
       appName: config.name
     }
-  },
-
-  mounted () {
-    this.checkConnection()
-  },
-
-  methods: {
-    checkConnection () {
-      this.$http.get('status')
-        .then(() => { this.serverOnline = true })
-        .catch(() => { this.serverOnline = false })
-    }
   }
 }
 </script>

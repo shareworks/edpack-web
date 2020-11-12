@@ -6,6 +6,8 @@
 
     <!-- Main content -->
     <main :class="{ 'page-offset': pageOffset, 'nav-offset': navAvailable, 'page-lti': inLTI }">
+      <el-alert type="warning" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE', [appName])" v-if="!serverOnline"></el-alert>
+
       <el-row class="container">
         <router-view :key="resetKey">
           <spinner class="mt-30"></spinner>
@@ -55,11 +57,15 @@ export default {
       inLTI: this.$store.state.inLTI,
       dialogWelcome: false,
       resetKey: 1,
-      disableWelcome: false
+      disableWelcome: false,
+      serverOnline: true,
+      appName: config.name
     }
   },
 
   mounted () {
+    this.checkConnection()
+
     // Handle resize events
     window.addEventListener('resize', this.handleResize)
 
@@ -93,6 +99,11 @@ export default {
   },
 
   methods: {
+    checkConnection () {
+      this.$http.get('status')
+        .then(() => { this.serverOnline = true })
+        .catch(() => { this.serverOnline = false })
+    },
     toggleDialog () {
       this.dialogWelcome = !this.dialogWelcome
       this.disableWelcome = true

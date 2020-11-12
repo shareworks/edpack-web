@@ -39,7 +39,6 @@ export default {
   },
 
   mounted () {
-    this.checkConnection()
     this.getCourse()
   },
 
@@ -63,11 +62,6 @@ export default {
           if (this.$route.name === 'student') this.$router.replace({ name: 'error', query: { type: 'course_inactive' } })
           else if (err.status === 404) this.$router.replace({ name: 'error', query: { type: 'not_found' } })
         })
-    },
-    checkConnection () {
-      this.$http.get('status')
-        .then(() => { this.serverOnline = true })
-        .catch(() => { this.serverOnline = false })
     },
     isAuthorized (course) {
       if (this.$store.state.user.systemAdmin) return true

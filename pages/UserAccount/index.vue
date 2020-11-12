@@ -67,16 +67,7 @@ export default {
     }
   },
 
-  mounted () {
-    this.checkConnection()
-  },
-
   methods: {
-    checkConnection () {
-      this.$http.get('status')
-        .then(() => { this.serverOnline = true })
-        .catch(() => { this.serverOnline = false })
-    },
     logout () {
       this.$http.post('users/logout', {})
         .then(() => {

@@ -35,17 +35,8 @@ export default {
       serverOnline: true
     }
   },
-
-  mounted () {
-    this.checkConnection()
-  },
-
   methods: {
-    checkConnection () {
-      this.$http.get('status')
-        .then(() => { this.serverOnline = true })
-        .catch(() => { this.serverOnline = false })
-    },
+
     visibilityChanged (isVisible, entry, count) {
       const { target } = entry
 

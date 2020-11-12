@@ -112,18 +112,12 @@ export default {
   },
 
   mounted () {
-    this.checkConnection()
     this.$http.get('/auth/saml/identity-providers')
       .then((res) => { this.schools = res.data.list })
       .catch(() => { this.$message({ message: this.$i18n.t('SW_COULD_NOT_GET_IDP'), type: 'error' }) })
   },
 
   methods: {
-    checkConnection () {
-      this.$http.get('status')
-        .then(() => { this.serverStatus = 'online' })
-        .catch(() => { this.serverStatus = 'offline' })
-    },
     selectSchool (school) {
       let redirect = this.$route.query.redirect || ''
       if (redirect[0] === '/') redirect = redirect.substr(1)
