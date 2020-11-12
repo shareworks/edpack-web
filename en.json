@@ -310,7 +310,7 @@
   "SW_MERGE_DIALOG_USERS_TEXT": "Each email will contain a link to the {0} sign in page.",
   "SW_MERGE_USERS": "Merge 2 members",
   "SW_MESSAGE": "Your message",
-  "SW_MESSAGE_SENT": "Message sent.",
+  "SW_MESSAGE_SENT": "An email with link to reset your password has been sent.",
   "SW_MISSING_REGISTER_TOKENS": "Request failed. Please use the email to complete this step.",
   "SW_MORE": "More",
   "SW_MORE_INFO": "More info",
@@ -595,6 +595,7 @@
   "SW_NO":"No",
   "SW_APPLICATION_SCREENSHOT": "Application screenshot",
   "SW_LOGO_IMAGE": "Logo image",
-  "SW_CONTRAST_MODE": "High contrast mode",
-  "SW_CONTRAST_MODE_TEXT": "Increase contrast of interface elements for people with low vision."
+  "SW_CONTRAST_MODE": "High contrast",
+  "SW_CONTRAST_MODE_SHORT": "Higher contrast interface",
+  "SW_CONTRAST_MODE_TEXT": "Increase contrast of interface elements for people with reduced vision."
 }

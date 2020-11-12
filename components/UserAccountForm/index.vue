@@ -94,7 +94,6 @@
       <el-form-item :label="$t('SW_CONTRAST_MODE')">
         <el-switch v-model="form.contrastMode" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
         <span class="text-muted ml-10">{{ $t('SW_CONTRAST_MODE_TEXT') }}</span>
-        <i class="icon-eye ml-5"></i>
       </el-form-item>
     </el-form>
     <!-- Newsletter -->

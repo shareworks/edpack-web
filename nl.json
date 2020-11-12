@@ -307,7 +307,7 @@
   "SW_MERGE_DIALOG_USERS_TEXT": "Elke e-mail bevat een link naar de inlogpagina van {0}.",
   "SW_MERGE_USERS": "Voeg 2 leden samen",
   "SW_MESSAGE": "Je bericht",
-  "SW_MESSAGE_SENT": "Message sent.",
+  "SW_MESSAGE_SENT": "Een e-mail met link om je wachtwoord opnieuw in te vullen is zojuist verzonden.",
   "SW_MISSING_REGISTER_TOKENS": "Verzoek mislukt. Gebruik de link in de e-mail om deze stap te voltooien.",
   "SW_MORE": "Meer",
   "SW_MORE_INFO": "Meer info",
@@ -589,6 +589,7 @@
   "SW_NO":"Nee",
   "SW_APPLICATION_SCREENSHOT": "Schermafbeelding van de toepassing",
   "SW_LOGO_IMAGE": "Logo afbeelding",
-  "SW_CONTRAST_MODE": "Hoge contrastmodus",
+  "SW_CONTRAST_MODE": "Hoog contrast",
+  "SW_CONTRAST_MODE_SHORT": "Verhoog contrast van interface",
   "SW_CONTRAST_MODE_TEXT": "Verhoog het contrast van interface-elementen voor mensen met een verminderd gezichtsvermogen."
 }

@@ -29,17 +29,16 @@
       <!-- About project -->
       <section v-if="steps[step] === 'intro'">
 
-        <p class="mb-20">{{ $t('SW_WELCOME_TEXT', [school.name[lang]]) }}
+        <p class="mb-20 font-16">{{ $t('SW_WELCOME_TEXT', [school.name[lang]]) }}
           <span v-if="showChatLink">{{ $t('SW_WELCOME_TEXT1') }} <a href="#" @click.prevent="openChat">{{ $t('SW_WELCOME_TEXT2') }}</a></span>
           <span v-else>{{ $t('SW_WELCOME_TEXT3') }}</span>.
         </p>
-        <p>{{ $t('SW_GOOD_LUCK') }}</p>
+        <p class="font-16">{{ $t('SW_GOOD_LUCK') }}</p>
 
-        <el-form class="mb-30">
-          <el-form-item :label="$t('SW_CONTRAST_MODE')">
+        <el-form class="mt-20 mb-30 ">
+          <el-form-item>
             <el-switch v-model="form.contrastMode" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
-            <span class="text-muted ml-10">{{ $t('SW_CONTRAST_MODE_TEXT') }}</span>
-            <i class="icon-eye ml-5"></i>
+            <span class="ml-10">{{ $t('SW_CONTRAST_MODE_SHORT') }}</span>
           </el-form-item>
         </el-form>
       </section>
