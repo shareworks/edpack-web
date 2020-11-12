@@ -71,8 +71,8 @@
       <inputs-with-flags :change="setNewFaculties" :value="form.terminology.faculties" name="facultiesTerm"/>
     </el-form-item>
 
-<!-- Buddycheck specific code -->
-    <el-form-item v-if="showIntro" :label="$t('SW_INTRO_FOR')">
+    <!-- Introduction by school -->
+    <el-form-item v-if="introBySchool" :label="$t('SW_INTRO_FOR')">
       <p class="text-muted">{{ $t('SW_INTRO_FOR_NEWLY') }}</p>
       <redactor :config="editorOptions" v-model="form.orgCourseIntro"></redactor>
     </el-form-item>
@@ -87,7 +87,7 @@ import convertDiacritics from '../../utils/convert-diacritics'
 
 export default {
   name: 'OrgGeneralSettings',
-  props: ['form', 'showIntro'],
+  props: ['form'],
   components: { InputsWithFlags, Redactor: () => import('@/edpack-web/components/Redactor') },
 
   data () {
@@ -96,6 +96,7 @@ export default {
       user: this.$store.state.user,
       lang: this.$store.state.lang,
       editorOptions: {},
+      introBySchool: config.introBySchool,
       languages: config.languages,
       filepicker: filestack.init(config.filestack.key)
     }
