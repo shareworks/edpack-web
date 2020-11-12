@@ -2,7 +2,7 @@
   <section>
     <draggable ghost-class="ghost" class="group-students" :list="students"
                :group="mode === 'all' ? {name: 'students', pull: 'clone', put: false} : {name: 'students', pull: true, put: true }"
-               @start="setDragging(true)" @end="onEnd" :sort="false">
+               @start="setDragging(true)" @end="onEnd" :sort="false" @change="changeStudentGroup">
 
       <el-card v-for="(student, index) in students" class="student-card-item" :key="student._id + '_' + index">
         <!-- Drag handle -->
@@ -36,6 +36,22 @@ export default {
   props: ['students', 'setDragging', 'mode', 'group'],
 
   methods: {
+    changeStudentGroup (action) {
+      if (!action.added) return
+
+      // Is there is same students in group
+      const sameStudentsInGroup = this.students.filter(stud => {
+        return stud._id === action.added.element._id
+      })
+
+      if (sameStudentsInGroup.length <= 1) return
+
+      // Find first same student and remove it
+      const removeStudentIndex = this.students.findIndex(stud => {
+        return stud._id === action.added.element._id
+      })
+      this.students.splice(removeStudentIndex, 1)
+    },
     onEnd (draggableEvent) {
       this.setDragging(false)
       // Drag to same element
