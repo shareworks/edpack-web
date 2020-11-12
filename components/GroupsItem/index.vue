@@ -47,12 +47,9 @@ export default {
         return
       }
 
-      const message = draggableEvent.pullMode === 'clone' ? this.$i18n.t('SW_USER_COPIED') : this.$i18n.t('SW_USER_MOVED')
+      const message =  this.$i18n.t(draggableEvent.pullMode === 'clone' ? 'SW_USER_COPIED' : 'SW_USER_MOVED')
       this.$message({ message, type: 'success' })
-
-      if (draggableEvent.pullMode === 'clone') {
-        this.$emit('updateGroupCount')
-      }
+      this.$emit('updateGroupCount', true)
     },
     changeStudentGroup (action) {
       if (action.added) {
@@ -62,7 +59,7 @@ export default {
           const removeStudentIndex = this.students.findIndex(stud => { return stud._id === action.added.element._id })
           this.students.splice(removeStudentIndex, 1)
         }
-        action.added.element.groupName = this.group.name
+        action.added.element.groupName = this.group ? this.group.name : null
         action.added.element.group = this.group
       }
     }

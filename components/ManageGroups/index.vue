@@ -67,6 +67,7 @@
                       </el-button>
                     </el-popconfirm>
 
+                    <!-- Rename group -->
                     <el-popover trigger="click" class="edit-group-button" :close-delay="0" :ref="`edit_${index}`" :title="$tc('SW_CHANGE_GROUP_NAME')" placement="top-end">
                       <el-input v-model="group.temporaryGroupName" :placeholder="$t('SW_GROUP_NAME')" :label="$t('SW_GROUP_NAME')"></el-input>
 
@@ -164,7 +165,7 @@ export default {
           this.$message({ message: this.$i18n.t('SW_GENERIC_ERROR'), type: 'error' })
         })
     },
-    updateGroupCount () {
+    updateGroupCount (setIsChangedToTrue) {
       const studentsGroupAmount = {}
       const students = this.studentsByGroup.map(group => { return group.students }).flat(1)
       this.fullKey += 1
@@ -178,6 +179,10 @@ export default {
       this.allStudents.forEach(student => {
         student.groupCount = studentsGroupAmount[student._id] || 0
       })
+
+      if (setIsChangedToTrue) {
+        this.setIsChanged(true)
+      }
     },
     sortStudentsByGroup (unsortedStudents) {
       const groups = []
@@ -227,8 +232,7 @@ export default {
         return filteredGroup
       })
 
-      this.setIsChanged(true)
-      this.updateGroupCount()
+      this.updateGroupCount(true)
       this.$message({ message: this.$i18n.t('SW_USER_DELETED'), type: 'success' })
     },
     confirmSubmitChanges () {
@@ -239,8 +243,7 @@ export default {
     },
     removeGroup (group) {
       this.studentsByGroup = this.studentsByGroup.filter(g => g.name !== group.name)
-      this.setIsChanged(true)
-      this.updateGroupCount()
+      this.updateGroupCount(true)
     },
     setDragging (value) { this.dragging = value },
     addNewGroup () {
@@ -274,7 +277,7 @@ export default {
       const participants = []
 
       // get students from groups
-      const students = [...this.studentsByGroup].flat(1)
+      const students = this.studentsByGroup.map(group => { return group.students }).flat(1)
 
       // process all participants form request
       for (const student of students) {

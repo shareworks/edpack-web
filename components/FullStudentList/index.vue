@@ -29,7 +29,7 @@ export default {
     return {
       noGroup: false,
       studentsSorted: [],
-      studentsWithoutGroup: this.allStudents.filter(user => !user.groupName || user.groupName === '' || !user.group)
+      studentsWithoutGroup: []
     }
   },
 
@@ -44,12 +44,20 @@ export default {
   methods: {
     sortStudents () {
       const studentsSorted = []
-      this.allStudents.forEach(user => {
-        if (!user.groupName) return studentsSorted.push(user)
-        studentsSorted.push(user)
+      const studentsWithoutGroup = []
+
+      this.allStudents.forEach(student => {
+        if (student.groupCount === 0) {
+          student.groupName = null
+          student.group = null
+          studentsWithoutGroup.push(student)
+        }
+
+        studentsSorted.push(student)
       })
 
       this.studentsSorted = studentsSorted
+      this.studentsWithoutGroup = studentsWithoutGroup
     }
   }
 }
