@@ -68,7 +68,7 @@
                     </el-popconfirm>
 
                     <!-- Rename group -->
-                    <el-popover trigger="click" class="edit-group-button" :close-delay="0" :ref="`edit_${index}`" :title="$tc('SW_CHANGE_GROUP_NAME')" placement="top-end">
+                    <el-popover @after-leave="renameStudentsGroup(group.name, group.temporaryGroupName)" trigger="click" class="edit-group-button" :close-delay="0" :title="$tc('SW_CHANGE_GROUP_NAME')" placement="top-end">
                       <el-input v-model="group.temporaryGroupName" :placeholder="$t('SW_GROUP_NAME')" :label="$t('SW_GROUP_NAME')"></el-input>
 
                       <el-button slot="reference" plain size="small" @click.stop class="button-square mr-10 delete-group-button hidden-xs">
@@ -143,6 +143,17 @@ export default {
   },
 
   methods: {
+    renameStudentsGroup (oldName, newName) {
+      if (oldName === newName) return
+      const groupIndex = this.studentsByGroup.findIndex(group => { return group.temporaryGroupName === newName })
+
+      this.studentsByGroup[groupIndex].students.forEach(student => {
+        student.groupName = newName
+        student.group.name = newName
+      })
+
+      this.setIsChanged(true)
+    },
     getStudents () {
       if (this.status === 'loading') return
       this.status = 'loading'
