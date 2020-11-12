@@ -93,20 +93,7 @@
 
     <!-- @TODO: separate component - Add group dialog -->
     <el-dialog :title="$t('SW_ADD_GROUP')" append-to-body :visible.sync="addGroupDialog">
-      <!-- Group name -->
-      <el-form label-position="top">
-        <el-form-item required :label="`${$t('SW_GROUP_NAME')}:`">
-          <el-input placeholder="The Kangaroos" v-model="newGroupName" @keydown.enter.native.prevent="addNewGroup"></el-input>
-        </el-form-item>
-
-        <el-form-item>
-          <el-button type="primary" @click="addNewGroup">
-            {{ $t('SW_ADD_GROUP') }}
-            <i class="icon-arrow_forward"></i>
-          </el-button>
-          <el-button type="text" class="ml-10" @click="addGroupDialog = false">{{ $t('SW_CANCEL') }}</el-button>
-        </el-form-item>
-      </el-form>
+      <create-group-item :studentsByGroup="studentsByGroup" :closeCreateGroupDialog="closeCreateGroupDialog"/>
     </el-dialog>
   </div>
 </template>
@@ -117,11 +104,12 @@ import draggable from 'vuedraggable'
 import GroupsItem from '../GroupsItem'
 import TableStatus from '../TableStatus'
 import FullStudentList from '../FullStudentList'
+import CreateGroupItem from '../CreateGroupItem'
 
 export default {
   name: 'ManageGroups',
   props: ['setIsChanged', 'isChanged', 'url', 'courseId', 'assessment'],
-  components: { TableStatus, Affix, GroupsItem, FullStudentList, draggable },
+  components: { TableStatus, Affix, GroupsItem, FullStudentList, draggable, CreateGroupItem },
 
   data () {
     return {
@@ -133,7 +121,6 @@ export default {
       allStudents: [],
       dragging: false,
       searchText: this.$route.query.query || '',
-      newGroupName: '',
       fullKey: 0
     }
   },
@@ -143,6 +130,7 @@ export default {
   },
 
   methods: {
+    closeCreateGroupDialog () { this.addGroupDialog = false },
     renameStudentsGroup (oldName, newName) {
       if (oldName === newName) return
       const groupIndex = this.studentsByGroup.findIndex(group => { return group.temporaryGroupName === newName })
@@ -257,27 +245,6 @@ export default {
       this.updateGroupCount(true)
     },
     setDragging (value) { this.dragging = value },
-    addNewGroup () {
-      const newName = this.newGroupName.trim()
-      const group = { name: newName, temporaryGroupName: newName, students: [] }
-
-      if (!newName) return this.$message({ message: this.$i18n.t('SW_GROUP_REQUIRED'), type: 'error' })
-
-      const filtered = this.studentsByGroup.filter(group => {
-        return group.temporaryGroupName.toLowerCase() === newName.toLowerCase()
-      })
-
-      if (!filtered.length) {
-        // Success
-        this.studentsByGroup.push(group)
-        this.newGroupName = ''
-        this.addGroupDialog = false
-        this.$message({ message: this.$i18n.t('SW_ADDED_GROUP'), type: 'success' })
-      } else {
-        // Unsuccess
-        this.$message({ message: this.$i18n.t('SW_GROUP_NOT_UNIQUE'), type: 'error' })
-      }
-    },
     groupNameSort (a, b) {
       if (a.name < b.name) { return -1 }
       if (a.name > b.name) { return 1 }
