@@ -147,6 +147,7 @@ export default {
       this.form.checks.verifiedAccount = this.steps[this.step] === 'verify'
       this.form.checks.acceptedTerms = this.acceptTerms
       this.form.checks.welcome = this.dontShowAgain
+      this.form.contrastMode = this.currentUser.contrastMode
 
       const params = { params: { entity: this.school._id } }
 
