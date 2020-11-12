@@ -597,5 +597,5 @@
   "SW_LOGO_IMAGE": "Logo image",
   "SW_CONTRAST_MODE": "High contrast",
   "SW_CONTRAST_MODE_SHORT": "Higher contrast interface",
-  "SW_CONTRAST_MODE_TEXT": "Increase contrast of interface elements for people with reduced vision."
+  "SW_CONTRAST_MODE_TEXT": "Increase contrast of interface elements if you have reduced vision."
 }

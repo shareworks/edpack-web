@@ -90,12 +90,12 @@
       </el-select>
     </el-form-item>
 
-    <el-form class="mb-30">
-      <el-form-item :label="$t('SW_CONTRAST_MODE')">
-        <el-switch v-model="form.contrastMode" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
-        <span class="text-muted ml-10">{{ $t('SW_CONTRAST_MODE_TEXT') }}</span>
-      </el-form-item>
-    </el-form>
+    <!-- High contrast mode -->
+    <el-form-item :label="$t('SW_CONTRAST_MODE')">
+      <el-switch v-model="form.contrastMode" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+      <span class="text-muted ml-10">{{ $t('SW_CONTRAST_MODE_TEXT') }}</span>
+    </el-form-item>
+
     <!-- Newsletter -->
     <el-form-item :label="$t('SW_NEWSLETTER')" class="additional">
       <el-checkbox class="newsletter" :label="$t('SW_NEWSLETTER_TEXT')" v-model="form.newsletter"></el-checkbox>
