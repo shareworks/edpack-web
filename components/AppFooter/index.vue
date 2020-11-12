@@ -17,10 +17,8 @@
 
       &copy; {{ (new Date()).getFullYear() }} &centerdot;
 
-      <a v-if="aboutUrl" class="footer-link" target="_blank" :href="aboutUrl">{{ productName }}</a>
-      <el-button v-else type="text" class="footer-link" @click="openAbout">
-        {{ productName }}
-      </el-button>
+      <a v-if="aboutUrl" class="footer-link" target="_blank" rel="noreferrer" :href="aboutUrl">{{ productName }}</a>
+      <a v-else href="#" class="footer-link" @click.prevent="openAbout">{{ productName }}</a>
 
       <span> {{ $t('SW_IS_BUILT_BY') }} </span>
       <a :href="business.url" rel="noreferrer" class="footer-link" target="_blank">{{ business.shortName }}</a>.
@@ -73,12 +71,8 @@ export default {
     openTerms () { this.$router.push({ name: 'terms' }) },
     openPrivacy () { this.$router.push({ name: 'privacy' }) },
     openDialog () { this.dialogContact = true },
-    closeDialog () {
-      this.dialogContact = false
-    },
-    toggleDialog () {
-      this.dialogColofon = !this.dialogColofon
-    }
+    closeDialog () { this.dialogContact = false },
+    toggleDialog () { this.dialogColofon = !this.dialogColofon }
   }
 }
 </script>

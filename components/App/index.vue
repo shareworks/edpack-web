@@ -6,7 +6,7 @@
 
     <!-- Main content -->
     <main :class="{ 'page-offset': pageOffset, 'nav-offset': navAvailable, 'page-lti': inLTI }">
-      <el-alert type="warning" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE', [appName])" v-if="!serverOnline"></el-alert>
+      <el-alert type="error" effect="dark" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE', [appName])" v-if="!serverOnline"></el-alert>
 
       <el-row class="container">
         <router-view :key="resetKey">
