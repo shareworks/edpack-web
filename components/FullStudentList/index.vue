@@ -24,12 +24,11 @@ import GroupsItem from '../GroupsItem'
 export default {
   name: 'FullStudentList',
   components: { GroupsItem },
-  props: ['allStudents', 'dragging', 'setDragging', 'updateGroupCount'],
+  props: ['allStudents', 'dragging', 'setDragging', 'updateGroupCount', 'setStudentsWithoutGroup', 'studentsWithoutGroup'],
   data () {
     return {
       noGroup: false,
       studentsSorted: [],
-      studentsWithoutGroup: []
     }
   },
 
@@ -61,7 +60,7 @@ export default {
       })
 
       this.studentsSorted = studentsSorted
-      this.studentsWithoutGroup = studentsWithoutGroup
+      this.setStudentsWithoutGroup(studentsWithoutGroup)
     }
   }
 }

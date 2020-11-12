@@ -41,7 +41,7 @@
 
       <el-row class="groups mt-20" justify="center" :gutter="30">
         <el-col :span="5" class="unsorted-row">
-          <full-student-list :key="fullKey" :setDragging="setDragging" :updateGroupCount="updateGroupCount" :allStudents="allStudents" :dragging="dragging" />
+          <full-student-list :key="fullKey" :setStudentsWithoutGroup="setStudentsWithoutGroup" :studentsWithoutGroup="studentsWithoutGroup" :setDragging="setDragging" :updateGroupCount="updateGroupCount" :allStudents="allStudents" :dragging="dragging" />
         </el-col>
 
         <el-col :span="19" class="groups-row">
@@ -119,6 +119,7 @@ export default {
       removedStudents: [],
       studentsByGroup: [],
       allStudents: [],
+      studentsWithoutGroup: [],
       dragging: false,
       searchText: this.$route.query.query || '',
       fullKey: 0
@@ -130,6 +131,7 @@ export default {
   },
 
   methods: {
+    setStudentsWithoutGroup (value) { this.studentsWithoutGroup = value },
     closeCreateGroupDialog () { this.addGroupDialog = false },
     renameStudentsGroup (oldName, newName) {
       if (oldName === newName) return
@@ -256,8 +258,11 @@ export default {
         return group.students.map(student => { return { ...student, groupName: group.temporaryGroupName } })
       }).flat(1)
 
+      // newly moved studentsWithoutGroup should be posted to
+      const allAvailableStudents = [...students, ...this.studentsWithoutGroup]
+
       // prepare participants for request
-      const participants = students.map(student => {
+      const participants = allAvailableStudents.map(student => {
         return { groupName: student.groupName, email: student.email }
       })
 
@@ -266,6 +271,7 @@ export default {
 
       this.$http.put(url, { participants })
         .then(() => {
+          this.studentsWithoutGroup = []
           this.studentsByGroup = []
           this.allStudents = []
           this.getStudents()
