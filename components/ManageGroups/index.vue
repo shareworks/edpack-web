@@ -255,7 +255,7 @@ export default {
     submitChanges () {
       // get students from groups
       const students = this.studentsByGroup.map(group => {
-        return group.students.map(student => { return { ...student, groupName: group.temporaryGroupName } })
+        return group.students.map(student => { return { ...student, groupName: group.temporaryGroupName, groupId: group._id } })
       }).flat(1)
 
       // newly moved studentsWithoutGroup should be posted to
@@ -263,7 +263,7 @@ export default {
 
       // prepare participants for request
       const participants = allAvailableStudents.map(student => {
-        return { groupName: student.groupName, email: student.email }
+        return { groupName: student.groupName, groupId: student.groupId, email: student.email, userId: student._id }
       })
 
       // @TODO comproved specific fix? -- yes
