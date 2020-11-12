@@ -37,7 +37,7 @@
 
         <el-form class="mt-20 mb-30 ">
           <el-form-item>
-            <el-switch v-model="form.contrastMode" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+            <el-switch v-model="currentUser.contrastMode" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
             <span class="ml-10">{{ $t('SW_CONTRAST_MODE_SHORT') }}</span>
           </el-form-item>
         </el-form>

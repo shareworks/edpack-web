@@ -23,7 +23,7 @@
     <reload-after-deploy></reload-after-deploy>
 
     <!-- Welcome dialog -->
-    <el-dialog custom-class="welcome-dialog" append-to-body :visible.sync="dialogWelcome">
+    <el-dialog custom-class="welcome-dialog" :class="currentUser.contrastMode ? 'contrast-mode' : ''" append-to-body :visible.sync="dialogWelcome">
       <welcome-dialog :closeDialog="toggleDialog"></welcome-dialog>
     </el-dialog>
   </div>
