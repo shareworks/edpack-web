@@ -48,8 +48,8 @@
 
         <el-card shadow="never" class="mb-20">
           <div class="terms-window">
-            <div v-if="!isComproved" v-html="school.colofon[lang]"></div>
-            <static-terms v-else :isComproved="isComproved"></static-terms>
+            <div v-if="!acceptTermsOnWelcome" v-html="school.colofon[lang]"></div>
+            <static-terms v-else :isComproved="acceptTermsOnWelcome"></static-terms>
           </div>
         </el-card>
       </section>
@@ -77,7 +77,7 @@
       </el-button>
       <el-button type="primary" @click="nextStep" :loading="submitting">
         <strong v-if="steps[step] === 'intro'">{{ $t('SW_CONTINUE') }}</strong>
-        <strong v-else-if="steps[step] === 'terms' || isComproved">{{ $t('SW_ACCEPT_CLOSE') }}</strong>
+        <strong v-else-if="steps[step] === 'terms' || acceptTermsOnWelcome">{{ $t('SW_ACCEPT_CLOSE') }}</strong>
         <strong v-else-if="steps[step] === 'verify'">{{ $t('SW_SAVE_CLOSE') }}</strong>
         <i class="ml-5 icon-arrow_forward"></i>
       </el-button>
@@ -100,12 +100,12 @@ export default {
   components: { LogoAnimation, ThumbnailEdit, StaticTerms },
 
   data () {
-    const isComproved = config.name === 'Comproved'
-    const acceptTerms = !!(this.$store.state.school.colofon && this.$store.state.school.colofon[this.$store.state.lang]) || isComproved
+    const acceptTermsOnWelcome = config.acceptTermsOnWelcome
+    const acceptTerms = !!(this.$store.state.school.colofon && this.$store.state.school.colofon[this.$store.state.lang]) || acceptTermsOnWelcome
 
     return {
       aboutUrl: config.aboutUrl,
-      isComproved,
+      acceptTermsOnWelcome,
       acceptTerms,
       school: this.$store.state.school,
       step: 0,
