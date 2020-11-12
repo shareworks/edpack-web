@@ -81,7 +81,7 @@
                 </template>
 
                 <!-- Draggable student group list -->
-                <groups-item :setDragging="setDragging" @updateGroupCount="updateGroupCount" :group="{name: group.name, _id: group._id}" :students="group.students" :class="{'can-drag-in': dragging}"/>
+                <groups-item :setDragging="setDragging" @updateGroupCount="updateGroupCount" :group="{name: group.temporaryGroupName, _id: group._id}" :students="group.students" :class="{'can-drag-in': dragging}"/>
               </el-collapse-item>
             </el-collapse>
           </section>
@@ -284,19 +284,15 @@ export default {
       return 0
     },
     submitChanges () {
-      // prepare participants for request
-      const participants = []
-
       // get students from groups
-      const students = this.studentsByGroup.map(group => { return group.students }).flat(1)
+      const students = this.studentsByGroup.map(group => {
+        return group.students.map(student => { return { ...student, groupName: group.temporaryGroupName } })
+      }).flat(1)
 
-      // process all participants form request
-      for (const student of students) {
-        participants.push({
-          groupName: student.groupName,
-          email: student.email
-        })
-      }
+      // prepare participants for request
+      const participants = students.map(student => {
+        return { groupName: student.groupName, email: student.email }
+      })
 
       // @TODO comproved specific fix? -- yes
       const url = this.assessment ? `assessments/${this.assessment._id}/sync-users` : `${this.url}/sync-users`

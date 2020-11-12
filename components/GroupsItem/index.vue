@@ -2,7 +2,7 @@
   <section>
     <draggable ghost-class="ghost" class="group-students" :list="students"
                :group="mode === 'all' ? {name: 'students', pull: 'clone', put: false} : {name: 'students', pull: true, put: true }"
-               @start="setDragging(true)" @end="onEnd" :sort="false" @change="changeStudentGroup">
+               @start="setDragging(true)" @end="onEnd" :sort="false">
 
       <el-card v-for="(student, index) in students" class="student-card-item" :key="student._id + '_' + index">
         <!-- Drag handle -->
@@ -50,18 +50,6 @@ export default {
       const message =  this.$i18n.t(draggableEvent.pullMode === 'clone' ? 'SW_USER_COPIED' : 'SW_USER_MOVED')
       this.$message({ message, type: 'success' })
       this.$emit('updateGroupCount', true)
-    },
-    changeStudentGroup (action) {
-      if (action.added) {
-        // @TODO make simpler to prevent duplicate students
-        const sameStudentsInGroup = this.students.filter(stud => { return stud._id === action.added.element._id })
-        if (sameStudentsInGroup.length > 1) {
-          const removeStudentIndex = this.students.findIndex(stud => { return stud._id === action.added.element._id })
-          this.students.splice(removeStudentIndex, 1)
-        }
-        action.added.element.groupName = this.group ? this.group.name : null
-        action.added.element.group = this.group
-      }
     }
   }
 }
