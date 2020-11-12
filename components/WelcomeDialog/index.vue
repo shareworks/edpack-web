@@ -49,7 +49,7 @@
         <el-card shadow="never" class="mb-20">
           <div class="terms-window">
             <div v-if="!acceptTermsOnWelcome" v-html="school.colofon[lang]"></div>
-            <static-terms v-else :isComproved="acceptTermsOnWelcome"></static-terms>
+            <static-terms v-else></static-terms>
           </div>
         </el-card>
       </section>
