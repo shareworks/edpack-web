@@ -63,7 +63,7 @@ export default {
         return
       }
 
-      const message =  this.$i18n.t(draggableEvent.pullMode === 'clone' ? 'SW_USER_COPIED' : 'SW_USER_MOVED')
+      const message = this.$i18n.t(draggableEvent.pullMode === 'clone' ? 'SW_USER_COPIED' : 'SW_USER_MOVED')
       this.$message({ message, type: 'success' })
       this.$emit('updateGroupCount', true)
     }

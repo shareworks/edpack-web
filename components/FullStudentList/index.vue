@@ -28,7 +28,7 @@ export default {
   data () {
     return {
       noGroup: false,
-      studentsSorted: [],
+      studentsSorted: []
     }
   },
 
@@ -65,4 +65,3 @@ export default {
   }
 }
 </script>
-

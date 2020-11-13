@@ -44,7 +44,7 @@ export default {
         // It's NOT a unique group name
         this.$message({ message: this.$i18n.t('SW_GROUP_NOT_UNIQUE'), type: 'error' })
       }
-    },
+    }
   }
 }
 </script>

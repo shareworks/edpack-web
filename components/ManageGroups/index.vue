@@ -173,8 +173,7 @@ export default {
 
       // count each student group amount
       students.forEach(student => {
-        if (studentsGroupAmount.hasOwnProperty(student._id)) { studentsGroupAmount[student._id]++ }
-        else { studentsGroupAmount[student._id] = 1 }
+        if (studentsGroupAmount.hasOwnProperty(student._id)) { studentsGroupAmount[student._id]++ } else { studentsGroupAmount[student._id] = 1 }
       })
 
       this.allStudents.forEach(student => {
