@@ -253,3 +253,8 @@ th .cell{
   display: flex !important;
   align-items: center !important;
 }
+
+// add outline to header close modal button, otherwise when you focus you don't see visual different
+.el-dialog__headerbtn:focus {
+  outline: 1px $--color-primary solid !important;
+}
