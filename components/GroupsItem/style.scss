@@ -26,6 +26,11 @@
     width: 200px;
   }
 
+  .thumbnail {
+    height: 100%;
+    margin: 0 auto;
+  }
+
   .el-card__body {
     padding: 0;
     display: flex;
@@ -46,11 +51,6 @@
       }
     }
   }
-}
-
-.thumbnail {
-  height: 100%;
-  margin: 0 auto;
 }
 
 .ghost {
