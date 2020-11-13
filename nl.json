@@ -589,5 +589,6 @@
   "SW_LOGO_IMAGE": "Logo afbeelding",
   "SW_CONTRAST_MODE": "Hoog contrast",
   "SW_CONTRAST_MODE_SHORT": "Verhoog contrast van interface",
-  "SW_CONTRAST_MODE_TEXT": "Verhoog het contrast van interface-elementen bij een verminderd gezichtsvermogen."
+  "SW_CONTRAST_MODE_TEXT": "Verhoog het contrast van interface-elementen bij een verminderd gezichtsvermogen.",
+  "SW_CLOSE_FULLSCREEN": "Sluiten fullscreen"
 }

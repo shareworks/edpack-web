@@ -116,7 +116,7 @@
   margin-top: -3px;
 }
 
-.to-left {
+.to-right {
   margin-left: auto;
 }
 
@@ -207,4 +207,13 @@
 .groups-row {
   height: 100%;
   overflow-y: scroll;
+}
+
+.fullscreen-manage-groups {
+  padding-left: 20px;
+  padding-right: 20px;
+
+  .bar-placeholder {
+    display: none;
+  }
 }

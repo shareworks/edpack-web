@@ -1,101 +1,107 @@
 <template>
-  <div>
-    <div v-if="status === 'done'">
-      <affix class="sticky-bar" relative-element-selector=".groups" :offset="{ top: 130, bottom: -1000 }">
-        <div class="manage-groups-bar">
-          <transition-group name="drag-items-animation" mode="out-in">
-            <!-- Filter -->
-            <el-row type="flex" align="middle" v-if="!dragging" :key="1">
-              <el-col :xs="24" :sm="16">
-                <!-- Add group button -->
-                <el-button type="primary" plain size="medium" @click="addGroupDialog = true">
-                  <i class="icon-add"></i>
-                  <span>{{ $t('SW_ADD_GROUP') }}</span>
-                </el-button>
+  <fullscreen class="fullscreen fullscreen-manage-groups" ref="fullscreen">
+      <div v-if="status === 'done'">
+        <affix class="sticky-bar" :relative-element-selector="'.groups'" :offset="{ top: fullscreenMode ? 0 : 130, bottom: -1000 }">
+          <div class="manage-groups-bar">
+            <transition-group name="drag-items-animation" mode="out-in">
+              <!-- Filter -->
+              <el-row type="flex" align="baseline" v-if="!dragging" :key="1">
+                <el-col :xs="20" :sm="16" :span="20">
+                  <!-- Add group button -->
+                  <el-button type="primary" plain size="medium" @click="addGroupDialog = true">
+                    <i class="icon-add"></i>
+                    <span>{{ $t('SW_ADD_GROUP') }}</span>
+                  </el-button>
 
-                <!-- Save button -->
-                <el-button type="success" size="medium" :plain="!isChanged" :disabled="!isChanged" @click="confirmSubmitChanges">
-                  <i class="icon-ok-sign"></i>
-                  <span>{{ $t('SW_SAVE_CHANGES') }}</span>
-                </el-button>
-              </el-col>
+                  <!-- Save button -->
+                  <el-button type="success" size="medium" :plain="!isChanged" :disabled="!isChanged" @click="confirmSubmitChanges">
+                    <i class="icon-ok-sign"></i>
+                    <span>{{ $t('SW_SAVE_CHANGES') }}</span>
+                  </el-button>
+                </el-col>
 
-              <el-col :xs="0" :sm="8" class="hidden-xs hidden-sm to-left">
-                <!-- Search input -->
-                <el-input prefix-icon="icon-search" class="hide" :placeholder="$t('SW_SEARCH_STUDENTS')" size="medium" v-model="searchText" clearable></el-input>
-              </el-col>
-            </el-row>
+                <el-col :xs="4" :sm="8" :span="4" class="to-right">
+                  <!-- Search input -->
+                  <el-input prefix-icon="icon-search" class="hide" :placeholder="$t('SW_SEARCH_STUDENTS')" size="medium" v-model="searchText" clearable></el-input>
 
-            <el-row type="flex" align="middle" v-else :key="2">
-              <el-col :xs="0" :span="24">
-                <div class="remove-draggable-wrapper">
-                  <span class="copy-remove-user-title">{{ $t('SW_DRAG_REMOVE_STUDENTS') }}</span>
-                  <draggable ghost-class="ghost" class="remove-students" :list="removedStudents" group="students" @change="confirmRemoveUser"></draggable>
-                </div>
-              </el-col>
-            </el-row>
-          </transition-group>
-        </div>
-      </affix>
-      <div class="bar-placeholder"></div>
+                  <!-- Fullscreen -->
+                  <el-button type="text" class="survey-fullscreen" @click="toggleFullscreen">
+                    <i class="icon-fullscreen"></i>
+                    <span>{{ $t(fullscreenMode ? 'SW_CLOSE_FULLSCREEN' : 'SW_FULLSCREEN') }}</span>
+                  </el-button>
+                </el-col>
+              </el-row>
 
-      <el-row class="groups mt-20" justify="center" :gutter="30">
-        <el-col :span="5" class="unsorted-row">
-          <full-student-list :key="fullKey" :setStudentsWithoutGroup="setStudentsWithoutGroup" :studentsWithoutGroup="studentsWithoutGroup" :setDragging="setDragging" :updateGroupCount="updateGroupCount" :allStudents="allStudents" :dragging="dragging" />
-        </el-col>
+              <el-row type="flex" align="middle" v-else :key="2">
+                <el-col :xs="0" :span="24">
+                  <div class="remove-draggable-wrapper">
+                    <span class="copy-remove-user-title">{{ $t('SW_DRAG_REMOVE_STUDENTS') }}</span>
+                    <draggable ghost-class="ghost" class="remove-students" :list="removedStudents" group="students" @change="confirmRemoveUser"></draggable>
+                  </div>
+                </el-col>
+              </el-row>
+            </transition-group>
+          </div>
+        </affix>
+        <div class="bar-placeholder"/>
 
-        <el-col :span="19" class="groups-row">
-          <section class="groups-wrapper">
-            <h3 class="collapse-header">
-              <p class="question-sentence groups-header"><strong>{{ $tc('SW_GROUPS', 2) }}</strong> <el-tag class="ml-5" size="mini">{{ studentsByGroup.length }}</el-tag></p>
-            </h3>
+        <el-row class="groups mt-20" justify="center" :gutter="30">
+          <el-col :span="5" class="unsorted-row">
+            <full-student-list :key="fullKey" :setStudentsWithoutGroup="setStudentsWithoutGroup" :studentsWithoutGroup="studentsWithoutGroup" :setDragging="setDragging" :updateGroupCount="updateGroupCount" :allStudents="allStudents" :dragging="dragging" />
+          </el-col>
 
-            <el-collapse class="group-collapse" v-if="studentsByGroup.length">
-              <el-collapse-item v-for="(group, index) in studentsByGroup" :key="index">
+          <el-col :span="19" class="groups-row">
+            <section class="groups-wrapper">
+              <h3 class="collapse-header">
+                <p class="question-sentence groups-header"><strong>{{ $tc('SW_GROUPS', 2) }}</strong> <el-tag class="ml-5" size="mini">{{ studentsByGroup.length }}</el-tag></p>
+              </h3>
 
-                <!-- Question title and number -->
-                <template slot="title">
-                  <h3 class="collapse-header">
-                    <div class="question-number">{{ index + 1 }}</div>
-                    <div class="question-sentence capitalize bold">{{ group.temporaryGroupName }}</div>
+              <el-collapse class="group-collapse" v-if="studentsByGroup.length">
+                <el-collapse-item v-for="(group, index) in studentsByGroup" :key="index">
 
-                    <!-- Remove group -->
-                    <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @onConfirm="removeGroup(group)"
-                                   class="delete-group-button" hideIcon :title="$t('SW_DELETE_GROUP')">
-                      <el-button slot="reference" plain size="small" @click.stop class="button-square mr-5 delete-group-button hidden-xs" type="danger">
-                        <i class="icon-delete"></i>
-                      </el-button>
-                    </el-popconfirm>
+                  <!-- Question title and number -->
+                  <template slot="title">
+                    <h3 class="collapse-header">
+                      <div class="question-number">{{ index + 1 }}</div>
+                      <div class="question-sentence capitalize bold">{{ group.temporaryGroupName }}</div>
 
-                    <!-- Rename group -->
-                    <el-popover @after-leave="renameStudentsGroup(group.name, group.temporaryGroupName)" trigger="click" class="edit-group-button" :close-delay="0" :title="$tc('SW_CHANGE_GROUP_NAME')" placement="top-end">
-                      <el-input v-model="group.temporaryGroupName" :placeholder="$t('SW_GROUP_NAME')" :label="$t('SW_GROUP_NAME')"></el-input>
+                      <!-- Remove group -->
+                      <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @onConfirm="removeGroup(group)"
+                                     class="delete-group-button" hideIcon :title="$t('SW_DELETE_GROUP')">
+                        <el-button slot="reference" plain size="small" @click.stop class="button-square mr-5 delete-group-button hidden-xs" type="danger">
+                          <i class="icon-delete"></i>
+                        </el-button>
+                      </el-popconfirm>
 
-                      <el-button slot="reference" plain size="small" @click.stop class="button-square mr-10 delete-group-button hidden-xs">
-                        <i class="icon-pencil"></i>
-                      </el-button>
-                    </el-popover>
+                      <!-- Rename group -->
+                      <el-popover @after-leave="renameStudentsGroup(group.name, group.temporaryGroupName)" trigger="click" class="edit-group-button" :close-delay="0" :title="$tc('SW_CHANGE_GROUP_NAME')" placement="top-end">
+                        <el-input v-model="group.temporaryGroupName" :placeholder="$t('SW_GROUP_NAME')" :label="$t('SW_GROUP_NAME')"></el-input>
 
-                    <el-tag class="question-tag-info hidden-xs" type="info">{{ group.students.length }} {{ $tc('SW_STUDENT', group.students.length).toLowerCase() }}</el-tag>
-                  </h3>
-                </template>
+                        <el-button slot="reference" plain size="small" @click.stop class="button-square mr-10 delete-group-button hidden-xs">
+                          <i class="icon-pencil"></i>
+                        </el-button>
+                      </el-popover>
 
-                <!-- Draggable student group list -->
-                <groups-item :setDragging="setDragging" @updateGroupCount="updateGroupCount" :group="{name: group.temporaryGroupName, _id: group._id}" :students="group.students" :class="{'can-drag-in': dragging}"/>
-              </el-collapse-item>
-            </el-collapse>
-          </section>
-        </el-col>
-      </el-row>
-    </div>
+                      <el-tag class="question-tag-info hidden-xs" type="info">{{ group.students.length }} {{ $tc('SW_STUDENT', group.students.length).toLowerCase() }}</el-tag>
+                    </h3>
+                  </template>
 
-    <table-status :status="status" :noneText="$t('SW_NO_STUDENTS_FOUND')"></table-status>
+                  <!-- Draggable student group list -->
+                  <groups-item :setDragging="setDragging" @updateGroupCount="updateGroupCount" :group="{name: group.temporaryGroupName, _id: group._id}" :students="group.students" :class="{'can-drag-in': dragging}"/>
+                </el-collapse-item>
+              </el-collapse>
+            </section>
+          </el-col>
+        </el-row>
+      </div>
 
-    <!-- @TODO: separate component - Add group dialog -->
-    <el-dialog :title="$t('SW_ADD_GROUP')" append-to-body :visible.sync="addGroupDialog">
-      <create-group-item :studentsByGroup="studentsByGroup" :closeCreateGroupDialog="closeCreateGroupDialog"/>
-    </el-dialog>
-  </div>
+      <table-status :status="status" :noneText="$t('SW_NO_STUDENTS_FOUND')"></table-status>
+
+      <!-- @TODO: separate component - Add group dialog -->
+      <el-dialog :title="$t('SW_ADD_GROUP')" append-to-body :visible.sync="addGroupDialog">
+        <create-group-item :studentsByGroup="studentsByGroup" :closeCreateGroupDialog="closeCreateGroupDialog"/>
+      </el-dialog>
+  </fullscreen>
 </template>
 
 <script>
@@ -113,6 +119,7 @@ export default {
 
   data () {
     return {
+      fullscreenMode: false,
       muteRemoveWarning: false,
       addGroupDialog: false,
       status: false,
@@ -131,6 +138,10 @@ export default {
   },
 
   methods: {
+    toggleFullscreen () {
+      this.fullscreenMode = !this.fullscreenMode
+      this.$refs.fullscreen.toggle()
+    },
     setStudentsWithoutGroup (value) { this.studentsWithoutGroup = value },
     closeCreateGroupDialog () { this.addGroupDialog = false },
     renameStudentsGroup (oldName, newName) {
