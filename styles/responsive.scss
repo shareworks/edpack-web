@@ -56,3 +56,10 @@
     display: none !important;
   }
 }
+
+@media (min-width: $--lg) {
+  .hidden-lg-and-up {
+    display: none !important;
+  }
+}
+
