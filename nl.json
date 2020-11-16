@@ -572,6 +572,7 @@
   "SW_REMOVE_PARTICIPANT": "Student verwijderen | Studenten verwijderen",
   "SW_REMOVE_PARTICIPANT_TEXT": "Weet u zeker dat u de student uit deze groep wilt verwijderen? U kunt dit niet ongedaan maken en er worden GEEN e-mails verzonden. | Weet u zeker dat u deze studenten uit deze assessment wilt verwijderen? U kunt dit niet ongedaan maken en er worden GEEN e-mails verzonden.",
   "SW_REMOVE_SHOW_NEVER": "Verwijderen en niet meer weergeven",
+  "SW_START_CREATING_ACTIONS": "Maak je leerpad inzichtelijk en help anderen met jouw feedback. Ga aan de slag door je eerste acties toe te voegen.",
   "SW_ADD_PARTICIPANT": "Deelnemer student",
   "SW_FACULTY_MANAGERS": "{0} managers",
   "SW_FACULTY_MANAGERS_TEXT": "Geef elk {0} zijn eigen manager.",

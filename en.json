@@ -579,6 +579,7 @@
   "SW_REMOVE_PARTICIPANT_TEXT": "Are you sure you want to remove the student from this group? You cannot undo this and NO emails will be sent. | Are you sure you want to remove these students? You cannot undo this and NO emails will be sent.",
   "SW_REMOVE_SHOW_NEVER": "Remove and don't show anymore",
   "SW_ADD_PARTICIPANT": "Add student",
+  "SW_START_CREATING_ACTIONS": "Make your learning path more insightful for yourself & help others with your feedback. Get started by adding your first actions.",
   "SW_FACULTY_MANAGERS": "{0} managers",
   "SW_FACULTY_MANAGERS_TEXT": "Give each {0} their own manager.",
   "SW_DOWNLOAD_PDF_FILE": "Download as PDF",
