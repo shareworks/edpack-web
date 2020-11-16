@@ -25,7 +25,7 @@
                   <el-input prefix-icon="icon-search" class="hide" :placeholder="$t('SW_SEARCH_STUDENTS')" size="medium" v-model="searchText" clearable></el-input>
 
                   <!-- Fullscreen -->
-                  <el-button type="text" class="survey-fullscreen" @click="toggleFullscreen">
+                  <el-button type="text" class="pull-right hidden-xs" @click="toggleFullscreen">
                     <i class="icon-fullscreen"></i>
                     <span>{{ $t(fullscreenMode ? 'SW_CLOSE_FULLSCREEN' : 'SW_FULLSCREEN') }}</span>
                   </el-button>
@@ -97,8 +97,8 @@
 
       <table-status :status="status" :noneText="$t('SW_NO_STUDENTS_FOUND')"></table-status>
 
-      <!-- @TODO: separate component - Add group dialog -->
-      <el-dialog :title="$t('SW_ADD_GROUP')" append-to-body :visible.sync="addGroupDialog">
+    <!-- Add group dialog -->
+    <el-dialog :title="$t('SW_ADD_GROUP')" append-to-body :visible.sync="addGroupDialog">
         <create-group-item :studentsByGroup="studentsByGroup" :closeCreateGroupDialog="closeCreateGroupDialog"/>
       </el-dialog>
   </fullscreen>

@@ -132,9 +132,7 @@ export default {
         this.$forceUpdate()
       })
     },
-    errorUploading () {
-      this.$message({ message: this.$i18n.t('SW_ERROR_LOADING'), type: 'error' })
-    },
+    errorUploading () { this.$message({ message: this.$i18n.t('SW_ERROR_LOADING'), type: 'error' }) },
     setNewName (lang, value) { this.form.name[lang] = value },
     setNewFaculty (lang, value) { this.form.terminology.faculty[lang] = value },
     setNewFaculties (lang, value) { this.form.terminology.faculties[lang] = value }
