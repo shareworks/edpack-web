@@ -1,7 +1,7 @@
 <template>
-  <fullscreen class="fullscreen fullscreen-manage-groups" ref="fullscreen">
+  <fullscreen class="fullscreen fullscreen-manage-groups" ref="fullscreenManageGroups" @change="fullscreenChange">
       <div v-if="status === 'done'">
-        <affix class="sticky-bar" :relative-element-selector="'.groups'" :offset="{ top: fullscreenMode ? 0 : 130, bottom: -1000 }">
+        <affix class="sticky-bar" :relative-element-selector="'.groups'" :offset="{ top: fullscreen ? 0 : 130, bottom: -1000 }">
           <transition-group name="drag-items-animation" mode="out-in">
             <!-- Filter -->
             <el-row type="flex" justify="center" align="baseline" v-if="!dragging" :key="1">
@@ -26,7 +26,7 @@
                 <!-- Fullscreen -->
                 <el-button type="text" class="pull-right hidden-xs" @click="toggleFullscreen">
                   <i class="icon-fullscreen"></i>
-                  <span>{{ $t(fullscreenMode ? 'SW_CLOSE_FULLSCREEN' : 'SW_FULLSCREEN') }}</span>
+                  <span>{{ $t(fullscreen ? 'SW_CLOSE_FULLSCREEN' : 'SW_FULLSCREEN') }}</span>
                 </el-button>
               </el-col>
             </el-row>
@@ -118,7 +118,7 @@ export default {
 
   data () {
     return {
-      fullscreenMode: false,
+      fullscreen: false,
       muteRemoveWarning: false,
       addGroupDialog: false,
       status: false,
@@ -138,10 +138,8 @@ export default {
   },
 
   methods: {
-    toggleFullscreen () {
-      this.fullscreenMode = !this.fullscreenMode
-      this.$refs.fullscreen.toggle()
-    },
+    toggleFullscreen () { this.$refs.fullscreenManageGroups.toggle() },
+    fullscreenChange (fullscreen) { this.fullscreen = fullscreen },
     setStudentsWithoutGroup (value) { this.studentsWithoutGroup = value },
     closeCreateGroupDialog () { this.addGroupDialog = false },
     renameStudentsGroup (oldName, newName) {
