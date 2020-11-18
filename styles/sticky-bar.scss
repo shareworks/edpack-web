@@ -18,6 +18,14 @@
     padding: 0 10px;
   }
 
+  // specific styles for transition-group in ManageGroups
+  > span {
+    max-width: $--max-content-width;
+    margin: 0 auto;
+    padding: 0 10px;
+    display: block;
+  }
+
   & + .bar-placeholder {
     height: 40px;
   }
@@ -30,6 +38,11 @@
 @media (min-width: $--md) {
   .sticky-bar.affix {
     > .el-row {
+      padding: 0 20px;
+    }
+
+    // specific styles for transition-group in ManageGroups
+    > span {
       padding: 0 20px;
     }
   }

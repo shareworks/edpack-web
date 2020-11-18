@@ -2,47 +2,45 @@
   <fullscreen class="fullscreen fullscreen-manage-groups" ref="fullscreen">
       <div v-if="status === 'done'">
         <affix class="sticky-bar" :relative-element-selector="'.groups'" :offset="{ top: fullscreenMode ? 0 : 130, bottom: -1000 }">
-          <div class="manage-groups-bar">
-            <transition-group name="drag-items-animation" mode="out-in">
-              <!-- Filter -->
-              <el-row type="flex" align="baseline" v-if="!dragging" :key="1">
-                <el-col :xs="20" :sm="16" :span="20">
-                  <!-- Add group button -->
-                  <el-button type="primary" plain size="medium" @click="addGroupDialog = true">
-                    <i class="icon-add"></i>
-                    <span>{{ $t('SW_ADD_GROUP') }}</span>
-                  </el-button>
+          <transition-group name="drag-items-animation" mode="out-in">
+            <!-- Filter -->
+            <el-row type="flex" justify="center" align="baseline" v-if="!dragging" :key="1">
+              <el-col :xs="20" :sm="16" :span="20">
+                <!-- Add group button -->
+                <el-button type="primary" plain size="medium" @click="addGroupDialog = true">
+                  <i class="icon-add"></i>
+                  <span>{{ $t('SW_ADD_GROUP') }}</span>
+                </el-button>
 
-                  <!-- Save button -->
-                  <el-button type="success" size="medium" :plain="!isChanged" :disabled="!isChanged" @click="confirmSubmitChanges">
-                    <i class="icon-ok-sign"></i>
-                    <span>{{ $t('SW_SAVE_CHANGES') }}</span>
-                  </el-button>
-                </el-col>
+                <!-- Save button -->
+                <el-button type="success" size="medium" :plain="!isChanged" :disabled="!isChanged" @click="confirmSubmitChanges">
+                  <i class="icon-ok-sign"></i>
+                  <span>{{ $t('SW_SAVE_CHANGES') }}</span>
+                </el-button>
+              </el-col>
 
-                <el-col :xs="4" :sm="8" :span="4" class="to-right">
-                  <!-- Search input -->
-                  <el-input prefix-icon="icon-search" class="hide" :placeholder="$t('SW_SEARCH_STUDENTS')" size="medium" v-model="searchText" clearable></el-input>
+              <el-col :xs="4" :sm="8" :span="4" class="to-right">
+                <!-- Search input -->
+                <el-input prefix-icon="icon-search" class="hide" :placeholder="$t('SW_SEARCH_STUDENTS')" size="medium" v-model="searchText" clearable></el-input>
 
-                  <!-- Fullscreen -->
-                  <el-button type="text" class="pull-right hidden-xs" @click="toggleFullscreen">
-                    <i class="icon-fullscreen"></i>
-                    <span>{{ $t(fullscreenMode ? 'SW_CLOSE_FULLSCREEN' : 'SW_FULLSCREEN') }}</span>
-                  </el-button>
-                </el-col>
-              </el-row>
+                <!-- Fullscreen -->
+                <el-button type="text" class="pull-right hidden-xs" @click="toggleFullscreen">
+                  <i class="icon-fullscreen"></i>
+                  <span>{{ $t(fullscreenMode ? 'SW_CLOSE_FULLSCREEN' : 'SW_FULLSCREEN') }}</span>
+                </el-button>
+              </el-col>
+            </el-row>
 
-              <!-- Remove student area -->
-              <el-row type="flex" align="middle" v-else-if="dragging && !draggingMainList" :key="2">
-                <el-col :xs="0" :span="24">
-                  <div class="remove-draggable-wrapper">
-                    <span class="copy-remove-user-title">{{ $t('SW_DRAG_REMOVE_STUDENTS') }}</span>
-                    <draggable ghost-class="ghost" class="remove-students" :list="removedStudents" group="students" @change="confirmRemoveUser"></draggable>
-                  </div>
-                </el-col>
-              </el-row>
-            </transition-group>
-          </div>
+            <!-- Remove student area -->
+            <el-row type="flex" align="middle" v-else-if="dragging && !draggingMainList" :key="2">
+              <el-col :xs="0" :span="24">
+                <div class="remove-draggable-wrapper">
+                  <span class="copy-remove-user-title">{{ $t('SW_DRAG_REMOVE_STUDENTS') }}</span>
+                  <draggable ghost-class="ghost" class="remove-students" :list="removedStudents" group="students" @change="confirmRemoveUser"></draggable>
+                </div>
+              </el-col>
+            </el-row>
+          </transition-group>
         </affix>
         <div class="bar-placeholder"/>
 

@@ -175,16 +175,6 @@
   min-height: 50px;
 }
 
-.affix > .manage-groups-bar {
-  padding: 0 10px !important;
-  max-width: $--max-content-width !important;
-  margin: 0 auto !important;
-
-  @media (min-width: $--md) {
-    padding: 0 20px !important;
-  }
-}
-
 .groups {
   height: 80vh;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
@@ -210,9 +200,6 @@
 }
 
 .fullscreen-manage-groups {
-  padding-left: 20px;
-  padding-right: 20px;
-
   .bar-placeholder {
     display: none;
   }
