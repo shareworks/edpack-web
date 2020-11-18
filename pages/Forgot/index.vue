@@ -17,7 +17,7 @@
 
           <el-collapse-transition>
             <div v-show="!success">
-              <p class="mb-20 text-center">{{ $t('SW_FORGOT_PASSWORD_TEXT', [appName]) }}</p>
+              <p class="mb-20 text-center">{{ $t(requestPassword ? 'SW_REQUEST_PASSWORD_TEXT' : 'SW_FORGOT_PASSWORD_TEXT', [appName]) }}</p>
 
               <el-form :model="form" @submit.prevent.native="submitEmail">
                 <el-input :placeholder="$t('SW_YOUR_EMAIL')" autofocus prefix-icon="icon-email" class="mb-10" name="email" v-model="form.email"></el-input>
