@@ -72,6 +72,10 @@ export default {
       if (!this.form.email || this.submitting) return
       this.submitting = true
 
+      if (this.requestPassword) {
+        this.form.requestPassword = true
+      }
+
       this.$http.post('/auth/local/recover-password', this.form)
         .then(() => {
           this.success = true
