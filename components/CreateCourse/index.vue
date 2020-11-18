@@ -12,7 +12,7 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item class="mt-20" :label="$t('SW_COURSE_ILEARN')" v-if="school.ilearn && school.ilearn.advantageApiId">
+      <el-form-item class="mt-20" :label="$t('SW_COURSE_ILEARN')" v-if="(school.ilearn && school.ilearn.advantageApiId)">
         <el-switch v-model="form.ilearn.integration" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
         <span class="text-muted ml-10">{{ $t('SW_COURSE_ILEARN_TEXT' )}}</span>
       </el-form-item>
@@ -51,7 +51,7 @@ export default {
         faculty: '',
         status: this.$store.state.inLTI ? 'inactive' : 'active',
         ilearn: {
-          integration: this.$store.state.school.ilearn && this.$store.state.school.advantageApiId
+          integration: (this.$store.state.school.ilearn && this.$store.state.school.advantageApiId)
         }
       }
     }
