@@ -2,7 +2,7 @@
   <section>
     <draggable ghost-class="ghost" class="group-students" :list="students"
                :group="mode === 'all' ? {name: 'students', pull: 'clone', put: false} : {name: 'students', pull: true, put: true }"
-               @start="setDragging(true)" @end="onEnd" :sort="false" @change="changeStudentGroup">
+               @start="setDragging(true, mode === 'all')" @end="onEnd" :sort="false" @change="changeStudentGroup">
 
       <el-card v-for="(student, index) in students" class="student-card-item" :key="student._id + '_' + index">
         <!-- Drag handle -->
@@ -53,7 +53,7 @@ export default {
       this.students.splice(removeStudentIndex, 1)
     },
     onEnd (draggableEvent) {
-      this.setDragging(false)
+      this.setDragging(false, this.mode === 'all')
       // Drag to same element
       if (draggableEvent.to === draggableEvent.from) {
         return

@@ -32,7 +32,8 @@
                 </el-col>
               </el-row>
 
-              <el-row type="flex" align="middle" v-else :key="2">
+              <!-- Remove student area -->
+              <el-row type="flex" align="middle" v-else-if="dragging && !draggingMainList" :key="2">
                 <el-col :xs="0" :span="24">
                   <div class="remove-draggable-wrapper">
                     <span class="copy-remove-user-title">{{ $t('SW_DRAG_REMOVE_STUDENTS') }}</span>
@@ -128,6 +129,7 @@ export default {
       allStudents: [],
       studentsWithoutGroup: [],
       dragging: false,
+      draggingMainList: false,
       searchText: this.$route.query.query || '',
       fullKey: 0
     }
@@ -256,7 +258,10 @@ export default {
       this.studentsByGroup = this.studentsByGroup.filter(g => g.name !== group.name)
       this.updateGroupCount(true)
     },
-    setDragging (value) { this.dragging = value },
+    setDragging (value, draggingMainList) {
+      this.dragging = value
+      this.draggingMainList = draggingMainList
+    },
     groupNameSort (a, b) {
       if (a.name < b.name) { return -1 }
       if (a.name > b.name) { return 1 }
