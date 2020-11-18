@@ -1,5 +1,5 @@
 <template>
-  <fullscreen class="fullscreen fullscreen-manage-groups" ref="fullscreenManageGroups" @change="fullscreenChange">
+  <fullscreen class="fullscreen-manage-groups" ref="fullscreenManageGroups" @change="fullscreenChange">
       <div v-if="status === 'done'">
         <affix class="sticky-bar" :relative-element-selector="'.groups'" :offset="{ top: fullscreen ? 0 : 130, bottom: -1000 }">
           <transition-group name="drag-items-animation" mode="out-in">
@@ -44,7 +44,7 @@
         </affix>
         <div class="bar-placeholder"/>
 
-        <el-row class="groups mt-20" justify="center" :gutter="30">
+        <el-row class="groups mt-20" :class="{ 'hide-shadow': fullscreen }" justify="center" :gutter="30">
           <el-col :span="5" class="unsorted-row">
             <full-student-list :key="fullKey" :setStudentsWithoutGroup="setStudentsWithoutGroup" :studentsWithoutGroup="studentsWithoutGroup" :setDragging="setDragging" :updateGroupCount="updateGroupCount" :allStudents="allStudents" :dragging="dragging" />
           </el-col>
