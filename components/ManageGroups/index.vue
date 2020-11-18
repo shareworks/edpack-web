@@ -55,7 +55,7 @@
                 <p class="question-sentence groups-header"><strong>{{ $tc('SW_GROUPS', 2) }}</strong> <el-tag class="ml-5" size="mini">{{ studentsByGroup.length }}</el-tag></p>
               </h3>
 
-              <el-collapse class="group-collapse" v-if="studentsByGroup.length">
+              <el-collapse class="group-collapse students-list-padding" v-if="studentsByGroup.length">
                 <el-collapse-item v-for="(group, index) in studentsByGroup" :key="index">
 
                   <!-- Question title and number -->
