@@ -1,5 +1,5 @@
 <template>
-  <fullscreen class="fullscreen-manage-groups" ref="fullscreenManageGroups" @change="fullscreenChange">
+  <fullscreen :class="{ 'fullscreen-manage-groups': fullscreen }" ref="fullscreenManageGroups" @change="fullscreenChange">
       <div v-if="status === 'done'">
         <affix class="sticky-bar" :relative-element-selector="'.groups'" :offset="{ top: fullscreen ? 0 : 130, bottom: -1000 }">
           <transition-group name="drag-items-animation" mode="out-in">
