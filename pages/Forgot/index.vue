@@ -52,7 +52,9 @@ import AnimatedLanding from '../../../components/AnimatedLanding'
 
 export default {
   name: 'Reset',
-  metaInfo: { title: 'Forgot password' },
+  metaInfo () {
+    return { title: this.$i18n.t(this.requestPassword ? 'SW_REQUEST_PASSWORD' : 'SW_FORGOT_PASSWORD') }
+  },
   components: { FooterLinks, AnimatedLanding },
 
   data () {
