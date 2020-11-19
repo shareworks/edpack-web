@@ -81,10 +81,6 @@ export default {
     }
   },
 
-  filters: {
-    fromNow: function (date) { return moment(date).fromNow(true) }
-  },
-
   mounted () {
     this.getInstructors()
   },

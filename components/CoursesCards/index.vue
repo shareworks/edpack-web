@@ -20,7 +20,7 @@
             <el-col :span="12">
               <div class="pull-right">
                 <div class="text-muted text-ellipsis font-12">
-                  {{ course.createdDate | fromNow }}</div>
+                  {{ fromNow(course.createdDate) }}</div>
               </div>
             </el-col>
           </el-row>
@@ -45,8 +45,8 @@ export default {
     }
   },
 
-  filters: {
-    fromNow: function (date) { return moment(date).fromNow(true) }
+  methods: {
+    fromNow (date) { return moment(date).fromNow(true) }
   }
 }
 </script>

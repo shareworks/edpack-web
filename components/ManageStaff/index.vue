@@ -14,7 +14,7 @@
               <div class="mb-20 font-12">
               <span v-if="instructor.activityDate">
                 <span class="online-icon"></span>
-                {{ instructor.activityDate | fromNow }}
+                {{ fromNow(instructor.activityDate) }}
               </span>
                 <span v-else>{{ $t('SW_INVITE_PENDING') }}</span> &centerdot;
                 <el-button :loading="removing" :disabled="instructors.length === 1" type="text" size="mini" @click="confirmRemove(instructor)">
@@ -61,15 +61,12 @@ export default {
     }
   },
 
-  filters: {
-    fromNow: function (date) { return moment(date).fromNow(true) }
-  },
-
   mounted () {
     this.getInstructors()
   },
 
   methods: {
+    fromNow (date) { return moment(date).fromNow(true) },
     getInstructors () {
       this.loading = true
 

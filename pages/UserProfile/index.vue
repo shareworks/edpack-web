@@ -18,7 +18,7 @@
           &centerdot;
           <a :href="'mailto:' + user.email">{{user.email }}</a>
           <span v-if="user.lastActivityDate">&centerdot;</span>
-          <span v-if="user.lastActivityDate">{{user.lastActivityDate | fromNow }}</span>
+          <span v-if="user.lastActivityDate">{{ fromNow(user.lastActivityDate) }}</span>
         </div>
 
         <!-- Email user -->
@@ -111,10 +111,6 @@ export default {
     }
   },
 
-  filters: {
-    fromNow: function (date) { return moment(date).fromNow() }
-  },
-
   created () {
     this.getProfile(this.$route.params.id)
     this.getApps(this.$route.params.id)
@@ -135,6 +131,7 @@ export default {
   },
 
   methods: {
+    fromNow (date) { return moment(date).fromNow() },
     getProfile (id) {
       this.status = 'loading'
 
