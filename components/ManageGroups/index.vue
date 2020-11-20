@@ -144,7 +144,7 @@ export default {
     closeCreateGroupDialog () { this.addGroupDialog = false },
     renameStudentsGroup (oldName, newName) {
       if (oldName === newName) return
-      const groupIndex = this.studentsByGroup.findIndex(group => { return group.temporaryGroupName === newName })
+      const groupIndex = this.studentsByGroup.findIndex(group => group.temporaryGroupName === newName)
 
       this.studentsByGroup[groupIndex].students.forEach(student => {
         student.groupName = newName

@@ -46,7 +46,7 @@ export default {
       const studentsWithoutGroup = []
 
       this.allStudents.forEach(student => {
-        const studentAlreadyAdded = studentsSorted.filter(stud => { return stud._id === student._id }).length
+        const studentAlreadyAdded = studentsSorted.find(stud => stud._id === student._id)
         // Prevent adding same student to the list
         if (studentAlreadyAdded) return
 
