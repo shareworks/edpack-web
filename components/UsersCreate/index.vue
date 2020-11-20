@@ -8,7 +8,7 @@
       <p>{{ $t("SW_DIFFERENT_EMAIL_TEXT") }}</p>
     </el-alert>
 
-    <el-alert class="mb-10" show-icon v-if="incorrectEmails.length !== 0" type="error" :title="$t('SW_EMAILS_NOT_CORRECT')">
+    <el-alert class="mb-10" show-icon v-if="incorrectEmails.length" type="error" :title="$t('SW_EMAILS_NOT_CORRECT')">
       <ul>
         <li v-for="email in incorrectEmails" :key="email">
           <span class="bold">{{ email }}</span>
@@ -72,7 +72,7 @@ export default {
       // Filter all emails that don't match regex:
       emails.forEach(email => { emailsValidation(email, failedEmails, [], email, email) })
 
-      failedEmails = failedEmails.filter(email => { return email.trim() !== '' })
+      failedEmails = failedEmails.filter(email => email.trim())
       this.incorrectEmails = failedEmails
     },
     addUsers () {
@@ -80,9 +80,7 @@ export default {
 
       const formRecipients = this.form.recipients.trim()
 
-      if (!formRecipients) {
-        return this.$message({ message: this.$i18n.t('SW_EMAIL_ERROR'), type: 'warning' })
-      }
+      if (!formRecipients) return this.$message({ message: this.$i18n.t('SW_EMAIL_ERROR'), type: 'warning' })
 
       // Convert string to emails
       const emails = this.form.recipients.replace(/\n/g, ',').split(',')
@@ -90,7 +88,7 @@ export default {
       const self = this.form.toSelf
 
       this.emailsValidation(emails)
-      if (this.incorrectEmails.length !== 0) return
+      if (this.incorrectEmails.length) return
 
       // Check for proper org emails
       if (this.school.emailDomains.length) {

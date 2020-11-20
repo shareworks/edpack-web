@@ -84,8 +84,7 @@ export default {
   methods: {
     addFaculty () {
       const length = this.form.faculties.length
-      if (!length) this.form.faculties.push({ en: '', nl: '' })
-      else if (this.form.faculties[length - 1].en !== '' || this.form.faculties[length - 1].nl !== '') {
+      if (!length || this.form.faculties[length - 1].en || this.form.faculties[length - 1].nl) {
         this.form.faculties.push({ en: '', nl: '', canvas: { id: '' } })
       }
     }

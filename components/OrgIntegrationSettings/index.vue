@@ -6,7 +6,7 @@
     <el-switch v-model="hideCredentials" active-color="#13ce66" inactive-color="#ff4949" class="mb-20" :active-text="$t('SW_VIEW_CREDENTIALS')"></el-switch>
 
     <!--Email domains-->
-    <el-alert class="mb-10" show-icon v-if="incorrectDomains.length !== 0" type="error" :title="$tc('SW_DOMAINS_NOT_CORRECT', incorrectDomains.length)">
+    <el-alert class="mb-10" show-icon v-if="incorrectDomains.length" type="error" :title="$tc('SW_DOMAINS_NOT_CORRECT', incorrectDomains.length)">
       <ul>
         <li v-for="domain in incorrectDomains" :key="domain">
           <span class="bold">{{ domain }}</span>
@@ -450,16 +450,15 @@ export default {
       this.trimImportantValues()
     },
     domainsValidation () {
-      let failedDomains = []
+      const failedDomains = []
       const domainRegex = /^@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
 
       // Filter all emails that don't match regex:
       this.form.emailDomains.forEach(domain => {
         const isIncorrect = !domainRegex.test(domain.trim())
-        if (isIncorrect) { failedDomains.push(domain.trim()) }
+        if (domain.trim() && isIncorrect) failedDomains.push(domain.trim())
       })
 
-      failedDomains = failedDomains.filter(domain => { return domain.trim() !== '' })
       this.incorrectDomains = failedDomains
       this.form.domainError = failedDomains.length > 0
     },

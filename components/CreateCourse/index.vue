@@ -73,8 +73,8 @@ export default {
       if (!this.form.faculty) this.form.faculty = undefined
       this.submitting = true
 
-      if (this.courseTemplate !== '') {
-        const course = this.courses.filter(c => c._id === this.courseTemplate)[0]
+      if (this.courseTemplate) {
+        const course = this.courses.find(c => c._id === this.courseTemplate)
 
         this.form.goals = course.goals
         this.form.projectLabels = course.projectLabels
