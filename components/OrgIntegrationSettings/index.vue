@@ -1,7 +1,6 @@
 <template>
   <div>
-    <el-alert :title="$t('SW_INTEGRATIONS_INFO_TITLE', [appName])" class="mb-30" :description="$t('SW_INTEGRATIONS_INFO_TEXT', [appName])" type="info" show-icon></el-alert>
-
+    <el-alert :title="$t('SW_INTEGRATIONS_INFO_TITLE', [appName])" class="mb-30" :description="$t('SW_INTEGRATIONS_INFO_TEXT', [appName])" type="info" show-icon/>
     <!-- Show credentials in UI -->
     <el-switch v-model="hideCredentials" active-color="#13ce66" inactive-color="#ff4949" class="mb-20" :active-text="$t('SW_VIEW_CREDENTIALS')"></el-switch>
 
@@ -191,13 +190,22 @@
           </el-radio-group>
         </el-form-item>
 
-        <div>
+        <div v-if="form.lastConfiguredLms !== 'moodle'">
           <!-- URL -->
-          <el-form-item :label="apiTemplate[form.lastConfiguredLms].name + 'URL'" v-if="apiTemplate[form.lastConfiguredLms].apiUrl.status">
+          <el-form-item :label="apiTemplate[form.lastConfiguredLms].name + ' URL'" v-if="apiTemplate[form.lastConfiguredLms].apiUrl.status">
             <el-input @change="processHttp" v-model="form[form.lastConfiguredLms].apiUrl" type="url" :placeholder="apiTemplate[form.lastConfiguredLms].apiUrl.placeholder"/>
           </el-form-item>
 
-          <!-- callback url should be here -->
+          <!-- Callback url -->
+          <el-form-item :label="apiTemplate[form.lastConfiguredLms].name + ' Callback URI'" v-if="apiTemplate[form.lastConfiguredLms].callbackUrl.status">
+            <el-input v-model="this[apiTemplate[form.lastConfiguredLms].name.toLowerCase() + 'CallbackUrl']" :readonly="true" type="url">
+              <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
+                <el-button v-clipboard="canvasCallbackUrl" @success="clipboardSuccess">
+                  <i class="icon-copy"></i>
+                </el-button>
+              </el-tooltip>
+            </el-input>
+          </el-form-item>
 
           <!-- App ID -->
           <el-form-item label="Application ID" v-if="apiTemplate[form.lastConfiguredLms].appId.status">
@@ -242,67 +250,7 @@
           </el-form-item>
         </div>
 
-        <div v-if="form.lastConfiguredLms === 'canvas'">
-          <!-- Canvas callback url -->
-          <el-form-item label="Canvas Callback URI">
-            <el-input v-model="canvasCallbackUrl" :readonly="true" type="url">
-              <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
-                <el-button v-clipboard="canvasCallbackUrl" @success="clipboardSuccess">
-                  <i class="icon-copy"></i>
-                </el-button>
-              </el-tooltip>
-            </el-input>
-          </el-form-item>
-        </div>
-        <div v-else-if="form.lastConfiguredLms === 'brightspace'">
-          <!-- Brightspace callback url -->
-          <el-form-item label="Brightspace redirect URI">
-            <el-input v-model="brightspaceCallbackUrl" :readonly="true" type="url">
-              <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
-                <el-button v-clipboard="brightspaceCallbackUrl" @success="clipboardSuccess">
-                  <i class="icon-copy"></i>
-                </el-button>
-              </el-tooltip>
-            </el-input>
-          </el-form-item>
-        </div>
-        <div v-else-if="form.lastConfiguredLms === 'blackboard'">
-          <!-- Blackboard callback url -->
-          <el-form-item label="Blackboard redirect URI" class="hide">
-            <el-input v-model="blackboardCallbackUrl" :readonly="true" type="url">
-              <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
-                <el-button v-clipboard="blackboardCallbackUrl" @success="clipboardSuccess">
-                  <i class="icon-copy"></i>
-                </el-button>
-              </el-tooltip>
-            </el-input>
-          </el-form-item>
-        </div>
-        <div v-else-if="form.lastConfiguredLms === 'ilearn'">
-          <!-- Ilearn App ID -->
-          <el-form-item label="Application ID">
-            <el-input v-model="iLearn" :readonly="true">
-              <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
-                <el-button v-clipboard="iLearn">
-                  <i class="icon-copy"></i>
-                </el-button>
-              </el-tooltip>
-            </el-input>
-          </el-form-item>
-
-          <!-- Ilearn callback url -->
-          <el-form-item label="iLearn redirect URI" class="hide">
-            <el-input v-model="iLearnCallbackUrl" :readonly="true" type="url">
-              <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
-                <el-button v-clipboard="iLearnCallbackUrl" @success="clipboardSuccess">
-                  <i class="icon-copy"></i>
-                </el-button>
-              </el-tooltip>
-            </el-input>
-          </el-form-item>
-        </div>
-        <el-alert v-else :title="$t('SW_NO_API_INTEGRATION_YET')" class="mb-30" :description="$t('SW_NO_API_INTEGRATION_YET_TEXT')" type="warning" show-icon>
-        </el-alert>
+        <el-alert v-else :title="$t('SW_NO_API_INTEGRATION_YET')" class="mb-30" :description="$t('SW_NO_API_INTEGRATION_YET_TEXT')" type="warning" show-icon/>
       </div>
     </el-collapse-transition>
   </div>
@@ -355,7 +303,7 @@ export default {
         canvas: {
           name: 'Canvas',
           apiUrl:{ status: true, placeholder: 'ex. https://your-school.instructure.com ...' },
-          CallbackUrl:{ status: true },
+          callbackUrl:{ status: true },
           appId: { status: false },
           apiId: { status: this.form.lastConfiguredLtiVersion === 'basic',label: 'Canvas key ID', placeholder: 'Canvas Developer Key ID ...' },
           apiSecret: { status: this.form.lastConfiguredLtiVersion === 'basic', label: 'Canvas key secret', placeholder: 'Canvas Developer Key Secret ...' },
@@ -367,7 +315,7 @@ export default {
         brightspace: {
           name: 'Brightspace',
           apiUrl:{ status: true, placeholder: 'ex. https://your-school.brightspace.com ...' },
-          CallbackUrl:{ status: true },
+          callbackUrl:{ status: true },
           appId: { status: false },
           apiId: { status: this.form.lastConfiguredLtiVersion === 'basic',label: 'Brightspace API client ID', placeholder: 'Brightspace OAuth Client ID ...' },
           apiSecret: { status: this.form.lastConfiguredLtiVersion === 'basic', label: 'Brightspace API client secret' },
@@ -379,7 +327,7 @@ export default {
         blackboard: {
           name: 'Blackboard',
           apiUrl:{ status: true, placeholder: 'ex. https://your-school.blackboard.com ...' },
-          CallbackUrl:{ status: false },
+          callbackUrl:{ status: false },
           appId: { status: true, label: 'Blackboard Application ID', placeholder: 'Blackboard Application ID ...' },
           apiId: { status: true, label: 'Blackboard App key', placeholder: 'Blackboard App key ...' },
           apiSecret: { status: true, label: 'Blackboard App secret', placeholder: 'Blackboard App Secret ...' },
@@ -391,7 +339,7 @@ export default {
         ilearn: {
           name: 'Ilearn',
           apiUrl:{ status: true, placeholder: 'ex. https://your-school.ilearn.com ...' },
-          CallbackUrl:{ status: false },
+          callbackUrl:{ status: false },
           appId: { status: false },
           apiId: { status: this.form.lastConfiguredLtiVersion === 'basic',label: 'iLearn App key', placeholder: 'iLearn App key ...' },
           apiSecret: { status: this.form.lastConfiguredLtiVersion === 'basic', label: 'iLearn App secret', placeholder: 'iLearn App Secret ...' },
@@ -403,14 +351,12 @@ export default {
       }
     }
   },
-
   watch: {
     form: {
       deep: true,
       handler () { this.trimImportantValues() }
     }
   },
-
   methods: {
     changeHttpToHttps (urlString) {
       if (!urlString) return
