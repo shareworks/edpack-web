@@ -19,12 +19,12 @@
         {{ domain }}
       </el-tag>
       <el-input
-              class="inline ml-5"
               size="small"
+              ref="emailDomains"
+              class="inline ml-5"
               v-if="inputVisible.emailDomains"
               v-model="inputValue.emailDomains"
               placeholder="@role.your-school.com"
-              ref="emailDomains"
               @keyup.enter.native="handleInputConfirm('emailDomains')"
               @blur="handleInputConfirm('emailDomains'); domainsValidation()">
       </el-input>
@@ -187,20 +187,62 @@
         <!-- API integration LMS -->
         <el-form-item :label="$t('SW_LMS_API_INTEGRATION')">
           <el-radio-group v-model="form.lastConfiguredLms" size="small">
-            <el-radio-button label="canvas">Canvas</el-radio-button>
-            <el-radio-button label="brightspace">Brightspace</el-radio-button>
-            <el-radio-button label="blackboard">Blackboard</el-radio-button>
-            <el-radio-button label="moodle">Moodle</el-radio-button>
-            <el-radio-button label="ilearn">Ilearn</el-radio-button>
+            <el-radio-button v-for="integration in integrations" :key="integration" class="capitalize" :label="integration"/>
           </el-radio-group>
         </el-form-item>
 
-        <div v-if="form.lastConfiguredLms === 'canvas'">
-          <!-- Canvas URL -->
-          <el-form-item label="Canvas URL">
-            <el-input @change="processHttp" v-model="form.canvas.apiUrl" type="url" placeholder="ex. https://your-school.instructure.com ..."></el-input>
+        <div>
+          <!-- URL -->
+          <el-form-item :label="apiTemplate[form.lastConfiguredLms].name + 'URL'" v-if="apiTemplate[form.lastConfiguredLms].apiUrl.status">
+            <el-input @change="processHttp" v-model="form[form.lastConfiguredLms].apiUrl" type="url" :placeholder="apiTemplate[form.lastConfiguredLms].apiUrl.placeholder"/>
           </el-form-item>
 
+          <!-- callback url should be here -->
+
+          <!-- App ID -->
+          <el-form-item label="Application ID" v-if="apiTemplate[form.lastConfiguredLms].appId.status">
+            <el-input v-model="form[form.lastConfiguredLms].appId">
+              <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
+                <el-button v-clipboard="form[form.lastConfiguredLms].appId">
+                  <i class="icon-copy"></i>
+                </el-button>
+              </el-tooltip>
+            </el-input>
+          </el-form-item>
+
+          <!-- key -->
+          <el-form-item :label="apiTemplate[form.lastConfiguredLms].apiId.label" v-if="apiTemplate[form.lastConfiguredLms].apiId.status">
+            <el-input v-model="form[form.lastConfiguredLms].apiId" type="text" :placeholder="apiTemplate[form.lastConfiguredLms].apiId.placeholder"/>
+          </el-form-item>
+
+          <!-- Secret -->
+          <el-form-item :label="apiTemplate[form.lastConfiguredLms].apiSecret.label" v-if="apiTemplate[form.lastConfiguredLms].apiSecret.status">
+            <el-input v-model="form[form.lastConfiguredLms].apiSecret" :type="hideCredentials ? 'password' : 'text'" :placeholder="form[form.lastConfiguredLms].apiSecret.placeholder"/>
+          </el-form-item>
+
+          <!-- Lti-advantage auth url -->
+          <el-form-item :label="apiTemplate[form.lastConfiguredLms].advantageApiId.label" v-if="apiTemplate[form.lastConfiguredLms].advantageApiId.status">
+            <el-input v-model="form[form.lastConfiguredLms].advantageApiId" :type="'text'" :placeholder="form[form.lastConfiguredLms].advantageApiId.placeholder"/>
+          </el-form-item>
+
+          <!-- Lti-advantage auth secret -->
+          <el-form-item :label="apiTemplate[form.lastConfiguredLms].advantageApiSecret.label" v-if="apiTemplate[form.lastConfiguredLms].advantageApiSecret.status">
+            <el-input v-model="form[form.lastConfiguredLms].advantageApiSecret" :type="'text'" :placeholder="form[form.lastConfiguredLms].advantageApiSecret.placeholder"/>
+          </el-form-item>
+
+          <!-- Lti-advantage auth url -->
+          <el-form-item :label="apiTemplate[form.lastConfiguredLms].name + 'LTI v1.3 auth'" v-if="apiTemplate[form.lastConfiguredLms].advantageAuthUrl.status">
+            <el-input v-model="form[form.lastConfiguredLms].advantageAuthUrl" :type="'text'" :placeholder="form[form.lastConfiguredLms].advantageAuthUrl.placeholder"/>
+          </el-form-item>
+
+          <!-- Ilearn ? Lti-advantage Deeplink-->
+          <el-form-item :label="form[form.lastConfiguredLms].advantageDeeplinking.label" v-if="apiTemplate[form.lastConfiguredLms].advantageDeeplinking.status">
+            <el-switch v-model="form[form.lastConfiguredLms].advantageDeeplinking" active-color="#13ce66" inactive-color="#ff4949"/>
+            <span class="text-muted ml-10">{{ $t('SW_USE_DEEPLINK_TEXT' )}}</span>
+          </el-form-item>
+        </div>
+
+        <div v-if="form.lastConfiguredLms === 'canvas'">
           <!-- Canvas callback url -->
           <el-form-item label="Canvas Callback URI">
             <el-input v-model="canvasCallbackUrl" :readonly="true" type="url">
@@ -211,39 +253,8 @@
               </el-tooltip>
             </el-input>
           </el-form-item>
-
-          <!-- Canvas key -->
-          <el-form-item label="Canvas Key ID" v-if="form.lastConfiguredLtiVersion === 'basic'">
-            <el-input @change="trimImportantValues" v-model="form.canvas.apiId" type="text" placeholder="Canvas Developer Key ID ..."></el-input>
-          </el-form-item>
-
-          <!-- Canvas secret -->
-          <el-form-item label="Canvas Key Secret" v-if="form.lastConfiguredLtiVersion === 'basic'">
-            <el-input @change="trimImportantValues" v-model="form.canvas.apiSecret" :type="hideCredentials ? 'password' : 'text'" placeholder="Canvas Developer Key Secret ..."></el-input>
-          </el-form-item>
-
-          <!-- Canvas Lti-advantage auth url -->
-          <el-form-item label="Canvas LTI v1.3 Key ID" v-if="form.lastConfiguredLtiVersion === 'advantage'">
-            <el-input @change="trimImportantValues" v-model="form.canvas.advantageApiId" :type="'text'" placeholder="Canvas LTI v1.3 Key ID ..."></el-input>
-          </el-form-item>
-
-          <!-- Canvas Lti-advantage auth secret -->
-          <el-form-item label="Canvas LTI v1.3 Key Secret" v-if="form.lastConfiguredLtiVersion === 'advantage'">
-            <el-input @change="trimImportantValues" v-model="form.canvas.advantageApiSecret" :type="'text'" placeholder="Canvas LTI v1.3 Key Secret ..."></el-input>
-          </el-form-item>
-
-          <!-- Canvas Lti-advantage auth url -->
-          <el-form-item label="Canvas LTI v1.3 auth" v-if="form.lastConfiguredLtiVersion === 'advantage'">
-            <el-input @change="trimImportantValues" v-model="form.canvas.advantageAuthUrl" :type="'text'" placeholder="Canvas LTI v1.3 authorization url ..."></el-input>
-          </el-form-item>
         </div>
-
         <div v-else-if="form.lastConfiguredLms === 'brightspace'">
-          <!-- Brightspace URL -->
-          <el-form-item label="Brightspace URL">
-            <el-input @change="processHttp" v-model="form.brightspace.apiUrl" type="url" placeholder="ex. https://your-school.brightspace.com ..."></el-input>
-          </el-form-item>
-
           <!-- Brightspace callback url -->
           <el-form-item label="Brightspace redirect URI">
             <el-input v-model="brightspaceCallbackUrl" :readonly="true" type="url">
@@ -254,50 +265,8 @@
               </el-tooltip>
             </el-input>
           </el-form-item>
-
-          <!-- Brightspace key -->
-          <el-form-item label="Brightspace API client ID" v-if="form.lastConfiguredLtiVersion === 'basic'">
-            <el-input @change="trimImportantValues" v-model="form.brightspace.apiId" type="text" placeholder="Brightspace OAuth Client ID ..."></el-input>
-          </el-form-item>
-
-          <!-- Brightspace secret -->
-          <el-form-item label="Brightspace API client secret" v-if="form.lastConfiguredLtiVersion === 'basic'">
-            <el-input @change="trimImportantValues" v-model="form.brightspace.apiSecret" :type="hideCredentials ? 'password' : 'text'" placeholder="Brightspace OAuth Client Secret ..."></el-input>
-          </el-form-item>
-
-          <!-- Brightspace Lti-advantage auth url -->
-          <el-form-item label="Brightspace LTI v1.3 client id" v-if="form.lastConfiguredLtiVersion === 'advantage'">
-            <el-input @change="trimImportantValues" v-model="form.brightspace.advantageApiId" :type="'text'" placeholder="Brightspace LTI v1.3 client id ..."></el-input>
-          </el-form-item>
-
-          <!-- Brightspace Lti-advantage auth secret -->
-          <el-form-item label="Brightspace LTI v1.3 client secret" v-if="form.lastConfiguredLtiVersion === 'advantage'">
-            <el-input @change="trimImportantValues" v-model="form.brightspace.advantageApiSecret" :type="'text'" placeholder="Brightspace LTI v1.3 client secret ..."></el-input>
-          </el-form-item>
-
-          <!-- Brightspace Lti-advantage auth url -->
-          <el-form-item label="Brightspace LTI v1.3 auth" v-if="form.lastConfiguredLtiVersion === 'advantage'">
-            <el-input @change="trimImportantValues" v-model="form.brightspace.advantageAuthUrl" :type="'text'" placeholder="Brightspace LTI v1.3 authorization url ..."></el-input>
-          </el-form-item>
         </div>
-
         <div v-else-if="form.lastConfiguredLms === 'blackboard'">
-          <!-- Blackboard URL -->
-          <el-form-item label="Blackboard URL">
-            <el-input @change="processHttp" v-model="form.blackboard.apiUrl" type="url" placeholder="ex. https://your-school.blackboard.com ..."></el-input>
-          </el-form-item>
-
-          <!-- Blackboard App ID -->
-          <el-form-item label="Application ID">
-            <el-input v-model="form.blackboard.appId">
-              <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
-                <el-button v-clipboard="form.blackboard.appId">
-                  <i class="icon-copy"></i>
-                </el-button>
-              </el-tooltip>
-            </el-input>
-          </el-form-item>
-
           <!-- Blackboard callback url -->
           <el-form-item label="Blackboard redirect URI" class="hide">
             <el-input v-model="blackboardCallbackUrl" :readonly="true" type="url">
@@ -308,24 +277,8 @@
               </el-tooltip>
             </el-input>
           </el-form-item>
-
-          <!-- Blackboard key -->
-          <el-form-item label="Blackboard App key">
-            <el-input @change="trimImportantValues" v-model="form.blackboard.apiId" type="text" placeholder="Blackboard App key ..."></el-input>
-          </el-form-item>
-
-          <!-- Blackboard secret -->
-          <el-form-item label="Blackboard App secret">
-            <el-input @change="trimImportantValues" v-model="form.blackboard.apiSecret" :type="hideCredentials ? 'password' : 'text'" placeholder="Blackboard App Secret ..."></el-input>
-          </el-form-item>
         </div>
-
         <div v-else-if="form.lastConfiguredLms === 'ilearn'">
-          <!-- Ilearn URL -->
-          <el-form-item label="ilearn URL">
-            <el-input @change="processHttp" v-model="form.ilearn.apiUrl" type="url" placeholder="ex. https://your-school.ilearn.com ..."></el-input>
-          </el-form-item>
-
           <!-- Ilearn App ID -->
           <el-form-item label="Application ID">
             <el-input v-model="iLearn" :readonly="true">
@@ -347,39 +300,7 @@
               </el-tooltip>
             </el-input>
           </el-form-item>
-
-          <!-- Ilearn key -->
-          <el-form-item label="iLearn App key" v-if="form.lastConfiguredLtiVersion === 'basic'">
-            <el-input @change="trimImportantValues" v-model="form.ilearn.apiId" type="text" placeholder="iLearn App key ..."></el-input>
-          </el-form-item>
-
-          <!-- Ilearn secret -->
-          <el-form-item label="iLearn App secret" v-if="form.lastConfiguredLtiVersion === 'basic'">
-            <el-input @change="trimImportantValues" v-model="form.ilearn.apiSecret" :type="hideCredentials ? 'password' : 'text'" placeholder="iLearn App Secret ..."></el-input>
-          </el-form-item>
-
-          <!-- Ilearn Lti-advantage auth url -->
-          <el-form-item label="iLearn LTI v1.3 client id" v-if="form.lastConfiguredLtiVersion === 'advantage'">
-            <el-input @change="trimImportantValues" v-model="form.ilearn.advantageApiId" :type="'text'" placeholder="iLearn LTI v1.3 client id ..."></el-input>
-          </el-form-item>
-
-          <!-- Ilearn Lti-advantage auth secret -->
-          <el-form-item label="iLearn LTI v1.3 client secret" v-if="form.lastConfiguredLtiVersion === 'advantage'">
-            <el-input @change="trimImportantValues" v-model="form.ilearn.advantageApiSecret" :type="'text'" placeholder="iLearn LTI v1.3 client secret ..."></el-input>
-          </el-form-item>
-
-          <!-- Ilearn Lti-advantage auth url -->
-          <el-form-item label="iLearn LTI v1.3 auth" v-if="form.lastConfiguredLtiVersion === 'advantage'">
-            <el-input @change="trimImportantValues" v-model="form.ilearn.advantageAuthUrl" :type="'text'" placeholder="iLearn LTI v1.3 authorization url ..."></el-input>
-          </el-form-item>
-
-          <!-- Ilearn Lti-advantage Deeplink-->
-          <el-form-item label="iLearn LTI v1.3 deeplinking" v-if="form.lastConfiguredLtiVersion === 'advantage'">
-            <el-switch v-model="form.ilearn.advantageDeeplinking" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
-            <span class="text-muted ml-10">{{ $t('SW_USE_DEEPLINK_TEXT' )}}</span>
-          </el-form-item>
         </div>
-
         <el-alert v-else :title="$t('SW_NO_API_INTEGRATION_YET')" class="mb-30" :description="$t('SW_NO_API_INTEGRATION_YET_TEXT')" type="warning" show-icon>
         </el-alert>
       </div>
@@ -426,7 +347,67 @@ export default {
       ltiAdvantageKeysetUrl: `${config.api_url}/lti/advantage/jwks`,
 
       blackboardAppId: config.blackboardAppId,
-      iLearn: config.iLearn
+      iLearn: config.iLearn,
+
+      importantFields: ['canvas', 'brightspace', 'blackboard', 'ilearn'],
+      integrations: ['canvas', 'brightspace', 'blackboard', 'moodle', 'ilearn'],
+      apiTemplate: {
+        canvas: {
+          name: 'Canvas',
+          apiUrl:{ status: true, placeholder: 'ex. https://your-school.instructure.com ...' },
+          CallbackUrl:{ status: true },
+          appId: { status: false },
+          apiId: { status: this.form.lastConfiguredLtiVersion === 'basic',label: 'Canvas key ID', placeholder: 'Canvas Developer Key ID ...' },
+          apiSecret: { status: this.form.lastConfiguredLtiVersion === 'basic', label: 'Canvas key secret', placeholder: 'Canvas Developer Key Secret ...' },
+          advantageApiId: { status: this.form.lastConfiguredLtiVersion === 'advantage', label: 'Canvas LTI v1.3 Key ID' , placeholder: 'Canvas LTI v1.3 Key ID ...' },
+          advantageApiSecret: { status: this.form.lastConfiguredLtiVersion === 'advantage', label: 'Canvas LTI v1.3 Key Secret', placeholder: 'Canvas LTI v1.3 Key Secret ...' },
+          advantageAuthUrl: { status: this.form.lastConfiguredLtiVersion === 'advantage', placeholder: 'Canvas LTI v1.3 authorization url ...' },
+          advantageDeeplinking: { status: false }
+        },
+        brightspace: {
+          name: 'Brightspace',
+          apiUrl:{ status: true, placeholder: 'ex. https://your-school.brightspace.com ...' },
+          CallbackUrl:{ status: true },
+          appId: { status: false },
+          apiId: { status: this.form.lastConfiguredLtiVersion === 'basic',label: 'Brightspace API client ID', placeholder: 'Brightspace OAuth Client ID ...' },
+          apiSecret: { status: this.form.lastConfiguredLtiVersion === 'basic', label: 'Brightspace API client secret' },
+          advantageApiId: { status: this.form.lastConfiguredLtiVersion === 'advantage', label: 'Brightspace LTI v1.3 client id' , placeholder: 'Brightspace LTI v1.3 client id ...' },
+          advantageApiSecret: { status: this.form.lastConfiguredLtiVersion === 'advantage', label: 'Brightspace LTI v1.3 client secret', placeholder: 'Brightspace LTI v1.3 client secret ...' },
+          advantageAuthUrl: { status: this.form.lastConfiguredLtiVersion === 'advantage', placeholder: 'Brightspace LTI v1.3 authorization url ...' },
+          advantageDeeplinking: { status: false }
+        },
+        blackboard: {
+          name: 'Blackboard',
+          apiUrl:{ status: true, placeholder: 'ex. https://your-school.blackboard.com ...' },
+          CallbackUrl:{ status: false },
+          appId: { status: true, label: 'Blackboard Application ID', placeholder: 'Blackboard Application ID ...' },
+          apiId: { status: true, label: 'Blackboard App key', placeholder: 'Blackboard App key ...' },
+          apiSecret: { status: true, label: 'Blackboard App secret', placeholder: 'Blackboard App Secret ...' },
+          advantageApiId: { status: false },
+          advantageApiSecret: { status: false },
+          advantageAuthUrl: { status: false },
+          advantageDeeplinking: { status: false }
+        },
+        ilearn: {
+          name: 'Ilearn',
+          apiUrl:{ status: true, placeholder: 'ex. https://your-school.ilearn.com ...' },
+          CallbackUrl:{ status: false },
+          appId: { status: false },
+          apiId: { status: this.form.lastConfiguredLtiVersion === 'basic',label: 'iLearn App key', placeholder: 'iLearn App key ...' },
+          apiSecret: { status: this.form.lastConfiguredLtiVersion === 'basic', label: 'iLearn App secret', placeholder: 'iLearn App Secret ...' },
+          advantageApiId: { status: this.form.lastConfiguredLtiVersion === 'advantage', label: 'iLearn LTI v1.3 client id' , placeholder: 'iLearn LTI v1.3 client id ...' },
+          advantageApiSecret: { status: this.form.lastConfiguredLtiVersion === 'advantage', label: 'iLearn LTI v1.3 client secret', placeholder: 'iLearn LTI v1.3 client secret ...' },
+          advantageAuthUrl: { status: this.form.lastConfiguredLtiVersion === 'advantage', label: 'iLearn LTI v1.3 auth', placeholder: 'iLearn LTI v1.3 authorization url ...' },
+          advantageDeeplinking: { status: this.form.lastConfiguredLtiVersion === 'advantage', label: 'iLearn LTI v1.3 deeplinking' }
+        }
+      }
+    }
+  },
+
+  watch: {
+    form: {
+      deep: true,
+      handler () { this.trimImportantValues() }
     }
   },
 
@@ -442,10 +423,9 @@ export default {
       return url.toString()
     },
     processHttp () {
-      this.form.canvas.apiUrl = this.changeHttpToHttps(this.form.canvas.apiUrl)
-      this.form.brightspace.apiUrl = this.changeHttpToHttps(this.form.brightspace.apiUrl)
-      this.form.blackboard.apiUrl = this.changeHttpToHttps(this.form.blackboard.apiUrl)
-      this.form.ilearn.apiUrl = this.changeHttpToHttps(this.form.ilearn.apiUrl)
+      this.importantFields.forEach(field => {
+        this.form[field].apiUrl = this.changeHttpToHttps(this.form[field].apiUrl)
+      })
 
       this.trimImportantValues()
     },
@@ -480,32 +460,13 @@ export default {
       })
     },
     trimImportantValues () {
-      this.form.canvas.apiUrl = this.form.canvas.apiUrl?.trim()
-      this.form.canvas.apiId = this.form.canvas.apiId?.trim()
-      this.form.canvas.apiSecret = this.form.canvas.apiSecret?.trim()
-      this.form.canvas.advantageApiId = this.form.canvas.advantageApiId?.trim()
-      this.form.canvas.advantageApiSecret = this.form.canvas.advantageApiSecret?.trim()
-      this.form.canvas.advantageAuthUrl = this.form.canvas.advantageAuthUrl?.trim()
-
-      this.form.brightspace.apiUrl = this.form.brightspace.apiUrl?.trim()
-      this.form.brightspace.apiId = this.form.brightspace.apiId?.trim()
-      this.form.brightspace.apiSecret = this.form.brightspace.apiSecret?.trim()
-      this.form.brightspace.advantageApiId = this.form.brightspace.advantageApiId?.trim()
-      this.form.brightspace.advantageApiSecret = this.form.brightspace.advantageApiSecret?.trim()
-      this.form.brightspace.advantageAuthUrl = this.form.brightspace.advantageAuthUrl?.trim()
-
-      this.form.blackboard.apiUrl = this.form.blackboard.apiUrl?.trim()
-      this.form.blackboard.apiId = this.form.blackboard.apiId?.trim()
-      this.form.blackboard.apiSecret = this.form.blackboard.apiSecret?.trim()
-
-      if (this.form.ilearn) {
-        this.form.ilearn.apiUrl = this.form.ilearn.apiUrl?.trim()
-        this.form.ilearn.apiId = this.form.ilearn.apiId?.trim()
-        this.form.ilearn.apiSecret = this.form.ilearn.apiSecret?.trim()
-        this.form.ilearn.advantageApiId = this.form.ilearn.advantageApiId?.trim()
-        this.form.ilearn.advantageApiSecret = this.form.ilearn.advantageApiSecret?.trim()
-        this.form.ilearn.advantageAuthUrl = this.form.ilearn.advantageAuthUrl?.trim()
-      }
+      this.importantFields.forEach(formField => {
+        for (const key in this.form[formField]) {
+          if (this.form[formField] && typeof this.form[formField][key] === 'string') {
+            this.form[formField][key] = this.form[formField][key].trim()
+          }
+        }
+      })
     },
     showInput (type) {
       this.inputVisible[type] = true
@@ -527,9 +488,7 @@ export default {
       else this.form[type].splice(this.form[type].indexOf(item), 1)
       this.$nextTick()
     },
-    clipboardSuccess () {
-      this.$message({ message: this.$i18n.t('SW_COPIED_TO_CLIPBOARD'), type: 'success' })
-    }
+    clipboardSuccess () { this.$message({ message: this.$i18n.t('SW_COPIED_TO_CLIPBOARD'), type: 'success' }) }
   }
 }
 </script>
