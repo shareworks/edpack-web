@@ -138,7 +138,6 @@ export default {
       // If passed intro, always update user
       else this.updateUser()
     },
-    openChat () { window.fcWidget.open() },
     updateUser () {
       if (this.submitting) return
       this.submitting = true
@@ -166,7 +165,8 @@ export default {
         })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.submitting = false })
-    }
+    },
+    openChat () { window.fcWidget.open() }
   }
 }
 </script>

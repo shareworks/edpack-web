@@ -317,11 +317,6 @@ export default {
         this.getUsers(true)
       }
     },
-    changeFilter (filter) { this.$router.replace({ name: 'admin', params: { slug: this.school.slug, mode: 'users' }, query: { query: this.searchText, filter: filter } }) },
-    dateFormatter (row, column, value) { return value ? moment(value).fromNow() : '-' },
-    sortCreatedDate (a, b) { return dateSorter(a.createdDate, b.createdDate) },
-    sortActivityDate (a, b) { return dateSorter(a.activityDate, b.activityDate) },
-    sortCaseInsensitive (a, b) { return sortCaseInsensitive(a.name, b.name) },
     updateUser (userId, user) {
       this.tableData = this.tableData.filter(u => u._id !== userId)
       this.tableData.push(user)
@@ -329,7 +324,12 @@ export default {
     finishEditUser () {
       this.editUserForm = false
       this.dialogEditUser = false
-    }
+    },
+    changeFilter (filter) { this.$router.replace({ name: 'admin', params: { slug: this.school.slug, mode: 'users' }, query: { query: this.searchText, filter: filter } }) },
+    dateFormatter (row, column, value) { return value ? moment(value).fromNow() : '-' },
+    sortCreatedDate (a, b) { return dateSorter(a.createdDate, b.createdDate) },
+    sortActivityDate (a, b) { return dateSorter(a.activityDate, b.activityDate) },
+    sortCaseInsensitive (a, b) { return sortCaseInsensitive(a.name, b.name) }
   }
 }
 </script>
