@@ -573,6 +573,7 @@
   "SW_MIN": "min.",
   "SW_MAX": "max.",
   "SW_LOG_IN_WITH_MS": "Sign in with Microsoft",
+  "SW_DELETE_EMAIL_CONFIRM": "Are you sure you want to remove this email address?",
   "SW_SUCCESSFULLY_CONFIGURED": "Course successfully configured with LMS",
   "SW_USER_COPIED": "Student has been added to the group.",
   "SW_USER_MOVED": "Student has been moved.",

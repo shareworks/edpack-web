@@ -577,6 +577,7 @@
   "SW_START_CREATING_ACTIONS": "Maak je leerpad inzichtelijk en help anderen met jouw feedback. Ga aan de slag door je eerste acties toe te voegen.",
   "SW_ADD_PARTICIPANT": "Deelnemer student",
   "SW_FACULTY_MANAGERS": "{0} managers",
+  "SW_DELETE_EMAIL_CONFIRM": "Weet je zeker dat je dit e-mailadres wilt verwijderen?",
   "SW_FACULTY_MANAGERS_TEXT": "Geef elk {0} zijn eigen manager.",
   "SW_DOWNLOAD_PDF_FILE": "Download als PDF",
   "SW_DUPLICATED_USER_REMOVED": "De gedupliceerde gebruiker is opgemerkt en verwijderd.",
