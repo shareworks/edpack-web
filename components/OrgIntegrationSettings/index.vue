@@ -314,7 +314,7 @@ export default {
         },
         brightspace: {
           name: 'Brightspace',
-          apiUrl: { status: true, placeholder: 'ex. https://your-school.brightspace.com ...' },
+          apiUrl: { status: true, placeholder: 'ex. https://your-school.brightspace.com/d2l ...' },
           callbackUrl: { status: true },
           appId: { status: false },
           apiId: { status: this.form.lastConfiguredLtiVersion === 'basic', label: 'Brightspace API client ID', placeholder: 'Brightspace OAuth Client ID ...' },
