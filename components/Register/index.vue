@@ -48,6 +48,12 @@
             <span class="google-icon"></span>
             <strong>{{ $t('SW_REGISTER_WITH_GOOGLE') }}</strong>
           </el-button>
+
+          <!-- Register with MS account -->
+          <el-button class="block no-margin mt-5" v-if="signinWithMS" @click="selectMicrosoft">
+            <span class="ms-icon"></span>
+            <strong>{{ $t('SW_REGISTER_WITH_MS') }}</strong>
+          </el-button>
         </div>
 
         <el-alert class="mt-10" type="error" show-icon v-if="errorType" :title="$t('SW_' + errorType.toUpperCase())"></el-alert>
@@ -80,6 +86,7 @@ export default {
       organizationId: this.$route.query.organization || '',
       apiUrl: config.api_url,
       signinByPassword: config.signinByPassword,
+      signinWithMS: config.signinWithMS,
       passwordMode: false,
       submitting: false,
       selectedSchool: '',
@@ -108,14 +115,16 @@ export default {
       window.location.assign(`${this.apiUrl}/auth/saml?name=${school.name}&entrypoint=${school.url}&redirectpath=${redirect}`)
     },
     selectGoogle () {
-      if (config.mock_user) return this.$router.push('/admin')
-
       let redirect = this.$route.query.redirect || ''
       if (redirect[0] === '/') redirect = redirect.substr(1)
       window.location.assign(`${this.apiUrl}/auth/google?redirectpath=${redirect}`)
     },
+    selectMicrosoft () {
+      let redirect = this.$route.query.redirect || ''
+      if (redirect[0] === '/') redirect = redirect.substr(1)
+      window.location.assign(`${this.apiUrl}/auth/microsoft?redirectpath=${redirect}`)
+    },
     submitPassword () {
-      if (config.mock_user) return this.$router.push('/admin')
       if (!this.form.password || !this.repeatPassword) return this.$message({ message: this.$i18n.t('SW_PASSWORD_INCOMPLETE'), type: 'error' })
       if (!this.accessToken || !this.organizationId) return this.$message({ message: this.$i18n.t('SW_MISSING_REGISTER_TOKENS'), type: 'error' })
       if (this.form.password !== this.repeatPassword) {
