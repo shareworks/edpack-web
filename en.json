@@ -572,6 +572,7 @@
   "SW_SUBMIT_MANAGE_GROUP_TITLE": "Are you sure?",
   "SW_MIN": "min.",
   "SW_MAX": "max.",
+  "SW_LOG_IN_WITH_MS": "Sign in with Microsoft",
   "SW_SUCCESSFULLY_CONFIGURED": "Course successfully configured with LMS",
   "SW_USER_COPIED": "Student has been added to the group.",
   "SW_USER_MOVED": "Student has been moved.",

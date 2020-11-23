@@ -35,6 +35,12 @@
             <span class="google-icon"></span>
             <strong>{{ $t('SW_LOG_IN_WITH_GOOGLE') }}</strong>
           </el-button>
+
+          <!-- MS log in -->
+          <el-button v-if="signinWithMS" class="block mt-5 no-margin" @click="selectMicrosoft">
+            <span class="ms-icon"></span>
+            <strong>{{ $t('SW_LOG_IN_WITH_MS') }}</strong>
+          </el-button>
         </div>
 
         <el-alert class="mt-10" type="error" show-icon v-if="errorType" :title="$t('SW_' + errorType.toUpperCase())"></el-alert>
@@ -96,6 +102,7 @@ export default {
       appName: config.name,
       apiUrl: config.api_url,
       signinByPassword: config.signinByPassword,
+      signinWithMS: config.signinWithMS,
       showRequestPasswordLink: config.showRequestPasswordLink,
       passwordMode: false,
       submitting: false,
@@ -129,6 +136,13 @@ export default {
       let redirect = this.$route.query.redirect || ''
       if (redirect[0] === '/') redirect = redirect.substr(1)
       window.location.assign(`${this.apiUrl}/auth/google?redirectpath=${redirect}`)
+    },
+    selectMicrosoft () {
+      if (config.mock_user) return this.$router.push('/admin')
+
+      let redirect = this.$route.query.redirect || ''
+      if (redirect[0] === '/') redirect = redirect.substr(1)
+      window.location.assign(`${this.apiUrl}/auth/microsoft?redirectpath=${redirect}`)
     },
     submitPassword () {
       if (config.mock_user) return this.$router.push('/admin')
