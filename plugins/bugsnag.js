@@ -1,15 +1,12 @@
-import bugsnag from '@bugsnag/js'
 import config from 'config'
-import bugsnagVue from '@bugsnag/plugin-vue'
+import Bugsnag from '@bugsnag/js'
+import BugsnagPluginVue from '@bugsnag/plugin-vue'
 
-const bugsnagClient = bugsnag({
+Bugsnag.start({
   apiKey: config.bugsnag,
   notifyReleaseStages: ['development', 'staging', 'production'],
-  releaseStage: process.env.NODE_ENV
+  releaseStage: process.env.NODE_ENV,
+  plugins: [new BugsnagPluginVue()]
 })
 
-export default {
-  install (Vue, options) {
-    bugsnagClient.use(bugsnagVue, Vue)
-  }
-}
+export default Bugsnag

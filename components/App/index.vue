@@ -31,6 +31,7 @@
 
 <script>
 import config from 'config'
+import Bugsnag from '../../plugins/bugsnag'
 import AppHeader from '../../components/AppHeader'
 import AppSidebar from '../../components/AppSidebar'
 import AppFooter from '../../components/AppFooter'
@@ -63,6 +64,16 @@ export default {
     }
   },
 
+  created () {
+    this.$router.beforeEach((to, from, next) => {
+      this.$Progress.start()
+      next()
+    })
+    this.$router.afterEach(() => {
+      this.$Progress.finish()
+    })
+  },
+
   mounted () {
     this.checkConnection()
 
@@ -75,14 +86,9 @@ export default {
     })
   },
 
-  created () {
-    this.$router.beforeEach((to, from, next) => {
-      this.$Progress.start()
-      next()
-    })
-    this.$router.afterEach(() => {
-      this.$Progress.finish()
-    })
+  updated () {
+    if (this.currentUser?._id) Bugsnag.setUser(this.currentUser._id)
+    if (this.school._id) Bugsnag.setContext(this.school._id)
   },
 
   watch: {

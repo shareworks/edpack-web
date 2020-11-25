@@ -43,7 +43,7 @@ import { router } from '../router'
 // Custom Plugins
 import VueTruncate from 'vue-truncate-filter'
 import LanguagePlugin from './plugins/language'
-import BugsnagPlugin from './plugins/bugsnag'
+import Bugsnag from './plugins/bugsnag'
 import LocalStoragePlugin from './plugins/local-storage'
 import AxiosPlugin from './plugins/axios'
 import RouterAfterEachPlugin from './plugins/router-after-each'
@@ -52,9 +52,11 @@ import VueObserveVisibility from 'vue-observe-visibility'
 
 sync(store, router)
 
+Bugsnag.getPlugin('vue')
+  .installVueErrorHandler(Vue)
+
 // Init Custom plugins
 Vue.use(LocalStoragePlugin)
-Vue.use(BugsnagPlugin)
 Vue.use(LanguagePlugin)
 Vue.use(AxiosPlugin)
 Vue.use(VueObserveVisibility)
