@@ -72,7 +72,7 @@
     </el-form-item>
 
     <!-- Staff introduction by school -->
-    <el-form-item v-if="introBySchool && user.role !== 'student'" :label="$t('SW_INTRO_FOR')">
+    <el-form-item v-if="introBySchool" :label="$t('SW_INTRO_FOR')">
       <p class="text-muted">{{ $t('SW_INTRO_FOR_NEWLY') }}</p>
       <redactor :config="editorOptions" v-model="form.orgCourseIntro"></redactor>
     </el-form-item>
