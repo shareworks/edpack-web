@@ -2,3 +2,20 @@
   width: 100px;
   height: 40px;
 }
+
+.form-en,
+.form-nl {
+  .el-form-item__label:after {
+    content: "";
+    background-image: url('/images/en.png');
+    background-size: contain;
+    display: inline-block;
+    width: 16px;
+    height: 10px;
+    margin-left: 7px;
+  }
+}
+
+.form-nl .el-form-item__label:after {
+  background-image: url('/images/nl.png');
+}

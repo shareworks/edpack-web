@@ -71,10 +71,16 @@
       <inputs-with-flags :change="setNewFaculties" :value="form.terminology.faculties" name="facultiesTerm"/>
     </el-form-item>
 
-    <!-- Introduction by school -->
-    <el-form-item v-if="introBySchool" :label="$t('SW_INTRO_FOR')">
+    <!-- Introduction by school EN -->
+    <el-form-item v-if="introBySchool" class="form-en" :label="$t('SW_INTRO_FOR')">
       <p class="text-muted">{{ $t('SW_INTRO_FOR_NEWLY') }}</p>
-      <redactor :config="editorOptions" v-model="form.orgCourseIntro"></redactor>
+      <redactor :config="editorOptions" v-model="form.orgCourseIntro.en"></redactor>
+    </el-form-item>
+
+    <!-- Introduction by school NL -->
+    <el-form-item v-if="introBySchool" class="form-nl" :label="$t('SW_INTRO_FOR')">
+      <p class="text-muted">{{ $t('SW_INTRO_FOR_NEWLY') }}</p>
+      <redactor :config="editorOptions" v-model="form.orgCourseIntro.nl"></redactor>
     </el-form-item>
   </div>
 </template>
