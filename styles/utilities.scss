@@ -350,3 +350,12 @@
   display: block;
   width: auto !important;
 }
+
+.flex-stretch {
+  display: flex;
+  align-items: stretch;
+}
+
+.pointer-default {
+  cursor: default;
+}
