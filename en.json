@@ -601,5 +601,6 @@
   "SW_CONTRAST_MODE": "High contrast",
   "SW_CONTRAST_MODE_SHORT": "Higher contrast interface",
   "SW_CONTRAST_MODE_TEXT": "Increase contrast of interface elements if you have reduced vision.",
-  "SW_CLOSE_FULLSCREEN": "Close fullscreen"
+  "SW_CLOSE_FULLSCREEN": "Close fullscreen",
+  "SW_FIRST_TIME": "First time?"
 }
