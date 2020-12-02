@@ -1,32 +1,34 @@
 <template>
   <div v-if="school.counts">
-    <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}" v-if="completionStats">
-      <el-card v-for="stat in completionStats" :key="stat.prop" class="stat-counter">
-
-        <vc-donut background="white" foreground="lightgrey" :size="80" unit="%" :thickness="30" :sections="stat.sections">
+    <!-- completionStats -->
+    <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}" v-if="Object.keys(statisticCompletionValues).length">
+      <el-card v-for="(stat, key) in statisticCompletionValues" :key="key" class="stat-counter">
+        <vc-donut background="white" ba foreground="lightgrey" :size="80" unit="%" :thickness="30" :sections="[{ color: '#67c23a', value: stat.value }]">
           <div class="font-26">
-            <strong><countTo :startVal='(school.counts[stat.prop] / 2)' :endVal='school.counts[stat.prop]' separator="." :duration='4000'></countTo>%</strong>
+            <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'></countTo>%</strong>
           </div>
           <div class="font-14">{{ stat.name }}</div>
         </vc-donut>
       </el-card>
     </masonry>
 
-    <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}" v-if="userStats">
-      <el-card v-for="stat in userStats" :key="stat.prop" class="stat-counter">
-      <div class="font-26">
-        <i :class="stat.icon"></i>
-        <strong><countTo :startVal='(school.counts[stat.prop] / 2)' :endVal='school.counts[stat.prop]' separator="." :duration='4000'></countTo></strong>
-      </div>
-      <div>{{ stat.name }}</div>
-    </el-card>
+    <!-- userStats -->
+    <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}" v-if="Object.keys(userStats).length">
+      <el-card v-for="(stat, key) in statisticUserValues" :key="key" class="stat-counter">
+        <div class="font-26">
+          <i :class="stat.icon"></i>
+          <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'></countTo></strong>
+        </div>
+        <div>{{ stat.name }}</div>
+      </el-card>
     </masonry>
 
-    <masonry class="hidden-xs" :cols="{default: 3, 767: 2}" :gutter="{default: '20px', 767: '10px'}" v-if="stats">
-      <el-card v-for="stat in stats" :key="stat.prop" class="stat-counter">
+    <!-- stats -->
+    <masonry class="hidden-xs" :cols="{default: 3, 767: 2}" :gutter="{default: '20px', 767: '10px'}" v-if="Object.keys(statisticStatsValues).length">
+      <el-card v-for="(stat, key) in statisticStatsValues" :key="key" class="stat-counter">
         <div class="font-20">
           <i :class="stat.icon"></i>
-          <strong><countTo :startVal='(school.counts[stat.prop] / 2)' :endVal='school.counts[stat.prop]' separator="." :duration='4000'></countTo></strong>
+          <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'></countTo></strong>
         </div>
         <div>{{ $t('SW_TOTAL') }} {{ stat.name }}</div>
       </el-card>
@@ -43,13 +45,74 @@ Vue.use(Donut)
 
 export default {
   name: 'Statistics',
-  props: ['completionStats', 'userStats', 'stats'],
+  props: ['completionStats', 'userStats', 'stats', 'useFaculty'],
   components: { countTo },
 
   data () {
     return {
+      lang: this.$store.state.lang,
       school: this.$store.state.school,
-      lang: this.$store.state.lang
+      facultyFilter: this.$route.query.context || '',
+      statisticCompletionValues: {},
+      statisticUserValues: {},
+      statisticStatsValues: {}
+    }
+  },
+
+  watch: {
+    $route () {
+      this.facultyFilter = this.$route.query.context
+      if (this.useFaculty) this.getFacultyStatistic()
+    }
+  },
+
+  mounted () {
+    if (this.useFaculty) { this.getFacultyStatistic() }
+    else { this.setupStatisticValues(this.school.counts) }
+  },
+
+  methods: {
+    getFacultyStatistic () {
+      this.$http.get(`organizations/${this.school._id}/faculty/${this.facultyFilter}/counts`)
+        .then(res => { this.setupStatisticValues(res.data.list[0]) })
+        .catch(err => console.log(err))
+    },
+    setupStatisticValues (newStatisticValues) {
+      const statCompletionValues = {}
+      const statUserValues = {}
+      const statStatsValues = {}
+
+      // add specific value to values object
+      this.completionStats.forEach(statProperty => {
+        statCompletionValues[statProperty.prop] = { ...statProperty, value: 0 }
+      })
+      this.userStats.forEach(statProperty => {
+        statUserValues[statProperty.prop] = { ...statProperty, value: 0 }
+      })
+      this.stats.forEach(statProperty => {
+        statStatsValues[statProperty.prop] = { ...statProperty, value: 0 }
+      })
+
+      // add values from api to values object
+      for (const statProp in statCompletionValues) {
+        if (newStatisticValues[statProp]) {
+          statCompletionValues[statProp].value = newStatisticValues[statProp]
+        }
+      }
+      for (const statProp in statUserValues) {
+        if (newStatisticValues[statProp]) {
+          statUserValues[statProp].value = newStatisticValues[statProp]
+        }
+      }
+      for (const statProp in statStatsValues) {
+        if (newStatisticValues[statProp]) {
+          statStatsValues[statProp].value = newStatisticValues[statProp]
+        }
+      }
+
+      this.statisticCompletionValues = statCompletionValues
+      this.statisticUserValues = statUserValues
+      this.statisticStatsValues = statStatsValues
     }
   }
 }
