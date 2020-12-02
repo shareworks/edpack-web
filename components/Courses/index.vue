@@ -41,23 +41,16 @@
 
         <el-col :xs="16" :sm="12" class="course-header-filter">
 
-          <el-row>
-            <el-col :span="6">
-              <!-- Select a faculty -->
-              <el-select v-model="facultyFilter" clearable class="mr-10" :placeholder="$t('SW_FACULTY', [school.terminology.faculty[lang]])" size="medium" @change="changeFilter" v-if="school.faculties.length > 1 && !cards">
-                <el-option v-for="item in school.faculties" :key="item._id" :label="item[lang]" :value="item._id"></el-option>
-              </el-select>
-            </el-col>
-
-            <el-col :span="14">
-              <!-- Search input -->
-              <el-input :name="$t('SW_SEARCH_COURSES')" v-model="searchText" size="medium" clearable :placeholder="$t('SW_SEARCH_COURSES')" :class="{'input-with-select': user.role !== 'student'}">
-                <el-select v-model="statusFilter" slot="prepend" @change="changeFilter" v-if="user.role !== 'student'">
-                  <el-option v-for="item in statusOptions" :key="item" :label="$t('SW_' + item.toUpperCase())" :value="item"></el-option>
-                </el-select>
-              </el-input>
-            </el-col>
-          </el-row>
+          <!-- Select a faculty -->
+          <el-select v-model="facultyFilter" clearable class="mr-10 faculty-filter" :placeholder="$t('SW_FACULTY', [school.terminology.faculty[lang]])" size="medium" @change="changeFilter" v-if="school.faculties.length > 1 && !cards">
+            <el-option v-for="item in school.faculties" :key="item._id" :label="item[lang]" :value="item._id"></el-option>
+          </el-select>
+          <!-- Search input -->
+          <el-input :name="$t('SW_SEARCH_COURSES')" v-model="searchText" size="medium" clearable :placeholder="$t('SW_SEARCH_COURSES')" :class="{'input-with-select': user.role !== 'student'}">
+            <el-select v-model="statusFilter" slot="prepend" @change="changeFilter" v-if="user.role !== 'student'">
+              <el-option v-for="item in statusOptions" :key="item" :label="$t('SW_' + item.toUpperCase())" :value="item"></el-option>
+            </el-select>
+          </el-input>
         </el-col>
       </el-row>
     </affix>
