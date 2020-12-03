@@ -1,38 +1,46 @@
 <template>
-  <div v-if="school.counts">
-    <!-- completionStats -->
-    <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}" v-if="Object.keys(statisticCompletionValues).length">
-      <el-card v-for="(stat, key) in statisticCompletionValues" :key="key" class="stat-counter">
-        <vc-donut background="white" ba foreground="lightgrey" :size="80" unit="%" :thickness="30" :sections="[{ color: '#67c23a', value: stat.value }]">
+  <div>
+    <div v-if="status === 'done'">
+      <!-- completionStats -->
+      <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}" v-if="Object.keys(statisticCompletionValues).length">
+        <el-card v-for="(stat, key) in statisticCompletionValues" :key="key" class="stat-counter">
+          <vc-donut background="white" ba foreground="lightgrey" :size="80" unit="%" :thickness="30" :sections="[{ color: '#67c23a', value: stat.value }]">
+            <div class="font-26">
+              <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'></countTo>%</strong>
+            </div>
+            <div class="font-14">{{ stat.name }}</div>
+          </vc-donut>
+        </el-card>
+      </masonry>
+
+      <!-- userStats -->
+      <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}" v-if="Object.keys(userStats).length">
+        <el-card v-for="(stat, key) in statisticUserValues" :key="key" class="stat-counter">
           <div class="font-26">
-            <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'></countTo>%</strong>
+            <i :class="stat.icon"></i>
+            <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'></countTo></strong>
           </div>
-          <div class="font-14">{{ stat.name }}</div>
-        </vc-donut>
-      </el-card>
-    </masonry>
+          <div>{{ stat.name }}</div>
+        </el-card>
+      </masonry>
 
-    <!-- userStats -->
-    <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}" v-if="Object.keys(userStats).length">
-      <el-card v-for="(stat, key) in statisticUserValues" :key="key" class="stat-counter">
-        <div class="font-26">
-          <i :class="stat.icon"></i>
-          <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'></countTo></strong>
-        </div>
-        <div>{{ stat.name }}</div>
-      </el-card>
-    </masonry>
+      <!-- stats -->
+      <masonry class="hidden-xs" :cols="{default: 3, 767: 2}" :gutter="{default: '20px', 767: '10px'}" v-if="Object.keys(statisticStatsValues).length">
+        <el-card v-for="(stat, key) in statisticStatsValues" :key="key" class="stat-counter">
+          <div class="font-20">
+            <i :class="stat.icon"></i>
+            <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'></countTo></strong>
+          </div>
+          <div>{{ $t('SW_TOTAL') }} {{ stat.name }}</div>
+        </el-card>
+      </masonry>
+    </div>
 
-    <!-- stats -->
-    <masonry class="hidden-xs" :cols="{default: 3, 767: 2}" :gutter="{default: '20px', 767: '10px'}" v-if="Object.keys(statisticStatsValues).length">
-      <el-card v-for="(stat, key) in statisticStatsValues" :key="key" class="stat-counter">
-        <div class="font-20">
-          <i :class="stat.icon"></i>
-          <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'></countTo></strong>
-        </div>
-        <div>{{ $t('SW_TOTAL') }} {{ stat.name }}</div>
-      </el-card>
-    </masonry>
+    <!-- Loading -->
+    <spinner v-else-if="status === 'loading'"></spinner>
+
+    <!-- Error -->
+    <div v-else-if="status === 'error'" class="mt-30 text-muted text-center">{{ $t('SW_ERROR_LOADING') }}</div>
   </div>
 </template>
 
@@ -55,7 +63,8 @@ export default {
       facultyFilter: this.$route.query.context || '',
       statisticCompletionValues: {},
       statisticUserValues: {},
-      statisticStatsValues: {}
+      statisticStatsValues: {},
+      status: 'loading'
     }
   },
 
@@ -67,15 +76,18 @@ export default {
   },
 
   mounted () {
-    if (this.useFaculty) { this.getFacultyStatistic() }
-    else { this.setupStatisticValues(this.school.counts) }
+    if (this.useFaculty) return this.getFacultyStatistic()
+
+    this.setupStatisticValues(this.school.counts)
   },
 
   methods: {
     getFacultyStatistic () {
+      this.status = 'loading'
+
       this.$http.get(`organizations/${this.school._id}/faculty/${this.facultyFilter}/counts`)
         .then(res => { this.setupStatisticValues(res.data.list[0]) })
-        .catch(err => console.log(err))
+        .catch(() => { this.status = 'error' })
     },
     setupStatisticValues (newStatisticValues) {
       const statCompletionValues = {}
@@ -113,6 +125,7 @@ export default {
       this.statisticCompletionValues = statCompletionValues
       this.statisticUserValues = statUserValues
       this.statisticStatsValues = statStatsValues
+      this.status = 'done'
     }
   }
 }
