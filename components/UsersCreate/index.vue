@@ -29,7 +29,7 @@
         </el-select>
       </el-form-item>
       <!-- Send to self -->
-      <el-form-item class="send-copy">
+      <el-form-item class="send-copy" v-if="!assessmentUrl">
         <el-checkbox :label="$t('SW_SEND_TO_SELF')" v-model="form.toSelf" name="type"></el-checkbox>
       </el-form-item>
     </el-form>
@@ -47,7 +47,7 @@
 import emailsValidation from '@/edpack-web/utils/emails-validation'
 export default {
   name: 'UsersCreate',
-  props: ['closeDialog', 'isManageStaff', 'justStudents', 'course'],
+  props: ['closeDialog', 'isManageStaff', 'justStudents', 'course', 'assessmentUrl'],
 
   data () {
     return {
@@ -107,6 +107,23 @@ export default {
         }
       }
 
+      this.sending = true
+
+      if (this.assessmentUrl) {
+        // PUT -> COMPROVED
+        this.sendPut(emails)
+      } else {
+        this.sendPost(emails, self)
+      }
+    },
+    sendPut (emails) {
+      const participantsToAdd = emails.map(email => { return { email } })
+      this.$http.put(this.assessmentUrl, { participantsToAdd })
+        .then(() => { this.cleanForm() })
+        .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
+        .finally(() => { this.sending = false })
+    },
+    sendPost (emails, self) {
       // If no course, only add user on organization level
       const organization = this.user.organization._id
 
@@ -117,16 +134,17 @@ export default {
         roles = roles.concat(courseRoles)
       }
 
-      this.sending = true
+      // POST
       this.$http.post('users/invite', { invitations: roles }, { params: { toSelf: self } })
-        .then(() => {
-          this.form.recipients = ''
-          this.showDomainWarning = false
-          this.$message({ message: this.$i18n.t('SW_EMAILS_SENT'), type: 'success' })
-          this.closeDialog(true)
-        })
-        .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
+        .then(() => { this.cleanForm() })
+        .catch((e) => { console.log(e); this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.sending = false })
+    },
+    cleanForm () {
+      this.form.recipients = ''
+      this.showDomainWarning = false
+      this.$message({ message: this.$i18n.t('SW_EMAILS_SENT'), type: 'success' })
+      this.closeDialog(true)
     }
   }
 }
