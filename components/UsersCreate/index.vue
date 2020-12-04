@@ -29,7 +29,7 @@
         </el-select>
       </el-form-item>
       <!-- Send to self -->
-      <el-form-item class="send-copy">
+      <el-form-item class="send-copy" v-if="!assessmentUrl">
         <el-checkbox :label="$t('SW_SEND_TO_SELF')" v-model="form.toSelf" name="type"></el-checkbox>
       </el-form-item>
     </el-form>
@@ -111,14 +111,14 @@ export default {
 
       if (this.assessmentUrl) {
         // PUT -> COMPROVED
-        this.sendPut(emails, self)
+        this.sendPut(emails)
       } else {
         this.sendPost(emails, self)
       }
     },
-    sendPut (emails, self) {
+    sendPut (emails) {
       const participantsToAdd = emails.map(email => { return { email } })
-      this.$http.put(this.assessmentUrl, { participantsToAdd }, { params: { toSelf: self } })
+      this.$http.put(this.assessmentUrl, { participantsToAdd })
         .then(() => { this.cleanForm() })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.sending = false })
