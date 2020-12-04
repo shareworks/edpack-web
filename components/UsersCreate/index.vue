@@ -117,8 +117,8 @@ export default {
       }
     },
     sendPut (emails, self) {
-      const participantsToAdd = emails.map(email => { return { email } }, { params: { toSelf: self } })
-      this.$http.put(this.assessmentUrl, { participantsToAdd })
+      const participantsToAdd = emails.map(email => { return { email } })
+      this.$http.put(this.assessmentUrl, { participantsToAdd }, { params: { toSelf: self } })
         .then(() => { this.cleanForm() })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.sending = false })
