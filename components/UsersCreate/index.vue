@@ -47,7 +47,7 @@
 import emailsValidation from '@/edpack-web/utils/emails-validation'
 export default {
   name: 'UsersCreate',
-  props: ['closeDialog', 'isManageStaff', 'justStudents', 'course'],
+  props: ['closeDialog', 'isManageStaff', 'justStudents', 'course', 'assessmentUrl'],
 
   data () {
     return {
@@ -118,15 +118,26 @@ export default {
       }
 
       this.sending = true
-      this.$http.post('users/invite', { invitations: roles }, { params: { toSelf: self } })
-        .then(() => {
-          this.form.recipients = ''
-          this.showDomainWarning = false
-          this.$message({ message: this.$i18n.t('SW_EMAILS_SENT'), type: 'success' })
-          this.closeDialog(true)
-        })
-        .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
-        .finally(() => { this.sending = false })
+
+      if (this.assessmentUrl) {
+        // PUT -> COMPROVED
+        this.$http.put(this.assessmentUrl, { participantsToAdd: roles })
+          .then(() => { this.cleanForm() })
+          .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
+          .finally(() => { this.sending = false })
+      } else {
+        // POST
+        this.$http.post('users/invite', { invitations: roles }, { params: { toSelf: self } })
+          .then(() => { this.cleanForm() })
+          .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
+          .finally(() => { this.sending = false })
+      }
+    },
+    cleanForm () {
+      this.form.recipients = ''
+      this.showDomainWarning = false
+      this.$message({ message: this.$i18n.t('SW_EMAILS_SENT'), type: 'success' })
+      this.closeDialog(true)
     }
   }
 }
