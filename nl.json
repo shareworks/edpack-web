@@ -599,7 +599,7 @@
   "SW_FIRST_TIME": "Eerste keer hier?",
   "SW_NOTIFICATION_DISABLED": "Melding '{0}' uitgeschakeld",
   "SW_NOTIFICATION_DISABLED_TEXT": "U ontvangt dit soort melding niet meer.",
-  "SW_STAFF_NOTIFICATION": "meldingen van personeel",
-  "SW_STARTED_EVALUATION_NOTIFICATION":"evaluatiemelding gestart",
-  "SW_CLOSED_EVALUATION_NOTIFICATION": "gesloten evaluatiemelding"
+  "SW_STAFF_NOTIFICATION": "Docent",
+  "SW_STARTED_EVALUATION_NOTIFICATION":"Begonnen met evaluatie",
+  "SW_CLOSED_EVALUATION_NOTIFICATION": "Gesloten evaluatie"
 }
