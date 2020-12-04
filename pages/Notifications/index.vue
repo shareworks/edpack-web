@@ -29,7 +29,7 @@ import AnimatedLanding from '../../../components/AnimatedLanding'
 
 export default {
   name: 'Notifications',
-  metaInfo: { title: 'Reset password' },
+  metaInfo: { title: 'Disable notification' },
   components: { FooterLinks, AnimatedLanding },
   computed: {
     notificationType () {
