@@ -16,8 +16,7 @@
             <h3>{{ $t('SW_NOTIFICATION_DISABLED', [notificationType]) }}</h3>
             <p>{{ $t('SW_NOTIFICATION_DISABLED_TEXT') }}</p>
           </div>
-          <!-- @TODO: add some logic for errors handling -->
-          <p v-if="status === 'error'">error...</p>
+          <strong class="font-16" v-if="status === 'error'">{{ error.split(':')[1] }}</strong>
         </div>
 
         <!-- Footer links -->
@@ -43,6 +42,7 @@ export default {
   data () {
     return {
       status: false,
+      error: '',
       id: this.$route.params.id,
       type: this.$route.params.type,
       token: this.$route.query.token
@@ -56,14 +56,11 @@ export default {
       if (!this.id || !this.type || !this.token) return
       this.status = 'loading'
 
-      this.$http.put(`users/${this.id}/disable-notification/${this.type}`, {}, { params: this.token })
-        .then(res => {
-          this.status = 'done'
-          console.log('res', res)
-        })
-        .catch(err => {
+      this.$http.put(`users/${this.id}/disable-notification/${this.type}`, {}, { params: { token: this.token } })
+        .then(res => { this.status = res.data.status })
+        .catch((err) => {
+          this.error = err.data.errors[0].message
           this.status = 'error'
-          console.log('err', err)
         })
     }
   }
