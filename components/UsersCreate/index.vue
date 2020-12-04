@@ -107,6 +107,23 @@ export default {
         }
       }
 
+      this.sending = true
+
+      if (this.assessmentUrl) {
+        // PUT -> COMPROVED
+        this.sendPut(emails, self)
+      } else {
+        this.sendPost(emails, self)
+      }
+    },
+    sendPut (emails, self) {
+      const participantsToAdd = emails.map(email => { return { email } }, { params: { toSelf: self } })
+      this.$http.put(this.assessmentUrl, { participantsToAdd })
+        .then(() => { this.cleanForm() })
+        .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
+        .finally(() => { this.sending = false })
+    },
+    sendPost (emails, self) {
       // If no course, only add user on organization level
       const organization = this.user.organization._id
 
@@ -117,21 +134,11 @@ export default {
         roles = roles.concat(courseRoles)
       }
 
-      this.sending = true
-
-      if (this.assessmentUrl) {
-        // PUT -> COMPROVED
-        this.$http.put(this.assessmentUrl, { participantsToAdd: roles })
-          .then(() => { this.cleanForm() })
-          .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
-          .finally(() => { this.sending = false })
-      } else {
-        // POST
-        this.$http.post('users/invite', { invitations: roles }, { params: { toSelf: self } })
-          .then(() => { this.cleanForm() })
-          .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
-          .finally(() => { this.sending = false })
-      }
+      // POST
+      this.$http.post('users/invite', { invitations: roles }, { params: { toSelf: self } })
+        .then(() => { this.cleanForm() })
+        .catch((e) => { console.log(e); this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
+        .finally(() => { this.sending = false })
     },
     cleanForm () {
       this.form.recipients = ''
