@@ -47,7 +47,7 @@
 import emailsValidation from '@/edpack-web/utils/emails-validation'
 export default {
   name: 'UsersCreate',
-  props: ['closeDialog', 'isManageStaff', 'justStudents', 'course', 'assessmentUrl'],
+  props: ['closeDialog', 'isManageStaff', 'justStudents', 'course', 'assessmentUrl', 'assessmentRole'],
 
   data () {
     return {
@@ -117,8 +117,13 @@ export default {
       }
     },
     sendPut (emails) {
-      const participantsToAdd = emails.map(email => { return { email } })
-      this.$http.put(this.assessmentUrl, { participantsToAdd })
+      const usersToAdd = emails.map(email => { return { email } })
+
+      let payload
+      if (this.assessmentRole === 'assessor') payload = { assessorsToAdd: usersToAdd }
+      else payload = { usersToAdd }
+
+      this.$http.put(this.assessmentUrl, payload)
         .then(() => { this.cleanForm() })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.sending = false })
