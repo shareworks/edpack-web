@@ -196,7 +196,7 @@
   "SW_EXPORT": "Export results",
   "SW_EXPORTING_DATA_COURSE": "Updating grades in course. This can take some time.",
   "SW_FACULTY_INFO_TEXT": "Using faculty names, you can see which faculties are using this application and how much. Please spend time discussing the ideal faculty names. Changes could lead to losing existing faculty metadata. If this is irrelevant, just leave this section empty.",
-  "SW_FACULTY_MANAGER": "Manager",
+  "SW_FACULTY_MANAGER": "Faculty manager",
   "SW_FACULTY_MANAGER_PLACEHOLDER": "Find {0} ...",
   "SW_FEATURE_OPTIONS": "Features",
   "SW_FEEL_FREE": "If you have questions or want a walkthrough, feel free to ",
