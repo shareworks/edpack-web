@@ -77,8 +77,7 @@ export default {
 
   mounted () {
     if (this.useFaculty) return this.getFacultyStatistic()
-
-    this.setupStatisticValues(this.school.counts)
+    this.checkSchoolCountsAndCallSetup()
   },
 
   methods: {
@@ -88,6 +87,14 @@ export default {
       this.$http.get(`organizations/${this.school._id}/faculty/${this.facultyFilter}/counts`)
         .then(res => { this.setupStatisticValues(res.data.list[0]) })
         .catch(() => { this.status = 'error' })
+    },
+    checkSchoolCountsAndCallSetup () {
+      if (this.school.counts) {
+        return this.setupStatisticValues(this.school.counts)
+      }
+
+      // we will call that function again and again till school.counts won't be ready
+      setTimeout(() => { this.checkSchoolCountsAndCallSetup() }, 100)
     },
     setupStatisticValues (newStatisticValues) {
       const statCompletionValues = {}

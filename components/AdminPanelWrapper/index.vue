@@ -29,7 +29,7 @@
         </el-dropdown>
 
         <!-- App language -->
-        <app-language></app-language>
+        <app-language/>
       </div>
 
       <!-- Header text -->
@@ -41,16 +41,16 @@
       </page-header>
 
       <!-- Tabs -->
-      <slot name="tabs"></slot>
+      <slot name="tabs"/>
     </page-cover>
 
     <div class="page-body">
       <!-- Tables -->
-      <slot name="tables"></slot>
+      <slot name="tables"/>
 
       <!-- Statistics dialog -->
       <el-dialog :title="$t('SW_STATS')" append-to-body :visible.sync="dialogStats">
-        <statistics v-if="dialogStats" :closeDialog="toggleStats" :completionStats="completionStats" :userStats="userStats" :stats="stats"></statistics>
+        <statistics v-if="dialogStats" :closeDialog="toggleStats" :completionStats="completionStats" :userStats="userStats" :stats="stats"/>
       </el-dialog>
     </div>
   </div>
