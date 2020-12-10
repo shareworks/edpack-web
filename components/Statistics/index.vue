@@ -54,24 +54,15 @@ Vue.use(Donut)
 export default {
   name: 'Statistics',
   props: {
-    completionStats: {
-      default () { return [] }
-    },
-    userStats: {
-      default () { return [] }
-    },
-    stats: {
-      default () { return [] }
-    },
-    useFaculty: {
-      default: false
-    }
+    completionStats: { default () { return [] } },
+    userStats: { default () { return [] } },
+    stats: { default () { return [] } },
+    useFaculty: { default: false }
   },
   components: { countTo },
 
   data () {
     return {
-      lang: this.$store.state.lang,
       school: this.$store.state.school,
       facultyFilter: this.$route.query.context || '',
       statisticCompletionValues: {},
@@ -105,7 +96,6 @@ export default {
       if (this.school.counts) {
         return this.setupStatisticValues(this.school.counts)
       }
-
       // we will call that function again and again till school.counts won't be ready
       setTimeout(() => { this.checkSchoolCountsAndCallSetup() }, 100)
     },
@@ -115,15 +105,12 @@ export default {
       const statStatsValues = {}
 
       // add specific value to values object
-      console.log('this.completionStats', this.completionStats)
       this.completionStats.forEach(statProperty => {
         statCompletionValues[statProperty.prop] = { ...statProperty, value: 0 }
       })
-      console.log('this.userStats', this.userStats)
       this.userStats.forEach(statProperty => {
         statUserValues[statProperty.prop] = { ...statProperty, value: 0 }
       })
-      console.log('this.stats', this.stats)
       this.stats.forEach(statProperty => {
         statStatsValues[statProperty.prop] = { ...statProperty, value: 0 }
       })
