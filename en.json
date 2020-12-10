@@ -607,5 +607,6 @@
   "SW_NOTIFICATION_DISABLED_TEXT": "You will not receive this type of notification anymore.",
   "SW_STAFF_NOTIFICATION": "Staff",
   "SW_STARTED_EVALUATION_NOTIFICATION":"Started evaluation",
-  "SW_CLOSED_EVALUATION_NOTIFICATION": "Closed evaluation"
+  "SW_CLOSED_EVALUATION_NOTIFICATION": "Closed evaluation",
+  "SW_FULL_NAME_REQUIRED": "Name is required."
 }

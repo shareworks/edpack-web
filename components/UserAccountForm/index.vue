@@ -161,6 +161,10 @@ export default {
       this.emailChanged = true
     },
     onSubmit () {
+      if (!this.form.name.trim()) {
+        return this.$message({ message: this.$i18n.t('SW_FULL_NAME_REQUIRED'), type: 'warning' })
+      }
+
       this.submitting = true
       const params = { params: { entity: this.school._id } }
       if (this.emailChanged) params.params.updateEmails = true
