@@ -53,7 +53,20 @@ Vue.use(Donut)
 
 export default {
   name: 'Statistics',
-  props: ['completionStats', 'userStats', 'stats', 'useFaculty'],
+  props: {
+    completionStats: {
+      default () { return [] }
+    },
+    userStats: {
+      default () { return [] }
+    },
+    stats: {
+      default () { return [] }
+    },
+    useFaculty: {
+      default: false
+    }
+  },
   components: { countTo },
 
   data () {
@@ -102,12 +115,15 @@ export default {
       const statStatsValues = {}
 
       // add specific value to values object
+      console.log('this.completionStats', this.completionStats)
       this.completionStats.forEach(statProperty => {
         statCompletionValues[statProperty.prop] = { ...statProperty, value: 0 }
       })
+      console.log('this.userStats', this.userStats)
       this.userStats.forEach(statProperty => {
         statUserValues[statProperty.prop] = { ...statProperty, value: 0 }
       })
+      console.log('this.stats', this.stats)
       this.stats.forEach(statProperty => {
         statStatsValues[statProperty.prop] = { ...statProperty, value: 0 }
       })
