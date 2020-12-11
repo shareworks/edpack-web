@@ -44,7 +44,7 @@
 
         <el-col :xs="16" :sm="12" class="course-header-filter">
           <!-- Select a faculty -->
-          <el-select v-model="facultyFilter" clearable class="mr-10 faculty-filter" :placeholder="$t('SW_FACULTY', [school.terminology.faculty[lang]])"size="medium" @change="changeFilter" v-if="school.faculties.length > 1 && !cards">
+          <el-select v-model="facultyFilter" clearable class="mr-10 faculty-filter" :placeholder="$t('SW_FACULTY', [school.terminology.faculty[lang]])" size="medium" @change="changeFilter" v-if="school.faculties.length > 1 && !cards">
             <el-option v-for="item in school.faculties" :key="item._id" :label="item[lang]" :value="item._id"/>
           </el-select>
           <!-- Search input -->
