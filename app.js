@@ -49,6 +49,7 @@ import AxiosPlugin from './plugins/axios'
 import RouterAfterEachPlugin from './plugins/router-after-each'
 import RouterBeforeEachPlugin from './plugins/router-before-each'
 import VueObserveVisibility from 'vue-observe-visibility'
+import VueClipboards from 'vue-clipboards'
 
 sync(store, router)
 
@@ -61,6 +62,7 @@ Vue.use(LanguagePlugin)
 Vue.use(AxiosPlugin)
 Vue.use(VueObserveVisibility)
 Vue.use(VueTruncate)
+Vue.use(VueClipboards)
 
 // Init Vue dependencies
 Vue.use(Element, { locale: elLocaleEn, size: 'normal' })
