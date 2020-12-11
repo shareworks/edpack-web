@@ -132,14 +132,13 @@ export default {
       const query = { query: this.searchText, filter: this.statusFilter, faculty: this.facultyFilter }
       this.$router.replace({ params: { slug: this.school.slug, mode: 'courses' }, query })
     }, 400),
-    '$route' () {
-      this.selectionChange()
-      this.getCourses(true)
+    $route: {
+      immediate: true,
+      handler () {
+        this.selectionChange()
+        this.getCourses(true)
+      }
     }
-  },
-
-  mounted () {
-    this.getCourses()
   },
 
   methods: {
