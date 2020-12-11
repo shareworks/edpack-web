@@ -1,11 +1,17 @@
 <template>
   <div>
-    <thumbnail :model="form" class="thumb-user thumb-80 pull-left"></thumbnail>
+    <!-- Thumbnail -->
+    <thumbnail :model="form" class="thumb-user thumb-80 pull-left"/>
     <div class="picture-stuff">
+      <!-- Upload photo -->
       <el-button class="mb-5" plain @click="pickFile">
         <i class="icon-camera"></i>
         <span>{{ $t('SW_UPLOAD_PHOTO') }}</span>
-      </el-button><br>
+      </el-button>
+
+      <br>
+
+      <!-- Delete -->
       <el-button type="text" :disabled="!form.thumbnailUrl" size="medium" @click="form.thumbnailUrl = ''">
         <i class="icon-delete"></i>
         <span>{{ $t('SW_DELETE') }}</span>

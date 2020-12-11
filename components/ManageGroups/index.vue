@@ -1,6 +1,9 @@
 <template>
+  <!-- Fullscreen -->
   <fullscreen :class="{ 'fullscreen-manage-groups': fullscreen }" ref="fullscreenManageGroups" @change="fullscreenChange">
       <div v-if="status === 'done'">
+
+        <!-- Affix with filter and remove user logic -->
         <affix class="sticky-bar" :relative-element-selector="'.groups'" :offset="{ top: fullscreen ? 0 : 130, bottom: -1000 }">
           <transition-group name="drag-items-animation" mode="out-in">
             <!-- Filter -->
@@ -8,24 +11,24 @@
               <el-col :xs="20" :sm="16" :span="20">
                 <!-- Add group button -->
                 <el-button type="primary" plain size="medium" @click="addGroupDialog = true">
-                  <i class="icon-add"></i>
+                  <i class="icon-add"/>
                   <span>{{ $t('SW_ADD_GROUP') }}</span>
                 </el-button>
 
                 <!-- Save button -->
                 <el-button type="success" size="medium" :plain="!isChanged" :disabled="!isChanged" @click="confirmSubmitChanges">
-                  <i class="icon-ok-sign"></i>
+                  <i class="icon-ok-sign"/>
                   <span>{{ $t('SW_SAVE_CHANGES') }}</span>
                 </el-button>
               </el-col>
 
               <el-col :xs="4" :sm="8" :span="4" class="to-right">
                 <!-- Search input -->
-                <el-input prefix-icon="icon-search" class="hide" :placeholder="$t('SW_SEARCH_STUDENTS')" size="medium" v-model="searchText" clearable></el-input>
+                <el-input prefix-icon="icon-search" class="hide" :placeholder="$t('SW_SEARCH_STUDENTS')" size="medium" v-model="searchText" clearable/>
 
                 <!-- Fullscreen -->
                 <el-button type="text" class="pull-right hidden-xs" @click="toggleFullscreen">
-                  <i class="icon-fullscreen"></i>
+                  <i class="icon-fullscreen"/>
                   <span>{{ $t(fullscreen ? 'SW_CLOSE_FULLSCREEN' : 'SW_FULLSCREEN') }}</span>
                 </el-button>
               </el-col>
@@ -36,17 +39,21 @@
               <el-col :xs="0" :span="24">
                 <div class="remove-draggable-wrapper">
                   <span class="copy-remove-user-title">{{ $t('SW_DRAG_REMOVE_STUDENTS') }}</span>
-                  <draggable ghost-class="ghost" class="remove-students" :list="removedStudents" group="students" @change="confirmRemoveUser"></draggable>
+                  <draggable ghost-class="ghost" class="remove-students" :list="removedStudents" group="students" @change="confirmRemoveUser"/>
                 </div>
               </el-col>
             </el-row>
           </transition-group>
         </affix>
+
         <div class="bar-placeholder"/>
 
         <el-row class="groups mt-20" :class="{ 'hide-shadow': fullscreen }" justify="center" :gutter="30">
           <el-col :span="5" class="unsorted-row">
-            <full-student-list :key="fullKey" :setStudentsWithoutGroup="setStudentsWithoutGroup" :studentsWithoutGroup="studentsWithoutGroup" :setDragging="setDragging" :updateGroupCount="updateGroupCount" :allStudents="allStudents" :dragging="dragging" />
+            <!-- Full student list -->
+            <full-student-list :key="fullKey" :setStudentsWithoutGroup="setStudentsWithoutGroup"
+                               :studentsWithoutGroup="studentsWithoutGroup" :setDragging="setDragging"
+                               :updateGroupCount="updateGroupCount" :allStudents="allStudents" :dragging="dragging"/>
           </el-col>
 
           <el-col :span="19" class="groups-row">
@@ -55,6 +62,7 @@
                 <p class="question-sentence groups-header"><strong>{{ $tc('SW_GROUPS', 2) }}</strong> <el-tag class="ml-5" size="mini">{{ studentsByGroup.length }}</el-tag></p>
               </h3>
 
+              <!-- Students By Group -->
               <el-collapse class="group-collapse students-list-padding" v-if="studentsByGroup.length">
                 <el-collapse-item v-for="(group, index) in studentsByGroup" :key="index">
 
@@ -68,16 +76,16 @@
                       <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @onConfirm="removeGroup(group)"
                                      class="delete-group-button" hideIcon :title="$t('SW_DELETE_GROUP')">
                         <el-button slot="reference" plain size="small" @click.stop class="button-square mr-5 delete-group-button hidden-xs" type="danger">
-                          <i class="icon-delete"></i>
+                          <i class="icon-delete"/>
                         </el-button>
                       </el-popconfirm>
 
                       <!-- Rename group -->
                       <el-popover @after-leave="renameStudentsGroup(group.name, group.temporaryGroupName)" trigger="click" class="edit-group-button" :close-delay="0" :title="$tc('SW_CHANGE_GROUP_NAME')" placement="top-end">
-                        <el-input v-model="group.temporaryGroupName" :placeholder="$t('SW_GROUP_NAME')" :label="$t('SW_GROUP_NAME')"></el-input>
+                        <el-input v-model="group.temporaryGroupName" :placeholder="$t('SW_GROUP_NAME')" :label="$t('SW_GROUP_NAME')"/>
 
                         <el-button slot="reference" plain size="small" @click.stop class="button-square mr-10 delete-group-button hidden-xs">
-                          <i class="icon-pencil"></i>
+                          <i class="icon-pencil"/>
                         </el-button>
                       </el-popover>
 
@@ -94,7 +102,7 @@
         </el-row>
       </div>
 
-      <table-status :status="status" :noneText="$t('SW_NO_STUDENTS_FOUND')"></table-status>
+      <table-status :status="status" :noneText="$t('SW_NO_STUDENTS_FOUND')"/>
 
     <!-- Add group dialog -->
     <el-dialog :title="$t('SW_ADD_GROUP')" append-to-body :visible.sync="addGroupDialog">
@@ -277,7 +285,7 @@ export default {
         return { groupName: student.groupName, groupId: student.groupId, email: student.email, userId: student._id }
       })
 
-      // @TODO comproved specific fix? -- yes
+      // @TODO: comproved specific fix
       const url = this.assessment ? `assessments/${this.assessment._id}/sync-users` : `${this.url}/sync-users`
 
       this.$http.put(url, { participants })

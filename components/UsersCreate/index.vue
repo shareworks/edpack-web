@@ -20,24 +20,30 @@
       <!-- Textarea for emails -->
       <el-form-item>
         <el-input :disabled="sending" type="textarea" ref="recipients" :autosize="{ minRows: 3, maxRows: 8}"
-                  :placeholder="$t('SW_EMAIL_INVITES_PLACEHOLDER')" v-model="form.recipients"></el-input>
+                  :placeholder="$t('SW_EMAIL_INVITES_PLACEHOLDER')" v-model="form.recipients"/>
       </el-form-item>
+
       <!-- Role -->
       <el-form-item v-if="!isManageStaff" class="role-select">
         <el-select v-model="role" class="block">
-          <el-option v-for="item in ['staff', 'admin', 'student']" :key="item" :label="$tc('SW_' + item.toUpperCase(), 1)" :value="item"></el-option>
+          <el-option v-for="item in ['staff', 'admin', 'student']" :key="item" :label="$tc('SW_' + item.toUpperCase(), 1)" :value="item"/>
         </el-select>
       </el-form-item>
+
       <!-- Send to self -->
       <el-form-item class="send-copy" v-if="!assessmentUrl">
-        <el-checkbox :label="$t('SW_SEND_TO_SELF')" v-model="form.toSelf" name="type"></el-checkbox>
+        <el-checkbox :label="$t('SW_SEND_TO_SELF')" v-model="form.toSelf" name="type"/>
       </el-form-item>
     </el-form>
+
     <div class="mt-20">
+      <!-- Add user -->
       <el-button type="primary" @click="addUsers" :loading="sending">
         <i class="icon-send"></i>
         <strong>{{ $t('SW_INVITE') }}</strong>
       </el-button>
+
+      <!-- Cancel -->
       <el-button type="text" class="ml-10" @click="closeDialog()">{{ $t('SW_CANCEL') }}</el-button>
     </div>
   </div>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-progress type="circle" :width="70" :stroke-width="10" :color="customColors" :percentage="percentage"></el-progress>
+    <el-progress type="circle" :width="70" :stroke-width="10" :color="customColors" :percentage="percentage"/>
     <div>{{ $t('SW_' + levelName.toUpperCase()) }} &centerdot; {{resultPerQuestion[index][levelIndex + 1]}}</div>
   </div>
 </template>
@@ -24,9 +24,7 @@ export default {
 
   mounted () {
     const ANIMATION_DELAY = 600
-    setTimeout(() => {
-      this.percentage = this.realPercentage
-    }, ANIMATION_DELAY)
+    setTimeout(() => { this.percentage = this.realPercentage }, ANIMATION_DELAY)
   }
 }
 </script>

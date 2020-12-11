@@ -2,8 +2,7 @@
   <div class="thumbnail" :class="colorId"
        :style="{'background-image': 'url(' + thumbUrl + ')',
                 'color': textColor ? textColor: '#fff',
-                'border': borderColor ? `1px solid ${borderColor}` : null
-  }">
+                'border': borderColor ? `1px solid ${borderColor}` : null}">
     <span v-if="!thumbUrl">{{ initials }}</span>
   </div>
 </template>

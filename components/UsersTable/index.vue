@@ -8,7 +8,7 @@
             <!-- Remove users -->
             <el-badge :value="multipleSelection.length">
               <el-button type="danger" plain size="medium" @click="confirmRemove" class="button-square-xs ">
-                <i class="icon-delete"></i>
+                <i class="icon-delete"/>
                 <span class="hidden-xs hidden-sm">{{ $t('SW_REMOVE') }}</span>
               </el-button>
             </el-badge>
@@ -16,20 +16,20 @@
             <!-- Email users -->
             <el-badge :value="multipleSelection.length" v-if="isAdmin">
               <el-button type="primary" size="medium" plain @click="dialogEmail = true" class="button-square-xs ml-5">
-                <i class="icon-email"></i>
+                <i class="icon-email"/>
                 <span class="hidden-xs">{{ $tc('SW_EMAIL', 1) }}</span>
               </el-button>
             </el-badge>
 
             <!-- Log in as user -->
             <el-button @click="loginAs" size="medium" v-if="multipleSelection.length === 1 && user.systemAdmin" class="ml-5">
-              <i class="icon-enter"></i>
+              <i class="icon-enter"/>
               <span class="hidden-xs hidden-sm">{{ $t('SW_LOGIN_AS') }}</span>
             </el-button>
 
             <!-- Clear selection -->
             <el-button type="text" size="medium" @click="selectionChange" class="ml-10">
-              <i class="icon-clear"></i>
+              <i class="icon-clear"/>
               <span class="hidden-xs hidden-sm">{{ $t('SW_CANCEL') }}</span>
             </el-button>
           </div>
@@ -37,7 +37,7 @@
           <div v-else>
             <!-- Add users manually -->
             <el-button v-if="isAdmin" type="primary" plain @click="dialogAddUsers = true" size="medium" class="button-square-xs mr-10">
-              <i class="icon-add"></i>
+              <i class="icon-add"/>
               <span class="hidden-xs">{{ $t('SW_ADD_USERS') }}</span>
             </el-button>
 
@@ -52,30 +52,34 @@
           <!-- Search input -->
           <el-input v-model="searchText" size="medium" clearable :placeholder="$t('SW_SEARCH_USERS')" class="input-with-select">
             <el-select v-model="roleFilter" slot="prepend" @change="changeFilter">
-              <el-option v-for="item in roles" :key="item.value" :label="$tc('SW_' + item.label.toUpperCase())" :value="item.value"></el-option>
+              <el-option v-for="item in roles" :key="item.value" :label="$tc('SW_' + item.label.toUpperCase())" :value="item.value"/>
             </el-select>
           </el-input>
         </el-col>
       </el-row>
     </affix>
+
     <div class="bar-placeholder"></div>
 
     <!-- Users table -->
     <el-table v-show="tableData.length" :data="tableData" row-key="_id" ref="usersTable" @sort-change="sortChange" class="mt-20"
               @selection-change="selectionChange" :default-sort="{prop: this.sort, order: this.order}" id="sticky-content">
+
       <!-- Expand -->
       <el-table-column v-if="!hideCourses" type="expand" width="30">
         <template slot-scope="props">
-          <expand-user :_id="props.row._id" :user="props.row" :dateFormatter="dateFormatter" :sortCreatedDate="sortCreatedDate"></expand-user>
+          <expand-user :_id="props.row._id" :user="props.row" :dateFormatter="dateFormatter" :sortCreatedDate="sortCreatedDate"/>
         </template>
       </el-table-column>
+
       <!-- Selection -->
-      <el-table-column type="selection" reserve-selection width="35"></el-table-column>
+      <el-table-column type="selection" reserve-selection width="35"/>
+
       <!-- Name -->
       <el-table-column :label="$t('SW_NAME')" prop="name" min-width="160" sortable :sort-method="sortCaseInsensitive">
         <template slot-scope="props">
           <a href="#" class="text-ellipsis" @click.prevent="editUser(props.row)">
-            <thumbnail :model="props.row" class="thumb-user thumb-24 mr-5 hidden-xs hidden-sm"></thumbnail>
+            <thumbnail :model="props.row" class="thumb-user thumb-24 mr-5 hidden-xs hidden-sm"/>
             <strong>{{props.row.name}}</strong>
           </a>
         </template>
@@ -105,10 +109,11 @@
             </div>
         </template>
       </el-table-column>
+
       <!-- Course count -->
       <el-table-column v-if="!hideCourses" property="counts.courses" :label="$tc('SW_COURSE', 2)" width="120">
         <template slot-scope="props">
-          <i class="icon-graduation"></i>
+          <i class="icon-graduation"/>
           {{ props.row.counts && props.row.counts.courses || 0 }}
         </template>
       </el-table-column>
@@ -116,6 +121,7 @@
       <!-- PayAsYouGo -->
       <el-table-column property="credits" v-if="school.creditsEnabled" :label="$t('SW_LIMIT_ASSESSMENT_CREATION')" width="120">
         <template slot-scope="props">
+          <!-- Open PayAsYouGo dialog -->
           <el-button :type="isOverdue(props.row) || !props.row.credits || props.row.credits.used >= props.row.credits.limit ? 'danger' : 'success'" size="mini" @click="openPayAsYouGoDialog(props.row)" v-if="props.row.role === 'staff'">
             <span v-if="props.row.credits.isNew">
               <i class="icon-done_all"></i>
@@ -132,28 +138,28 @@
       </el-table-column>
 
       <!-- Created date -->
-      <el-table-column property="createdDate" :formatter="dateFormatter" :sort-method="sortCreatedDate" :label="$t('SW_CREATED_DATE')" min-width="120" sortable></el-table-column>
+      <el-table-column property="createdDate" :formatter="dateFormatter" :sort-method="sortCreatedDate" :label="$t('SW_CREATED_DATE')" min-width="120" sortable/>
+
       <!-- Activity date -->
-      <el-table-column property="activityDate" :formatter="dateFormatter" :sort-method="sortActivityDate" :label="$t('SW_ACTIVITY_DATE')" min-width="120" sortable></el-table-column>
+      <el-table-column property="activityDate" :formatter="dateFormatter" :sort-method="sortActivityDate" :label="$t('SW_ACTIVITY_DATE')" min-width="120" sortable/>
     </el-table>
 
-    <mugen-scroll :handler="getUsers" :handle-on-mount="false" :should-handle="status === 'incomplete'"></mugen-scroll>
-
-    <table-status :status="status" :noneText="$t('SW_NO_USERS_FOUND')" @clearSearch="searchText = ''"></table-status>
+    <mugen-scroll :handler="getUsers" :handle-on-mount="false" :should-handle="status === 'incomplete'"/>
+    <table-status :status="status" :noneText="$t('SW_NO_USERS_FOUND')" @clearSearch="searchText = ''"/>
 
     <!-- Add users dialog -->
     <el-dialog :title="$t('SW_ADD_USERS')" append-to-body class="small-dialog" :visible.sync="dialogAddUsers">
-      <users-create v-if="dialogAddUsers" :closeDialog="closeDialog"></users-create>
+      <users-create v-if="dialogAddUsers" :closeDialog="closeDialog"/>
     </el-dialog>
 
     <!-- Edit user dialog -->
     <el-dialog :title="$t('SW_EDIT_USER')" append-to-body :visible.sync="dialogEditUser">
-      <user-account-form :form="editUserForm" :updateUser="updateUser" v-if="dialogEditUser" class="edit-user-form" :finish="finishEditUser"></user-account-form>
+      <user-account-form :form="editUserForm" :updateUser="updateUser" v-if="dialogEditUser" class="edit-user-form" :finish="finishEditUser"/>
     </el-dialog>
 
     <!-- Email dialog -->
     <el-dialog :title="$tc('SW_SEND_EMAIL_TO_SELECTION_USERS', multipleSelection.length)" append-to-body :visible.sync="dialogEmail">
-      <email-users v-if="dialogEmail" :selectedUsers="multipleSelection" :closeDialog="closeDialog"></email-users>
+      <email-users v-if="dialogEmail" :selectedUsers="multipleSelection" :closeDialog="closeDialog"/>
     </el-dialog>
   </div>
 </template>

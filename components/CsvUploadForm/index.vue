@@ -6,14 +6,14 @@
     <el-upload v-if="!users.length" class="inline" ref="csvUpload" action="" :show-file-list="false" :on-change="handleCSVChange"
                :on-exceed="handleUploadExceed" :auto-upload="false" :limit="1" :multiple="false" accept=".csv" :on-remove="handleRemoveCsv">
       <el-button size="medium" type="primary" :loading="submitting" plain>
-        <i class="icon-upload"></i>
+        <i class="icon-upload"/>
         {{ $t('SW_UPLOAD_CSV_FILE') }}
       </el-button>
     </el-upload>
 
     <!-- Download template -->
     <el-button type="text" size="medium" class="ml-10 vertical-top" v-if="!submitting && !users.length" @click.prevent="downloadTemplate">
-      <i class="icon-download"></i>
+      <i class="icon-download"/>
       <span>{{ $t('SW_DOWNLOAD_TEMPLATE') }}</span>
     </el-button>
 
@@ -26,10 +26,13 @@
       <p class="mb-10" v-else-if="isComproved && assessors">{{ $t('SW_REUSE_EVAL_INFO_ASSESSORS', [users.length]) }}</p>
       <p class="mb-10" v-else>{{ $t('SW_REUSE_EVAL_USER', [users.length]) }}</p>
 
+      <!-- See student list -->
       <el-button size="small" type="success" v-if="!existing" @click="toggleStudentsList">
-        <i class="icon-users"></i>
+        <i class="icon-users"/>
         {{ $t(buttonText ? buttonText : 'SW_VIEW_STUDENTS') }}
       </el-button>
+
+      <!-- Remove csv -->
       <el-button type="success" size="small" plain @click="handleRemoveCsv">
         <i class="icon-cancel"></i>
         <span v-if="!isComproved">{{ $t('SW_UPLOAD_NEW_CSV') }}</span>
@@ -45,10 +48,11 @@
         {{ $t('SW_CSV_INVALID_EMAIL_TEXT') }}
         <p v-if="invalidDomain">{{ $t('SW_DOMAIN_ISSUE') }}</p>
       </el-alert>
+      <!-- Invalid emails table -->
       <el-table :data="invalidUsers" style="width: 100%" size="small" max-height="300px" class="mt-10">
-        <el-table-column prop="name" :label="$t('SW_NAME')" width="180"></el-table-column>
-        <el-table-column prop="email" :label="$tc('SW_EMAIL', 1)" width="300"></el-table-column>
-        <el-table-column v-if="!noGroup" prop="groupName" :label="$tc('SW_GROUP', 1)"></el-table-column>
+        <el-table-column prop="name" :label="$t('SW_NAME')" width="180"/>
+        <el-table-column prop="email" :label="$tc('SW_EMAIL', 1)" width="300"/>
+        <el-table-column v-if="!noGroup" prop="groupName" :label="$tc('SW_GROUP', 1)"/>
       </el-table>
     </div>
 
@@ -57,10 +61,11 @@
       <el-alert :title="$t('SW_CSV_DUPLICATED_EMAIL_TITLE', [invalidDuplicatedUsers.length])" type="error" :closable="false" effect="dark" show-icon>
         {{ $t('SW_CSV_DUPLICATED_EMAIL_TEXT') }}
       </el-alert>
+      <!-- Duplicated emails list -->
       <el-table :data="invalidDuplicatedUsers" style="width: 100%" size="small" max-height="300px" class="mt-10">
-        <el-table-column prop="name" :label="$t('SW_NAME')" width="180"></el-table-column>
-        <el-table-column prop="email" :label="$tc('SW_EMAIL', 1)" width="300"></el-table-column>
-        <el-table-column v-if="!noGroup" prop="groupName" :label="$tc('SW_GROUP', 1)"></el-table-column>
+        <el-table-column prop="name" :label="$t('SW_NAME')" width="180"/>
+        <el-table-column prop="email" :label="$tc('SW_EMAIL', 1)" width="300"/>
+        <el-table-column v-if="!noGroup" prop="groupName" :label="$tc('SW_GROUP', 1)"/>
       </el-table>
     </div>
 
@@ -101,9 +106,7 @@ export default {
   },
 
   methods: {
-    toggleStudentsList () {
-      this.usersListVisible = !this.usersListVisible
-    },
+    toggleStudentsList () { this.usersListVisible = !this.usersListVisible },
     handleRemoveCsv () {
       this.$emit('clearUsers')
       this.users = []

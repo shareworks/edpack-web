@@ -1,7 +1,8 @@
 <template>
   <div class="text-muted text-center" :class="{'mt-30': status !== 'done'}">
+
     <!-- Loading -->
-    <spinner v-if="status === 'loading'"></spinner>
+    <spinner v-if="status === 'loading'"/>
 
     <!-- Error -->
     <span v-if="status === 'error'">{{ $t('SW_ERROR_LOADING') }}</span>

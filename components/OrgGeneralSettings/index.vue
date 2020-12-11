@@ -8,12 +8,14 @@
 
     <!-- Short name -->
     <el-form-item :label="$t('SW_ORG_SHORT_NAME')" required>
-      <el-input v-model="form.shortName.en"></el-input>
+      <el-input v-model="form.shortName.en"/>
     </el-form-item>
+
     <!-- Notification email -->
     <el-form-item :label="$t('SW_ORG_NOTIFICATION_EMAIL')" required>
-      <el-input v-model="form.notificationEmail" type="email"></el-input>
+      <el-input v-model="form.notificationEmail" type="email"/>
     </el-form-item>
+
     <!-- Languages -->
     <el-form-item :label="$t('SW_ORG_LANGUAGES')" required>
       <div class="checkboxes-row">
@@ -21,44 +23,47 @@
                      v-model="form.languages[language]" :label="language">{{ $t('SW_DEFAULT_' + language.toUpperCase()) }}</el-checkbox>
       </div>
     </el-form-item>
+
     <!-- Default language -->
     <el-form-item :label="$t('SW_DEFAULT_LANGUAGE')">
       <el-select class="block" v-model="form.defaultLanguage" :disabled="!form.languages.nl || !form.languages.en">
-        <el-option v-for="language in languages" :key="language"
-                   :label="$t('SW_DEFAULT_' + language.toUpperCase())"
-                   :value="language">
+        <el-option v-for="language in languages" :key="language" :label="$t('SW_DEFAULT_' + language.toUpperCase())" :value="language">
           <img :src="'/images/' + language + '.png'" class="language-icon mr-5" alt="language-icon">
           <span>{{ $t('SW_DEFAULT_' + language.toUpperCase()) }}</span>
         </el-option>
       </el-select>
     </el-form-item>
+
     <!-- Brand color -->
     <el-form-item :label="$t('SW_BRAND_COLOR')">
-      <el-color-picker v-model="form.brandColor"></el-color-picker>
+      <el-color-picker v-model="form.brandColor"/>
     </el-form-item>
+
     <!-- Thumbnail -->
     <el-form-item :label="$t('SW_ORG_THUMB')">
       <el-button class="mb-5" @click="pickFile('thumbnailUrl')">
-        <i class="icon-camera"></i>
+        <i class="icon-camera"/>
         <span class="mr-5">{{ $t('SW_UPLOAD') }}</span> <small class="text-muted">{{ $t('SW_MIN', [200, 200]) }}</small>
       </el-button>
       <a :href="form.thumbnailUrl" target="_blank">
-        <thumbnail v-if="form.thumbnailUrl" :model="form" class="ml-10 thumb-42"></thumbnail>
+        <thumbnail v-if="form.thumbnailUrl" :model="form" class="ml-10 thumb-42"/>
       </a>
     </el-form-item>
+
     <!-- Logo -->
     <el-form-item :label="$t('SW_ORG_LOGO')">
       <el-button class="mb-5" @click="pickFile('logoUrl')">
-        <i class="icon-camera"></i>
+        <i class="icon-camera"/>
         <span class="mr-5">{{ $t('SW_UPLOAD') }}</span> <small class="text-muted">{{ $t('SW_MIN', [600, 200]) }}</small>
       </el-button>
       <a :href="form.logoUrl" target="_blank">
-        <thumbnail v-if="form.logoUrl" :model="form.logoUrl" class="logo-org ml-10"></thumbnail>
+        <thumbnail v-if="form.logoUrl" :model="form.logoUrl" class="logo-org ml-10"/>
       </a>
     </el-form-item>
+
     <!-- Website URL -->
     <el-form-item :label="$t('SW_ORG_WEBSITE_LINK')">
-      <el-input v-model="form.websiteUrl" type="url" placeholder="https://about.your-school.com ..."></el-input>
+      <el-input v-model="form.websiteUrl" type="url" placeholder="https://about.your-school.com ..."/>
     </el-form-item>
 
     <!-- Faculty term EN -->
@@ -74,13 +79,13 @@
     <!-- Introduction by school EN -->
     <el-form-item v-if="introBySchool" class="form-en" :label="$t('SW_INTRO_FOR')">
       <p class="text-muted">{{ $t('SW_INTRO_FOR_NEWLY') }}</p>
-      <redactor :config="editorOptions" v-model="form.orgCourseIntro.en"></redactor>
+      <redactor :config="editorOptions" v-model="form.orgCourseIntro.en"/>
     </el-form-item>
 
     <!-- Introduction by school NL -->
     <el-form-item v-if="introBySchool" class="form-nl" :label="$t('SW_INTRO_FOR')">
       <p class="text-muted">{{ $t('SW_INTRO_FOR_NEWLY') }}</p>
-      <redactor :config="editorOptions" v-model="form.orgCourseIntro.nl"></redactor>
+      <redactor :config="editorOptions" v-model="form.orgCourseIntro.nl"/>
     </el-form-item>
   </div>
 </template>

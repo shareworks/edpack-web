@@ -10,7 +10,6 @@
     <!-- Read our terms & policy -->
     {{ $t('SW_READ_OUR') }}
     <router-link to="/terms">{{ $t('SW_TERMS').toLowerCase() }}</router-link> & <router-link to="/privacy">{{ $t('SW_PRIVACY').toLowerCase() }}</router-link>.
-
   </div>
 </template>
 
@@ -23,9 +22,8 @@ export default {
   data () {
     return {
       appName: config.name,
-      supportMail: config.supportMail,
-      businessUrl: config.business.url,
       aboutUrl: config.aboutUrl,
+      businessUrl: config.business.url,
       businessName: config.business.shortName
     }
   }

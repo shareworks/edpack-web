@@ -1,12 +1,12 @@
 <template>
     <el-form>
-      <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_YOUR_PASSWORD', [appName])" autofocus prefix-icon="icon-password" id="password" v-model="form.password"></el-input>
+      <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_YOUR_PASSWORD', [appName])" autofocus prefix-icon="icon-password" id="password" v-model="form.password"/>
       <password v-model="form.password" :strengthMeterOnly="true"/>
-      <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_REPEAT_YOUR_PASSWORD')" prefix-icon="icon-lock" id="reset-password" class="mb-10" v-model="repeatPassword"></el-input>
+      <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_REPEAT_YOUR_PASSWORD')" prefix-icon="icon-lock" id="reset-password" class="mb-10" v-model="repeatPassword"/>
 
       <el-button class="block" :loading="submitting" type="primary" @click="submitPassword">
         {{ $t('SW_RESET_SIGN_IN') }}
-        <i class="icon-arrow_forward"></i>
+        <i class="icon-arrow_forward"/>
       </el-button>
     </el-form>
 </template>

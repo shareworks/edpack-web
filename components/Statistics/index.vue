@@ -17,7 +17,7 @@
       <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}" v-if="Object.keys(userStats).length">
         <el-card v-for="(stat, key) in statisticUserValues" :key="key" class="stat-counter">
           <div class="font-26">
-            <i :class="stat.icon"></i>
+            <i :class="stat.icon"/>
             <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'></countTo></strong>
           </div>
           <div>{{ stat.name }}</div>
@@ -28,7 +28,7 @@
       <masonry class="hidden-xs" :cols="{default: 3, 767: 2}" :gutter="{default: '20px', 767: '10px'}" v-if="Object.keys(statisticStatsValues).length">
         <el-card v-for="(stat, key) in statisticStatsValues" :key="key" class="stat-counter">
           <div class="font-20">
-            <i :class="stat.icon"></i>
+            <i :class="stat.icon"/>
             <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'></countTo></strong>
           </div>
           <div>{{ $t('SW_TOTAL') }} {{ stat.name }}</div>
@@ -37,7 +37,7 @@
     </div>
 
     <!-- Loading -->
-    <spinner v-else-if="status === 'loading'"></spinner>
+    <spinner v-else-if="status === 'loading'"/>
 
     <!-- Error -->
     <div v-else-if="status === 'error'" class="mt-30 text-muted text-center">{{ $t('SW_ERROR_LOADING') }}</div>

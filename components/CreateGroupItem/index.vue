@@ -2,14 +2,16 @@
   <!-- Group name -->
   <el-form label-position="top">
     <el-form-item required :label="`${$t('SW_GROUP_NAME')}:`">
-      <el-input placeholder="The Kangaroos" v-model="newGroupName" @keydown.enter.native.prevent="addNewGroup"></el-input>
+      <el-input placeholder="The Kangaroos" v-model="newGroupName" @keydown.enter.native.prevent="addNewGroup"/>
     </el-form-item>
 
     <el-form-item>
+      <!-- Add new group -->
       <el-button type="primary" @click="addNewGroup">
         {{ $t('SW_ADD_GROUP') }}
-        <i class="icon-arrow_forward"></i>
+        <i class="icon-arrow_forward"/>
       </el-button>
+      <!-- Cancel -->
       <el-button type="text" class="ml-10" @click="closeCreateGroupDialog">{{ $t('SW_CANCEL') }}</el-button>
     </el-form-item>
   </el-form>

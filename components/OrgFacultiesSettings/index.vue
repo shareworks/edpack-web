@@ -1,16 +1,21 @@
 <template>
   <div :class="{ 'multi-lang': form.languages.en && form.languages.nl }">
-    <el-alert type="info" class="mb-20" :title="$t('SW_ATTENTION')" show-icon :description="$t('SW_FACULTY_INFO_TEXT', [form.terminology.faculties[lang].toLowerCase(), form.terminology.faculty[lang].toLowerCase()])"></el-alert>
+    <!-- Faculty Alert -->
+    <el-alert type="info" class="mb-20" :title="$t('SW_ATTENTION')" show-icon
+              :description="$t('SW_FACULTY_INFO_TEXT', [form.terminology.faculties[lang].toLowerCase(), form.terminology.faculty[lang].toLowerCase()])"/>
 
     <el-form-item :label="form.terminology.faculties[lang]">
       <p class="form-help-text">{{ $t('SW_EXPLAIN_FACULTY_LIST', [form.terminology.faculties[lang].toLowerCase()]) }}</p>
 
       <el-row v-if="form.faculties.length > 0" :gutter="10">
+        <!-- English part -->
         <el-col :span="calcSpan" v-if="form.languages.en">
           <strong class="mb-10" v-if="form.languages.en && form.languages.nl">
             {{ $t('SW_DEFAULT_EN') }}
             <img :src="'/images/en.png'" class="ml-5 language-icon" alt="language-icon">
           </strong>
+
+          <!-- Faculties -->
           <div v-for="(faculty, index) in form.faculties" :key="index">
             <div class="mb-10">
               <el-input v-model="faculty.en">
@@ -19,6 +24,8 @@
             </div>
           </div>
         </el-col>
+
+        <!-- Netherlands part -->
         <el-col :span="calcSpan" v-if="form.languages.nl">
           <strong class="mb-10" v-if="form.languages.en && form.languages.nl">
             {{ $t('SW_DEFAULT_NL') }}
@@ -32,6 +39,8 @@
             </div>
           </div>
         </el-col>
+
+        <!-- Canvas account ID part -->
         <el-col :span="calcSpan" v-if="form.lmsApiIntegration && form.availableLms.includes('canvas')">
           <strong class="mb-10">
             {{ $t('SW_ACCOUNT_ID') }}
@@ -51,7 +60,7 @@
 
       <!-- Add faculty -->
       <el-button @click="addFaculty" class="block">
-        <i class="icon-add"></i>
+        <i class="icon-add"/>
         {{ $t('SW_ADD_FACULTY', [form.terminology.faculty[lang].toLowerCase()]) }}
       </el-button>
     </el-form-item>

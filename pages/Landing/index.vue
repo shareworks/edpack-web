@@ -1,19 +1,25 @@
 <template>
   <div>
-    <animated-landing></animated-landing>
+    <!-- Animated BG -->
+    <animated-landing/>
     <el-row type="flex" justify="center" align="middle" class="minimum-page">
       <el-col>
-        <div class="public-background"></div>
+        <div class="public-background"/>
 
         <!-- Logo -->
-        <a v-if="aboutUrl" :href="aboutUrl" :aria-label="$t('SW_LOGO_IMAGE')" target="_blank"><span class="horizontal-logo"></span></a>
-        <router-link v-else to="/about" class="inline" :aria-label="$t('SW_LOGO_IMAGE')"><span class="horizontal-logo"></span></router-link>
+        <a v-if="aboutUrl" :href="aboutUrl" :aria-label="$t('SW_LOGO_IMAGE')" target="_blank">
+          <span class="horizontal-logo"/>
+        </a>
+
+        <router-link v-else to="/about" class="inline" :aria-label="$t('SW_LOGO_IMAGE')">
+          <span class="horizontal-logo"/>
+        </router-link>
 
         <!-- Text -->
         <p class="landing-text bold font-20">{{ $t('SW_SLOGAN_SHORT') }}</p>
 
         <!-- Footer links -->
-        <footer-links class="mt-10 mb-20 landing-buttons"></footer-links>
+        <footer-links class="mt-10 mb-20 landing-buttons"/>
 
         <!-- Log in panel -->
         <login class="mb-30"></login>

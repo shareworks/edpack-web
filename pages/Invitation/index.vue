@@ -1,21 +1,22 @@
 <template>
   <div>
-    <animated-landing class="animated"></animated-landing>
+    <!-- Animated BG -->
+    <animated-landing class="animated"/>
     <el-row type="flex" justify="center" align="middle" class="minimum-page">
       <el-col>
-        <div class="public-background"></div>
+        <div class="public-background"/>
 
         <!-- Logo -->
         <router-link to="/" :aria-label="$t('SW_LOGO_IMAGE')">
-          <div class="horizontal-logo position-relative"></div>
+          <div class="horizontal-logo position-relative"/>
         </router-link>
 
         <!-- Log in panel -->
-        <el-alert type="warning" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE', [appName])" v-if="!serverOnline"></el-alert>
-        <register class="mb-30"></register>
+        <el-alert type="warning" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE', [appName])" v-if="!serverOnline"/>
+        <register class="mb-30"/>
 
         <!-- Footer links -->
-        <footer-links class="mt-10"></footer-links>
+        <footer-links class="mt-10"/>
       </el-col>
     </el-row>
   </div>

@@ -4,17 +4,18 @@
     <el-form label-width="160px">
       <!-- Subject -->
       <el-form-item :label="$t('SW_SUBJECT')">
-        <el-input v-model="form.subject" ref="subject" :placeholder="$t('SW_EMAIL_SUBJECT_PLACEHOLDER')"></el-input>
+        <el-input v-model="form.subject" ref="subject" :placeholder="$t('SW_EMAIL_SUBJECT_PLACEHOLDER')"/>
       </el-form-item>
 
       <!-- Message -->
       <el-form-item  :label="$t('SW_MESSAGE')">
-        <redactor :config="editorOptions" ref="blogPost" v-model="form.message"></redactor>
+        <redactor :config="editorOptions" ref="blogPost" v-model="form.message"/>
       </el-form-item>
+
+      <!-- Roles -->
       <el-form-item :label="$tc('SW_ROLE', 2)">
-        <p class="form-help-text">
-          {{ $t('SW_WHICH_ROLES_NEWSLETTER') }}
-        </p>
+        <p class="form-help-text">{{ $t('SW_WHICH_ROLES_NEWSLETTER') }}</p>
+
         <el-checkbox-group v-model="form.roles">
           <el-checkbox label="admin" class="mr-20">{{ $tc('SW_ADMIN', 2) }}</el-checkbox>
           <el-checkbox label="staff" class="mr-20">{{ $tc('SW_STAFF', 2) }}</el-checkbox>
@@ -25,7 +26,7 @@
       <!-- Send, test or cancel -->
       <el-form-item>
         <el-button type="primary" @click="sendEmail(false)" :loading="sending">
-          <i class="icon-send"></i>
+          <i class="icon-send"/>
           <strong>{{ $t('SW_SEND_NEWSLETTER') }}</strong>
         </el-button>
         <el-button @click="sendEmail(true)" :loading="sending">

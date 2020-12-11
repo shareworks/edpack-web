@@ -3,25 +3,27 @@
     <el-row type="flex" justify="center" align="middle" class="minimum-page">
       <el-col>
         <!-- Show BG -->
-        <div v-if="!inLTI" class="public-background"></div>
+        <div v-if="!inLTI" class="public-background"/>
 
         <!-- Logo -->
         <router-link to="/" :aria-label="$t('SW_LOGO_IMAGE')">
-          <div class="horizontal-logo position-relative"></div>
+          <div class="horizontal-logo position-relative"/>
         </router-link>
 
         <!-- Explain cookie status -->
         <div class="minimum-container">
-          <p class="title"><strong>{{ $t('SW_COOKIES_TITLE') }}</strong></p>
+          <p class="title">
+            <strong>{{ $t('SW_COOKIES_TITLE') }}</strong>
+          </p>
 
-          <el-alert v-for="cookie in cookies" :key="cookie.status" v-show="loading === cookie.status" :title="$t(cookie.title)" :center="true" :closable="false" :type="cookie.type" class="mt-20 message-text">
+          <el-alert v-for="cookie in cookies" :key="cookie.status" v-show="loading === cookie.status" :title="$t(cookie.title)"
+                    :center="true" :closable="false" :type="cookie.type" class="mt-20 message-text">
             <p class="mb-20">{{ $t(cookie.paragraph, [appName]) }}</p>
           </el-alert>
         </div>
 
         <!-- Footer links -->
-        <footer-links></footer-links>
-
+        <footer-links/>
       </el-col>
     </el-row>
   </div>
@@ -49,9 +51,11 @@ export default {
       ]
     }
   },
+
   mounted () {
     this.getCookie()
   },
+
   methods: {
     getCookie () {
       this.$http.get('/cookies/allow')

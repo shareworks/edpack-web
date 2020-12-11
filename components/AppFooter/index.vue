@@ -1,12 +1,11 @@
 <template>
   <div class="app-footer">
-
     <!-- About logo -->
     <a v-if="aboutUrl" :href="aboutUrl" target="_blank">
-      <span class="footer-logo"></span>
+      <span class="footer-logo"/>
     </a>
     <router-link v-else to="/about" target="_blank" aria-hidden="true" tabindex="-1">
-      <span class="footer-logo"></span>
+      <span class="footer-logo"/>
     </router-link>
 
     <!-- Credit -->
@@ -37,19 +36,18 @@
 
     <!-- Contact dialog -->
     <el-dialog :title="$t('SW_CONTACT_US')" append-to-body :visible.sync="dialogContact">
-      <contact-form v-if="dialogContact" :closeDialog="closeDialog"></contact-form>
+      <contact-form v-if="dialogContact" :closeDialog="closeDialog"/>
     </el-dialog>
 
     <!-- Colofon dialog -->
     <el-dialog :title="$t('SW_COLOFON')" v-if="school && school.colofon" append-to-body :visible.sync="dialogColofon">
-      <div class="redactor-in" v-html="school.colofon[lang]"></div>
+      <div class="redactor-in" v-html="school.colofon[lang]"/>
     </el-dialog>
   </div>
 </template>
 
 <script>
 import config from 'config'
-
 export default {
   name: 'AppFooter',
   components: { ContactForm: () => import('../../components/ContactForm') },

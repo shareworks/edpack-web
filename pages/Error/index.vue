@@ -3,17 +3,22 @@
     <el-row type="flex" justify="center" align="middle" class="minimum-page">
       <el-col>
         <!-- Show BG -->
-        <div v-if="!inLTI" class="public-background"></div>
+        <div v-if="!inLTI" class="public-background"/>
 
         <!-- Logo -->
         <router-link to="/" :aria-label="$t('SW_LOGO_IMAGE')">
-          <div class="horizontal-logo position-relative"></div>
+          <div class="horizontal-logo position-relative"/>
         </router-link>
 
         <!-- Error title and text -->
         <div class="minimum-container">
-          <div class="title text-center"><strong>{{ $t('SW_' + errorType.toUpperCase(), [appName]) }}</strong></div>
-          <p class="mt-10 text-center">{{ $t('SW_' + errorType.toUpperCase() + '_HELP', [appName]) }}</p>
+          <div class="title text-center">
+            <strong>{{ $t('SW_' + errorType.toUpperCase(), [appName]) }}</strong>
+          </div>
+
+          <p class="mt-10 text-center">
+            {{ $t('SW_' + errorType.toUpperCase() + '_HELP', [appName]) }}
+          </p>
 
           <!-- Cookies blocked warning -->
           <el-alert v-if="errorType === 'lti_error'" type="warning" class="mt-20 text-left" :closable="false">
@@ -36,7 +41,7 @@
         </div>
 
         <!-- Footer links -->
-       <footer-links :signin="true"></footer-links>
+       <footer-links :signin="true"/>
       </el-col>
     </el-row>
   </div>

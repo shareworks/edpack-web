@@ -9,28 +9,28 @@
         <el-form-item prop="name" required class="contact-form-item">
           <el-input ref="nameInput" :placeholder="$t('SW_YOUR_NAME')" v-model="form.name" name="name">
             <template slot="prepend">
-              <i class="icon-user"></i>
+              <i class="icon-user"/>
             </template>
           </el-input>
         </el-form-item>
 
         <!-- Botfield -->
         <el-form-item prop="name" class="hidden">
-          <el-input name="bt-field2"></el-input>
+          <el-input name="bt-field2"/>
         </el-form-item>
 
         <!-- Email -->
         <el-form-item prop="email" required class="contact-form-item">
           <el-input type="email" :placeholder="$tc('SW_EMAIL', 1)" v-model="form.email" name="email">
             <template slot="prepend">
-              <i class="icon-email"></i>
+              <i class="icon-email"/>
             </template>
           </el-input>
         </el-form-item>
 
         <!-- Message -->
         <el-form-item prop="message" required class="contact-form-item">
-          <el-input name="message" :placeholder="$t('SW_MESSAGE')" type="textarea" v-model="form.message" :autosize="{ minRows: 3, maxRows: 6}"></el-input>
+          <el-input name="message" :placeholder="$t('SW_MESSAGE')" type="textarea" v-model="form.message" :autosize="{ minRows: 3, maxRows: 6}"/>
         </el-form-item>
 
         <!-- Send or cancel -->
@@ -46,23 +46,19 @@
 
     <!-- Google maps -->
     <el-col class="hidden-xs contact-address" :sm="12" :md="12">
-      <gmap-map
-        :center="centerMap"
-        :options="mapOptions"
-        :zoom="6"
-        map-type-id="terrain">
+      <gmap-map :center="centerMap" :options="mapOptions" :zoom="6" map-type-id="terrain">
         <gmap-info-window :options="infoOptions" :position="position" :opened="infoWinOpen" @closeclick="infoWinOpen=false">
-          <span v-html="infoContent"></span>
+          <span v-html="infoContent"/>
         </gmap-info-window>
-        <gmap-marker :position="position" :clickable="false"></gmap-marker>
+        <gmap-marker :position="position" :clickable="false"/>
       </gmap-map>
     </el-col>
   </el-row>
 </template>
 
 <script>
-import config from 'config'
 import Vue from 'vue'
+import config from 'config'
 import * as VueGoogleMaps from 'vue2-google-maps'
 
 Vue.use(VueGoogleMaps, { load: { key: config.google_maps_key } })
@@ -88,6 +84,7 @@ export default {
     infoContent () {
       const b = this.business
       const mapsUrl = config.mapsUrl
+      // Company address
       return `<p class="bold">${b.name}<br><address>${b.streetAddress}<br>${b.postAddress}<br>${b.country}</address><a href="mailto:${b.mail}">${b.mail}</a><br><a href="${mapsUrl}" class="bold" target="_blank">${ this.$i18n.t('SW_GET_DIRECTION') }</a></p>`
     }
   },
@@ -113,6 +110,7 @@ export default {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       })
 
+      // Add additional info to easily find a bug
       formData.set('fullPath', this.$route.fullPath)
       if (this.user?._id) {
         formData.set('userId', this.user._id)

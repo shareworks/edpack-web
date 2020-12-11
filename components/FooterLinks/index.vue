@@ -16,14 +16,15 @@
         <span v-if="!inLTI" class="link-separator">|</span>
       </div>
 
-      <!-- Learn more -->
+      <!-- Learn more - redirect to another website -->
       <a v-if="aboutUrl" class="inline" :href="aboutUrl" target="_blank">
         <el-button tabindex="-1" size="large" type="text">
           <strong>{{ $t('SW_LEARN_MORE') }}</strong>
         </el-button>
       </a>
 
-      <router-link :to="{ name: 'about'}" :target="inLTI ? '_blank' : 'self'" v-if="!aboutUrl && $route.name !== 'about'">
+      <!-- Learn more redirect to About page -->
+      <router-link :to="{ name: 'about' }" :target="inLTI ? '_blank' : 'self'" v-if="!aboutUrl && $route.name !== 'about'">
         <el-button size="large" type="text">
           <strong>{{ $t('SW_LEARN_MORE') }}</strong>
         </el-button>
@@ -39,7 +40,7 @@
 
     <!-- Contact dialog -->
     <el-dialog :title="$t('SW_CONTACT_US')" append-to-body destroy-on-close :visible.sync="dialogContact">
-      <contact-form :closeDialog="toggleDialog"></contact-form>
+      <contact-form :closeDialog="toggleDialog"/>
     </el-dialog>
   </div>
 </template>
@@ -61,9 +62,7 @@ export default {
   },
 
   methods: {
-    toggleDialog () {
-      this.dialogContact = !this.dialogContact
-    }
+    toggleDialog () { this.dialogContact = !this.dialogContact }
   }
 }
 </script>

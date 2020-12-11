@@ -1,10 +1,10 @@
 <template>
-  <div v-loading="loading" element-loading-text= "Loading groups">
+  <div v-loading="loading" element-loading-text="Loading groups">
     <div>
       <p class="mb-20">{{ $t('SW_CSV_SYNC_EXPLAIN_TEXT', [appName]) }}</p>
 
       <!-- Upload csv file -->
-      <csv-upload-form @addUsers="addUsers" @clearUsers="clearUsers" :existing="{students: currentUsers.length, groups: statsBeforeSync.groups.length}"></csv-upload-form>
+      <csv-upload-form @addUsers="addUsers" @clearUsers="clearUsers" :existing="{students: currentUsers.length, groups: statsBeforeSync.groups.length}"/>
     </div>
 
     <div v-if="csvUsers.length" v-loading="loadingStats" class="mt-20">
@@ -15,9 +15,9 @@
             {{ $t('SW_NEW_WORKFLOW') }} <el-tag type="success" size="mini">{{statsAfterSync.newUsers.length}}</el-tag>
           </div>
           <el-table size="small" :data="statsAfterSync.newUsers">
-            <el-table-column prop="name" :label="$t('SW_NAME')" width="180"></el-table-column>
-            <el-table-column prop="email" :label="$tc('SW_EMAIL', 1)" width="280"></el-table-column>
-            <el-table-column prop="groupName" :label="$tc('SW_GROUP', 1)"></el-table-column>
+            <el-table-column prop="name" :label="$t('SW_NAME')" width="180"/>
+            <el-table-column prop="email" :label="$tc('SW_EMAIL', 1)" width="280"/>
+            <el-table-column prop="groupName" :label="$tc('SW_GROUP', 1)"/>
           </el-table>
         </el-tab-pane>
 
@@ -27,10 +27,10 @@
             {{ $t('SW_CHANGED') }} <el-tag type="warning" size="mini">{{statsAfterSync.transferredUsers.length}}</el-tag>
           </div>
           <el-table size="small" :data="statsAfterSync.transferredUsers">
-            <el-table-column prop="name" :label="$t('SW_NAME')" width="180"></el-table-column>
-            <el-table-column prop="email" :label="$tc('SW_EMAIL', 1)" width="280"></el-table-column>
-            <el-table-column prop="fromGroupName" :label="$t('SW_FROM_GROUP')"></el-table-column>
-            <el-table-column prop="toGroupName" :label="$t('SW_TO_GROUP')"></el-table-column>
+            <el-table-column prop="name" :label="$t('SW_NAME')" width="180"/>
+            <el-table-column prop="email" :label="$tc('SW_EMAIL', 1)" width="280"/>
+            <el-table-column prop="fromGroupName" :label="$t('SW_FROM_GROUP')"/>
+            <el-table-column prop="toGroupName" :label="$t('SW_TO_GROUP')"/>
           </el-table>
         </el-tab-pane>
 
@@ -40,9 +40,9 @@
             {{ $t('SW_REMOVED') }} <el-tag type="danger" size="mini">{{statsAfterSync.removedUsers.length}}</el-tag>
           </div>
           <el-table size="small" :data="statsAfterSync.removedUsers">
-            <el-table-column prop="name" :label="$t('SW_NAME')" width="180"></el-table-column>
-            <el-table-column prop="email" :label="$tc('SW_EMAIL', 1)" width="280"></el-table-column>
-            <el-table-column prop="groupName" :label="$tc('SW_GROUP', 1)"></el-table-column>
+            <el-table-column prop="name" :label="$t('SW_NAME')" width="180"/>
+            <el-table-column prop="email" :label="$tc('SW_EMAIL', 1)" width="280"/>
+            <el-table-column prop="groupName" :label="$tc('SW_GROUP', 1)"/>
           </el-table>
         </el-tab-pane>
       </el-tabs>
@@ -50,7 +50,9 @@
 
     <div class="mt-20">
       <el-button type="primary" size="medium" @click="confirmSync" :disabled="!csvUsers.length || loading || loadingStats" :loading="processingCsv">
-        <i class="icon-repeat"></i>{{ $t('SW_SYNC_NOW') }}</el-button>
+        <i class="icon-repeat"/>
+        {{ $t('SW_SYNC_NOW') }}
+      </el-button>
       <el-button class="ml-10" type="text" @click="closeDialog()">{{ $t('SW_CANCEL') }}</el-button>
     </div>
   </div>

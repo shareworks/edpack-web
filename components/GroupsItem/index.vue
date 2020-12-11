@@ -1,18 +1,19 @@
 <template>
   <section>
     <draggable ghost-class="ghost" class="group-students" :list="students"
-               :group="mode === 'all' ? {name: 'students', pull: 'clone', put: false} : {name: 'students', pull: true, put: true }"
-               @start="setDragging(true, mode === 'all')" @end="onEnd" :sort="false" @change="changeStudentGroup">
+               @start="setDragging(true, mode === 'all')" @end="onEnd" :sort="false" @change="changeStudentGroup"
+               :group="mode === 'all' ? {name: 'students', pull: 'clone', put: false} : {name: 'students', pull: true, put: true }">
 
+      <!-- Student card -->
       <el-card v-for="(student, index) in students" class="student-card-item" :key="student._id + '_' + index">
         <!-- Drag handle -->
         <el-button class="button-drag" type="text">
-          <i class="icon-drag_handle"></i>
+          <i class="icon-drag_handle"/>
         </el-button>
 
-        <!-- Student avatar -->
+        <!-- Student thumbnail -->
         <div class="inline">
-          <thumbnail :model="student" class="thumb-user mr-10 hidden-xs thumb-24 thumbnail"></thumbnail>
+          <thumbnail :model="student" class="thumb-user mr-10 hidden-xs thumb-24 thumbnail"/>
         </div>
 
         <!-- Student name -->
@@ -73,5 +74,5 @@ export default {
 
 <style lang="scss">
   @import '~scss_vars';
-  @import 'style';
+  @import 'style.scss';
 </style>

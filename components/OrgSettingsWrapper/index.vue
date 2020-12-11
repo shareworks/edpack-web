@@ -2,25 +2,27 @@
   <div>
     <page-cover>
       <!-- App language -->
-      <app-language class="pull-right"></app-language>
+      <app-language class="pull-right"/>
+
       <!-- Go back button -->
       <el-button type="text" @click="goBack" aria-label="Go back" class="btn-back">
-        <i class="icon-arrow_back"></i>
+        <i class="icon-arrow_back"/>
         <span>{{ $t('SW_BACK') }}</span>
       </el-button>
 
       <!-- Header -->
-      <page-header :title="$t('SW_SETTINGS')" icon="icon-lock" :area="$t('SW_ADMIN_ONLY')" :intro="$t('SW_SETTINGS_SHORT', { school: form.name.en })"></page-header>
+      <page-header :title="$t('SW_SETTINGS')" icon="icon-lock" :area="$t('SW_ADMIN_ONLY')" :intro="$t('SW_SETTINGS_SHORT', { school: form.name.en })"/>
 
       <!-- Tabs -->
-      <slot name="tabs"></slot>
+      <slot name="tabs"/>
     </page-cover>
 
     <!-- Settings page content -->
     <div class="page-body">
       <el-form ref="form" :model="form" label-width="220px" :label-position="['questions'].includes(activeTab) ? 'top' : 'left'">
 
-      <slot name="tables"></slot>
+      <!-- Tables -->
+      <slot name="tables"/>
 
         <!-- Submit or cancel -->
         <el-form-item class="mt-20" v-if="canShowControlsButton">

@@ -4,23 +4,26 @@
       <el-row type="flex" justify="center" align="middle">
         <el-col :xs="8" :sm="12">
           <div v-if="multipleSelection.length">
+
             <!-- Remove courses -->
             <el-badge :value="multipleSelection.length">
               <el-button type="danger" plain size="medium" @click="confirmRemove" :loading="submitting" class="button-square-xs">
-                <i class="icon-delete"></i>
+                <i class="icon-delete"/>
                 <span class="hidden-xs hidden-sm">{{ $t('SW_REMOVE') }}</span>
               </el-button>
             </el-badge>
+
             <!-- Archive courses -->
             <el-badge :value="multipleSelection.length" v-if="statusFilter !== 'archived'">
               <el-button type="warning" plain size="medium" @click="confirmArchive" class="button-square-xs ml-5">
-                <i class="icon-box"></i>
+                <i class="icon-box"/>
                 <span class="hidden-xs hidden-sm">{{ $tc('SW_ARCHIVE') }}</span>
               </el-button>
             </el-badge>
+
             <!-- Clear selection -->
             <el-button type="text" size="medium" class="ml-10" @click="selectionChange">
-              <i class="icon-clear"></i>
+              <i class="icon-clear"/>
               <span class="hidden-xs hidden-sm">{{ $t('SW_CANCEL') }}</span>
             </el-button>
           </div>
@@ -28,7 +31,7 @@
           <div v-else-if="user.role !== 'student'">
             <!-- Create courses manually -->
             <el-button v-if="school.enableManualCourses" type="primary" plain @click="dialogCourse = true" size="medium" class="button-square-xs">
-              <i class="icon-add"></i>
+              <i class="icon-add"/>
               <span class="hidden-xs">{{ $t('SW_CREATE_COURSE') }}</span>
             </el-button>
 
@@ -40,34 +43,35 @@
         </el-col>
 
         <el-col :xs="16" :sm="12" class="course-header-filter">
-
           <!-- Select a faculty -->
-          <el-select v-model="facultyFilter" clearable class="mr-10 faculty-filter" :placeholder="$t('SW_FACULTY', [school.terminology.faculty[lang]])" size="medium" @change="changeFilter" v-if="school.faculties.length > 1 && !cards">
-            <el-option v-for="item in school.faculties" :key="item._id" :label="item[lang]" :value="item._id"></el-option>
+          <el-select v-model="facultyFilter" clearable class="mr-10 faculty-filter" :placeholder="$t('SW_FACULTY', [school.terminology.faculty[lang]])"size="medium" @change="changeFilter" v-if="school.faculties.length > 1 && !cards">
+            <el-option v-for="item in school.faculties" :key="item._id" :label="item[lang]" :value="item._id"/>
           </el-select>
           <!-- Search input -->
           <el-input :name="$t('SW_SEARCH_COURSES')" v-model="searchText" size="medium" clearable :placeholder="$t('SW_SEARCH_COURSES')" :class="{'input-with-select': user.role !== 'student'}">
             <el-select v-model="statusFilter" slot="prepend" @change="changeFilter" v-if="user.role !== 'student'">
-              <el-option v-for="item in statusOptions" :key="item" :label="$t('SW_' + item.toUpperCase())" :value="item"></el-option>
+              <el-option v-for="item in statusOptions" :key="item" :label="$t('SW_' + item.toUpperCase())" :value="item"/>
             </el-select>
           </el-input>
         </el-col>
       </el-row>
     </affix>
-    <div class="bar-placeholder"></div>
+    <div class="bar-placeholder"/>
 
     <div class="mt-20" id="sticky-content">
       <!-- Course cards -->
-      <courses-cards v-show="tableData.length" v-if="cards" :courses="tableData"></courses-cards>
+      <courses-cards v-show="tableData.length" v-if="cards" :courses="tableData"/>
 
       <!-- Course table -->
       <courses-table ref="coursesTableInParent" :tableData="tableData" :cards="cards" :selection-change="selectionChange"
                      :order="order" :sort="sort" :sortChange="sortChange" :customCounts="customCounts"/>
     </div>
 
-    <mugen-scroll :handler="getCourses" :handle-on-mount="false" :should-handle="status === 'incomplete'"></mugen-scroll>
+    <!-- Scroll loading -->
+    <mugen-scroll :handler="getCourses" :handle-on-mount="false" :should-handle="status === 'incomplete'"/>
 
-    <table-status :status="status" :noneText="$t('SW_NO_COURSES_FOUND')" @clearSearch="searchText = ''"></table-status>
+    <!-- Table status -->
+    <table-status :status="status" :noneText="$t('SW_NO_COURSES_FOUND')" @clearSearch="searchText = ''"/>
 
     <div v-if="status === 'none' && statusFilter === 'active'" class="mt-30">
       <!-- Notify students there is nothing to do yet -->
@@ -83,7 +87,7 @@
 
     <!-- Create course dialog -->
     <el-dialog :title="$t('SW_CREATE_COURSE')" append-to-body :visible.sync="dialogCourse">
-      <create-course :closeDialog="closeDialog" v-if="dialogCourse"></create-course>
+      <create-course :closeDialog="closeDialog" v-if="dialogCourse"/>
     </el-dialog>
   </div>
 </template>

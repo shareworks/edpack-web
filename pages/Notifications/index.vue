@@ -1,6 +1,7 @@
 <template>
   <div>
-    <animated-landing class="animated"></animated-landing>
+    <!-- Animated BG -->
+    <animated-landing class="animated"/>
     <el-row type="flex" justify="center" align="middle" class="minimum-page">
       <el-col>
         <!-- Show BG -->
@@ -8,9 +9,10 @@
 
         <!-- Logo -->
         <router-link to="/" :aria-label="$t('SW_LOGO_IMAGE')">
-          <div class="horizontal-logo position-relative"></div>
+          <div class="horizontal-logo position-relative"/>
         </router-link>
 
+        <!-- Notifications disabled text -->
         <div class="minimum-container" v-loading="status === 'loading'">
           <div v-if="status === 'done'">
             <h3>{{ $t('SW_NOTIFICATION_DISABLED', [notificationType]) }}</h3>

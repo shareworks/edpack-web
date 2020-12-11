@@ -2,18 +2,18 @@
   <el-form ref="form" :model="form" label-width="150px">
     <!-- Thumbnail -->
     <el-form-item :label="$t('SW_YOUR_PHOTO')">
-      <thumbnail-edit :form="form"></thumbnail-edit>
+      <thumbnail-edit :form="form"/>
     </el-form-item>
 
     <!-- Full name -->
     <el-form-item :label="$t('SW_YOUR_NAME')" required>
-      <el-input prefix-icon="icon-bio" v-model="form.name"></el-input>
+      <el-input prefix-icon="icon-bio" v-model="form.name"/>
     </el-form-item>
 
     <!-- Reset password -->
     <el-form-item :label="$t('SW_RESET_PASSWORD')" v-if="school.loginByPassword" class="additional reset-password">
       <el-button size="medium" type="primary" plain @click="resetPasswordEmail" :loading="resetting">
-        <i class="icon-lock"></i>
+        <i class="icon-lock"/>
         <span>{{ $t('SW_RESET') }}</span>
       </el-button>
     </el-form-item>
@@ -28,20 +28,22 @@
           <el-popconfirm v-if="form.emails.length > 1" slot="append" :confirmButtonText="$t('SW_DELETE')" :cancelButtonText="$t('SW_CANCEL')"
                          @onConfirm="deleteEmail(email)" hideIcon :title="$t('SW_DELETE_EMAIL_CONFIRM')">
             <el-button slot="reference" class="delete-email-button mr-5">
-              <i class="icon-delete"></i>
+              <i class="icon-delete"/>
               <span v-if="!isMobile">{{ $t('SW_REMOVE') }}</span>
             </el-button>
           </el-popconfirm>
 
           <!-- Make primary -->
           <el-button class="primary-button-toggle" slot="append" @click="setPrimary(email)" v-if="isAdmin && form.emails.length > 1">
-            <i v-if="email === form.email" class="el-icon-star-on el-icon-left"></i>
+            <i v-if="email === form.email" class="el-icon-star-on el-icon-left"/>
             {{email === form.email ? $t('SW_PRIMARY') : $t('SW_SECONDARY') }}
           </el-button>
         </el-input>
       </div>
+
+      <!-- Add email -->
       <el-button v-if="user.systemAdmin" size="small" class="block" type="text" @click="form.emails.push('')">
-        <i class="icon-add"></i>
+        <i class="icon-add"/>
         <span>{{ $t('SW_ADD_EMAIL') }}</span>
       </el-button>
     </el-form-item>
@@ -69,9 +71,10 @@
       {{ $tc('SW_' + (form.role || user.role).toUpperCase()) }}
       {{ $t('SW_ROLE_AT', { school: form.organization.name[lang] }) }}
 
+      <!-- Change role -->
       <el-dropdown v-if="isAdmin" trigger="click" @command="changeRole" :disabled="changingRole">
         <el-button size="small" class="ml-10" :loading="changingRole">
-          <i class="icon-pencil"></i>
+          <i class="icon-pencil"/>
           <span>{{ $t('SW_CHANGE_ROLE') }}</span>
         </el-button>
         <el-dropdown-menu slot="dropdown">
@@ -92,13 +95,13 @@
 
     <!-- High contrast mode -->
     <el-form-item :label="$t('SW_CONTRAST_MODE')">
-      <el-switch v-model="form.contrastMode" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+      <el-switch v-model="form.contrastMode" active-color="#13ce66" inactive-color="#ff4949"/>
       <span class="text-muted ml-10">{{ $t('SW_CONTRAST_MODE_TEXT') }}</span>
     </el-form-item>
 
     <!-- Newsletter -->
     <el-form-item :label="$t('SW_NEWSLETTER')" class="additional">
-      <el-checkbox class="newsletter" :label="$t('SW_NEWSLETTER_TEXT')" v-model="form.newsletter"></el-checkbox>
+      <el-checkbox class="newsletter" :label="$t('SW_NEWSLETTER_TEXT')" v-model="form.newsletter"/>
     </el-form-item>
 
     <!-- Submit or cancel -->
@@ -112,10 +115,10 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import config from 'config'
 import { loadLanguages } from '../../utils/load-languages'
 import ThumbnailEdit from '../../components/ThumbnailEdit'
-import Vue from 'vue'
 
 export default {
   name: 'UserAccountForm',

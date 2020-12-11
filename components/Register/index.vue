@@ -1,7 +1,7 @@
 <template>
   <section class="form-register bottom" v-observe-visibility="{callback: visibilityChanged, throttle: 100, once: true}">
-
     <transition name="login" mode="out-in">
+      <!-- Login by google -->
       <div class="login" :key="'google'" v-if="!passwordMode">
         <div>
           <p class="mb-20">{{ $t('SW_REGISTER_TEXT', [appName]) }}</p>
@@ -9,34 +9,31 @@
           <p class="title"><strong>{{ $t('SW_REGISTER_SCHOOL') }}</strong></p>
 
           <!-- School selection -->
-          <el-select class="block"
-                     v-model="selectedSchool"
-                     filterable
-                     :placeholder="$t('SW_SELECT_YOUR_SCHOOL')"
-                     @change="selectSchool"
-                     :no-data-text="$t('SW_NO_DATA')"
-                     :no-match-text="$t('SW_NO_SCHOOLS_FOUND')"
-                     :loading-text="$t('SW_LOADING')">
+          <el-select class="block" v-model="selectedSchool" filterable :placeholder="$t('SW_SELECT_YOUR_SCHOOL')" @change="selectSchool"
+                     :no-data-text="$t('SW_NO_DATA')" :no-match-text="$t('SW_NO_SCHOOLS_FOUND')" :loading-text="$t('SW_LOADING')">
             <el-option v-for="(item, index) in schools" :key="index" :value="item">
-              <i class="icon-school"></i>
+              <i class="icon-school"/>
               <span>{{ item.name }}</span>
             </el-option>
           </el-select>
 
-          <!-- or -->
+          <!-- or Sign in By Password -->
           <div class="login-or" v-if="signinByPassword">{{$t('SW_OR')}}</div>
 
           <!-- Register with new password -->
           <div v-if="signinByPassword">
             <p class="title"><strong>{{$t(recoverToken ? 'SW_RESET_BY_ACCOUNT' : 'SW_ACCEPT_BY_ACCOUNT', [appName]) }}</strong></p>
 
-            <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_YOUR_PASSWORD', [appName])" prefix-icon="icon-lock" id="password" v-model="form.password"></el-input>
+            <!-- Password -->
+            <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_YOUR_PASSWORD', [appName])" prefix-icon="icon-lock" id="password" v-model="form.password"/>
+            <!-- Password strength meter -->
             <password v-model="form.password" :strengthMeterOnly="true"/>
-            <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_REPEAT_YOUR_PASSWORD')" prefix-icon="icon-lock" id="reset-password" class="mb-10"  v-model="repeatPassword"></el-input>
+            <!-- Repeat Password -->
+            <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_REPEAT_YOUR_PASSWORD')" prefix-icon="icon-lock" id="reset-password" class="mb-10"  v-model="repeatPassword"/>
 
             <el-button class="mb-10 block" :loading="submitting" type="primary" @click="submitPassword">
               {{ $t('SW_ACCEPT_SIGN_IN') }}
-              <i class="icon-arrow_forward"></i>
+              <i class="icon-arrow_forward"/>
             </el-button>
           </div>
 
@@ -56,17 +53,20 @@
           </el-button>
         </div>
 
-        <el-alert class="mt-10" type="error" show-icon v-if="errorType" :title="$t('SW_' + errorType.toUpperCase())"></el-alert>
+        <el-alert class="mt-10" type="error" show-icon v-if="errorType" :title="$t('SW_' + errorType.toUpperCase())"/>
 
         <div class="login-statement">
           <span class="hidden-xs">{{ $t('SW_LOGIN_STATEMENT', [appName]) }} </span>
           <a :href="aboutUrl ? aboutUrl : businessUrl" target="_blank">{{ businessName }}</a>
           {{ $t('SW_LOGIN_STATEMENT2') }}
+
+          <!-- Links -->
           <router-link to="/terms">{{ $t('SW_TERMS').toLowerCase() }}</router-link> & <router-link to="/privacy">{{ $t('SW_PRIVACY').toLowerCase() }}</router-link>.
         </div>
       </div>
 
-      <el-alert class="mt-10" type="error" show-icon v-if="errorType" :title="$t('SW_' + errorType.toUpperCase())"></el-alert>
+      <!-- Error alert -->
+      <el-alert class="mt-10" type="error" show-icon v-if="errorType" :title="$t('SW_' + errorType.toUpperCase())"/>
     </transition>
   </section>
 </template>

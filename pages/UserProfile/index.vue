@@ -1,10 +1,9 @@
 <template>
   <div>
     <page-cover v-if="status === 'done'">
-
       <!-- App thumb -->
       <div class="page-thumb pull-left">
-        <thumbnail :model="user" :large="true" class="thumb-user user-profile-thumb thumb-80"></thumbnail>
+        <thumbnail :model="user" :large="true" class="thumb-user user-profile-thumb thumb-80"/>
       </div>
 
       <div class="header-info">
@@ -13,6 +12,7 @@
           {{user.name}}
         </h1>
 
+        <!-- Faculty -->
         <div class="profile-text mb-20">
           <span>{{ getFaculty }}</span>
           &centerdot;
@@ -41,32 +41,36 @@
         </el-button>
 
         <!-- Language -->
-        <app-language class="ml-10"></app-language>
+        <app-language class="ml-10"/>
       </div>
     </page-cover>
 
     <div class="page-body" v-if="status === 'done'">
+      <!-- Plans -->
       <div class="mb-10" v-if="school.enablePlans">
         <h3 class="mb-20">{{ school.terminology.plans[lang] }}</h3>
-        <plans-list :user="user"></plans-list>
+        <!-- Plans list -->
+        <plans-list :user="user"/>
       </div>
       <el-row :gutter="60">
         <el-col :xs="24" :sm="14">
           <h3 class="mb-20">{{ $t('SW_APPS_I_FOLLOW') }}</h3>
+          <!-- Apps tiles -->
           <masonry :cols="{default: 3, 1199: 2, 767: 1}" v-if="apps.length" :gutter="{default: '30px', 767: '20px'}">
-            <app-tile v-for="page in apps" :app="page" :key="page._id"></app-tile>
+            <app-tile v-for="page in apps" :app="page" :key="page._id"/>
           </masonry>
           <div v-else class="text-muted">{{ $t('SW_NO_APPS_FOLLOWING') }}</div>
         </el-col>
         <el-col :xs="24" :sm="10">
           <h3 class="mb-20">{{ $t('SW_EXPERIENCES') }}</h3>
-          <experiences :user="user" :startLimit="5" class="mb-30"></experiences>
+          <!-- Experiences -->
+          <experiences :user="user" :startLimit="5" class="mb-30"/>
         </el-col>
       </el-row>
     </div>
 
     <!-- Loading -->
-    <spinner v-if="status === 'loading'" class="mt-20"></spinner>
+    <spinner v-if="status === 'loading'" class="mt-20"/>
 
     <!-- Error -->
     <div v-if="status === 'error'" class="text-muted text-center mt-20">
@@ -75,7 +79,7 @@
 
     <!-- Email dialog -->
     <el-dialog :title="$tc('SW_EMAIL', 1)" append-to-body :visible.sync="dialogEmail">
-      <email-users :closeDialog="toggleDialog" :selectedUsers="[user]">
+      <email-users :closeDialog="toggleEmailDialog" :selectedUsers="[user]">
         <template v-slot>
           <p class="mb-30">{{ $t('SW_EMAIL_USER', [user.name]) }}</p>
         </template>
@@ -169,9 +173,7 @@ export default {
           this.loadingApps = 'done'
         }).catch(() => { this.loadingApps = 'error' })
     },
-    toggleDialog () {
-      this.dialogEmail = !this.dialogEmail
-    },
+    toggleEmailDialog () { this.dialogEmail = !this.dialogEmail },
     logout () {
       this.$http.post('users/logout', {})
         .then(() => {

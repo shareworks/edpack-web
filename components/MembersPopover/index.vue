@@ -4,16 +4,16 @@
       <!-- List of instructors -->
       <div v-if="instructors.length" class="mb-10">
         <div v-for="instructor in instructors" class="text-ellipsis mb-5" :key="instructor._id">
-          <thumbnail :model="instructor" class="thumb-user thumb-24 mr-5"></thumbnail>
+          <thumbnail :model="instructor" class="thumb-user thumb-24 mr-5"/>
           <strong>{{instructor.name}}</strong>
           <el-tag class="ml-5" type="info" v-if="evaluation" size="mini">{{ $tc('SW_' + instructor.role.toUpperCase()) }}</el-tag>
         </div>
       </div>
       <div v-else class="text-muted">{{ $t('SW_NO_STAFF_FOUND') }}</div>
 
-      <!-- Manage -->
+      <!-- Manage staff -->
       <el-button v-if="canUpdate" type="text" size="small" @click="$emit('manageStaff')">
-        <i class="icon-pencil"></i>
+        <i class="icon-pencil"/>
         {{ $t('SW_MANAGE_STAFF') }}
       </el-button>
 

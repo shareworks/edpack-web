@@ -1,20 +1,24 @@
 <template>
   <div>
-    <animated-landing class="animated"></animated-landing>
+    <!-- Animated background -->
+    <animated-landing class="animated"/>
     <el-row type="flex" justify="center" align="middle" class="minimum-page">
       <el-col>
         <!-- Show BG -->
-        <div class="public-background"></div>
+        <div class="public-background"/>
 
         <!-- Logo -->
         <router-link to="/" :aria-label="$t('SW_LOGO_IMAGE')">
-          <div class="horizontal-logo position-relative"></div>
+          <div class="horizontal-logo position-relative"/>
         </router-link>
 
         <!-- Reset form -->
         <div class="minimum-container">
-          <div class="title text-center"><strong>{{ $t(requestPassword ? 'SW_REQUEST_PASSWORD' : 'SW_FORGOT_PASSWORD') }}</strong></div>
+          <div class="title text-center">
+            <strong>{{ $t(requestPassword ? 'SW_REQUEST_PASSWORD' : 'SW_FORGOT_PASSWORD') }}</strong>
+          </div>
 
+          <!-- Show email form -->
           <el-collapse-transition>
             <div v-show="!success">
               <p class="mb-20 text-center">{{ $t(requestPassword ? 'SW_REQUEST_PASSWORD_TEXT' : 'SW_FORGOT_PASSWORD_TEXT', [appName]) }}</p>
@@ -30,6 +34,7 @@
             </div>
           </el-collapse-transition>
 
+          <!-- Show email sent success message -->
           <el-collapse-transition>
             <div v-show="success" class="text-center pa-3">
               <i class="icon-checkmark mb-2 font-32 text-success"></i>
@@ -39,7 +44,7 @@
         </div>
 
         <!-- Footer links -->
-       <footer-links :signin="true"></footer-links>
+       <footer-links :signin="true"/>
       </el-col>
     </el-row>
   </div>

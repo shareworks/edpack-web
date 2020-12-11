@@ -1,12 +1,14 @@
 <template>
   <div>
-    <el-alert type="warning" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE', [appName])" v-if="!serverOnline"></el-alert>
+    <!-- Server is not working alert -->
+    <el-alert type="warning" show-icon :closable="false" v-if="!serverOnline"
+              :title="$t('SW_SERVER_MAINTENANCE', [appName])"/>
 
-    <router-view v-if="status === 'done'"></router-view>
+    <router-view v-if="status === 'done'"/>
 
     <div class="mt-30 text-muted text-center">
       <!-- Loading -->
-      <spinner v-if="status === 'loading'"></spinner>
+      <spinner v-if="status === 'loading'"/>
 
       <!-- Error -->
       <div v-if="status === 'error'">{{ $t('SW_ERROR_LOADING') }}</div>

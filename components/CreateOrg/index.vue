@@ -9,14 +9,14 @@
 
       <!-- Short name -->
       <el-form-item :label="$t('SW_ORG_SHORT_NAME')" prop="shortName.en" required :show-message="false">
-        <el-input v-model="form.shortName.en"></el-input>
+        <el-input v-model="form.shortName.en"/>
       </el-form-item>
 
       <!-- Create or cancel -->
       <el-form-item class="mt-20">
         <el-button type="primary" @click="createOrg" :loading="submitting">
           {{ $t('SW_CREATE_ORG') }}
-          <i class="icon-arrow_forward"></i>
+          <i class="icon-arrow_forward"/>
         </el-button>
         <el-button type="text" @click="closeDialog">{{ $t('SW_CANCEL') }}</el-button>
       </el-form-item>

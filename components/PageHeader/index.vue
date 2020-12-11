@@ -8,7 +8,7 @@
       <!-- Area info -->
       <span v-if="area">
         <strong>
-          <i v-if="icon" :class="icon"></i>
+          <i v-if="icon" :class="icon"/>
           <span>{{ area }}</span>
         </strong>
         &centerdot;
@@ -16,13 +16,13 @@
 
       <!-- Show instructors -->
       <span v-if="$slots.members">
-        <slot name="members"></slot>
+        <slot name="members"/>
         &centerdot;
       </span>
 
       <!-- Show participants -->
       <span v-if="$slots.participants">
-        <slot name="participants"></slot>
+        <slot name="participants"/>
         &centerdot;
       </span>
 
@@ -37,7 +37,7 @@
       <!-- Detailed text -->
       <el-collapse-transition>
         <div v-show="showMore">
-          <slot></slot>
+          <slot/>
           <a href="#" @click.prevent="moreInfo" class="bold">{{ $t('SW_LESS') }}</a>
         </div>
       </el-collapse-transition>

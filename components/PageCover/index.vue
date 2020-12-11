@@ -1,7 +1,7 @@
 <template>
   <div class="page-cover">
     <div class="cover-content">
-      <slot></slot>
+      <slot/>
     </div>
   </div>
 </template>

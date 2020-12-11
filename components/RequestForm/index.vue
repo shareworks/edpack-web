@@ -5,12 +5,12 @@
 
     <el-form-item class="email-item">
       <!-- Email -->
-      <label for="request-email" class="visually-hidden"></label>
+      <label for="request-email" class="visually-hidden"/>
       <el-input class="email-input" id="request-email" prefix-icon="icon-email" type="email" name="email" size="large" v-model="email" :placeholder="$t('SW_YOUR_EMAIL')" @keyup.enter.prevent="submitRequest" :required="true">
         <!--Submit request -->
         <template slot="append">
           <el-button class="submit-button" native-type="submit" type="primary" @click.prevent="submitRequest">
-            <i class="icon-send"></i>
+            <i class="icon-send"/>
             <span class="hidden-xs">{{ $t('SW_REQUEST_ACCESS') }}</span>
           </el-button>
         </template>
@@ -19,7 +19,7 @@
 
     <!-- Botfield -->
     <el-form-item prop="name" class="hidden">
-      <el-input name="bt-field2"></el-input>
+      <el-input name="bt-field2"/>
     </el-form-item>
 
   </el-form>

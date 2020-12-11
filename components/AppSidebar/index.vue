@@ -41,9 +41,7 @@ export default {
   },
 
   computed: {
-    isAdmin () {
-      return this.$store.state.user.systemAdmin || this.$store.state.user.role === 'admin'
-    }
+    isAdmin () { return this.$store.state.user.systemAdmin || this.$store.state.user.role === 'admin' }
   },
 
   methods: {

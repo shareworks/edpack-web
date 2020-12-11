@@ -4,7 +4,7 @@
 
       <!-- Menu icon -->
       <el-button type="text" class="menu-button visible-xs visible-sm" @click="openSidebar" aria-label="Toggle menu">
-        <i class="icon-menu"></i>
+        <i class="icon-menu"/>
       </el-button>
 
       <!-- Menu buttons-->
@@ -16,14 +16,16 @@
           <span>{{ $t('SW_DASHBOARD') }}</span>
         </el-menu-item>
 
-        <el-button :type="user.credits && user.credits.used < user.credits.limit ? 'success' : 'danger'" size="small" @click="dialogRemaining = true" v-if="user.role !== 'student' && school.creditsEnabled && payAsYouGo" class="assessment-limit">
-          <strong class="visible-sm-inline visible-xs-inline"><i class="icon-done_all"></i></strong>
+        <el-button :type="user.credits && user.credits.used < user.credits.limit ? 'success' : 'danger'" size="small"
+                   @click="dialogRemaining = true" v-if="user.role !== 'student' && school.creditsEnabled && payAsYouGo"
+                   class="assessment-limit">
+          <strong class="visible-sm-inline visible-xs-inline"><i class="icon-done_all"/></strong>
           <strong v-if="user.credits"> {{ user.credits.used > user.credits.limit ? 0 : user.credits.limit - user.credits.used }} </strong>
           <strong v-else> 0 </strong>
           <strong class="hidden-xs hidden-sm">{{ $t('SW_ASSESSMENTS_LEFT') }}</strong>
         </el-button>
 
-        <el-menu-item index="" class="hide"></el-menu-item>
+        <el-menu-item index="" class="hide"/>
       </el-menu>
 
       <!-- Header logo or text -->
@@ -32,11 +34,12 @@
         <div v-else class="header-logo"></div>
       </router-link>
 
+      <!-- Select organization -->
       <div class="header-school-container visible-xs visible-sm" v-else>
         <div class="org-select">
           <el-select size="small" v-model="selectedOrg" :filterable="userOrgs.length > 5" :placeholder="$t('SW_SELECT_SCHOOL')" @change="changeOrg">
             <el-option v-for="org in userOrgs" :key="org._id" :label="org.name[lang]" :value="org._id">
-              <i class="icon-school"></i>
+              <i class="icon-school"/>
               <span>{{ org.name[lang] }}</span>
             </el-option>
           </el-select>
@@ -49,32 +52,34 @@
         <div class="hidden-xs hidden-sm org-select" v-if="userOrgs.length > 1">
           <el-select size="small" v-model="selectedOrg" :filterable="userOrgs.length > 5" :placeholder="$t('SW_SELECT_SCHOOL')" @change="changeOrg">
             <el-option v-for="org in userOrgs" :key="org._id" :label="org.name[lang]" :value="org._id">
-              <i class="icon-school"></i>
+              <i class="icon-school"/>
               <span>{{ org.name[lang] }}</span>
             </el-option>
           </el-select>
         </div>
 
+        <!-- Show school selection -->
         <div class="org-select" v-if="showOrgButton && userOrgs.length > 1">
           <el-button type="primary" plain size="small" @click="showSchoolSelect = !showSchoolSelect">
-            <i class="icon-list"></i>
+            <i class="icon-list"/>
             {{ $tc('SW_ORGANIZATION', 2) }}
           </el-button>
         </div>
 
         <!-- User account -->
         <router-link class="user-account-link" :to="{ name: showProfile ? 'profile' : 'account', params: { slug: school.slug, id: user._id } }" aria-label="Account page">
-            <thumbnail tabindex="0" :model="user" class="thumb-user mr-5 thumb-24"></thumbnail>
+            <thumbnail tabindex="0" :model="user" class="thumb-user mr-5 thumb-24"/>
             <strong class="hidden-sm-inline user-name">{{user.name}}</strong>
         </router-link>
       </div>
     </div>
 
+    <!-- Pay as you go limit -->
     <el-dialog :title="$t('SW_CREDITS_INFO')" append-to-body :visible.sync="dialogRemaining" v-if="payAsYouGo">
       {{ $t('SW_CREDITS_REMAINING_INFO', [school.name[lang]])}} <a href="#" @click.prevent="openChat">{{ $t('SW_CONTACT_SUPPORT') }}</a>.
 
       <div v-if="user.credits && user.credits.exp">
-        <strong class="hidden-xs hidden-sm"><i class="icon-time"></i></strong>
+        <strong class="hidden-xs hidden-sm"><i class="icon-time"/></strong>
         <strong>{{ prettyDate(user.credits.exp) }}</strong>
       </div>
     </el-dialog>
@@ -121,12 +126,8 @@ export default {
   },
 
   computed: {
-    user () {
-      return this.$store.state.user
-    },
-    isAdmin () {
-      return this.$store.state.user.systemAdmin || this.$store.state.user.role === 'admin'
-    }
+    user () { return this.$store.state.user },
+    isAdmin () { return this.$store.state.user.systemAdmin || this.$store.state.user.role === 'admin' }
   },
 
   methods: {
@@ -138,9 +139,7 @@ export default {
         this.showOrgButton = true
       }
     },
-    prettyDate (date) {
-      return moment(new Date(date)).format('LLL')
-    },
+    prettyDate (date) { return moment(new Date(date)).format('LLL') },
     changeOrg (orgID) {
       this.$http.put(`session/context?organization=${orgID}`)
         .then(() => { window.location = window.location.origin })

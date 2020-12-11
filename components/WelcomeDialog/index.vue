@@ -3,7 +3,8 @@
     <page-cover>
       <div class="dialog-logo">
         <section class="logo-wrapper">
-          <logo-animation></logo-animation>
+          <!-- Logo animation -->
+          <logo-animation/>
         </section>
 
         <!-- Headers -->
@@ -28,16 +29,16 @@
 
       <!-- About project -->
       <section v-if="steps[step] === 'intro'">
-
         <p class="mb-20 font-16">{{ $t('SW_WELCOME_TEXT', [school.name[lang]]) }}
           <span v-if="showChatLink">{{ $t('SW_WELCOME_TEXT1') }} <a href="#" @click.prevent="openChat">{{ $t('SW_WELCOME_TEXT2') }}</a></span>
           <span v-else>{{ $t('SW_WELCOME_TEXT3') }}</span>.
         </p>
         <p class="font-16">{{ $t('SW_GOOD_LUCK') }}</p>
 
+        <!-- Contrast mode -->
         <el-form class="mt-20 mb-30 ">
           <el-form-item>
-            <el-switch v-model="currentUser.contrastMode" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+            <el-switch v-model="currentUser.contrastMode" active-color="#13ce66" inactive-color="#ff4949"/>
             <span class="ml-10">{{ $t('SW_CONTRAST_MODE_SHORT') }}</span>
           </el-form-item>
         </el-form>
@@ -45,11 +46,10 @@
 
       <!-- Accept terms and privacy statement -->
       <section v-else-if="steps[step] === 'terms'">
-
         <el-card shadow="never" class="mb-20">
           <div class="terms-window">
-            <div v-if="!acceptTermsOnWelcome" v-html="school.colofon[lang]"></div>
-            <static-terms v-else></static-terms>
+            <div v-if="!acceptTermsOnWelcome" v-html="school.colofon[lang]"/>
+            <static-terms v-else/>
           </div>
         </el-card>
       </section>
@@ -58,31 +58,38 @@
       <section v-else-if="steps[step] === 'verify'" class="mb-30">
         <p class="mb-20">{{ $t('SW_ADD_NAME_TEXT') }}</p>
         <el-form ref="form" :model="form" label-width="150px" class="text-left">
+
           <!-- Thumbnail -->
           <el-form-item :label="$t('SW_YOUR_PHOTO')">
-            <thumbnail-edit :form="form"></thumbnail-edit>
+            <thumbnail-edit :form="form"/>
           </el-form-item>
 
           <!-- Full name -->
           <el-form-item :label="$t('SW_YOUR_NAME')" required>
-            <el-input prefix-icon="icon-bio" v-model="form.name"></el-input>
+            <el-input prefix-icon="icon-bio" v-model="form.name"/>
           </el-form-item>
         </el-form>
       </section>
 
-      <app-language v-if="steps[step] === 'intro'" class="mr-10" :big="true"></app-language>
+      <!-- App language -->
+      <app-language v-if="steps[step] === 'intro'" class="mr-10" :big="true"/>
+
+      <!-- Go back button -->
       <el-button class="mr-5" v-else @click="step--">
         <i class="icon-arrow_back"></i>
         {{ $t('SW_BACK') }}
       </el-button>
+
+      <!-- Welcome dialog steps controls button -->
       <el-button type="primary" @click="nextStep" :loading="submitting">
         <strong v-if="steps[step] === 'intro'">{{ $t('SW_CONTINUE') }}</strong>
         <strong v-else-if="steps[step] === 'terms' || acceptTermsOnWelcome">{{ $t('SW_ACCEPT_CLOSE') }}</strong>
         <strong v-else-if="steps[step] === 'verify'">{{ $t('SW_SAVE_CLOSE') }}</strong>
         <i class="ml-5 icon-arrow_forward"></i>
       </el-button>
-      <el-checkbox class="ml-10" v-model="dontShowAgain">{{ $t('SW_DONT_SHOW_AGAIN') }}</el-checkbox>
 
+      <!-- Don't show again -->
+      <el-checkbox class="ml-10" v-model="dontShowAgain">{{ $t('SW_DONT_SHOW_AGAIN') }}</el-checkbox>
     </div>
   </div>
 </template>

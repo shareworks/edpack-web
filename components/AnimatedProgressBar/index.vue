@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-progress v-if="isTextVisible" :text-inside="true" :stroke-width="20" :percentage="percentage" status="success"></el-progress>
+    <el-progress v-if="isTextVisible" :text-inside="true" :stroke-width="20" :percentage="percentage" status="success"/>
     <span v-else class="text-muted">{{ $t('SW_NO_DATA') }}</span>
   </div>
 </template>
@@ -18,9 +18,7 @@ export default {
 
   mounted () {
     const ANIMATION_DELAY = 500
-    setTimeout(() => {
-      this.percentage = this.realPercentage
-    }, ANIMATION_DELAY)
+    setTimeout(() => { this.percentage = this.realPercentage }, ANIMATION_DELAY)
   }
 }
 </script>

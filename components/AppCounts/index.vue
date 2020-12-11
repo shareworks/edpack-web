@@ -5,6 +5,7 @@
         <div class="font-20">
           <i :class="stat.icon"></i>
           <strong>
+            <!-- Count component -->
             <countTo ref="counts" :autoplay=false :startVal="((counts[stat.prop] || 0) / 2)" :endVal="(counts[stat.prop] || 0)" separator="." :duration="3000"
                      v-observe-visibility="{callback: (isVisible, entry) => visibilityChanged(isVisible, entry, {visible: true, index}), throttle: countAnimationDelay, once: true}">
             </countTo>

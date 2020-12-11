@@ -5,7 +5,7 @@
 
         <!-- Logo -->
         <router-link to="/" :aria-label="$t('SW_LOGO_IMAGE')">
-          <div class="horizontal-logo position-relative"></div>
+          <div class="horizontal-logo position-relative"/>
         </router-link>
 
       </article>
@@ -15,21 +15,24 @@
       <article>
         <!-- Go back button -->
         <el-button  type="text" @click="goBack" aria-label="Go back" class="btn-back">
-          <i class="icon-arrow_back"></i>
+          <i class="icon-arrow_back"/>
           <span>{{ $t('SW_BACK') }}</span>
         </el-button>
 
         <p class="font-26 bold mb-10">
           {{ $t('SW_HEADER_' + $route.name.toUpperCase()) }}
         </p>
-        <p class="text-muted mb-30"><strong>{{ $t('SW_LAST_UPDATE', lastUpdated) }}</strong></p>
+        <p class="text-muted mb-30">
+          <strong>{{ $t('SW_LAST_UPDATE', lastUpdated) }}</strong>
+        </p>
       </article>
     </section>
 
     <section class="static-section white-section">
       <article class="static-max-width">
         <div class="static-page-content">
-          <slot></slot>
+          <!-- Content slot -->
+          <slot/>
         </div>
       </article>
     </section>
@@ -38,10 +41,10 @@
       <article class="text-center">
 
         <!-- Footer links -->
-        <footer-links :signin="true"></footer-links>
+        <footer-links :signin="true"/>
 
         <!-- Credits and terms -->
-        <footer-credits></footer-credits>
+        <footer-credits/>
       </article>
     </section>
   </div>

@@ -1,23 +1,22 @@
 <template>
   <div>
-    <slot></slot>
+    <slot/>
     <p class="mb-30" v-if="!hasSlotData">{{ $t('SW_EMAIL_DIALOG_USERS_TEXT', [appName]) }}</p>
 
     <el-form label-position="top">
       <!-- Subject -->
       <el-form-item>
-        <el-input :name="$t('SW_EMAIL_SUBJECT_PLACEHOLDER')" v-model="form.subject" ref="subject" :placeholder="$t('SW_EMAIL_SUBJECT_PLACEHOLDER')"></el-input>
+        <el-input :name="$t('SW_EMAIL_SUBJECT_PLACEHOLDER')" v-model="form.subject" ref="subject" :placeholder="$t('SW_EMAIL_SUBJECT_PLACEHOLDER')"/>
       </el-form-item>
 
       <!-- Message -->
       <el-form-item :label="$t('SW_MESSAGE')">
-        <el-input :name="$t('SW_MESSAGE')" type="textarea" :autosize="{ minRows: 3, maxRows: 8}" :placeholder="$t('SW_EMAIL_MESSAGE_PLACEHOLDER')" v-model="form.message">
-        </el-input>
+        <el-input :name="$t('SW_MESSAGE')" type="textarea" :autosize="{ minRows: 3, maxRows: 8}" :placeholder="$t('SW_EMAIL_MESSAGE_PLACEHOLDER')" v-model="form.message"/>
       </el-form-item>
 
       <!-- Send to self -->
       <el-form-item>
-        <el-checkbox :aria-label="$t('SW_SEND_TO_SELF')" :label="$t('SW_SEND_TO_SELF')" v-model="form.toSelf" name="type"></el-checkbox>
+        <el-checkbox :aria-label="$t('SW_SEND_TO_SELF')" :label="$t('SW_SEND_TO_SELF')" v-model="form.toSelf" name="type"/>
       </el-form-item>
 
       <!-- Send or cancel -->

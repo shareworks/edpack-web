@@ -7,18 +7,25 @@
       <el-col :span="12" :xs="24">
         <p class="mb-10 bold">{{ $t('SW_CURRENT_STAFF_TEXT') }}</p>
         <div class="instructor-list">
+          <!-- Instructor list -->
           <div v-for="instructor in instructors" class="text-ellipsis instructor-data" :key="instructor._id">
-            <thumbnail :model="instructor" class="thumb-user thumb-42 mr-5"></thumbnail>
+            <!-- Thumbnail -->
+            <thumbnail :model="instructor" class="thumb-user thumb-42 mr-5"/>
             <div>
+              <!-- Name -->
               <strong>{{instructor.name}}</strong>
               <div class="mb-20 font-12">
               <span v-if="instructor.activityDate">
-                <span class="online-icon"></span>
+                <!-- Activity Date -->
+                <span class="online-icon"/>
                 {{ fromNow(instructor.activityDate) }}
               </span>
+                <!-- Invite pending -->
                 <span v-else>{{ $t('SW_INVITE_PENDING') }}</span> &centerdot;
+
+                <!-- Remove instructor -->
                 <el-button :loading="removing" :disabled="instructors.length === 1" type="text" size="mini" @click="confirmRemove(instructor)">
-                  <i class="icon-delete"></i>
+                  <i class="icon-delete"/>
                   <span class="hidden-xs hidden-sm">{{ $t('SW_REMOVE') }}</span>
                 </el-button>
               </div>
@@ -26,14 +33,15 @@
           </div>
         </div>
       </el-col>
+
       <!-- Add instructors -->
       <el-col v-if="course.can.invite" :span="12" :xs="24">
-        <users-create :isManageStaff="true" :course="course" :closeDialog="closeDialog" :updateMembers="updateMembers"></users-create>
+        <users-create :isManageStaff="true" :course="course" :closeDialog="closeDialog" :updateMembers="updateMembers"/>
       </el-col>
     </el-row>
 
     <!-- Loading -->
-    <spinner v-if="loading"></spinner>
+    <spinner v-if="loading"/>
   </div>
 </template>
 

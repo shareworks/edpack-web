@@ -15,7 +15,9 @@
     </h3>
 
     <!-- Draggable students list -->
-    <groups-item @updateGroupCount="updateGroupCount" class="students-list-padding" :class="{'can-drag-in': dragging && noGroup}" :mode="noGroup ? 'without' : 'all'" :setDragging="setDragging" :students="noGroup ? studentsWithoutGroup : studentsSorted"/>
+    <groups-item @updateGroupCount="updateGroupCount" class="students-list-padding"  :setDragging="setDragging"
+                 :class="{'can-drag-in': dragging && noGroup}" :mode="noGroup ? 'without' : 'all'"
+                 :students="noGroup ? studentsWithoutGroup : studentsSorted"/>
   </section>
 </template>
 <script>

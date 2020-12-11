@@ -1,10 +1,11 @@
 <template>
   <div>
     <el-alert :title="$t('SW_INTEGRATIONS_INFO_TITLE', [appName])" class="mb-30" :description="$t('SW_INTEGRATIONS_INFO_TEXT', [appName])" type="info" show-icon/>
-    <!-- Show credentials in UI -->
-    <el-switch v-model="hideCredentials" active-color="#13ce66" inactive-color="#ff4949" class="mb-20" :active-text="$t('SW_VIEW_CREDENTIALS')"></el-switch>
 
-    <!--Email domains-->
+    <!-- Show credentials in UI -->
+    <el-switch v-model="hideCredentials" active-color="#13ce66" inactive-color="#ff4949" class="mb-20" :active-text="$t('SW_VIEW_CREDENTIALS')"/>
+
+    <!-- Incorrect email domains -->
     <el-alert class="mb-10" show-icon v-if="incorrectDomains.length" type="error" :title="$tc('SW_DOMAINS_NOT_CORRECT', incorrectDomains.length)">
       <ul>
         <li v-for="domain in incorrectDomains" :key="domain">
@@ -13,22 +14,19 @@
       </ul>
     </el-alert>
 
+    <!-- Email domains -->
     <el-form-item :label="$t('SW_EMAIL_DOMAINS')" required>
       <el-tag v-for="domain in form.emailDomains" :key="domain" closable :disable-transitions="false" @close="handleClose('emailDomains', domain); domainsValidation()">
         {{ domain }}
       </el-tag>
-      <el-input
-              size="small"
-              ref="emailDomains"
-              class="inline ml-5"
-              v-if="inputVisible.emailDomains"
-              v-model="inputValue.emailDomains"
-              placeholder="@role.your-school.com"
-              @keyup.enter.native="handleInputConfirm('emailDomains')"
-              @blur="handleInputConfirm('emailDomains'); domainsValidation()">
-      </el-input>
+
+      <el-input size="small" ref="emailDomains" class="inline ml-5" v-if="inputVisible.emailDomains" v-model="inputValue.emailDomains"
+                placeholder="@role.your-school.com" @keyup.enter.native="handleInputConfirm('emailDomains')"
+                @blur="handleInputConfirm('emailDomains'); domainsValidation()"/>
+
+      <!-- New domain -->
       <el-button v-else size="small" class="ml-5" @click="showInput('emailDomains')">
-        <i class="icon-add"></i>
+        <i class="icon-add"/>
         {{ $t('SW_NEW_DOMAIN') }}
       </el-button>
     </el-form-item>
@@ -38,18 +36,13 @@
       <el-tag v-for="samlDomain in form.saml.domains" :key="samlDomain" closable :disable-transitions="false" @close="handleClose('samlDomains', samlDomain)">
         {{ samlDomain }}
       </el-tag>
-      <el-input
-              class="inline ml-5"
-              size="small"
-              v-if="inputVisible.samlDomains"
-              v-model="inputValue.samlDomains"
-              placeholder="saml-domain.edu"
-              ref="samlDomains"
-              @keyup.enter.native="handleInputConfirm('samlDomains')"
-              @blur="handleInputConfirm('samlDomains')">
-      </el-input>
+      <el-input class="inline ml-5" size="small" v-if="inputVisible.samlDomains" v-model="inputValue.samlDomains"
+              placeholder="saml-domain.edu" ref="samlDomains" @keyup.enter.native="handleInputConfirm('samlDomains')"
+              @blur="handleInputConfirm('samlDomains')"/>
+
+      <!-- New SAML domain -->
       <el-button v-else size="small" class="ml-5" @click="showInput('samlDomains')">
-        <i class="icon-add"></i>
+        <i class="icon-add"/>
         {{ $t('SW_NEW_SAML_DOMAIN') }}
       </el-button>
     </el-form-item>
@@ -59,18 +52,13 @@
       <el-tag v-for="entity in form.saml.entityIds" :key="entity" closable :disable-transitions="false" @close="handleClose('samlEntityIds', entity)">
         {{ entity }}
       </el-tag>
-      <el-input
-              class="inline ml-5"
-              size="small"
-              v-if="inputVisible.samlEntityIds"
-              v-model="inputValue.samlEntityIds"
-              placeholder="https://www.saml-domain.edu/saml-login-url"
-              ref="samlEntityIds"
-              @keyup.enter.native="handleInputConfirm('samlEntityIds')"
-              @blur="handleInputConfirm('samlEntityIds')">
-      </el-input>
+
+      <el-input class="inline ml-5" size="small" v-if="inputVisible.samlEntityIds" v-model="inputValue.samlEntityIds"
+                placeholder="https://www.saml-domain.edu/saml-login-url" ref="samlEntityIds" @keyup.enter.native="handleInputConfirm('samlEntityIds')"
+                @blur="handleInputConfirm('samlEntityIds')"/>
+
       <el-button v-else size="small" class="ml-5" @click="showInput('samlEntityIds')">
-        <i class="icon-add"></i>
+        <i class="icon-add"/>
         {{ $t('SW_NEW_SAML_ENTITY_ID') }}
       </el-button>
     </el-form-item>
@@ -90,7 +78,7 @@
         <el-input v-model="ltiConfigUrl" :readonly="true" type="url">
           <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
             <el-button v-clipboard="ltiConfigUrl" @success="clipboardSuccess">
-              <i class="icon-copy"></i>
+              <i class="icon-copy"/>
             </el-button>
           </el-tooltip>
         </el-input>
@@ -101,7 +89,7 @@
         <el-input v-model="form._id" :readonly="true" type="text">
           <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
             <el-button v-clipboard="form._id" @success="clipboardSuccess">
-              <i class="icon-copy"></i>
+              <i class="icon-copy"/>
             </el-button>
           </el-tooltip>
         </el-input>
@@ -112,18 +100,19 @@
         <el-input v-model="form.ltiBasic.secret" :readonly="true" :type="hideCredentials ? 'password' : 'text'" :placeholder="$t('SW_SECRET_PLACEHOLDER')">
           <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
             <el-button v-clipboard="form.ltiBasic.secret" @success="clipboardSuccess">
-              <i class="icon-copy"></i>
+              <i class="icon-copy"/>
             </el-button>
           </el-tooltip>
 
           <el-tooltip slot="append" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_GENERATE_SECRET_TEXT')" placement="bottom-end">
             <el-button @click="generateSecret">
-              <i class="icon-repeat"></i>
+              <i class="icon-repeat"/>
               {{ $t('SW_GENERATE') }}
             </el-button>
           </el-tooltip>
         </el-input>
 
+        <!-- Generated key alert -->
         <el-alert v-if="generatedSecretAlert && form.isChanged" class="mt-10" show-icon center :title="$t('SW_GENERATED_KEY_ALERT')" type="warning" :closable="false"/>
       </el-form-item>
     </div>
@@ -135,7 +124,7 @@
         <el-input v-model="ltiAdvantageDomainUrl" :readonly="true" type="url">
           <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
             <el-button v-clipboard="ltiAdvantageDomainUrl" @success="clipboardSuccess">
-              <i class="icon-copy"></i>
+              <i class="icon-copy"/>
             </el-button>
           </el-tooltip>
         </el-input>
@@ -146,7 +135,7 @@
         <el-input v-model="ltiAdvantageRedirectUrl" :readonly="true" type="url">
           <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
             <el-button v-clipboard="ltiAdvantageRedirectUrl" @success="clipboardSuccess">
-              <i class="icon-copy"></i>
+              <i class="icon-copy"/>
             </el-button>
           </el-tooltip>
         </el-input>
@@ -157,7 +146,7 @@
         <el-input v-model="ltiAdvantageLoginUrl" :readonly="true" type="url">
           <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
             <el-button v-clipboard="ltiAdvantageLoginUrl" @success="clipboardSuccess">
-              <i class="icon-copy"></i>
+              <i class="icon-copy"/>
             </el-button>
           </el-tooltip>
         </el-input>
@@ -168,7 +157,7 @@
         <el-input v-model="ltiAdvantageKeysetUrl" :readonly="true" type="url">
           <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
             <el-button v-clipboard="ltiAdvantageKeysetUrl" @success="clipboardSuccess">
-              <i class="icon-copy"></i>
+              <i class="icon-copy"/>
             </el-button>
           </el-tooltip>
         </el-input>
@@ -177,7 +166,7 @@
 
     <!-- Enable API Integration -->
     <el-form-item class="mb-10" :label="$t('SW_TOGGLE_API_INTEGRATION')">
-      <el-switch v-model="form.lmsApiIntegration" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+      <el-switch v-model="form.lmsApiIntegration" active-color="#13ce66" inactive-color="#ff4949"/>
       <span class="text-muted ml-10">{{ $t('SW_TOGGLE_API_INTEGRATION_TEXT' )}}</span>
     </el-form-item>
 
@@ -201,7 +190,7 @@
             <el-input v-model="this[apiTemplate[form.lastConfiguredLms].name.toLowerCase() + 'CallbackUrl']" :readonly="true" type="url">
               <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
                 <el-button v-clipboard="canvasCallbackUrl" @success="clipboardSuccess">
-                  <i class="icon-copy"></i>
+                  <i class="icon-copy"/>
                 </el-button>
               </el-tooltip>
             </el-input>
@@ -212,7 +201,7 @@
             <el-input v-model="form[form.lastConfiguredLms].appId">
               <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
                 <el-button v-clipboard="form[form.lastConfiguredLms].appId">
-                  <i class="icon-copy"></i>
+                  <i class="icon-copy"/>
                 </el-button>
               </el-tooltip>
             </el-input>
@@ -250,6 +239,7 @@
           </el-form-item>
         </div>
 
+        <!-- No API integration -->
         <el-alert v-else :title="$t('SW_NO_API_INTEGRATION_YET')" class="mb-30" :description="$t('SW_NO_API_INTEGRATION_YET_TEXT')" type="warning" show-icon/>
       </div>
     </el-collapse-transition>

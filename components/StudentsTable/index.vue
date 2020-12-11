@@ -2,29 +2,34 @@
   <div>
     <!-- Table with students -->
     <el-table v-show="tableValues.length" size="small" :data="getTableData" row-key="_id" ref="studentsTable" class="mb-20">
+
       <!-- Name -->
       <el-table-column :label="$tc(participantTypeText ? participantTypeText : 'SW_STUDENT', 1)" prop="name" min-width="160">
         <template slot-scope="props">
           <div class="text-ellipsis">
             <el-popover width="200" trigger="click" placement="bottom">
-              <el-input size="small" v-model="props.row.name"></el-input>
+              <el-input size="small" v-model="props.row.name"/>
               <strong class="student-name" slot="reference">{{props.row.name}}</strong>
             </el-popover>
           </div>
         </template>
       </el-table-column>
+
       <!-- Email address -->
       <el-table-column property="email" :label="$tc('SW_EMAIL', 1)" min-width="180">
         <template slot-scope="props">
           <a :href="'mailto:' + props.row.email" target="_blank" class="text-ellipsis">{{ props.row.email }}</a>
         </template>
       </el-table-column>
+
       <!-- Group name -->
       <el-table-column v-if="!noGroup" property="groupName" :label="$tc('SW_GROUP', 1)" min-width="180">
         <template slot-scope="props">
           <strong>{{ props.row.groupName }}</strong>
         </template>
       </el-table-column>
+
+      <!-- Group Index -->
       <el-table-column v-if="!noGroup" property="groupName" :label="$t('SW_GROUP_INDEX')" min-width="50">
         <template slot-scope="props">
           <strong>{{ props.row.groupIndex }}</strong>
@@ -32,7 +37,7 @@
       </el-table-column>
     </el-table>
 
-    <el-pagination class="text-center" background layout="prev, pager, next" :total="total" :page-size="pageSize" @current-change="onPageChange"></el-pagination>
+    <el-pagination class="text-center" background layout="prev, pager, next" :total="total" :page-size="pageSize" @current-change="onPageChange"/>
   </div>
 </template>
 

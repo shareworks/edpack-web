@@ -1,7 +1,9 @@
 <template>
   <div>
+    <!-- Id -->
     <div class="mb-10"><strong class="mr-5">ID</strong> {{ _id }}</div>
 
+    <!-- Faculties Manager -->
     <div v-if="user.faculties.length" class="mb-10">
       <p>
         <strong>{{ $t('SW_FACULTY_MANAGER') }}</strong>
@@ -9,26 +11,34 @@
       </p>
     </div>
 
+    <!-- User Courses -->
     <div v-if="userCourses && userCourses.length">
       <el-table :data="userCourses" row-key="_id" :default-sort="{prop: 'createdDate', order: 'descending'}">
+        <!-- Course Name -->
         <el-table-column property="name" :label="$tc('SW_COURSE', 1)" min-width="180">
           <template slot-scope="scope">
             <router-link :to="{ name: 'staff', params: { course: scope.row._id, slug: school.slug } }" class="block text-ellipsis">
               <span v-if="scope.row.name">{{ scope.row.name }}</span>
               <span v-else>-</span>
-              <lms-icon class="ml-5" :model="scope.row"></lms-icon>
+              <lms-icon class="ml-5" :model="scope.row"/>
             </router-link>
           </template>
         </el-table-column>
+
+        <!-- Role -->
         <el-table-column property="role" :label="$tc('SW_ROLE', 1)" min-width="110">
           <template slot-scope="scope">
             <span v-if="scope.row.role">{{ $tc('SW_' + scope.row.role.toUpperCase(), 1 )}}</span>
             <span v-else>-</span>
           </template>
         </el-table-column>
-        <el-table-column property="createdDate" :formatter="dateFormatter" :sort-method="sortCreatedDate" :label="$t('SW_CREATED_DATE')" min-width="140"></el-table-column>
+
+        <!-- Created Date -->
+        <el-table-column property="createdDate" :formatter="dateFormatter" :sort-method="sortCreatedDate" :label="$t('SW_CREATED_DATE')" min-width="140"/>
       </el-table>
     </div>
+
+    <!-- No course found -->
     <div v-else>{{ $t('SW_NO_COURSES_FOUND') }}</div>
   </div>
 </template>

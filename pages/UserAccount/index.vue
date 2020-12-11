@@ -1,8 +1,9 @@
 <template>
   <div>
     <page-cover>
-      <page-header :title="$t('SW_MY_ACCOUNT')" :intro="$t(school.manageAccountEnabled || school.role === 'admin' || form.systemAdmin ? 'SW_MY_ACCOUNT_SHORT' : '')"></page-header>
-      <el-alert type="warning" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE', [appName])" v-if="!serverOnline"></el-alert>
+      <!-- Page Header -->
+      <page-header :title="$t('SW_MY_ACCOUNT')" :intro="$t(school.manageAccountEnabled || school.role === 'admin' || form.systemAdmin ? 'SW_MY_ACCOUNT_SHORT' : '')"/>
+      <el-alert type="warning" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE', [appName])" v-if="!serverOnline"/>
 
       <!-- View your profile -->
       <el-button size="small" type="primary" v-if="hasUserProfiles" @click="$router.push({ name: 'profile', params: { id: form._id, slug: school.slug } })" class="mt-10">
@@ -17,6 +18,7 @@
       </el-button>
 
       <!-- User account options -->
+      <!-- @TODO: this section is hidden, remove it? -->
       <el-dropdown trigger="click" class="hide" @command="handleCommand">
         <el-button class="ml-10" size="small">
           <span>{{ $t('SW_MORE') }}</span>
@@ -39,7 +41,7 @@
 
     <!-- Account form -->
     <div class="page-body">
-      <user-account-form :form="form" v-if="school.manageAccountEnabled || school.role === 'admin' || form.systemAdmin" :finish="finish"></user-account-form>
+      <user-account-form :form="form" v-if="school.manageAccountEnabled || school.role === 'admin' || form.systemAdmin" :finish="finish"/>
     </div>
   </div>
 </template>
@@ -61,7 +63,6 @@ export default {
       hasUserProfiles: config.hasUserProfiles,
       school: this.$store.state.school,
       form: Vue.util.extend({}, this.$store.state.user),
-      inLTI: this.$store.state.inLTI,
       serverOnline: true,
       appName: config.name
     }
