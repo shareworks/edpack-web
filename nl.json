@@ -602,5 +602,12 @@
   "SW_STAFF_NOTIFICATION": "Docent",
   "SW_STARTED_EVALUATION_NOTIFICATION":"Begonnen met evaluatie",
   "SW_CLOSED_EVALUATION_NOTIFICATION": "Gesloten evaluatie",
-  "SW_FULL_NAME_REQUIRED": "Naam is vereist."
+  "SW_FULL_NAME_REQUIRED": "Naam is vereist.",
+  "SW_NOTIFICATION": "Kennisgeving",
+  "SW_STAFF_NOTIFICATION_DISABLING": "kennisgeving personeel",
+  "SW_STARTED_EVALUATION_NOTIFICATION_DISABLING":"gestart kennisgeving",
+  "SW_CLOSED_EVALUATION_NOTIFICATION_DISABLING": "gesloten kennisgeving",
+  "SW_STAFF_NOTIFICATION_TEXT": "Uitschakelen kennisgeving personeel.",
+  "SW_STARTED_EVALUATION_NOTIFICATION_TEXT":"Disable begonnen evaluatie kennisgeving.",
+  "SW_CLOSED_EVALUATION_NOTIFICATION_TEXT": "Schakel gesloten evaluatiemelding uit."
 }
