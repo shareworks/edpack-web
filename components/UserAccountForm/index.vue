@@ -100,19 +100,19 @@
     </el-form-item>
 
     <!-- Disable Staff Notification -->
-    <el-form-item class="hidden" v-if="showFullAccountInfo && (form.role === 'staff' || isAdmin)" :label="$t('SW_STAFF_NOTIFICATION_DISABLING')">
+    <el-form-item class="hidden" v-if="form.checks && showFullAccountInfo && (form.role === 'staff' || isAdmin)" :label="$t('SW_STAFF_NOTIFICATION_DISABLING')">
       <el-switch v-model="form.checks.disableStaffNotifcation" active-color="#13ce66" inactive-color="#ff4949"/>
       <span class="text-muted ml-10">{{ $t('SW_STAFF_NOTIFICATION_TEXT') }}</span>
     </el-form-item>
 
     <!-- Disable Start Notification -->
-    <el-form-item class="hidden" v-if="showFullAccountInfo" :label="$t('SW_STARTED_EVALUATION_NOTIFICATION_DISABLING')">
+    <el-form-item class="hidden" v-if="form.checks && showFullAccountInfo" :label="$t('SW_STARTED_EVALUATION_NOTIFICATION_DISABLING')">
       <el-switch v-model="form.checks.disableStartNotification" active-color="#13ce66" inactive-color="#ff4949"/>
       <span class="text-muted ml-10">{{ $t('SW_STARTED_EVALUATION_NOTIFICATION_TEXT') }}</span>
     </el-form-item>
 
     <!-- Disable Closed Notification -->
-    <el-form-item class="hidden" v-if="showFullAccountInfo" :label="$t('SW_CLOSED_EVALUATION_NOTIFICATION_DISABLING')">
+    <el-form-item class="hidden" v-if="form.checks && showFullAccountInfo" :label="$t('SW_CLOSED_EVALUATION_NOTIFICATION_DISABLING')">
       <el-switch v-model="form.checks.disableClosedNotification" active-color="#13ce66" inactive-color="#ff4949"/>
       <span class="text-muted ml-10">{{ $t('SW_CLOSED_EVALUATION_NOTIFICATION_TEXT') }}</span>
     </el-form-item>
