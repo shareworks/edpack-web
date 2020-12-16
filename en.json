@@ -616,5 +616,7 @@
   "SW_STAFF_NOTIFICATION_TEXT": "Disable staff notification.",
   "SW_STARTED_EVALUATION_NOTIFICATION_TEXT":"Disable started evaluation notification.",
   "SW_CLOSED_EVALUATION_NOTIFICATION_TEXT": "Disable closed evaluation notification.",
-  "SW_QR_INSTRUCTION": "Show this QR code to your students or copy the link below."
+  "SW_QR_INSTRUCTION": "Show this QR code to your students or copy the link below.",
+  "SW_PRODUCTION": "Production",
+  "SW_PRODUCTION_TEXT":"This school not used for demo preview."
 }

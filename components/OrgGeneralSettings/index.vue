@@ -1,9 +1,15 @@
 <template>
   <div :class="{ 'multi-lang': form.languages.en && form.languages.nl }">
 
-    <!-- Full name EN -->
+    <!-- Full name -->
     <el-form-item :label="$t('SW_ORG_FULL_NAME')" prop="name.en" required :show-message="false">
       <inputs-with-flags :change="setNewName" :value="form.name" name="full" :placeholder="$t('SW_ORG_FULL_NAME')"/>
+    </el-form-item>
+
+    <!-- Production -->
+    <el-form-item :label="$t('SW_PRODUCTION')">
+      <el-switch v-model="form.production" active-color="#13ce66" inactive-color="#ff4949"/>
+      <span class="text-muted ml-10">{{ $t('SW_PRODUCTION_TEXT') }}</span>
     </el-form-item>
 
     <!-- Short name -->

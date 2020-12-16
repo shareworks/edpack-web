@@ -610,5 +610,7 @@
   "SW_STAFF_NOTIFICATION_TEXT": "Uitschakelen kennisgeving personeel.",
   "SW_STARTED_EVALUATION_NOTIFICATION_TEXT":"Disable begonnen evaluatie kennisgeving.",
   "SW_CLOSED_EVALUATION_NOTIFICATION_TEXT": "Schakel gesloten evaluatiemelding uit.",
-  "SW_QR_INSTRUCTION": "Toon deze QR-code aan studenten of kopieer de link hieronder."
+  "SW_QR_INSTRUCTION": "Toon deze QR-code aan studenten of kopieer de link hieronder.",
+  "SW_PRODUCTION": "Productie",
+  "SW_PRODUCTION_TEXT":"Deze school wordt niet gebruikt voor demo-preview."
 }

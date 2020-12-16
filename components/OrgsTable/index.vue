@@ -87,10 +87,18 @@
       </el-table-column>
 
       <!-- LMS -->
-      <el-table-column property="lastConfiguredLms" label="LMS" min-width="120">
+      <el-table-column property="lastConfiguredLms" label="LMS" min-width="70">
         <template slot-scope="props">
           <span v-if="props.row.lastConfiguredLms && props.row.lmsApiIntegration" class="block text-ellipsis capitalize">{{ props.row.lastConfiguredLms }}</span>
           <span v-else class="text-muted">{{ $t('SW_NONE') }}</span>
+        </template>
+      </el-table-column>
+
+      <!-- Production -->
+      <el-table-column property="production" :label="$t('SW_PRODUCTION')" width="100">
+        <template slot-scope="props">
+          <span class="text-success" v-if="props.row.production">{{ $t('SW_YES') }}</span>
+          <span class="text-danger" v-else>{{ $t('SW_NO') }}</span>
         </template>
       </el-table-column>
 
