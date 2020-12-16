@@ -8,7 +8,9 @@ const basicVisibilityChanged = (isVisible, entry, hiddenClass, visibleClass, add
     target.classList.add(hiddenClass)
   }
 
-  additionalLogicFunction(...args)
+  if (additionalLogicFunction) {
+    additionalLogicFunction(...args)
+  }
 }
 
 export default basicVisibilityChanged
