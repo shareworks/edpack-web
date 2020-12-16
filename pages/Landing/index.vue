@@ -2,8 +2,8 @@
   <div>
     <!-- Animated BG -->
     <animated-landing/>
-    <el-row type="flex" justify="center" align="middle" class="minimum-page">
-      <el-col>
+    <el-row type="flex" justify="center" align="top" class="minimum-page landing-wrapper">
+    <el-col>
         <div class="public-background"/>
 
         <!-- Logo -->
@@ -22,7 +22,7 @@
         <footer-links class="mt-10 mb-20 landing-buttons"/>
 
         <!-- Log in panel -->
-        <login class="mb-30"></login>
+        <login class="mb-30"/>
       </el-col>
     </el-row>
   </div>
