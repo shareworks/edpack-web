@@ -127,7 +127,7 @@ export default {
 
       let payload
       if (this.assessmentRole === 'assessor') payload = { assessorsToAdd: usersToAdd }
-      else payload = { usersToAdd }
+      else payload = { participantsToAdd: usersToAdd }
 
       this.$http.put(this.assessmentUrl, payload)
         .then(() => { this.cleanForm() })
