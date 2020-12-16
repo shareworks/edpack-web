@@ -96,6 +96,7 @@
 
 <script>
 import config from 'config'
+import basicVisibilityChanged from '@/edpack-web/utils/basic-visibility-changed'
 
 export default {
   name: 'Login',
@@ -175,11 +176,7 @@ export default {
         .finally(() => { this.submitting = false })
     },
     visibilityChanged (isVisible, entry) {
-      const { target } = entry
-      if (isVisible) {
-        target.classList.remove('bottom')
-        target.classList.add('top')
-      }
+      basicVisibilityChanged(isVisible, entry, 'bottom', 'top')
     }
   }
 }

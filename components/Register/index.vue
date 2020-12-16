@@ -74,6 +74,7 @@
 <script>
 import config from 'config'
 import Password from 'vue-password-strength-meter'
+import basicVisibilityChanged from '@/edpack-web/utils/basic-visibility-changed'
 
 export default {
   name: 'Register',
@@ -149,11 +150,7 @@ export default {
         .finally(() => { this.submitting = false })
     },
     visibilityChanged (isVisible, entry) {
-      const { target } = entry
-      if (isVisible) {
-        target.classList.remove('bottom')
-        target.classList.add('top')
-      }
+      basicVisibilityChanged(isVisible, entry, 'bottom', 'top')
     }
   }
 }

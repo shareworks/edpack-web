@@ -23,6 +23,7 @@
 
 <script>
 import config from 'config'
+import basicVisibilityChanged from '@/edpack-web/utils/basic-visibility-changed'
 export default {
   name: 'contact-us',
   metaInfo: {
@@ -38,12 +39,7 @@ export default {
   },
   methods: {
     visibilityChanged (isVisible, entry) {
-      const { target } = entry
-
-      if (isVisible) {
-        target.classList.remove('invisible')
-        target.classList.add('visible')
-      }
+      basicVisibilityChanged(isVisible, entry, 'invisible', 'visible')
     }
   }
 }

@@ -19,6 +19,7 @@
 
 <script>
 import countTo from 'vue-count-to'
+import basicVisibilityChanged from '@/edpack-web/utils/basic-visibility-changed'
 
 export default {
   name: 'AppCounts',
@@ -36,22 +37,18 @@ export default {
   },
 
   methods: {
-    visibilityChanged (isVisible, entry, count) {
-      const { target } = entry
-
-      if (isVisible) {
-        target.classList.remove('invisible')
-        target.classList.add('visible')
-      } else {
-        target.classList.add('invisible')
-      }
-
+    startCountAnimation (count, isVisible) {
       if (count && isVisible) {
         setTimeout(() => {
           this.$refs.counts[count.index].start()
         }, this.countAnimationDelay)
       }
     },
+
+    visibilityChanged (isVisible, entry, count) {
+      basicVisibilityChanged(isVisible, entry, 'invisible', 'visible', this.startCountAnimation, count, isVisible)
+    },
+
     getPublicAppCounts () {
       this.$http.get('public/counts')
         .then((res) => { this.counts = res.data })
