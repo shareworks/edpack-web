@@ -41,7 +41,8 @@
 
     <!-- Account form -->
     <div class="page-body">
-      <user-account-form :form="form" v-if="school.manageAccountEnabled || school.role === 'admin' || form.systemAdmin" :finish="finish"/>
+      <user-account-form :form="form" v-if="school.manageAccountEnabled || school.role === 'admin' || form.systemAdmin"
+                         :finish="finish" :showFullAccountInfo="true"/>
     </div>
   </div>
 </template>
