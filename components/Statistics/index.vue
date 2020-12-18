@@ -57,14 +57,14 @@ export default {
     completionStats: { default () { return [] } },
     userStats: { default () { return [] } },
     stats: { default () { return [] } },
-    useFaculty: { default: false }
+    faculty: { default: false }
   },
   components: { countTo },
 
   data () {
     return {
       school: this.$store.state.school,
-      facultyFilter: this.$route.query.context || '',
+      facultyFilter: this.faculty ? this.faculty._id : this.$route.query.context || '',
       statisticCompletionValues: {},
       statisticUserValues: {},
       statisticStatsValues: {},
@@ -75,12 +75,12 @@ export default {
   watch: {
     $route () {
       this.facultyFilter = this.$route.query.context
-      if (this.useFaculty) this.getFacultyStatistic()
+      if (this.faculty) this.getFacultyStatistic()
     }
   },
 
   mounted () {
-    if (this.useFaculty) return this.getFacultyStatistic()
+    if (this.faculty) return this.getFacultyStatistic()
     this.checkSchoolCountsAndCallSetup()
   },
 
