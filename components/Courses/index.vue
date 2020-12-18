@@ -102,7 +102,7 @@ import CoursesTable from '../CoursesTable'
 
 export default {
   name: 'Courses',
-  props: ['member', 'customCounts', 'cards', 'hideCreateCourseButton'],
+  props: ['member', 'customCounts', 'cards', 'faculty'],
   components: { CoursesCards, CreateCourse, TableStatus, CoursesTable },
 
   data () {
@@ -123,7 +123,7 @@ export default {
       statusOptions: ['active', 'inactive', 'archived'],
       statusFilter: this.$route.query.statusFilter || 'active',
       submitting: false,
-      facultyFilter: this.$route.query.context || ''
+      facultyFilter: this.faculty ? this.faculty._id : this.$route.query.context || ''
     }
   },
 
@@ -166,8 +166,8 @@ export default {
       if (this.searchText) params.filter = this.searchText
 
       // Show courses within a faculty
-      if (this.$route.query.context && this.$route.query.context !== 'school') {
-        params.faculty = this.$route.query.context
+      if (this.facultyFilter && this.facultyFilter !== 'school') {
+        params.faculty = this.facultyFilter
       }
 
       this.$http.get('courses', { params })
