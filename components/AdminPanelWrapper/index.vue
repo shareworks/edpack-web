@@ -81,9 +81,8 @@ export default {
 
   watch: {
     $route (to) {
-      if (to.params.mode !== this.mode) {
-        this.setMode(to.params.mode)
-      }
+      if (!to.params.mode) to.params.mode = config.defaultAdminTab
+      if (to.params.mode !== this.mode) this.setMode(to.params.mode)
     }
   },
 
