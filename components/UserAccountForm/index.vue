@@ -96,7 +96,7 @@
     <!-- High contrast mode -->
     <el-form-item :label="$t('SW_CONTRAST_MODE')">
       <el-switch v-model="form.contrastMode" active-color="#13ce66" inactive-color="#ff4949"/>
-      <span class="text-muted ml-10">{{ $t('SW_CONTRAST_MODE_TEXT') }}</span>
+      <span class="ml-10">{{ $t('SW_CONTRAST_MODE_TEXT') }}</span>
     </el-form-item>
 
     <!-- Disable Staff Notification -->
