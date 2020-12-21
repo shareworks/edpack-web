@@ -16,6 +16,7 @@ export default {
 
   mounted () {
     router.onError(error => {
+      console.log('Router error occurred', error)
       const isChunkLoadFailure = error.message.toLowerCase().includes('chunkloaderror')
 
       if (isChunkLoadFailure) {
