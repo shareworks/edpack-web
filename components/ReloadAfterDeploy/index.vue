@@ -1,5 +1,5 @@
 <template>
-  <div/>
+  <div></div>
 </template>
 
 <script>
@@ -19,13 +19,12 @@ export default {
 
   methods: {
     checkReloadFailure (error) {
-      console.log(error)
-      let isChunkLoadFailure = error.message.toLowerCase().includes('chunkloaderror')
-      if (!isChunkLoadFailure) isChunkLoadFailure = error.message.toLowerCase().includes('unexpected token')
+      const errorMessage = error.message.toLowerCase()
+      const isChunkLoadFailure = errorMessage.includes('chunk') || errorMessage.includes('unexpected token')
 
       if (isChunkLoadFailure) {
         const reloadedDate = this.$ls.get('reloaded')
-        const justReloaded = reloadedDate && (moment(new Date()).diff(moment(reloadedDate), 'seconds' < 60))
+        const justReloaded = reloadedDate && (moment(new Date()).diff(moment(reloadedDate), 'seconds') < 100)
 
         // If not already reloaded in last minute, ask for reload.
         if (!justReloaded) this.askForReload()
