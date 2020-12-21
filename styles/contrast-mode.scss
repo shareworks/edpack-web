@@ -12,6 +12,10 @@
     color: #343434 !important;
   }
 
+  .el-input__inner {
+    color: #343434 !important;
+  }
+
   input:focus,
   textarea:focus {
     outline: none !important;
@@ -39,15 +43,15 @@
   }
 
   .el-message--warning .el-message__content {
-    color: #a56400;
+    color: #a56400 !important;
   }
 
   .el-message--success .el-message__content {
-    color: green;
+    color: green !important;
   }
 
   .el-message--error .el-message__content {
-    color: #7c0101;
+    color: #7c0101 !important;
   }
 
   .el-message--info .el-message__content {
@@ -98,7 +102,38 @@
     color: #343434 !important;
   }
 
-  .el-button.btn-back {
+  .newsletter > .el-checkbox__label {
+    font-weight: 500 !important;
+  }
+
+  .el-form-item__content {
+    font-weight: 500 !important;
+  }
+
+  .el-dropdown-menu {
+    font-weight: 500 !important;
+  }
+
+  .el-dropdown-menu__item {
+    font-weight: 500 !important;
+  }
+
+  .el-alert,
+  .btn-back,
+  .el-checkbox__label {
+    font-weight: 500 !important;
     color: #2b2b2b !important;
+  }
+
+  .el-tooltip.el-tag--info {
+    color: #2b2b2b !important;
+  }
+
+  .credits {
+    opacity: 1;
+  }
+
+  a {
+    color: #00638d !important;
   }
 }
