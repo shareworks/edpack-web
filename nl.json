@@ -621,7 +621,7 @@
   "SW_RELEASED_NOTIFICATION":"Vrijgegeven evaluatie",
   "SW_RELEASED-LOCKED_NOTIFICATION":"Vrijgegeven-vergrendelde evaluatie",
   "SW_PENDING_NOTIFICATION_DISABLING": "In afwachting van kennisgeving",
-  "SW_PENDING_NOTIFICATION_DISABLING_TEXT": "Schakel in afwachting van evaluatiemelding uit.",
+  "SW_PENDING_NOTIFICATION_DISABLING_TEXT": "Schakel in afwachtingvan evaluatiemelding uit.",
   "SW_RELEASED_NOTIFICATION_DISABLING": "Vrijgegeven melding",
   "SW_RELEASED_NOTIFICATION_DISABLING_TEXT":"Schakel vrijgegeven evaluatiemelding uit.",
   "SW_RELEASED_LOCKED_NOTIFICATION_DISABLING": "Melding loslaten of vergrendelen",
