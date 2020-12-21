@@ -6,7 +6,6 @@
 import moment from 'moment'
 import config from 'config'
 import { router } from '../../../router'
-
 export default {
   name: 'ReloadAfterDeploy',
   data () {
@@ -16,10 +15,9 @@ export default {
   },
 
   mounted () {
-    window.onerror = function (message) {
-      console.log('Router error occurred', message)
-      let isChunkLoadFailure = message.toLowerCase().includes('chunkloaderror')
-      if (!isChunkLoadFailure) isChunkLoadFailure = message.toLowerCase().includes('unexpected token \'<\'')
+    router.onError(error => {
+      let isChunkLoadFailure = error.message.toLowerCase().includes('chunkloaderror')
+      if (!isChunkLoadFailure) isChunkLoadFailure = error.message.toLowerCase().includes('unexpected token')
 
       if (isChunkLoadFailure) {
         const reloadedDate = this.$ls.get('reloaded')
@@ -28,7 +26,7 @@ export default {
         // If not already reloaded in last minute, ask for reload.
         if (!justReloaded) this.askForReload()
       }
-    }
+    })
   },
 
   methods: {
