@@ -3,19 +3,16 @@
 This repository contains generic Vue JS and SCSS code to reduce duplicate code in educational frontend apps.
 
 ## How to initialize the submodule after cloning an Edpack-enabled project
-
 ```
 git submodule update --init
 ```
 
 ## How to add the Edpack submodule to a new project
-
 ```
 git submodule add https://www.github.com/shareworks/edpack-web src/edpack-web
 ```
 
 ## How to remove the Edpack submodule:
-
 ```
 // 1. Delete the relevant section from the .gitmodules file.
 nano .gitmodules
