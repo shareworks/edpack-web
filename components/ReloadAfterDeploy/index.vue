@@ -19,8 +19,8 @@ export default {
 
   methods: {
     checkReloadFailure (error) {
-      let isChunkLoadFailure = error.message.toLowerCase().includes('chunk')
-      if (!isChunkLoadFailure) isChunkLoadFailure = error.message.toLowerCase().includes('unexpected token')
+      const errorMessage = error.message.toLowerCase()
+      const isChunkLoadFailure = errorMessage.includes('chunk') || errorMessage.includes('unexpected token')
 
       if (isChunkLoadFailure) {
         const reloadedDate = this.$ls.get('reloaded')
