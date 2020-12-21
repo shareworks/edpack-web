@@ -15,7 +15,7 @@ export default {
   },
 
   mounted () {
-    router.onError(error => this.checkReloadFailure(error))
+    router.onError(this.checkReloadFailure)
   },
 
   methods: {
