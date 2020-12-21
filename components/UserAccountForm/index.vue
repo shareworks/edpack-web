@@ -99,23 +99,8 @@
       <span class="ml-10">{{ $t('SW_CONTRAST_MODE_TEXT') }}</span>
     </el-form-item>
 
-    <!-- Disable Staff Notification -->
-    <el-form-item class="hidden" v-if="form.checks && showFullAccountInfo && (form.role === 'staff' || isAdmin)" :label="$t('SW_STAFF_NOTIFICATION_DISABLING')">
-      <el-switch v-model="form.checks.disableStaffNotifcation" active-color="#13ce66" inactive-color="#ff4949"/>
-      <span class="text-muted ml-10">{{ $t('SW_STAFF_NOTIFICATION_TEXT') }}</span>
-    </el-form-item>
-
-    <!-- Disable Start Notification -->
-    <el-form-item class="hidden" v-if="form.checks && showFullAccountInfo" :label="$t('SW_STARTED_EVALUATION_NOTIFICATION_DISABLING')">
-      <el-switch v-model="form.checks.disableStartNotification" active-color="#13ce66" inactive-color="#ff4949"/>
-      <span class="text-muted ml-10">{{ $t('SW_STARTED_EVALUATION_NOTIFICATION_TEXT') }}</span>
-    </el-form-item>
-
-    <!-- Disable Closed Notification -->
-    <el-form-item class="hidden" v-if="form.checks && showFullAccountInfo" :label="$t('SW_CLOSED_EVALUATION_NOTIFICATION_DISABLING')">
-      <el-switch v-model="form.checks.disableClosedNotification" active-color="#13ce66" inactive-color="#ff4949"/>
-      <span class="text-muted ml-10">{{ $t('SW_CLOSED_EVALUATION_NOTIFICATION_TEXT') }}</span>
-    </el-form-item>
+    <!-- Notifications switchers -->
+    <notifications-switchers :form="form" :showFullAccountInfo="showFullAccountInfo"/>
 
     <!-- Newsletter -->
     <el-form-item :label="$t('SW_NEWSLETTER')" class="additional">
@@ -137,11 +122,12 @@ import Vue from 'vue'
 import config from 'config'
 import { loadLanguages } from '../../utils/load-languages'
 import ThumbnailEdit from '../../components/ThumbnailEdit'
+import NotificationsSwitchers from '../NotificationsSwitchers'
 
 export default {
   name: 'UserAccountForm',
   props: ['form', 'finish', 'updateUser', 'showFullAccountInfo'],
-  components: { ThumbnailEdit },
+  components: { ThumbnailEdit, NotificationsSwitchers },
 
   data () {
     return {

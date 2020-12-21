@@ -620,5 +620,16 @@
   "SW_PRODUCTION": "Production",
   "SW_PRODUCTION_TEXT":"This school not used for demo preview.",
   "SW_BAD_PARAMS": "Unable to handle this request",
-  "SW_BAD_PARAMS_HELP": "Error has been reported. Please try again later or contact us."
+  "SW_BAD_PARAMS_HELP": "Error has been reported. Please try again later or contact us.",
+  "SW_START_NOTIFICATION":"Start evaluation",
+  "SW_CLOSED_NOTIFICATION":"Closed evaluation",
+  "SW_PENDING_NOTIFICATION":"Pending evaluation",
+  "SW_RELEASED_NOTIFICATION":"Released evaluation",
+  "SW_RELEASED-LOCKED_NOTIFICATION":"Released-locked evaluation",
+  "SW_PENDING_NOTIFICATION_DISABLING": "Pending notification",
+  "SW_PENDING_NOTIFICATION_DISABLING_TEXT": "Disable pending evaluation notification.",
+  "SW_RELEASED_NOTIFICATION_DISABLING": "Released notification",
+  "SW_RELEASED_NOTIFICATION_DISABLING_TEXT":"Disable released evaluation notification.",
+  "SW_RELEASED_LOCKED_NOTIFICATION_DISABLING": "Release or lock notification",
+  "SW_RELEASED_LOCKED_NOTIFICATION_DISABLING_TEXT":"Disable release or lock evaluation notification."
 }
