@@ -18,7 +18,8 @@ export default {
   mounted () {
     window.onerror = function (message) {
       console.log('Router error occurred', message)
-      const isChunkLoadFailure = message.toLowerCase().includes('chunkloaderror')
+      let isChunkLoadFailure = message.toLowerCase().includes('chunkloaderror')
+      if (!isChunkLoadFailure) isChunkLoadFailure = message.toLowerCase().includes('unexpected token \'<\'')
 
       if (isChunkLoadFailure) {
         const reloadedDate = this.$ls.get('reloaded')
