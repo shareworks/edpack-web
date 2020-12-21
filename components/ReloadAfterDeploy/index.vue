@@ -5,7 +5,6 @@
 <script>
 import moment from 'moment'
 import config from 'config'
-import { router } from '../../../router'
 export default {
   name: 'ReloadAfterDeploy',
   data () {
@@ -15,7 +14,12 @@ export default {
   },
 
   mounted () {
-    router.onError(error => {
+    window.addEventListener('error', this.checkReloadFailure)
+  },
+
+  methods: {
+    checkReloadFailure (error) {
+      console.log(error)
       let isChunkLoadFailure = error.message.toLowerCase().includes('chunkloaderror')
       if (!isChunkLoadFailure) isChunkLoadFailure = error.message.toLowerCase().includes('unexpected token')
 
@@ -26,10 +30,7 @@ export default {
         // If not already reloaded in last minute, ask for reload.
         if (!justReloaded) this.askForReload()
       }
-    })
-  },
-
-  methods: {
+    },
     askForReload () {
       this.$confirm(this.$i18n.t('SW_APP_JUST_UPDATED_TEXT', [this.appName]), this.$i18n.t('SW_APP_JUST_UPDATED'), {
         showCancelButton: false,
