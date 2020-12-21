@@ -612,5 +612,7 @@
   "SW_CLOSED_EVALUATION_NOTIFICATION_TEXT": "Schakel gesloten evaluatiemelding uit.",
   "SW_QR_INSTRUCTION": "Toon deze QR-code aan studenten of kopieer de link hieronder.",
   "SW_PRODUCTION": "Productie",
-  "SW_PRODUCTION_TEXT":"Deze school wordt niet gebruikt voor demo-preview."
+  "SW_PRODUCTION_TEXT":"Deze school wordt niet gebruikt voor demo-preview.",
+  "SW_BAD_PARAMS": "Kan dit verzoek niet verwerken",
+  "SW_BAD_PARAMS_HELP": "Er is een fout gemeld. Probeer het later opnieuw of neem contact met ons op."
 }

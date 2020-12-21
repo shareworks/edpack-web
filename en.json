@@ -618,5 +618,7 @@
   "SW_CLOSED_EVALUATION_NOTIFICATION_TEXT": "Disable closed evaluation notification.",
   "SW_QR_INSTRUCTION": "Show this QR code to your students or copy the link below.",
   "SW_PRODUCTION": "Production",
-  "SW_PRODUCTION_TEXT":"This school not used for demo preview."
+  "SW_PRODUCTION_TEXT":"This school not used for demo preview.",
+  "SW_BAD_PARAMS": "Unable to handle this request",
+  "SW_BAD_PARAMS_HELP": "Error has been reported. Please try again later or contact us."
 }
