@@ -25,7 +25,7 @@ export default {
 
       if (isChunkLoadFailure) {
         const reloadedDate = this.$ls.get('reloaded')
-        const justReloaded = reloadedDate && (moment(new Date()).diff(moment(reloadedDate), 'seconds' < 60))
+        const justReloaded = reloadedDate && (moment(new Date()).diff(moment(reloadedDate), 'seconds') < 100)
 
         // If not already reloaded in last minute, ask for reload.
         if (!justReloaded) this.askForReload()
