@@ -1,10 +1,11 @@
 <template>
-  <div/>
+  <div></div>
 </template>
 
 <script>
 import moment from 'moment'
 import config from 'config'
+import { router } from '../../../router'
 export default {
   name: 'ReloadAfterDeploy',
   data () {
@@ -14,12 +15,12 @@ export default {
   },
 
   mounted () {
-    window.addEventListener('error', this.checkReloadFailure)
+    router.onError(error => this.checkReloadFailure(error))
   },
 
   methods: {
     checkReloadFailure (error) {
-      console.log(error)
+      console.log(error.message)
       let isChunkLoadFailure = error.message.toLowerCase().includes('chunkloaderror')
       if (!isChunkLoadFailure) isChunkLoadFailure = error.message.toLowerCase().includes('unexpected token')
 
