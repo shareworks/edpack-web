@@ -12,13 +12,19 @@
         <el-input v-model="form.shortName.en"/>
       </el-form-item>
 
+      <!-- Production -->
+      <el-form-item :label="$t('SW_PRODUCTION')">
+        <el-switch v-model="form.production" active-color="#13ce66" inactive-color="#ff4949"/>
+        <span class="text-muted ml-10">{{ $t('SW_PRODUCTION_TEXT') }}</span>
+      </el-form-item>
+
       <!-- Create or cancel -->
       <el-form-item class="mt-20">
         <el-button type="primary" @click="createOrg" :loading="submitting">
           {{ $t('SW_CREATE_ORG') }}
           <i class="icon-arrow_forward"/>
         </el-button>
-        <el-button type="text" @click="closeDialog">{{ $t('SW_CANCEL') }}</el-button>
+        <el-button type="text" class="ml-10" @click="closeDialog">{{ $t('SW_CANCEL') }}</el-button>
       </el-form-item>
     </el-form>
   </div>
