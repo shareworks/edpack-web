@@ -68,7 +68,7 @@
 
     <!-- Role: Admin, Staff or Student -->
     <el-form-item :label="$tc('SW_ROLE', 1)" class="additional">
-      {{ $tc('SW_' + (form.role || user.role).toUpperCase()) }}
+      <strong>{{ $tc('SW_' + (form.role || user.role).toUpperCase()) }}</strong>
       {{ $t('SW_ROLE_AT', { school: form.organization.name[lang] }) }}
 
       <!-- Change role -->
@@ -100,7 +100,18 @@
     </el-form-item>
 
     <!-- Notifications switchers -->
-    <notifications-switchers :form="form" :showFullAccountInfo="showFullAccountInfo"/>
+    <el-form-item v-if="showFullAccountInfo" :label="$t('SW_NOTIFICATIONS')">
+      <el-collapse-transition>
+        <notifications-switchers v-show="showNotifications" :form="form"/>
+      </el-collapse-transition>
+
+      <!-- Show or hide notifications -->
+      <el-button type="text" size="normal" @click="showNotifications = !showNotifications">
+        <span v-if="!showNotifications">{{  $t('SW_EDIT_NOTIFICATIONS') }}</span>
+        <span v-else>{{ $t('SW_HIDE_NOTIFICATIONS') }}</span>
+        <i :class="{'el-icon-caret-bottom': !showNotifications, 'el-icon-caret-top': showNotifications}" class="el-icon--right"/>
+      </el-button>
+    </el-form-item>
 
     <!-- Newsletter -->
     <el-form-item :label="$t('SW_NEWSLETTER')" class="additional">
@@ -145,6 +156,7 @@ export default {
       changingRole: false,
       resetting: false,
       facultyManager: [],
+      showNotifications: false,
       formClone: Vue.util.extend({}, this.form)
     }
   },
