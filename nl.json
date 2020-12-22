@@ -628,5 +628,6 @@
   "SW_RELEASED_NOTIFICATION_DISABLING": "Vrijgegeven melding",
   "SW_RELEASED_NOTIFICATION_DISABLING_TEXT":"Schakel vrijgegeven evaluatiemelding uit.",
   "SW_RELEASED_LOCKED_NOTIFICATION_DISABLING": "Melding loslaten of vergrendelen",
-  "SW_RELEASED_LOCKED_NOTIFICATION_DISABLING_TEXT":"Schakel de vrijgave uit of vergrendel evaluatiemelding"
+  "SW_RELEASED_LOCKED_NOTIFICATION_DISABLING_TEXT":"Schakel de vrijgave uit of vergrendel evaluatiemelding",
+  "SW_CATEGORY": "Categorie | Categorieën"
 }

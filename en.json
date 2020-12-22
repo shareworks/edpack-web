@@ -634,5 +634,6 @@
   "SW_RELEASED_NOTIFICATION_DISABLING": "Released notification",
   "SW_RELEASED_NOTIFICATION_DISABLING_TEXT":"Disable released evaluation notification.",
   "SW_RELEASED_LOCKED_NOTIFICATION_DISABLING": "Release or lock notification",
-  "SW_RELEASED_LOCKED_NOTIFICATION_DISABLING_TEXT":"Disable release or lock evaluation notification."
+  "SW_RELEASED_LOCKED_NOTIFICATION_DISABLING_TEXT":"Disable release or lock evaluation notification.",
+  "SW_CATEGORY": "Category | Categories"
 }
