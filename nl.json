@@ -618,16 +618,5 @@
   "SW_PRODUCTION_TEXT":"Deze school is een productieomgeving",
   "SW_BAD_PARAMS": "Kan dit verzoek niet verwerken",
   "SW_BAD_PARAMS_HELP": "Er is een fout gemeld. Probeer het later opnieuw of neem contact met ons op.",
-  "SW_START_NOTIFICATION":"Start de evaluatie",
-  "SW_CLOSED_NOTIFICATION":"Gesloten evaluatie",
-  "SW_PENDING_NOTIFICATION":"In afwachting van evaluatie",
-  "SW_RELEASED_NOTIFICATION":"Vrijgegeven evaluatie",
-  "SW_RELEASED-LOCKED_NOTIFICATION":"Vrijgegeven-vergrendelde evaluatie",
-  "SW_PENDING_NOTIFICATION_DISABLING": "In afwachting van kennisgeving",
-  "SW_PENDING_NOTIFICATION_DISABLING_TEXT": "Schakel in afwachtingvan evaluatiemelding uit.",
-  "SW_RELEASED_NOTIFICATION_DISABLING": "Vrijgegeven melding",
-  "SW_RELEASED_NOTIFICATION_DISABLING_TEXT":"Schakel vrijgegeven evaluatiemelding uit.",
-  "SW_RELEASED_LOCKED_NOTIFICATION_DISABLING": "Melding loslaten of vergrendelen",
-  "SW_RELEASED_LOCKED_NOTIFICATION_DISABLING_TEXT":"Schakel de vrijgave uit of vergrendel evaluatiemelding",
   "SW_CATEGORY": "Categorie | Categorieën"
 }
