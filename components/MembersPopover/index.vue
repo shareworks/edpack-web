@@ -12,7 +12,7 @@
       <div v-else class="text-muted">{{ $t('SW_NO_STAFF_FOUND') }}</div>
 
       <!-- Manage staff -->
-      <el-button v-if="canUpdate" type="text" size="small" @click="$emit('manageStaff')">
+      <el-button v-if="canUpdate && !inLTI" type="text" size="small" @click="$emit('manageStaff')">
         <i class="icon-pencil"/>
         {{ $t('SW_MANAGE_STAFF') }}
       </el-button>
@@ -35,6 +35,7 @@ export default {
   data () {
     return {
       course: this.$store.state.course,
+      inLTI: this.$store.state.inLTI,
       instructors: []
     }
   },
