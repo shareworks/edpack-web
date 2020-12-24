@@ -618,5 +618,6 @@
   "SW_PRODUCTION_TEXT":"Deze school is een productieomgeving",
   "SW_BAD_PARAMS": "Kan dit verzoek niet verwerken",
   "SW_BAD_PARAMS_HELP": "Er is een fout gemeld. Probeer het later opnieuw of neem contact met ons op.",
-  "SW_CATEGORY": "Categorie | Categorieën"
+  "SW_CATEGORY": "Categorie | Categorieën",
+  "SW_CONFIGURE_ERROR": "Fout tijdens cursusconfiguratie met LMS"
 }

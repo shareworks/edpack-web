@@ -624,5 +624,6 @@
   "SW_PRODUCTION_TEXT":"This school is a production environment",
   "SW_BAD_PARAMS": "Unable to handle this request",
   "SW_BAD_PARAMS_HELP": "Error has been reported. Please try again later or contact us.",
-  "SW_CATEGORY": "Category | Categories"
+  "SW_CATEGORY": "Category | Categories",
+  "SW_CONFIGURE_ERROR": "Error during course configuration with LMS"
 }
