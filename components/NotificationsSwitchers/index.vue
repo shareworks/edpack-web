@@ -15,7 +15,7 @@ export default {
   data () {
     return {
       isAdmin: this.$store.state.isAdmin,
-      notificationRoles: config.notificationRoles,
+      notificationRoles: config.notificationRoles
     }
   }
 }

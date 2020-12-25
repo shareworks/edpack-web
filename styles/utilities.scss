@@ -66,6 +66,15 @@
   line-height: 40px;
 }
 
+.status-label-list {
+  line-height: 24px;
+
+  > li {
+    list-style: none;
+    padding-bottom: 8px;
+  }
+}
+
 .block {
   display: block;
 }
@@ -275,6 +284,10 @@
 
 .ml-30 {
   margin-left: 30px !important;
+}
+
+.ml-40 {
+  margin-left: 40px !important;
 }
 
 .mr-5 {
