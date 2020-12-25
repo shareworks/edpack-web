@@ -46,7 +46,10 @@ export default {
   },
 
   watch: {
-    evaluation () { this.getInstructors() }
+    evaluation: {
+      deep: true,
+      handler () { this.getInstructors() }
+    }
   },
 
   methods: {
