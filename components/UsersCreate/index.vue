@@ -53,7 +53,7 @@
 import emailsValidation from '@/edpack-web/utils/emails-validation'
 export default {
   name: 'UsersCreate',
-  props: ['closeDialog', 'isManageStaff', 'justStudents', 'course', 'assessmentUrl', 'assessmentRole'],
+  props: ['closeDialog', 'isManageStaff', 'justStudents', 'course', 'assessmentUrl', 'assessmentRole', 'updateMembers'],
 
   data () {
     return {
@@ -130,7 +130,10 @@ export default {
       else payload = { participantsToAdd: usersToAdd }
 
       this.$http.put(this.assessmentUrl, payload)
-        .then(() => { this.cleanForm() })
+        .then(() => {
+          this.cleanForm()
+          this.updateMembers()
+        })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.sending = false })
     },
@@ -147,7 +150,10 @@ export default {
 
       // POST
       this.$http.post('users/invite', { invitations: roles }, { params: { toSelf: self } })
-        .then(() => { this.cleanForm() })
+        .then(() => {
+          this.cleanForm()
+          this.updateMembers()
+        })
         .catch((e) => { console.log(e); this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.sending = false })
     },
