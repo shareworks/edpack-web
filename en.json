@@ -626,5 +626,6 @@
   "SW_BAD_PARAMS_HELP": "Error has been reported. Please try again later or contact us.",
   "SW_CATEGORY": "Category | Categories",
   "SW_CONFIGURE_ERROR": "Error during course configuration with LMS",
-  "SW_CAN_ACCESS_RESULTS": "can access results"
+  "SW_CAN_ACCESS_RESULTS": "can access results",
+  "SW_SEE_DISABLE_AS": "As {0}"
 }

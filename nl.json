@@ -620,5 +620,6 @@
   "SW_BAD_PARAMS_HELP": "Er is een fout gemeld. Probeer het later opnieuw of neem contact met ons op.",
   "SW_CATEGORY": "Categorie | Categorieën",
   "SW_CONFIGURE_ERROR": "Fout tijdens cursusconfiguratie met LMS",
-  "SW_CAN_ACCESS_RESULTS": "kunnen resultaten inzien"
+  "SW_CAN_ACCESS_RESULTS": "kunnen resultaten inzien",
+  "SW_SEE_DISABLE_AS": "Als {0}"
 }
