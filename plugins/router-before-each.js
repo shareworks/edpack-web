@@ -21,6 +21,7 @@ export default {
     }
 
     router.beforeEach((to, from, next) => {
+      console.log('router.beforeEach', to, from)
       // Abort some routes in LTI mode
       if (to.meta.abortInLTI && inLTI && from.name) return next(from)
 
