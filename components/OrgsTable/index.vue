@@ -104,7 +104,7 @@
 
       <!-- LTI version -->
       <el-table-column property="availableLms" :label="$t('SW_LTI_VERSION')" width="100">
-        <template>
+        <template slot-scope="props">
           <span v-if="props.row.availableLms.length === 0" class="text-muted">{{ $t('SW_NONE') }}</span>
           <span v-else-if="props.row.lastConfiguredLtiVersion === 'basic'" class="block text-ellipsis capitalize">1.1</span>
           <span v-else class="block text-ellipsis capitalize">1.3</span>
@@ -113,7 +113,7 @@
 
       <!-- API -->
       <el-table-column property="lmsApiIntegration" label="API" width="70">
-        <template>
+        <template slot-scope="props">
           <span class="text-success" v-if="props.row.lmsApiIntegration">{{ $t('SW_YES') }}</span>
           <span class="text-danger" v-else>{{ $t('SW_NO') }}</span>
         </template>
