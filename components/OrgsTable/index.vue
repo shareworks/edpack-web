@@ -103,18 +103,18 @@
       </el-table-column>
 
       <!-- LTI version -->
-      <el-table-column property="lastConfiguredLms" :label="$t('SW_LTI_VERSION')" width="100">
+      <el-table-column property="availableLms" :label="$t('SW_LTI_VERSION')" width="100">
         <template>
-          <span v-if="school.availableLms.length === 0" class="text-muted">{{ $t('SW_NONE') }}</span>
-          <span v-else-if="school.lastConfiguredLtiVersion === 'basic'" class="block text-ellipsis capitalize">1.1</span>
+          <span v-if="props.row.availableLms.length === 0" class="text-muted">{{ $t('SW_NONE') }}</span>
+          <span v-else-if="props.row.lastConfiguredLtiVersion === 'basic'" class="block text-ellipsis capitalize">1.1</span>
           <span v-else class="block text-ellipsis capitalize">1.3</span>
         </template>
       </el-table-column>
 
       <!-- API -->
-      <el-table-column property="lastConfiguredLms" label="API" width="70">
+      <el-table-column property="lmsApiIntegration" label="API" width="70">
         <template>
-          <span class="text-success" v-if="school.lmsApiIntegration">{{ $t('SW_YES') }}</span>
+          <span class="text-success" v-if="props.row.lmsApiIntegration">{{ $t('SW_YES') }}</span>
           <span class="text-danger" v-else>{{ $t('SW_NO') }}</span>
         </template>
       </el-table-column>
