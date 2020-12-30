@@ -610,6 +610,8 @@
   "SW_STARTED_EVALUATION_NOTIFICATION":"Started evaluation",
   "SW_CLOSED_EVALUATION_NOTIFICATION": "Closed evaluation",
   "SW_FULL_NAME_REQUIRED": "Name is required.",
+  "SW_INVITE_ONLY": "Invitation required",
+  "SW_INVITE_ONLY_HELP": "You need an invitation to use Buddycheck. Please contact your administrator to request an invitation. Also contact your administrator is you believe this is incorrect.",
   "SW_NOTIFICATION": "Notification",
   "SW_EDIT_NOTIFICATIONS": "Edit email notifications",
   "SW_HIDE_NOTIFICATIONS": "Hide email notifications",
