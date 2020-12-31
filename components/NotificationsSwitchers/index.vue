@@ -2,8 +2,9 @@
   <div>
     <div v-for="notification in notificationRoles">
       <el-switch v-model="form.checks[notification.type]" active-color="#13ce66" inactive-color="#ff4949"/>
-      <span class="text-faded ml-10">({{ $t('SW_SEE_DISABLE_AS', [translateRoles(notification.role)]) }})</span>
-      <span class="text-muted ml-10">{{ $t(`SW_${notification.type.toUpperCase()}`) }}</span>
+      <strong class="ml-10">{{ $t('SW_SEE_DISABLE_AS', [translateRoles(notification.role)]) }}</strong>
+      &centerdot;
+      <span>{{ $t(`SW_${notification.type.toUpperCase()}`) }}</span>
     </div>
   </div>
 </template>
