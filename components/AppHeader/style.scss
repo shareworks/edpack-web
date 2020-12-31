@@ -90,6 +90,7 @@ button.menu-button {
   padding: calc((#{$--header-height} / 2) - 12px);
   right: 33%;
   top: 0;
+  left: 45px;
   position: absolute;
 }
 
@@ -128,11 +129,17 @@ button.menu-button {
   margin-top: -6px;
 
   .el-input__inner {
-    background: rgba(240, 240, 240, 0.6);
     border: none !important;
   }
 }
-
 .assessment-limit {
   margin: 14px 10px !important;
+}
+
+@media (min-width: $--sm) {
+  .org-select {
+    .el-input__inner {
+      border: none !important;
+    }
+  }
 }
