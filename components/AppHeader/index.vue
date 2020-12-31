@@ -60,9 +60,9 @@
 
         <!-- Show school selection -->
         <div class="org-select" v-if="showOrgButton && userOrgs.length > 1">
-          <el-button type="primary" plain size="small" @click="showSchoolSelect = !showSchoolSelect">
+          <el-button type="primary" class="button-square-xs" plain size="small" @click="showSchoolSelect = !showSchoolSelect">
             <i class="icon-list"/>
-            {{ $tc('SW_ORGANIZATION', 2) }}
+            <span class="hidden-xs">{{ $tc('SW_ORGANIZATION', 2) }}</span>
           </el-button>
         </div>
 
