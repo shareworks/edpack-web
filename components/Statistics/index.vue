@@ -6,7 +6,7 @@
         <el-card v-for="(stat, key) in statisticCompletionValues" :key="key" class="stat-counter">
           <vc-donut background="white" ba foreground="lightgrey" :size="80" unit="%" :thickness="30" :sections="[{ color: '#67c23a', value: stat.value }]">
             <div class="font-26">
-              <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'></countTo>%</strong>
+              <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'/>%</strong>
             </div>
             <div class="font-14">{{ stat.name }}</div>
           </vc-donut>
@@ -18,7 +18,7 @@
         <el-card v-for="(stat, key) in statisticUserValues" :key="key" class="stat-counter">
           <div class="font-26">
             <i :class="stat.icon"/>
-            <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'></countTo></strong>
+            <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'/></strong>
           </div>
           <div>{{ stat.name }}</div>
         </el-card>
@@ -29,7 +29,7 @@
         <el-card v-for="(stat, key) in statisticStatsValues" :key="key" class="stat-counter">
           <div class="font-20">
             <i :class="stat.icon"/>
-            <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'></countTo></strong>
+            <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'/></strong>
           </div>
           <div>{{ $t('SW_TOTAL') }} {{ stat.name }}</div>
         </el-card>
