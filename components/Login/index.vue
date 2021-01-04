@@ -20,10 +20,10 @@
           <!-- or -->
           <div class="login-or">{{$t('SW_OR')}}</div>
 
-          <!-- Sign in by password -->
-          <el-button class="mb-10 block" type="primary" plain @click="passwordMode = true" v-if="signinByPassword">
-            <i class="icon-user"></i>
-            {{ $t('SW_SIGN_IN_BY_PASSWORD') }}
+          <!-- MS log in -->
+          <el-button v-if="signinWithMS" class="block mb-5 no-margin" @click="selectMicrosoft">
+            <span class="ms-icon"/>
+            <strong>{{ $t('SW_LOG_IN_WITH_MS') }}</strong>
           </el-button>
 
           <!-- Google log in -->
@@ -32,10 +32,10 @@
             <strong>{{ $t('SW_LOG_IN_WITH_GOOGLE') }}</strong>
           </el-button>
 
-          <!-- MS log in -->
-          <el-button v-if="signinWithMS" class="block mt-5 no-margin" @click="selectMicrosoft">
-            <span class="ms-icon"/>
-            <strong>{{ $t('SW_LOG_IN_WITH_MS') }}</strong>
+          <!-- Sign in by password -->
+          <el-button class="mt-10 block no-margin" type="primary" plain @click="passwordMode = true" v-if="signinByPassword">
+            <i class="icon-user"></i>
+            {{ $t('SW_SIGN_IN_BY_PASSWORD') }}
           </el-button>
         </div>
 
