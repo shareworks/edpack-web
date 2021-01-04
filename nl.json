@@ -351,7 +351,7 @@
   "SW_ONLY_CSV": "Alleen .csv bestanden zijn toegestaan!",
   "SW_ONLY_SYNC_IN_LMS": "Je kan LMS functionaliteiten alleen binnen je leeromgeving gebruiken.",
   "SW_OPEN_NEW_TAB_COOKIE": "Ga naar het nieuwe venster dat zojuist is aangemaakt en kijk of de authenticatie cookie nu wel goed werkt.",
-  "SW_OR": "van",
+  "SW_OR": "of",
   "SW_ORGANIZATION": "School | Scholen",
   "SW_ORGANIZATION_NOT_FOUND": "School niet gevonden",
   "SW_ORGANIZATION_NOT_FOUND_HELP": "De LTI-sleutel komt niet overeen met een school in onze database.",
