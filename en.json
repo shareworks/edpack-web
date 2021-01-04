@@ -306,7 +306,7 @@
   "SW_MERGE_DIALOG_USERS_TEXT": "Each email will contain a link to the {0} sign in page.",
   "SW_MERGE_USERS": "Merge 2 members",
   "SW_MESSAGE": "Your message",
-  "SW_MESSAGE_SENT": "An email with link to reset your password has been sent.",
+  "SW_MESSAGE_SENT": "An email with link to create or reset your password has been sent.",
   "SW_MISSING_REGISTER_TOKENS": "Request failed. Please use the email to complete this step.",
   "SW_MORE": "More",
   "SW_MORE_INFO": "More info",

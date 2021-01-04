@@ -303,7 +303,7 @@
   "SW_MERGE_DIALOG_USERS_TEXT": "Elke e-mail bevat een link naar de inlogpagina van {0}.",
   "SW_MERGE_USERS": "Voeg 2 leden samen",
   "SW_MESSAGE": "Je bericht",
-  "SW_MESSAGE_SENT": "Een e-mail met link om je wachtwoord opnieuw in te vullen is zojuist verzonden.",
+  "SW_MESSAGE_SENT": "Een e-mail met link om je wachtwoord (opnieuw) aan te maken is zojuist verzonden.",
   "SW_MISSING_REGISTER_TOKENS": "Verzoek mislukt. Gebruik de link in de e-mail om deze stap te voltooien.",
   "SW_MORE": "Meer",
   "SW_MORE_INFO": "Meer info",
