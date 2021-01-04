@@ -143,9 +143,13 @@ export default {
           this.$message({ message: this.$i18n.t('SW_INVITATION_COMPLETED', [this.appName]), type: 'success' })
           this.$router.push('/')
         })
-        .catch(() => {
-          this.$message({ message: this.$i18n.t('SW_PASSWORD_INCORRECT'), type: 'error' })
+        .catch((err) => {
           this.form.password = ''
+          let errorString = 'SW_GENERIC_ERROR'
+          const errorTranslation = err.data?.errors[0]?.translation
+          if (errorTranslation) errorString = 'SW_' + errorTranslation
+
+          this.$message({ message: this.$i18n.t(errorString), type: 'error' })
         })
         .finally(() => { this.submitting = false })
     },

@@ -86,7 +86,12 @@ export default {
           this.success = true
           this.$message({ message: this.$i18n.t('SW_EMAIL_RESET_SUBMITTED'), type: 'success' })
         })
-        .catch(() => { this.$message({ message: this.$i18n.t('SW_EMAIL_NOT_NOT_FOUND'), type: 'error' }) })
+        .catch((err) => {
+          let errorString = 'SW_GENERIC_ERROR'
+          const errorTranslation = err.data?.errors[0]?.translation
+          if (errorTranslation) errorString = 'SW_' + errorTranslation
+          this.$message({ message: this.$i18n.t(errorString), type: 'error' })
+        })
         .finally(() => { this.submitting = false })
     }
   }

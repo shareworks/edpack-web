@@ -22,6 +22,7 @@ export default {
 
     if (inLTI) this.addLtiOrigin()
 
+    // Global error code, others we do in component
     Axios.interceptors.response.use(
       response => response,
       (error) => {
@@ -41,9 +42,6 @@ export default {
               })
           }
         }
-
-        // Forbidden
-        if (status === 403) errorMessage = i18n.t('SW_NO_ACCESS')
 
         // Session timeout
         if (status === 440) {
