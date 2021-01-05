@@ -49,14 +49,14 @@
         <div class="bar-placeholder"/>
 
         <el-row class="groups mt-20" :class="{ 'hide-shadow': fullscreen }" justify="center" :gutter="30">
-          <el-col :span="5" class="unsorted-row">
+          <el-col :xs="10" :sm="8" :md="6" class="unsorted-row">
             <!-- Full student list -->
             <full-student-list :key="fullKey" :setStudentsWithoutGroup="setStudentsWithoutGroup"
                                :studentsWithoutGroup="studentsWithoutGroup" :setDragging="setDragging"
                                :updateGroupCount="updateGroupCount" :allStudents="allStudents" :dragging="dragging"/>
           </el-col>
 
-          <el-col :span="19" class="groups-row">
+          <el-col :xs="14" :sm="16" :md="18" class="groups-row">
             <section class="groups-wrapper">
               <h3 class="collapse-header">
                 <p class="question-sentence groups-header"><strong>{{ $tc('SW_GROUPS', 2) }}</strong> <el-tag class="ml-5" size="mini">{{ studentsByGroup.length }}</el-tag></p>

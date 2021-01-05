@@ -20,8 +20,8 @@
         <p class="student-name text-ellipsis">{{ student.name ? student.name : student.email }}</p>
 
         <!-- Amount of groups -->
-        <el-tag v-if="mode === 'all'" class="group-amount-tag text-muted hidden-sm hidden-xs" size="small" type="info">
-          {{ student.groupCount || 0 }} {{ $tc('SW_GROUP', student.groupCount || 0).toLowerCase() }}
+        <el-tag v-if="mode === 'all'" class="group-amount-tag text-muted hidden-xs" size="small" type="info">
+          {{ student.groupCount || 0 }} <i class="icon-peers"></i>
         </el-tag>
       </el-card>
     </draggable>
