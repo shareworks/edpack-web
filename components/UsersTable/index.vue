@@ -27,6 +27,12 @@
               <span class="hidden-xs hidden-sm">{{ $t('SW_LOGIN_AS') }}</span>
             </el-button>
 
+            <!-- Log in as user -->
+            <el-button @click="dialogMerge = true" size="medium" v-if="multipleSelection.length === 2 && user.systemAdmin" class="ml-5">
+              <i class="icon-call_merge"/>
+              <span class="hidden-xs hidden-sm">{{ $t('SW_MERGE') }}</span>
+            </el-button>
+
             <!-- Clear selection -->
             <el-button type="text" size="medium" @click="selectionChange" class="ml-10">
               <i class="icon-clear"/>
@@ -161,6 +167,11 @@
     <el-dialog :title="$tc('SW_SEND_EMAIL_TO_SELECTION_USERS', multipleSelection.length)" append-to-body :visible.sync="dialogEmail">
       <email-users v-if="dialogEmail" :selectedUsers="multipleSelection" :closeDialog="closeDialog"/>
     </el-dialog>
+
+    <!-- Merge dialog -->
+    <el-dialog :title="$t('SW_MERGE_USERS')" append-to-body :visible.sync="dialogMerge">
+      <users-merge v-if="dialogMerge" :selectedUsers="multipleSelection" :closeDialog="closeDialog"></users-merge>
+    </el-dialog>
   </div>
 </template>
 
@@ -175,12 +186,13 @@ import EmailUsers from '../../components/EmailUsers'
 import TableStatus from '../../components/TableStatus'
 import UsersCreate from '../../components/UsersCreate'
 import UserAccountForm from '../../components/UserAccountForm'
+import UsersMerge from '../../components/UsersMerge'
 import sortCaseInsensitive from '../../utils/sort-case-insensitive'
 
 export default {
   name: 'UsersTable',
   props: ['openPayAsYouGoDialog', 'isOverdue'],
-  components: { UserAccountForm, UsersCreate, EmailUsers, TableStatus, ExpandUser },
+  components: { UserAccountForm, UsersCreate, EmailUsers, TableStatus, ExpandUser, UsersMerge },
 
   data () {
     const roles = config.usersTableRoles
@@ -206,7 +218,8 @@ export default {
       hasUserProfiles: config.hasUserProfiles,
       dialogAddUsers: false,
       dialogEditUser: false,
-      dialogEmail: false
+      dialogEmail: false,
+      dialogMerge: false
     }
   },
 
@@ -317,6 +330,7 @@ export default {
     closeDialog (refresh) {
       this.dialogAddUsers = false
       this.dialogEmail = false
+      this.dialogMerge = false
       this.selectionChange()
       if (refresh) {
         this.searchText = ''
