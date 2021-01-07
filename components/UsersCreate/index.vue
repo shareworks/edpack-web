@@ -151,8 +151,10 @@ export default {
       // POST
       this.$http.post('users/invite', { invitations: roles }, { params: { toSelf: self } })
         .then(() => {
+          if (this.updateMembers) {
+            this.updateMembers()
+          }
           this.cleanForm()
-          this.updateMembers()
         })
         .catch((e) => { console.log(e); this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.sending = false })
