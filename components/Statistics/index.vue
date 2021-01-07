@@ -2,8 +2,8 @@
   <div>
     <div v-if="status === 'done'">
       <!-- completionStats -->
-      <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}" v-if="Object.keys(statisticCompletionValues).length">
-        <el-card v-for="(stat, key) in statisticCompletionValues" :key="key" class="stat-counter">
+      <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}">
+        <el-card v-for="(stat, index) in statisticCompletionValues" :key="`statisticCompletionValues${index}`" class="stat-counter">
           <vc-donut background="white" ba foreground="lightgrey" :size="80" unit="%" :thickness="30" :sections="[{ color: '#67c23a', value: stat.value }]">
             <div class="font-26">
               <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'/>%</strong>
@@ -14,8 +14,8 @@
       </masonry>
 
       <!-- userStats -->
-      <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}" v-if="Object.keys(userStats).length">
-        <el-card v-for="(stat, key) in statisticUserValues" :key="key" class="stat-counter">
+      <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}">
+        <el-card v-for="(stat, index) in statisticUserValues" :key="`statisticUserValues${index}`" class="stat-counter">
           <div class="font-26">
             <i :class="stat.icon"/>
             <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'/></strong>
@@ -25,8 +25,8 @@
       </masonry>
 
       <!-- stats -->
-      <masonry class="hidden-xs" :cols="{default: 3, 767: 2}" :gutter="{default: '20px', 767: '10px'}" v-if="Object.keys(statisticStatsValues).length">
-        <el-card v-for="(stat, key) in statisticStatsValues" :key="key" class="stat-counter">
+      <masonry class="hidden-xs" :cols="{default: 3, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
+        <el-card v-for="(stat, index) in statisticStatsValues" :key="`statisticStatsValues${index}`" class="stat-counter">
           <div class="font-20">
             <i :class="stat.icon"/>
             <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'/></strong>
@@ -54,10 +54,8 @@ Vue.use(Donut)
 export default {
   name: 'Statistics',
   props: {
-    completionStats: { default () { return [] } },
-    userStats: { default () { return [] } },
-    stats: { default () { return [] } },
-    faculty: { default: false }
+    faculty: { default: false },
+    stats: Array
   },
   components: { countTo },
 
@@ -65,9 +63,9 @@ export default {
     return {
       school: this.$store.state.school,
       facultyFilter: this.faculty ? this.faculty._id : this.$route.query.context || '',
-      statisticCompletionValues: {},
-      statisticUserValues: {},
-      statisticStatsValues: {},
+      statisticCompletionValues: [],
+      statisticUserValues: [],
+      statisticStatsValues: [],
       status: 'loading'
     }
   },
@@ -100,36 +98,23 @@ export default {
       setTimeout(() => { this.checkSchoolCountsAndCallSetup() }, 100)
     },
     setupStatisticValues (newStatisticValues) {
-      const statCompletionValues = {}
-      const statUserValues = {}
-      const statStatsValues = {}
+      const wholeValues = {}
 
-      // add specific value to values object
-      this.completionStats.forEach(statProperty => {
-        statCompletionValues[statProperty.prop] = { ...statProperty, value: 0 }
-      })
-      this.userStats.forEach(statProperty => {
-        statUserValues[statProperty.prop] = { ...statProperty, value: 0 }
-      })
+      // prepare containers for statistic
+      const statCompletionValues = []
+      const statUserValues = []
+      const statStatsValues = []
+
+      // use just statistics from the stats list
       this.stats.forEach(statProperty => {
-        statStatsValues[statProperty.prop] = { ...statProperty, value: 0 }
+        wholeValues[statProperty.prop] = { ...statProperty, value: newStatisticValues[statProperty.prop] || 0 }
       })
 
-      // add values from api to values object
-      for (const statProp in statCompletionValues) {
-        if (newStatisticValues[statProp]) {
-          statCompletionValues[statProp].value = newStatisticValues[statProp]
-        }
-      }
-      for (const statProp in statUserValues) {
-        if (newStatisticValues[statProp]) {
-          statUserValues[statProp].value = newStatisticValues[statProp]
-        }
-      }
-      for (const statProp in statStatsValues) {
-        if (newStatisticValues[statProp]) {
-          statStatsValues[statProp].value = newStatisticValues[statProp]
-        }
+      for (const statProp in wholeValues) {
+        // filter statistic by type
+        if (wholeValues[statProp].type === 'completionStats') { statCompletionValues.push(wholeValues[statProp]) }
+        if (wholeValues[statProp].type === 'userStats') { statUserValues.push(wholeValues[statProp]) }
+        if (wholeValues[statProp].type === 'usersStats') { statStatsValues.push(wholeValues[statProp]) }
       }
 
       this.statisticCompletionValues = statCompletionValues
