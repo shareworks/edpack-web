@@ -19,7 +19,7 @@
 
     <!-- Settings page content -->
     <div class="page-body">
-      <el-form ref="form" :model="form" label-width="220px" :label-position="['questions'].includes(activeTab) ? 'top' : 'left'">
+      <el-form ref="form" :model="form" label-width="220px" :label-position="['questions'].includes(settingsMode) ? 'top' : 'left'">
 
       <!-- Tables -->
       <slot name="tables"/>
@@ -45,7 +45,7 @@ Vue.use(VueClipboards)
 export default {
   name: 'OrgSettingsWrapper',
   metaInfo: { title: 'Settings' },
-  props: ['toTab', 'activeTab', 'setActiveTab', 'orgLoaded', 'setOrgLoaded', 'form', 'setForm'],
+  props: ['settingsMode', 'setMode', 'orgLoaded', 'setOrgLoaded', 'form', 'setForm'],
 
   data () {
     return {
@@ -55,6 +55,10 @@ export default {
   },
 
   watch: {
+    $route (to) {
+      if (!to.params.settingsMode) to.params.settingsMode = 'general'
+      if (to.params.settingsMode !== this.settingsMode) this.setMode(to.params.settingsMode)
+    },
     form: {
       handler () {
         ('isChanged' in this.form) ? this.form.isChanged = true : this.form.isChanged = false
@@ -77,9 +81,9 @@ export default {
 
   computed: {
     canShowControlsButton () {
-      if (this.activeTab !== 'faculties' && this.activeTab !== 'categories') return true
-      if (this.activeTab === 'faculties' && this.form.faculties.length > 0) return true
-      if (this.activeTab === 'categories' && this.form.categories.length > 0) return true
+      if (this.settingsMode !== 'faculties' && this.settingsMode !== 'categories') return true
+      if (this.settingsMode === 'faculties' && this.form.faculties.length > 0) return true
+      if (this.settingsMode === 'categories' && this.form.categories.length > 0) return true
 
       return false
     }
