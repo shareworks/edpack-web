@@ -41,7 +41,7 @@
     </el-form-item>
 
     <!-- Brand color -->
-    <el-form-item :label="$t('SW_BRAND_COLOR')">
+    <el-form-item :label="$t('SW_BRAND_COLOR')" class="hide">
       <el-color-picker v-model="form.brandColor"/>
     </el-form-item>
 
