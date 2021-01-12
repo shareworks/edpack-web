@@ -9,7 +9,7 @@
         </el-button>
 
         <!-- School settings -->
-        <el-button class="button-square-xs" plain size="medium" type="primary" @click="$router.push({name: 'settings', params: { slug: school.slug, mode: 'general' }})">
+        <el-button class="button-square-xs" plain size="medium" type="primary" @click="$router.push({name: 'settings', params: { slug: school.slug, settingsMode: 'general' }})">
           <i class="icon-cog"></i>
           <span class="hidden-xs">{{ $t('SW_SETTINGS') }}</span>
         </el-button>
