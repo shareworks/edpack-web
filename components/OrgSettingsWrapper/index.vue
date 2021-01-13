@@ -5,7 +5,7 @@
       <app-language class="pull-right"/>
 
       <!-- Go back button -->
-      <el-button type="text" @click="goBack" aria-label="Go back" class="btn-back">
+      <el-button type="text" @click="cancel()" aria-label="Go back" class="btn-back">
         <i class="icon-arrow_back"/>
         <span>{{ $t('SW_BACK') }}</span>
       </el-button>
@@ -19,7 +19,6 @@
       </el-tabs>
     </page-cover>
 
-    <!-- Settings page content -->
     <div class="page-body" v-if="status === 'done'">
       <el-form ref="form" :model="form" label-width="220px" :label-position="['questions'].includes(settingsMode) ? 'top' : 'left'">
 
@@ -29,9 +28,8 @@
         <!-- Submit or cancel -->
         <el-form-item class="mt-20" v-if="canShowControlsButton">
           <el-button type="primary" @click="onSubmit" class="mr-10" :loading="submitting">{{ $t('SW_SAVE_CHANGES') }}</el-button>
-          <router-link to="/admin">
-            <el-button type="text">{{ $t('SW_CANCEL') }}</el-button>
-          </router-link>
+
+            <el-button type="text" @click="cancel('force')">{{ $t('SW_CANCEL') }}</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -51,6 +49,7 @@ import OrgGeneralSettings from '@/edpack-web/components/OrgGeneralSettings'
 import OrgOptions from '@/components/OrgOptions'
 import OrgFacultiesSettings from '@/edpack-web/components/OrgFacultiesSettings'
 import OrgIntegrationSettings from '@/edpack-web/components/OrgIntegrationSettings'
+import isEqual from 'lodash/isEqual'
 
 Vue.use(VueClipboards)
 
@@ -75,29 +74,26 @@ export default {
     this.getOrg()
   },
 
+  updated () {
+    if (!window.fcWidget) return
+    this.$store.state.school.enableFreshChat ? window.fcWidget.show() : window.fcWidget.hide()
+  },
+
   watch: {
     $route (to) {
       if (!to.params.settingsMode) to.params.settingsMode = 'general'
-      if (to.params.settingsMode !== this.settingsMode) this.settingsMode = to.params.settingsMode
+      if (to.params.settingsMode !== this.settingsMode) {
+        this.settingsMode = to.params.settingsMode
+        this.toTab = to.params.settingsMode
+      }
     },
     form: {
+      deep: true,
       handler () {
-        ('isChanged' in this.form) ? this.form.isChanged = true : this.form.isChanged = false
-      },
-      deep: true
+        const unsavedChanges = !isEqual(this.school, this.form)
+        this.$store.dispatch('setUnsavedChanges', unsavedChanges)
+      }
     }
-  },
-
-  updated () {
-    if (this.$store.state.school.enableFreshChat && window.fcWidget) {
-      window.fcWidget.show()
-    } else if (!this.$store.state.school.enableFreshChat && window.fcWidget) {
-      window.fcWidget.hide()
-    }
-  },
-
-  mounted () {
-    this.getOrg()
   },
 
   computed: {
@@ -111,31 +107,18 @@ export default {
   },
 
   methods: {
-    goBack () { this.$router.push({ name: 'admin' }) },
     getOrg () {
       this.$http.get(`organizations/${this.school._id}`)
         .then((res) => {
-          // Use JSON.parse(JSON.stringify(obj)) to prevent deep bindings, see Vue.utils.extend issue: https://github.com/vuejs/vue/issues/1849
-          this.school = JSON.parse(JSON.stringify(res.data.list[0]))
-          this.$store.state.user.organization = res.data.list[0]
-          this.$store.dispatch('setUser', this.$store.state.user)
+          this.updateSchool(res.data.list[0])
           this.status = 'done'
         })
         .catch(() => { this.status = 'error' })
     },
     tabClick () {
-      if (this.form.isChanged) {
-        this.$confirm(this.$i18n.t('SW_DISCARD_CHANGED_TEXT'), this.$i18n.t('SW_DISCARD_CHANGED'), {
-          confirmButtonText: this.$i18n.t('SW_DISCARD_AND_CONTINUE'),
-          cancelButtonText: this.$i18n.t('SW_CANCEL')
-        }).then(() => {
-          this.form = JSON.parse(JSON.stringify(this.school))
-          this.settingsMode = this.toTab
-        }).catch(() => { this.toTab = this.settingsMode })
-      } else {
-        this.settingsMode = this.toTab
-        this.$router.replace({ name: 'settings', params: { slug: this.school.slug, settingsMode: this.toTab } })
-      }
+      this.$router.replace({ name: 'settings', params: { slug: this.school.slug, settingsMode: this.toTab } })
+        .then(() => { this.form = JSON.parse(JSON.stringify(this.school)) })
+        .catch(() => { this.toTab = this.settingsMode })
     },
     onSubmit () {
       if (this.form.domainError) {
@@ -161,14 +144,22 @@ export default {
 
       this.$http.put(`organizations/${this.form._id}`, this.form)
         .then((res) => {
-          const school = res.data.list[0]
-          this.$store.state.user.organization = school
-          this.$store.dispatch('setUser', this.$store.state.user)
-          this.school = JSON.parse(JSON.stringify(school))
+          this.updateSchool(res.data.list[0])
           this.$message({ message: this.$i18n.t('SW_CHANGES_SAVED'), type: 'success' })
         })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.submitting = false })
+    },
+    cancel (force) {
+      if (force) this.$store.dispatch('setUnsavedChanges', false)
+      this.$router.push({ name: 'admin' })
+    },
+    updateSchool (updatedSchool) {
+      // Use JSON.parse(JSON.stringify(obj)) to prevent deep bindings, see Vue.utils.extend issue: https://github.com/vuejs/vue/issues/1849
+      this.school = JSON.parse(JSON.stringify(updatedSchool))
+      this.form = JSON.parse(JSON.stringify(updatedSchool))
+      this.$store.state.user.organization = updatedSchool
+      this.$store.dispatch('setUser', this.$store.state.user)
     }
   }
 }

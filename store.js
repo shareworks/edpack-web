@@ -12,6 +12,7 @@ export const SET_USER = 'SET_USER'
 export const SET_LANGUAGE = 'SET_LANGUAGE'
 export const SET_LANGUAGES = 'SET_LANGUAGES'
 export const SET_COURSE = 'SET_COURSE'
+export const SET_UNSAVED_CHANGES = 'SET_UNSAVED_CHANGES'
 
 const state = {
   navAvailable: false,
@@ -25,7 +26,8 @@ const state = {
   slug: null,
   isAdmin: false,
   languages: config.languages,
-  lang: config.defaultLanguage
+  lang: config.defaultLanguage,
+  unsavedChanges: false
 }
 
 const mutations = {
@@ -54,6 +56,9 @@ const mutations = {
     state.isAdmin = user.role === 'admin' || user.systemAdmin
     state.languages = getLanguages(user.organization.languages)
     state.lang = user.language
+  },
+  [SET_UNSAVED_CHANGES] (state, data) {
+    state.unsavedChanges = data.payload
   },
   [SET_LANGUAGE] (state, data) {
     state.lang = data.payload
@@ -87,6 +92,9 @@ const actions = {
   },
   setCourse ({ commit }, payload) {
     commit({ type: SET_COURSE, payload })
+  },
+  setUnsavedChanges ({ commit }, payload) {
+    commit({ type: SET_UNSAVED_CHANGES, payload })
   },
   setMobileView ({ commit }, payload) {
     commit({ type: WINDOW_RESIZE, payload })

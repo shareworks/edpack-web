@@ -41,7 +41,7 @@
       </page-header>
 
       <!-- Tabs -->
-      <el-tabs v-model="mode" @tab-click="tabClick" class="mt-10" :before-leave="beforeLeave">
+      <el-tabs v-model="toTab" @tab-click="tabClick" class="mt-10">
         <el-tab-pane :label="tab.label" :name="tab.value" :key="tab.value" v-for="tab in tabs"/>
       </el-tabs>
     </page-cover>
@@ -79,10 +79,10 @@ export default {
 
   data () {
     return {
-      questionChanged: false,
       school: this.$store.state.school,
       currentUser: this.$store.state.user,
       mode: this.$route.params.mode || config.defaultAdminTab,
+      toTab: this.$route.params.mode || config.defaultAdminTab,
       dialogStats: false,
       appName: config.name,
       lang: this.$store.state.lang,
@@ -97,7 +97,10 @@ export default {
   watch: {
     $route (to) {
       if (!to.params.mode) to.params.mode = config.defaultAdminTab
-      if (to.params.mode !== this.mode) this.mode = to.params.mode
+      if (to.params.mode !== this.mode) {
+        this.mode = to.params.mode
+        this.toTab = to.params.mode
+      }
     }
   },
 
@@ -115,28 +118,9 @@ export default {
     },
     handleCommand (command) { if (command.type === 'uptime') window.open(config.business.uptimeUrl, '_blank') },
     toggleStats () { this.dialogStats = !this.dialogStats },
-    tabClick () { this.$router.replace({ name: 'admin', params: { mode: this.mode, slug: this.school.slug } }) },
-    beforeLeave (newTab) {
-      if (this.questionChanged) {
-        return this.$confirm(this.$i18n.t('SW_DISCARD_CHANGED_TEXT'), this.$i18n.t('SW_DISCARD_CHANGED'), {
-          confirmButtonText: this.$i18n.t('SW_DISCARD_AND_CONTINUE'),
-          cancelButtonText: this.$i18n.t('SW_CANCEL'),
-
-          callback: (action) => {
-            // Cancel
-            if (action === 'cancel') {
-              this.mode = 'questions'
-            }
-
-            // Confirm
-            if (action === 'confirm') {
-              this.mode = newTab
-              this.questionChanged = false
-              this.tabClick()
-            }
-          }
-        })
-      }
+    tabClick () {
+      this.$router.replace({ name: 'admin', params: { mode: this.toTab, slug: this.school.slug } })
+        .catch(() => { this.toTab = this.mode })
     }
   }
 }

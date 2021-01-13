@@ -48,6 +48,7 @@ import LocalStoragePlugin from './plugins/local-storage'
 import AxiosPlugin from './plugins/axios'
 import RouterAfterEachPlugin from './plugins/router-after-each'
 import RouterBeforeEachPlugin from './plugins/router-before-each'
+import RouterUnsavedChanges from './plugins/router-unsaved-changes'
 import VueObserveVisibility from 'vue-observe-visibility'
 import VueClipboards from 'vue-clipboards'
 
@@ -88,6 +89,7 @@ const i18n = LanguagePlugin.geti18n()
 // Init Custom routes plugins
 Vue.use(RouterBeforeEachPlugin)
 Vue.use(RouterAfterEachPlugin)
+Vue.use(RouterUnsavedChanges)
 
 // Init global components
 Vue.component('spinner', Spinner)
