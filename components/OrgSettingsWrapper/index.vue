@@ -25,6 +25,7 @@
 
         <!-- Content Component -->
         <component :is="tabs[settingsMode].name" :form="form"/>
+
         <!-- Submit or cancel -->
         <el-form-item class="mt-20" v-if="canShowControlsButton">
           <el-button type="primary" @click="onSubmit" class="mr-10" :loading="submitting">{{ $t('SW_SAVE_CHANGES') }}</el-button>
@@ -39,7 +40,7 @@
     <spinner v-else-if="status === 'loading'" class="mt-30"></spinner>
 
     <!-- Error -->
-    <div class="text-muted text-center mt-30" v-if="status === 'error'">{{ $t('SW_ERROR_LOADING') }}</div>
+    <div v-else-if="status === 'error'" class="text-muted text-center mt-30">{{ $t('SW_ERROR_LOADING') }}</div>
   </div>
 </template>
 
@@ -116,6 +117,8 @@ export default {
         .then((res) => {
           // Use JSON.parse(JSON.stringify(obj)) to prevent deep bindings, see Vue.utils.extend issue: https://github.com/vuejs/vue/issues/1849
           this.school = JSON.parse(JSON.stringify(res.data.list[0]))
+          this.$store.state.user.organization = res.data.list[0]
+          this.$store.dispatch('setUser', this.$store.state.user)
           this.status = 'done'
         })
         .catch(() => { this.status = 'error' })

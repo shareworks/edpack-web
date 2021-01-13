@@ -170,6 +170,7 @@
 <script>
 import moment from 'moment'
 import debounce from 'lodash/debounce'
+import config from 'config'
 import OrgOptions from '@/components/OrgOptions'
 import dateSorter from '@/edpack-web/utils/date-sorter'
 import CreateOrg from '@/edpack-web/components/CreateOrg'
@@ -179,7 +180,6 @@ import sortCaseInsensitive from '@/edpack-web/utils/sort-case-insensitive'
 
 export default {
   name: 'OrgsTable',
-  props: ['customCounts'],
   components: { CreateOrg, OrgOptions, Newsletter, TableStatus },
 
   data () {
@@ -199,7 +199,8 @@ export default {
       sending: false,
       user: this.$store.state.user,
       lang: this.$store.state.lang,
-      submitting: false
+      submitting: false,
+      customCounts: config.courseCounts
     }
   },
 

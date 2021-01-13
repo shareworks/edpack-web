@@ -41,48 +41,63 @@
       </page-header>
 
       <!-- Tabs -->
-      <slot name="tabs"/>
+      <el-tabs v-model="mode" @tab-click="tabClick" class="mt-10" :before-leave="beforeLeave">
+        <el-tab-pane :label="tab.label" :name="tab.value" :key="tab.value" v-for="tab in tabs"/>
+      </el-tabs>
     </page-cover>
 
-    <div class="page-body">
-      <!-- Tables -->
-      <slot name="tables"/>
+    <div class="page-body" v-if="status === 'done'">
+      <!-- Content Component -->
+      <component :is="tabs[mode].name"/>
 
       <!-- Statistics dialog -->
       <el-dialog :title="$t('SW_STATS')" append-to-body :visible.sync="dialogStats">
         <statistics v-if="dialogStats" :closeDialog="toggleStats" :stats="stats"/>
       </el-dialog>
     </div>
+
+    <!-- Loading -->
+    <spinner v-else-if="status === 'loading'" class="mt-30"></spinner>
+
+    <!-- Error -->
+    <div v-else-if="status === 'error'" class="text-muted text-center mt-30">{{ $t('SW_ERROR_LOADING') }}</div>
   </div>
 </template>
 
 <script>
-import Vue from 'vue'
 import config from 'config'
-import Statistics from '../Statistics'
+import Statistics from '@/edpack-web/components/Statistics'
+import Courses from '@/edpack-web/components/Courses'
+import OrgsTable from '@/edpack-web/components/OrgsTable'
+import UsersTable from '@/edpack-web/components/UsersTable'
 
 export default {
   name: 'AdminPanelWrapper',
   metaInfo: { title: 'Admin' },
-  props: ['mode', 'currentUser', 'school', 'setMode', 'stats'],
-  components: { Statistics },
+  props: ['stats', 'tabs'],
+  components: { Statistics, OrgsTable, Courses, UsersTable },
 
   data () {
     return {
+      questionChanged: false,
+      school: this.$store.state.school,
+      currentUser: this.$store.state.user,
+      mode: this.$route.params.mode || config.defaultAdminTab,
       dialogStats: false,
       appName: config.name,
-      lang: this.$store.state.lang
+      lang: this.$store.state.lang,
+      status: 'loading'
     }
   },
 
-  mounted () {
+  created () {
     this.getOrg()
   },
 
   watch: {
     $route (to) {
       if (!to.params.mode) to.params.mode = config.defaultAdminTab
-      if (to.params.mode !== this.mode) this.setMode(to.params.mode)
+      if (to.params.mode !== this.mode) this.mode = to.params.mode
     }
   },
 
@@ -90,14 +105,39 @@ export default {
     getOrg () {
       this.$http.get(`organizations/${this.school._id}`)
         .then((res) => {
-          Vue.util.extend(this.school, res.data.list[0])
+          // Use JSON.parse(JSON.stringify(obj)) to prevent deep bindings, see Vue.utils.extend issue: https://github.com/vuejs/vue/issues/1849
+          this.school = JSON.parse(JSON.stringify(res.data.list[0]))
           this.$store.state.user.organization = res.data.list[0]
           this.$store.dispatch('setUser', this.$store.state.user)
+          this.status = 'done'
         })
-        .catch((err) => { if (err.status === 404) this.$router.replace({ name: 'error', query: { type: 'not_found' } }) })
+        .catch(() => { this.status = 'error' })
     },
     handleCommand (command) { if (command.type === 'uptime') window.open(config.business.uptimeUrl, '_blank') },
-    toggleStats () { this.dialogStats = !this.dialogStats }
+    toggleStats () { this.dialogStats = !this.dialogStats },
+    tabClick () { this.$router.replace({ name: 'admin', params: { mode: this.mode, slug: this.school.slug } }) },
+    beforeLeave (newTab) {
+      if (this.questionChanged) {
+        return this.$confirm(this.$i18n.t('SW_DISCARD_CHANGED_TEXT'), this.$i18n.t('SW_DISCARD_CHANGED'), {
+          confirmButtonText: this.$i18n.t('SW_DISCARD_AND_CONTINUE'),
+          cancelButtonText: this.$i18n.t('SW_CANCEL'),
+
+          callback: (action) => {
+            // Cancel
+            if (action === 'cancel') {
+              this.mode = 'questions'
+            }
+
+            // Confirm
+            if (action === 'confirm') {
+              this.mode = newTab
+              this.questionChanged = false
+              this.tabClick()
+            }
+          }
+        })
+      }
+    }
   }
 }
 </script>

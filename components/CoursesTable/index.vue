@@ -109,6 +109,7 @@
 
 <script>
 import moment from 'moment'
+import config from 'config'
 import LmsIcon from '../LmsIcon'
 import dateSorter from '@/edpack-web/utils/date-sorter'
 import sortCaseInsensitive from '@/edpack-web/utils/sort-case-insensitive'
@@ -116,11 +117,12 @@ import sortCaseInsensitive from '@/edpack-web/utils/sort-case-insensitive'
 export default {
   name: 'CoursesTable',
   components: { LmsIcon },
-  props: ['tableData', 'cards', 'selectionChange', 'order', 'sort', 'sortChange', 'customCounts'],
+  props: ['tableData', 'cards', 'selectionChange', 'order', 'sort', 'sortChange'],
   data () {
     return {
       lang: this.$store.state.lang,
-      school: this.$store.state.school
+      school: this.$store.state.school,
+      customCounts: config.courseCounts
     }
   },
   methods: {
