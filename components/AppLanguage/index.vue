@@ -1,6 +1,6 @@
 <template>
   <div class="app-language hidden-xs" v-if="canSwitch">
-    <el-dropdown @command="handleLanguage">
+    <el-dropdown @command="checkUnsavedChanges">
       <!-- Language button -->
       <el-button aria-label="Choose language" :type="big ? 'default' : 'text'" :size="big ? '': 'medium'">
         <img :src="'/images/' + currentLanguage + '.png'" class="language-icon" alt="language-icon">
@@ -22,7 +22,6 @@
 <script>
 import config from 'config'
 import { loadLanguages } from '../../utils/load-languages'
-
 export default {
   name: 'AppLanguage',
   props: ['big'],
@@ -37,12 +36,22 @@ export default {
   },
 
   methods: {
+    checkUnsavedChanges (newLanguage) {
+      if (this.currentLanguage === newLanguage) return
+      if (!this.$store.state.unsavedChanges) return this.handleLanguage(newLanguage)
+
+      // Else, ask for confirmation to discard changes
+      this.$confirm(this.$i18n.t('SW_DISCARD_CHANGED_TEXT'), this.$i18n.t('SW_DISCARD_CHANGED'), {
+        confirmButtonText: this.$i18n.t('SW_DISCARD_AND_CONTINUE'),
+        cancelButtonText: this.$i18n.t('SW_CANCEL')
+      })
+        .then(() => {
+          this.$store.dispatch('setUnsavedChanges', false)
+          this.handleLanguage(newLanguage)
+        })
+        .catch(() => { console.log('language change cancelled') })
+    },
     handleLanguage (newLanguage) {
-      const isOtherLanguage = this.currentLanguage !== newLanguage
-
-      // If not changed, stop here
-      if (!isOtherLanguage) return false
-
       this.currentLanguage = newLanguage
       loadLanguages(this.$i18n, newLanguage)
 
