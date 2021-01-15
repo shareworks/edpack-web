@@ -129,11 +129,10 @@
 </template>
 
 <script>
-import config from 'config'
+import isEqual from 'lodash/isEqual'
 import { loadLanguages } from '../../utils/load-languages'
 import ThumbnailEdit from '../../components/ThumbnailEdit'
 import NotificationsSwitchers from '../NotificationsSwitchers'
-import isEqual from 'lodash/isEqual'
 
 export default {
   name: 'UserAccountForm',
@@ -149,15 +148,13 @@ export default {
       isMobile: this.$store.state.isMobile,
       submitting: false,
       faculties: this.$store.state.school.faculties,
-      hasFacultyManagers: config.hasFacultyManagers,
       emailsCopy: [...this.form.emails],
       languages: this.$store.state.languages,
       emailChanged: false,
       changingRole: false,
       resetting: false,
       facultyManager: [],
-      showNotifications: false,
-      formClone: JSON.parse(JSON.stringify(this.$store.state.user))
+      showNotifications: false
     }
   },
 
@@ -241,7 +238,7 @@ export default {
       this.$http.post('users/invite', { invitations: student })
         .then((res) => {
           if (this.updateUser) {
-            this.updateUser(res.data.list[0], { ...this.formClone, role: newRole })
+            this.updateUser(res.data.list[0], { ...this.user, role: newRole })
           }
 
           this.form.role = newRole
@@ -271,7 +268,7 @@ export default {
       }
       this.$http.post('users/invite', { invitations: invitations })
         .then((res) => {
-          if (this.updateUser) this.updateUser(res.data.list[0], { ...this.formClone, faculties: result })
+          if (this.updateUser) this.updateUser(res.data.list[0], { ...this.user, faculties: result })
           this.form.faculties = result
           this.$message({ message: this.$i18n.t('SW_ROLE_CHANGED'), type: 'success' })
         })
