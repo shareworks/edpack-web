@@ -48,7 +48,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import config from 'config'
 import { removeCsrfToken } from '../../utils/csrf-handling'
 import UserAccountForm from '../../components/UserAccountForm'
@@ -63,8 +62,9 @@ export default {
       submitting: false,
       hasUserProfiles: config.hasUserProfiles,
       school: this.$store.state.school,
-      form: Vue.util.extend({}, this.$store.state.user),
+      form: JSON.parse(JSON.stringify(this.$store.state.user)),
       serverOnline: true,
+      isAdmin: this.$store.state.isAdmin,
       appName: config.name
     }
   },
@@ -79,6 +79,7 @@ export default {
         })
     },
     finish () {
+      this.$store.dispatch('setUnsavedChanges', false)
       let route = { name: 'home', params: { slug: this.school.slug } }
       if (this.isAdmin) route = '/admin'
       this.$router.push(route)

@@ -129,11 +129,11 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import config from 'config'
 import { loadLanguages } from '../../utils/load-languages'
 import ThumbnailEdit from '../../components/ThumbnailEdit'
 import NotificationsSwitchers from '../NotificationsSwitchers'
+import isEqual from 'lodash/isEqual'
 
 export default {
   name: 'UserAccountForm',
@@ -157,12 +157,23 @@ export default {
       resetting: false,
       facultyManager: [],
       showNotifications: false,
-      formClone: Vue.util.extend({}, this.form)
+      formClone: JSON.parse(JSON.stringify(this.$store.state.user))
     }
   },
 
   created () {
     if (this.form.faculties) for (const faculty of this.form.faculties) this.facultyManager.push(faculty._id)
+  },
+
+  watch: {
+    form: {
+      deep: true,
+      handler () {
+        if (!this.showFullAccountInfo) return
+        const unsavedChanges = !isEqual(this.user, this.form)
+        this.$store.dispatch('setUnsavedChanges', unsavedChanges)
+      }
+    }
   },
 
   methods: {
@@ -260,12 +271,8 @@ export default {
       }
       this.$http.post('users/invite', { invitations: invitations })
         .then((res) => {
-          if (this.updateUser) {
-            this.updateUser(res.data.list[0], { ...this.formClone, faculties: result })
-          }
-
+          if (this.updateUser) this.updateUser(res.data.list[0], { ...this.formClone, faculties: result })
           this.form.faculties = result
-
           this.$message({ message: this.$i18n.t('SW_ROLE_CHANGED'), type: 'success' })
         })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
