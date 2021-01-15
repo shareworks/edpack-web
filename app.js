@@ -35,6 +35,7 @@ import AppLanguage from './components/AppLanguage'
 import PageCover from './components/PageCover'
 import PageHeader from './components/PageHeader'
 import Affix from './components/Affix'
+import TableStatus from './components/TableStatus'
 
 // Store & Router stuff
 import store from './store'
@@ -97,6 +98,7 @@ Vue.component('thumbnail', Thumbnail)
 Vue.component('appLanguage', AppLanguage)
 Vue.component('pageCover', PageCover)
 Vue.component('pageHeader', PageHeader)
+Vue.component('tableStatus', TableStatus)
 Vue.component('affix', Affix)
 Vue.component('mugenScroll', MugenScroll)
 
