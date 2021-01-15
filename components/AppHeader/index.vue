@@ -101,7 +101,6 @@ export default {
       lang: this.$store.state.lang,
       showProfile: config.hasUserProfiles,
       selectedOrg: this.$store.state.user.organization.name[this.$store.state.user.language],
-      userOrgs: this.$store.state.user.organizations,
       showSchoolSelect: false,
       showOrgButton: false,
       payAsYouGo: config.payAsYouGo,
@@ -127,6 +126,10 @@ export default {
 
   computed: {
     user () { return this.$store.state.user },
+    userOrgs () {
+      const orgs = this.$store.state.user.organizations
+      return orgs.sort((a, b) => { return a.name.en.toLowerCase() > b.name.en.toLowerCase() })
+    },
     isAdmin () { return this.$store.state.user.systemAdmin || this.$store.state.user.role === 'admin' }
   },
 
