@@ -44,12 +44,13 @@
 
 <script>
 import Vue from 'vue'
+import isEqual from 'lodash/isEqual'
 import VueClipboards from 'vue-clipboards'
-import OrgGeneralSettings from '@/edpack-web/components/OrgGeneralSettings'
 import OrgOptions from '@/components/OrgOptions'
+import OrgGeneralSettings from '@/edpack-web/components/OrgGeneralSettings'
 import OrgFacultiesSettings from '@/edpack-web/components/OrgFacultiesSettings'
 import OrgIntegrationSettings from '@/edpack-web/components/OrgIntegrationSettings'
-import isEqual from 'lodash/isEqual'
+import mergeEmptyLanguageFields from '@/edpack-web/utils/merge-empty-language-fields'
 
 Vue.use(VueClipboards)
 
@@ -125,20 +126,15 @@ export default {
         return this.$message({ message: this.$i18n.t('SW_DOMAINS_ERROR', this.form.domainError.length), type: 'error' })
       }
 
-      if (this.$store.state.languages.length === 1) {
-        const currentLanguage = this.form.languages.en ? 'en' : 'nl'
-        const anotherLanguage = this.form.languages.en ? 'nl' : 'en'
-
-        this.form.name[anotherLanguage] = this.form.name[currentLanguage]
-        this.form.terminology.faculty[anotherLanguage] = this.form.terminology.faculty[currentLanguage]
-        this.form.terminology.faculties[anotherLanguage] = this.form.terminology.faculties[currentLanguage]
-
-        if (this.form.categories) this.form.categories.forEach(category => { category[anotherLanguage] = category[currentLanguage] })
-        if (this.form.faculties) this.form.faculties.forEach(faculty => { faculty[anotherLanguage] = faculty[currentLanguage] })
-      }
-
       this.submitting = true
-      this.form.shortName.nl = this.form.shortName.en
+
+      const propsToCheck = ['name', 'shortName']
+      if (this.form.categories) propsToCheck.push('categories')
+      if (this.form.faculties) propsToCheck.push('faculties')
+
+      mergeEmptyLanguageFields(this.form, propsToCheck)
+      mergeEmptyLanguageFields(this.form.terminology, ['faculty', 'faculties'])
+
       if (this.form.faculties) { this.form.faculties = this.form.faculties.filter(fac => fac.en || fac.nl || fac._id) }
       if (this.form.categories) { this.form.categories = this.form.categories.filter(cat => cat.en || cat.nl || cat._id) }
 
