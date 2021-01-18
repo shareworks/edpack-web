@@ -175,12 +175,11 @@ import OrgOptions from '@/components/OrgOptions'
 import dateSorter from '@/edpack-web/utils/date-sorter'
 import CreateOrg from '@/edpack-web/components/CreateOrg'
 import Newsletter from '@/edpack-web/components/Newsletter'
-import TableStatus from '@/edpack-web/components/TableStatus'
 import sortCaseInsensitive from '@/edpack-web/utils/sort-case-insensitive'
 
 export default {
   name: 'OrgsTable',
-  components: { CreateOrg, OrgOptions, Newsletter, TableStatus },
+  components: { CreateOrg, OrgOptions, Newsletter },
 
   data () {
     return {

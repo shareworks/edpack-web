@@ -115,14 +115,13 @@
 import Affix from '../Affix'
 import draggable from 'vuedraggable'
 import GroupsItem from '../GroupsItem'
-import TableStatus from '../TableStatus'
 import FullStudentList from '../FullStudentList'
 import CreateGroupItem from '../CreateGroupItem'
 
 export default {
   name: 'ManageGroups',
   props: ['setIsChanged', 'isChanged', 'url', 'courseId', 'assessment'],
-  components: { TableStatus, Affix, GroupsItem, FullStudentList, draggable, CreateGroupItem },
+  components: { Affix, GroupsItem, FullStudentList, draggable, CreateGroupItem },
 
   data () {
     return {

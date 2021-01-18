@@ -95,7 +95,6 @@
 <script>
 import config from 'config'
 import debounce from 'lodash/debounce'
-import TableStatus from '../TableStatus'
 import CreateCourse from '../CreateCourse'
 import CoursesCards from '../CoursesCards'
 import CoursesTable from '../CoursesTable'
@@ -103,7 +102,7 @@ import CoursesTable from '../CoursesTable'
 export default {
   name: 'Courses',
   props: ['member', 'customCounts', 'cards', 'faculty'],
-  components: { CoursesCards, CreateCourse, TableStatus, CoursesTable },
+  components: { CoursesCards, CreateCourse, CoursesTable },
 
   data () {
     return {

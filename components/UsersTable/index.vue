@@ -183,7 +183,6 @@ import debounce from 'lodash/debounce'
 import dateSorter from '../../utils/date-sorter'
 import ExpandUser from '../../components/ExpandUser'
 import EmailUsers from '../../components/EmailUsers'
-import TableStatus from '../../components/TableStatus'
 import UsersCreate from '../../components/UsersCreate'
 import UserAccountForm from '../../components/UserAccountForm'
 import UsersMerge from '../../components/UsersMerge'
@@ -192,7 +191,7 @@ import sortCaseInsensitive from '../../utils/sort-case-insensitive'
 export default {
   name: 'UsersTable',
   props: ['openPayAsYouGoDialog', 'isOverdue'],
-  components: { UserAccountForm, UsersCreate, EmailUsers, TableStatus, ExpandUser, UsersMerge },
+  components: { UserAccountForm, UsersCreate, EmailUsers, ExpandUser, UsersMerge },
 
   data () {
     const roles = config.usersTableRoles
