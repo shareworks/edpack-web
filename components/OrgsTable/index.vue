@@ -71,7 +71,7 @@
           </el-row>
           <el-form :model="props.row" label-width="220px" :disabled="true">
             <!-- Org options -->
-            <org-options :form="props.row"/>
+            <org-options :form="props.row" class="org-options-table"/>
           </el-form>
         </template>
       </el-table-column>
