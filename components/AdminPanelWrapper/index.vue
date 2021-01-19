@@ -15,7 +15,7 @@
         </el-button>
 
         <!-- More options -->
-        <el-dropdown rigger="click" @command="handleCommand">
+        <el-dropdown rigger="click" @command="handleCommand" v-if="uptimeUrl">
           <el-button type="primary" size="medium" class="button-square-xs ml-5">
             <span class="hidden-xs">{{ $t('SW_MORE') }}</span>
             <i class="el-icon-caret-bottom el-icon--right"></i>
@@ -85,6 +85,7 @@ export default {
       toTab: this.$route.params.mode || config.defaultAdminTab,
       dialogStats: false,
       appName: config.name,
+      uptimeUrl: config.business.uptimeUrl,
       lang: this.$store.state.lang,
       status: 'loading'
     }
@@ -116,7 +117,7 @@ export default {
         })
         .catch(() => { this.status = 'error' })
     },
-    handleCommand (command) { if (command.type === 'uptime') window.open(config.business.uptimeUrl, '_blank') },
+    handleCommand (command) { if (command.type === 'uptime') window.open(this.uptimeUrl, '_blank') },
     toggleStats () { this.dialogStats = !this.dialogStats },
     tabClick () {
       this.$router.replace({ name: 'admin', params: { mode: this.toTab, slug: this.school.slug } })
