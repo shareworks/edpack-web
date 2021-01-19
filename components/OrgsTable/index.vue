@@ -97,7 +97,7 @@
       <!-- LMS -->
       <el-table-column property="lastConfiguredLms" label="LMS" min-width="70">
         <template slot-scope="props">
-          <span v-if="props.row.lastConfiguredLms && props.row.lmsApiIntegration" class="block text-ellipsis capitalize">{{ props.row.lastConfiguredLms }}</span>
+          <span v-if="props.row.lastConfiguredLms" class="block text-ellipsis capitalize">{{ props.row.lastConfiguredLms }}</span>
           <span v-else class="text-muted">{{ $t('SW_NONE') }}</span>
         </template>
       </el-table-column>

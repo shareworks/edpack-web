@@ -100,7 +100,7 @@
     </el-form-item>
 
     <!-- Notifications switchers -->
-    <el-form-item v-if="showFullAccountInfo" :label="$t('SW_NOTIFICATIONS')">
+    <el-form-item v-if="showFullAccountInfo && notificationRoles.length" :label="$t('SW_NOTIFICATIONS')">
       <el-collapse-transition>
         <notifications-switchers v-show="showNotifications" :form="form"/>
       </el-collapse-transition>
@@ -133,6 +133,7 @@ import isEqual from 'lodash/isEqual'
 import { loadLanguages } from '../../utils/load-languages'
 import ThumbnailEdit from '../../components/ThumbnailEdit'
 import NotificationsSwitchers from '../NotificationsSwitchers'
+import config from 'config'
 
 export default {
   name: 'UserAccountForm',
@@ -154,7 +155,8 @@ export default {
       changingRole: false,
       resetting: false,
       facultyManager: [],
-      showNotifications: false
+      showNotifications: false,
+      notificationRoles: config.notificationRoles || []
     }
   },
 
