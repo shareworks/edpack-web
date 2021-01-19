@@ -172,6 +172,11 @@
     <el-dialog :title="$t('SW_MERGE_USERS')" append-to-body :visible.sync="dialogMerge">
       <users-merge v-if="dialogMerge" :selectedUsers="multipleSelection" :closeDialog="closeDialog"></users-merge>
     </el-dialog>
+
+    <!-- Pay as you go dialog -->
+    <el-dialog :visible.sync="payAsYouGoDialog" destroy-on-close>
+      <pay-as-you-go-dialog :user="selectedUser" :closeDialog="closeDialog"></pay-as-you-go-dialog>
+    </el-dialog>
   </div>
 </template>
 
@@ -181,17 +186,18 @@ import moment from 'moment'
 import config from 'config'
 import debounce from 'lodash/debounce'
 import dateSorter from '../../utils/date-sorter'
+import sortCaseInsensitive from '../../utils/sort-case-insensitive'
 import ExpandUser from '../../components/ExpandUser'
 import EmailUsers from '../../components/EmailUsers'
 import UsersCreate from '../../components/UsersCreate'
 import UserAccountForm from '../../components/UserAccountForm'
 import UsersMerge from '../../components/UsersMerge'
-import sortCaseInsensitive from '../../utils/sort-case-insensitive'
+import PayAsYouGoDialog from '../../components/PayAsYouGoDialog'
 
 export default {
   name: 'UsersTable',
-  props: ['openPayAsYouGoDialog', 'isOverdue'],
-  components: { UserAccountForm, UsersCreate, EmailUsers, ExpandUser, UsersMerge },
+  props: [],
+  components: { UserAccountForm, UsersCreate, EmailUsers, ExpandUser, UsersMerge, PayAsYouGoDialog },
 
   data () {
     const roles = config.usersTableRoles
@@ -215,8 +221,10 @@ export default {
       editUserForm: false,
       hideCourses: config.hideCourses,
       hasUserProfiles: config.hasUserProfiles,
+      selectedUser: false,
       dialogAddUsers: false,
       dialogEditUser: false,
+      payAsYouGoDialog: false,
       dialogEmail: false,
       dialogMerge: false
     }
@@ -330,11 +338,20 @@ export default {
       this.dialogAddUsers = false
       this.dialogEmail = false
       this.dialogMerge = false
+      this.payAsYouGoDialog = false
+      this.selectedUser = false
       this.selectionChange()
       if (refresh) {
         this.searchText = ''
         this.getUsers(true)
       }
+    },
+    openPayAsYouGoDialog (student) {
+      this.selectedUser = student
+      this.payAsYouGoDialog = true
+    },
+    isOverdue (user) {
+      return user.credits && user.credits.exp && (moment(user.credits.exp) < moment(new Date()))
     },
     updateUser (userId, user) {
       this.tableData = this.tableData.filter(u => u._id !== userId)
