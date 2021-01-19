@@ -7,7 +7,6 @@ export default {
     const i18n = LanguagePlugin.geti18n()
 
     router.beforeEach((to, from, next) => {
-
       // If no changes to a form, continue
       if (!store.state.unsavedChanges) return next()
 

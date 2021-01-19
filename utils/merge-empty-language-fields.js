@@ -4,8 +4,7 @@ const checkValue = (element) => {
   // If both values empty - stop, no need to copy values
   if (!element.en && !element.nl) { return null }
   // One values is empty - copy it from another language
-  else if (element.en) { element.nl = element.en }
-  else { element.en = element.nl }
+  else if (element.en) { element.nl = element.en } else { element.en = element.nl }
 }
 
 const mergeEmptyLanguageFields = (form, props = []) => {
