@@ -93,7 +93,8 @@ export default {
         lang: 'en',
         imageFigure: true,
         imagePosition: true,
-        linkNewTab: true,
+        linkNewTab: false,
+        linkTarget: '_blank',
         buttons: ['format', 'bold', 'italic', 'lists', 'image', 'link'],
         buttonsHideOnMobile: ['image', 'video']
       }, this.config)
