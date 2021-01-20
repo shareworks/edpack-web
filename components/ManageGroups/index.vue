@@ -117,10 +117,14 @@ import draggable from 'vuedraggable'
 import GroupsItem from '../GroupsItem'
 import FullStudentList from '../FullStudentList'
 import CreateGroupItem from '../CreateGroupItem'
+import fullscreen from 'vue-fullscreen'
+import Vue from 'vue'
+
+Vue.use(fullscreen)
 
 export default {
   name: 'ManageGroups',
-  props: ['setIsChanged', 'isChanged', 'url', 'courseId', 'assessment'],
+  props: ['url', 'courseId', 'assessment'],
   components: { Affix, GroupsItem, FullStudentList, draggable, CreateGroupItem },
 
   data () {
@@ -128,6 +132,7 @@ export default {
       fullscreen: false,
       muteRemoveWarning: false,
       addGroupDialog: false,
+      isChanged: false,
       status: false,
       removedStudents: [],
       studentsByGroup: [],
@@ -144,6 +149,14 @@ export default {
     this.getStudents()
   },
 
+  watch: {
+    isChanged: {
+      handler () {
+        this.$store.dispatch('setUnsavedChanges', this.isChanged)
+      }
+    }
+  },
+
   methods: {
     toggleFullscreen () { this.$refs.fullscreenManageGroups.toggle() },
     fullscreenChange (fullscreen) { this.fullscreen = fullscreen },
@@ -158,7 +171,7 @@ export default {
         student.group.name = newName
       })
 
-      this.setIsChanged(true)
+      this.isChanged = true
     },
     getStudents () {
       if (this.status === 'loading') return
@@ -196,9 +209,7 @@ export default {
         student.groupCount = studentsGroupAmount[student._id] || 0
       })
 
-      if (setIsChangedToTrue) {
-        this.setIsChanged(true)
-      }
+      if (setIsChangedToTrue) this.isChanged = true
     },
     sortStudentsByGroup (unsortedStudents) {
       const groups = []
@@ -293,7 +304,7 @@ export default {
           this.studentsByGroup = []
           this.allStudents = []
           this.getStudents()
-          this.setIsChanged(false)
+          this.isChanged = false
 
           this.$message({ message: this.$i18n.t('SW_USERS_UPDATED'), type: 'success' })
         }).catch(err => {
