@@ -15,6 +15,7 @@
   "SW_ADD_FACULTY": "Add {0}",
   "SW_ADD_GROUP": "Add group",
   "SW_ACCOUNT_ID": "LMS subaccount ID",
+  "SW_COOKIE_WARNING": "{0} needs cookies for security and other functionalities. Please enable third party cookies in your browser settings to make sure {0} works properly.",
   "SW_GET_DIRECTION": "Get directions",
   "SW_ADD_RULE": "Add rule",
   "SW_ADD_STAFF_TEXT": "Invite instructors by email (One address per line)",

@@ -6,7 +6,8 @@
 
     <!-- Main content -->
     <main :class="{ 'page-offset': pageOffset, 'nav-offset': navAvailable, 'page-lti': inLTI }">
-      <el-alert type="error" effect="dark" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE', [appName])" v-if="!serverOnline"/>
+      <el-alert type="error" class="no-border-radius text-center" effect="dark" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE', [appName])" v-if="!serverOnline"/>
+      <el-alert type="warning" class="no-border-radius text-center" effect="dark" show-icon :title="$t('SW_COOKIE_WARNING', [appName])" v-if="cookieWarning"/>
 
       <el-row class="container">
         <router-view :key="resetKey">
@@ -60,7 +61,8 @@ export default {
       resetKey: 1,
       disableWelcome: false,
       serverOnline: true,
-      appName: config.name
+      appName: config.name,
+      cookieWarning: config.cookieWarning && !navigator.cookieEnabled
     }
   },
 
