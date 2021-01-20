@@ -124,7 +124,7 @@ Vue.use(fullscreen)
 
 export default {
   name: 'ManageGroups',
-  props: ['url', 'courseId', 'assessment'],
+  props: ['url', 'courseId'],
   components: { Affix, GroupsItem, FullStudentList, draggable, CreateGroupItem },
 
   data () {
@@ -179,8 +179,7 @@ export default {
 
       const params = { filter: this.searchText }
 
-      // @TODO Comproved specific fix?
-      if (this.assessment) params.course = this.assessment.course._id
+      if (this.courseId) params.course = this.courseId
 
       this.$http.get(`${this.url}/users`, { params })
         .then(res => {
@@ -295,8 +294,7 @@ export default {
         return { groupName: student.groupName, groupId: student.groupId, email: student.email, userId: student._id }
       })
 
-      // @TODO: comproved specific fix
-      const url = this.assessment ? `assessments/${this.assessment._id}/sync-users` : `${this.url}/sync-users`
+      const url = `${this.url}/sync-users`
 
       this.$http.put(url, { participants })
         .then(() => {
