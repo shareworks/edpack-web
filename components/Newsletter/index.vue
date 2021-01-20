@@ -82,7 +82,7 @@ export default {
       if (!toRoles.length) return this.$message({ message: this.$i18n.t('SW_ROLES_REQUIRED'), type: 'error' })
       if (!organizations.length) return this.$message({ message: this.$i18n.t('SW_ORGANIZATIONS_REQUIRED'), type: 'error' })
 
-      this.$http.post('newsletter', { subject, message }, { params: { toSelfOnly, toRoles, organizations } })
+      this.$http.post('messages/newsletter', { subject, message, toSelfOnly, toRoles, organizations })
         .then(() => {
           this.$message({ message: this.$i18n.t('SW_EMAILS_SENT'), type: 'success' })
           this.form.message = ''
