@@ -1,10 +1,18 @@
 const checkValue = (element) => {
   // If both values filled - stop, no need to copy values
-  if (element.en && element.nl) { return null }
+  if (element.en && element.nl) {
+    return null
+  }
+
   // If both values empty - stop, no need to copy values
-  if (!element.en && !element.nl) { return null }
-  // One values is empty - copy it from another language
-  else if (element.en) { element.nl = element.en } else { element.en = element.nl }
+  if (!element.en && !element.nl) {
+    return null
+  } else if (element.en) {
+    // One values is empty - copy it from another language
+    element.nl = element.en
+  } else {
+    element.en = element.nl
+  }
 }
 
 const mergeEmptyLanguageFields = (form, props = []) => {
@@ -14,10 +22,8 @@ const mergeEmptyLanguageFields = (form, props = []) => {
       form[propertyName].forEach(element => {
         checkValue(element)
       })
-    }
-
-    // If element has .en property - check is another language filled
-    else if (form[propertyName].hasOwnProperty('en')) {
+    } else if (Object.prototype.hasOwnProperty.call(form[propertyName], 'en')) {
+      // If element has .en property - check is another language filled
       checkValue(form[propertyName])
     }
   })
