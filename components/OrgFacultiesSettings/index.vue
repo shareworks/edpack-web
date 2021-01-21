@@ -41,7 +41,7 @@
         </el-col>
 
         <!-- Canvas account ID part -->
-        <el-col :span="calcSpan" v-if="form.lmsApiIntegration && form.availableLms.includes('canvas')">
+        <el-col :span="calcSpan" v-if="form.lmsApiIntegration && form.lms === 'canvas'">
           <strong class="mb-10">
             {{ $t('SW_ACCOUNT_ID') }}
           </strong>
@@ -84,7 +84,7 @@ export default {
   computed: {
     calcSpan () {
       let span = 1
-      if (this.form.lmsApiIntegration && this.form.availableLms.includes('canvas')) span++
+      if (this.form.lmsApiIntegration && this.form === 'canvas') span++
       if (this.form.languages.en && this.form.languages.nl) span++
       return 24 / span
     }

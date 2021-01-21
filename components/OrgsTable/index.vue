@@ -95,18 +95,18 @@
       </el-table-column>
 
       <!-- LMS -->
-      <el-table-column property="lastConfiguredLms" label="LMS" min-width="70">
+      <el-table-column property="lms" label="LMS" min-width="70">
         <template slot-scope="props">
-          <span v-if="props.row.lastConfiguredLms" class="block text-ellipsis capitalize">{{ props.row.lastConfiguredLms }}</span>
+          <span v-if="props.row.lms !== 'none'" class="block text-ellipsis capitalize">{{ props.row.lms }}</span>
           <span v-else class="text-muted">{{ $t('SW_NONE') }}</span>
         </template>
       </el-table-column>
 
       <!-- LTI version -->
-      <el-table-column property="availableLms" :label="$t('SW_LTI_VERSION')" width="100">
+      <el-table-column property="ltiVersion" :label="$t('SW_LTI_VERSION')" width="100">
         <template slot-scope="props">
-          <span v-if="props.row.availableLms.length === 0" class="text-muted">{{ $t('SW_NONE') }}</span>
-          <span v-else-if="props.row.lastConfiguredLtiVersion === 'basic'" class="block text-ellipsis capitalize">1.1</span>
+          <span v-if="props.row.ltiVersion === 'none'" class="text-muted">{{ $t('SW_NONE') }}</span>
+          <span v-else-if="props.row.ltiVersion === 'basic'" class="block text-ellipsis capitalize">1.1</span>
           <span v-else class="block text-ellipsis capitalize">1.3</span>
         </template>
       </el-table-column>

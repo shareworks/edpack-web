@@ -20,8 +20,8 @@ export default {
     emailDomains: [],
     faculties: [],
     lastModifiedDate: '2018-09-19T16:37:42.407Z',
-    availableLms: ['canvas'],
-    lastConfiguredLms: 'canvas',
+    lms: 'canvas',
+    ltiVersion: 'basic',
     saml: { domains: [], entityIds: [] },
     name: { nl: 'Shareworks University', en: 'Shareworks University' },
     notificationEmail: 'info@shareworks.nl',
@@ -34,11 +34,7 @@ export default {
       faculty: { en: 'Faculty', nl: 'Faculteit' },
       faculties: { en: 'Faculties', nl: 'Faculteiten' }
     },
-    canvas: { apiUrl: '', id: '', secret: '' },
-    blackboard: { apiUrl: '', id: '', secret: '' },
-    moodle: { apiUrl: '', id: '', secret: '' },
-    brightspace: { apiUrl: '', id: '', secret: '' },
-    lti: { secret: '' },
+    lmsConfig: {},
     type: 'organization',
     _id: '59a6b2fc52e5312bef1bf510'
   }]

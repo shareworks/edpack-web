@@ -1,5 +1,8 @@
 export default function getLmsType (model) {
-  if (!model || !model.availableLms) return false
+  if (!model || (!model.lms && !model.availableLms)) return false
+  if (model.lms) return model.lms
+
+  // deprecated
   if (model.availableLms.includes('canvas')) return 'canvas'
   if (model.availableLms.includes('brightspace')) return 'brightspace'
   if (model.availableLms.includes('blackboard')) return 'blackboard'
