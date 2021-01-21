@@ -7,7 +7,7 @@
 
         <!-- Name -->
         <el-form-item prop="name" required class="contact-form-item">
-          <el-input ref="nameInput" :placeholder="$t('SW_YOUR_NAME')" v-model="form.name" name="name">
+          <el-input ref="nameInput" :placeholder="$t('SW_YOUR_NAME')" v-model="form.name" :disabled="!!user" name="name">
             <template slot="prepend">
               <i class="icon-user"/>
             </template>
@@ -21,7 +21,7 @@
 
         <!-- Email -->
         <el-form-item prop="email" required class="contact-form-item">
-          <el-input type="email" :placeholder="$tc('SW_EMAIL', 1)" v-model="form.email" name="email">
+          <el-input type="email" :placeholder="$t('SW_SCHOOL_EMAIL')" v-model="form.email" :disabled="!!user" name="email">
             <template slot="prepend">
               <i class="icon-email"/>
             </template>
@@ -31,6 +31,11 @@
         <!-- Message -->
         <el-form-item prop="message" required class="contact-form-item">
           <el-input name="message" :placeholder="$t('SW_MESSAGE')" type="textarea" v-model="form.message" :autosize="{ minRows: 3, maxRows: 6}"/>
+        </el-form-item>
+
+        <!-- URL -->
+        <el-form-item prop="url" required class="hidden">
+          <el-input name="url" type="text" placeholder="Url" v-model="form.url"/>
         </el-form-item>
 
         <!-- Send or cancel -->
@@ -74,7 +79,12 @@ export default {
       centerMap: config.map.centerMap,
       infoWinOpen: true,
       user: this.$store.state.user,
-      form: { email: '', name: '', message: '' },
+      form: {
+        email: this.$store.state.user?.email || '',
+        name: this.$store.state.user?.name || '',
+        message: '',
+        url: window.location.href
+      },
       infoOptions: { pixelOffset: { width: 0, height: -38 } },
       business: config.business
     }
