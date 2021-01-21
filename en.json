@@ -364,6 +364,7 @@
   "SW_ONLY_SYNC_IN_LMS": "Please use the sync functionality within your online learning environment.",
   "SW_OPEN_NEW_TAB_COOKIE": "Please go to the new tab that was just created and check if the cookie works now.",
   "SW_OR": "or",
+  "SW_SCHOOL_EMAIL": "School email address",
   "SW_ORGANIZATION": "School | Schools",
   "SW_ORGANIZATION_NOT_FOUND": "School not found",
   "SW_ORGANIZATION_NOT_FOUND_HELP": "The LTI key does not match with any school in our database.",
