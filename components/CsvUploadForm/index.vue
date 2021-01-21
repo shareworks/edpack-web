@@ -23,7 +23,7 @@
         <p class="mb-10" v-if="!existing">{{ $t('SW_REUSE_EVAL_INFO', [users.length, groups.length]) }}</p>
         <p class="mb-10" v-else>{{ $t('SW_CSV_CHANGES_TEXT', [existing.groups, existing.students, groups.length, users.length]) }}</p>
       </div>
-      <p class="mb-10" v-else-if="isComproved && assessors">{{ $t('SW_REUSE_EVAL_INFO_ASSESSORS', [users.length]) }}</p>
+      <p class="mb-10" v-else-if="useParticipantsCsv && assessors">{{ $t('SW_REUSE_EVAL_INFO_ASSESSORS', [users.length]) }}</p>
       <p class="mb-10" v-else>{{ $t('SW_REUSE_EVAL_USER', [users.length]) }}</p>
 
       <!-- See student list -->
@@ -35,9 +35,9 @@
       <!-- Remove csv -->
       <el-button type="success" size="small" plain @click="handleRemoveCsv">
         <i class="icon-cancel"></i>
-        <span v-if="!isComproved">{{ $t('SW_UPLOAD_NEW_CSV') }}</span>
+        <span v-if="!useParticipantsCsv">{{ $t('SW_UPLOAD_NEW_CSV') }}</span>
         <!-- Comproved specific code -->
-        <span v-else-if="isComproved && isGroups">{{ $t('SW_UPLOAD_NEW_CSV') }}</span>
+        <span v-else-if="useParticipantsCsv && isGroups">{{ $t('SW_UPLOAD_NEW_CSV') }}</span>
         <span v-else>{{ $t('SW_UPLOAD_NEW_CSV_PARTICIPANTS') }}</span>
       </el-button>
     </el-alert>
@@ -90,7 +90,7 @@ export default {
 
   data () {
     return {
-      isComproved: config.name === 'Comproved',
+      useParticipantsCsv: config.useParticipantsCsv,
       user: this.$store.state.user,
       course: this.$store.state.course || null,
       school: this.$store.state.school,
@@ -179,7 +179,7 @@ export default {
             }
 
             // check is user unique
-            if (this.isComproved) {
+            if (this.useParticipantsCsv) {
               const isUnique = filteredResults.filter(u => u.email === user.email)
 
               if (isUnique.length > 1) {
