@@ -4,12 +4,7 @@
       <!-- completionStats -->
       <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}">
         <el-card v-for="(stat, index) in statisticCompletionValues" :key="`statisticCompletionValues${index}`" class="stat-counter">
-          <vc-donut background="white" ba foreground="lightgrey" :size="80" unit="%" :thickness="30" :sections="[{ color: '#67c23a', value: stat.value }]">
-            <div class="font-26">
-              <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'/>%</strong>
-            </div>
-            <div class="font-14">{{ stat.name }}</div>
-          </vc-donut>
+          <AnimatedCircleBar :realPercentage="stat.value" :width="200" :strokeWidth="30" :fullText="stat.name"/>
         </el-card>
       </masonry>
 
@@ -45,11 +40,8 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import countTo from 'vue-count-to'
-import Donut from 'vue-css-donut-chart'
-
-Vue.use(Donut)
+import AnimatedCircleBar from '@/edpack-web/components/AnimatedCircleBar'
 
 export default {
   name: 'Statistics',
@@ -57,7 +49,7 @@ export default {
     faculty: { default: false },
     stats: Array
   },
-  components: { countTo },
+  components: { countTo, AnimatedCircleBar },
 
   data () {
     return {

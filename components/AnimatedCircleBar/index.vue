@@ -1,14 +1,19 @@
 <template>
   <div>
-    <el-progress type="circle" :width="70" :stroke-width="10" :color="customColors" :percentage="percentage"/>
-    <div>{{ $t('SW_' + levelName.toUpperCase()) }} &centerdot; {{resultPerQuestion[index][levelIndex + 1]}}</div>
+    <el-progress type="circle" :width="width ? width : 70" :stroke-width="strokeWidth ? strokeWidth : 10" :color="customColors" :percentage="percentage"/>
+    <div v-if="fullText">{{ fullText }}</div>
+
+    <div>
+      <span v-if="levelName">{{ $t('SW_' + levelName.toUpperCase()) }} &centerdot; </span>
+      <span v-if="resultPerQuestion">{{resultPerQuestion[index][levelIndex + 1]}}</span>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'AnimatedCircleBar',
-  props: ['levelName', 'levelIndex', 'resultPerQuestion', 'realPercentage', 'index'],
+  props: ['levelName', 'levelIndex', 'resultPerQuestion', 'realPercentage', 'index', 'width', 'strokeWidth', 'fullText'],
   data () {
     return {
       percentage: 0,
