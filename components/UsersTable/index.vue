@@ -127,19 +127,8 @@
       <!-- PayAsYouGo -->
       <el-table-column property="credits" v-if="school.creditsEnabled" :label="$t('SW_LIMIT_ASSESSMENT_CREATION')" width="120">
         <template slot-scope="props">
-          <!-- Open PayAsYouGo dialog -->
-          <el-button :type="isOverdue(props.row) || !props.row.credits || props.row.credits.used >= props.row.credits.limit ? 'danger' : 'success'" size="mini" @click="openPayAsYouGoDialog(props.row)" v-if="props.row.role === 'staff'">
-            <span v-if="props.row.credits.isNew">
-              <i class="icon-done_all"/>
-              <strong>0</strong>
-            </span>
-            <span v-else>
-              <i class="icon-done_all"/>
-              <strong v-if="isOverdue(props.row)">0</strong>
-              <strong v-else>{{ props.row.credits && props.row.credits.used > props.row.credits.limit ? 0 : props.row.credits.limit - props.row.credits.used }}</strong>
-            </span>
-          </el-button>
-          <span v-else class="text-muted">-</span>
+          <!-- PayAsYouGoColumn -->
+          <pay-as-you-go-column :scope="props.row"/>
         </template>
       </el-table-column>
 
@@ -186,18 +175,18 @@ import moment from 'moment'
 import config from 'config'
 import debounce from 'lodash/debounce'
 import dateSorter from '../../utils/date-sorter'
-import sortCaseInsensitive from '../../utils/sort-case-insensitive'
 import ExpandUser from '../../components/ExpandUser'
+import UsersMerge from '../../components/UsersMerge'
 import EmailUsers from '../../components/EmailUsers'
 import UsersCreate from '../../components/UsersCreate'
 import UserAccountForm from '../../components/UserAccountForm'
-import UsersMerge from '../../components/UsersMerge'
+import PayAsYouGoColumn from '../../components/PayAsYouGoColumn'
 import PayAsYouGoDialog from '../../components/PayAsYouGoDialog'
+import sortCaseInsensitive from '../../utils/sort-case-insensitive'
 
 export default {
   name: 'UsersTable',
-  props: [],
-  components: { UserAccountForm, UsersCreate, EmailUsers, ExpandUser, UsersMerge, PayAsYouGoDialog },
+  components: { UserAccountForm, UsersCreate, EmailUsers, ExpandUser, UsersMerge, PayAsYouGoDialog, PayAsYouGoColumn },
 
   data () {
     const roles = config.usersTableRoles
@@ -345,13 +334,6 @@ export default {
         this.searchText = ''
         this.getUsers(true)
       }
-    },
-    openPayAsYouGoDialog (student) {
-      this.selectedUser = student
-      this.payAsYouGoDialog = true
-    },
-    isOverdue (user) {
-      return user.credits && user.credits.exp && (moment(user.credits.exp) < moment(new Date()))
     },
     updateUser (userId, user) {
       this.tableData = this.tableData.filter(u => u._id !== userId)
