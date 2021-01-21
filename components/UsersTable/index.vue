@@ -65,7 +65,7 @@
       </el-row>
     </affix>
 
-    <div class="bar-placeholder"></div>
+    <div class="bar-placeholder"/>
 
     <!-- Users table -->
     <el-table v-show="tableData.length" :data="tableData" row-key="_id" ref="usersTable" @sort-change="sortChange" class="mt-20"
@@ -130,11 +130,11 @@
           <!-- Open PayAsYouGo dialog -->
           <el-button :type="isOverdue(props.row) || !props.row.credits || props.row.credits.used >= props.row.credits.limit ? 'danger' : 'success'" size="mini" @click="openPayAsYouGoDialog(props.row)" v-if="props.row.role === 'staff'">
             <span v-if="props.row.credits.isNew">
-              <i class="icon-done_all"></i>
+              <i class="icon-done_all"/>
               <strong>0</strong>
             </span>
             <span v-else>
-              <i class="icon-done_all"></i>
+              <i class="icon-done_all"/>
               <strong v-if="isOverdue(props.row)">0</strong>
               <strong v-else>{{ props.row.credits && props.row.credits.used > props.row.credits.limit ? 0 : props.row.credits.limit - props.row.credits.used }}</strong>
             </span>
@@ -170,12 +170,12 @@
 
     <!-- Merge dialog -->
     <el-dialog :title="$t('SW_MERGE_USERS')" append-to-body :visible.sync="dialogMerge">
-      <users-merge v-if="dialogMerge" :selectedUsers="multipleSelection" :closeDialog="closeDialog"></users-merge>
+      <users-merge v-if="dialogMerge" :selectedUsers="multipleSelection" :closeDialog="closeDialog"/>
     </el-dialog>
 
     <!-- Pay as you go dialog -->
     <el-dialog :visible.sync="payAsYouGoDialog" destroy-on-close>
-      <pay-as-you-go-dialog :user="selectedUser" :closeDialog="closeDialog"></pay-as-you-go-dialog>
+      <pay-as-you-go-dialog :user="selectedUser" :closeDialog="closeDialog"/>
     </el-dialog>
   </div>
 </template>
