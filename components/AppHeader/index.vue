@@ -128,7 +128,7 @@ export default {
     user () { return this.$store.state.user },
     userOrgs () {
       const orgs = this.$store.state.user.organizations
-      return orgs.sort((a, b) => { return a.name.en.toLowerCase() > b.name.en.toLowerCase() })
+      return orgs.sort((a, b) => { return a.name.en.toLowerCase().localeCompare(b.name.en.toLowerCase()) })
     },
     isAdmin () { return this.$store.state.user.systemAdmin || this.$store.state.user.role === 'admin' }
   },
