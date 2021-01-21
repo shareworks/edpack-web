@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-progress v-if="isTextVisible" :text-inside="true" :stroke-width="20" :percentage="percentage" status="success"/>
+    <el-progress v-if="isTextVisible" :class="classes" :text-inside="true" :stroke-width="strokeWidth ? strokeWidth : 20" :percentage="percentage" status="success"/>
     <span v-else class="text-muted">{{ $t('SW_NO_DATA') }}</span>
   </div>
 </template>
@@ -8,7 +8,7 @@
 <script>
 export default {
   name: 'AnimatedProgressBar',
-  props: ['realPercentage', 'isTextVisible'],
+  props: ['realPercentage', 'isTextVisible', 'strokeWidth', 'classes'],
 
   data () {
     return {
