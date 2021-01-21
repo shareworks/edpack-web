@@ -129,11 +129,11 @@
 </template>
 
 <script>
-import isEqual from 'lodash/isEqual'
 import { loadLanguages } from '../../utils/load-languages'
 import ThumbnailEdit from '../../components/ThumbnailEdit'
 import NotificationsSwitchers from '../NotificationsSwitchers'
 import config from 'config'
+import isEqual from 'lodash/isEqual'
 
 export default {
   name: 'UserAccountForm',
