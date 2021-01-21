@@ -353,6 +353,7 @@
   "SW_NO_SCHOOLS_FOUND": "No schools found.",
   "SW_NO_STAFF_FOUND": "No instructors found.",
   "SW_NO_STUDENTS": "No students",
+  "SW_BRUTE_FORCE": "Too many failed attempts. Please try again in 10 minutes.",
   "SW_NO_STUDENTS_FOUND": "No students found.",
   "SW_NO_STUDENTS_TEXT_LMS": "Please check if you correctly added groups in course and try again by clicking 'More' > 'Sync'.",
   "SW_NO_TOKEN": "No token found in the request",
