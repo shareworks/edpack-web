@@ -84,7 +84,7 @@ export default {
   computed: {
     calcSpan () {
       let span = 1
-      if (this.form.lmsApiIntegration && this.form === 'canvas') span++
+      if (this.form.lmsApiIntegration && this.form.lms === 'canvas') span++
       if (this.form.languages.en && this.form.languages.nl) span++
       return 24 / span
     }
