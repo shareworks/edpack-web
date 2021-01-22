@@ -24,7 +24,7 @@
 
               <el-col :xs="4" :sm="8" :span="4" class="to-right">
                 <!-- Search input -->
-                <el-input prefix-icon="icon-search" class="hide" :placeholder="$t('SW_SEARCH_STUDENTS')" size="medium" v-model="searchText" clearable/>
+                <el-input prefix-icon="icon-search" :placeholder="$t('SW_SEARCH_STUDENTS')" size="medium" v-model="searchText" clearable/>
 
                 <!-- Fullscreen -->
                 <el-button type="text" class="pull-right hidden-xs" @click="toggleFullscreen">
@@ -51,20 +51,20 @@
         <el-row class="groups mt-20" :class="{ 'hide-shadow': fullscreen }" justify="center" :gutter="30">
           <el-col :xs="10" :sm="8" :md="6" class="unsorted-row">
             <!-- Full student list -->
-            <full-student-list :key="fullKey" :setStudentsWithoutGroup="setStudentsWithoutGroup"
-                               :studentsWithoutGroup="studentsWithoutGroup" :setDragging="setDragging"
-                               :updateGroupCount="updateGroupCount" :allStudents="allStudents" :dragging="dragging"/>
+            <full-student-list :key="fullStudentsKey" :setStudentsWithoutGroup="studentsData_SetStudentsWithoutGroup"
+                               :studentsWithoutGroup="studentsData_GetStudentsWithoutGroup()" :setDragging="setDragging"
+                               :updateGroupCount="studentsData_UpdateGroupCount" :allStudents="studentsData_GetFullList()" :dragging="dragging"/>
           </el-col>
 
           <el-col :xs="14" :sm="16" :md="18" class="groups-row">
             <section class="groups-wrapper">
               <h3 class="collapse-header">
-                <p class="question-sentence groups-header"><strong>{{ $tc('SW_GROUPS', 2) }}</strong> <el-tag class="ml-5" size="mini">{{ studentsByGroup.length }}</el-tag></p>
+                <p class="question-sentence groups-header"><strong>{{ $tc('SW_GROUPS', 2) }}</strong> <el-tag class="ml-5" size="mini">{{ studentsData_GetGroupsList().length }}</el-tag></p>
               </h3>
 
               <!-- Students By Group -->
-              <el-collapse class="group-collapse students-list-padding" v-if="studentsByGroup.length">
-                <el-collapse-item v-for="(group, index) in studentsByGroup" :key="index">
+              <el-collapse class="group-collapse students-list-padding" v-if="studentsData_GetGroupsList().length">
+                <el-collapse-item v-for="(group, index) in studentsData_GetGroupsList()" :key="index">
 
                   <!-- Question title and number -->
                   <template slot="title">
@@ -73,7 +73,7 @@
                       <div class="question-sentence capitalize bold">{{ group.temporaryGroupName }}</div>
 
                       <!-- Remove group -->
-                      <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @onConfirm="removeGroup(group)"
+                      <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @onConfirm="studentsData_RemoveGroup(group)"
                                      class="delete-group-button" hideIcon :title="$t('SW_DELETE_GROUP')">
                         <el-button slot="reference" plain size="small" @click.stop class="button-square mr-5 delete-group-button hidden-xs" type="danger">
                           <i class="icon-delete"/>
@@ -81,7 +81,7 @@
                       </el-popconfirm>
 
                       <!-- Rename group -->
-                      <el-popover @after-leave="renameStudentsGroup(group.name, group.temporaryGroupName)" trigger="click" class="edit-group-button" :close-delay="0" :title="$tc('SW_CHANGE_GROUP_NAME')" placement="top-end">
+                      <el-popover @after-leave="studentsData_RenameStudentsGroup(group.name, group.temporaryGroupName)" trigger="click" class="edit-group-button" :close-delay="0" :title="$tc('SW_CHANGE_GROUP_NAME')" placement="top-end">
                         <el-input v-model="group.temporaryGroupName" :placeholder="$t('SW_GROUP_NAME')" :label="$t('SW_GROUP_NAME')"/>
 
                         <el-button slot="reference" plain size="small" @click.stop class="button-square mr-10 delete-group-button hidden-xs">
@@ -94,7 +94,7 @@
                   </template>
 
                   <!-- Draggable student group list -->
-                  <groups-item :setDragging="setDragging" @updateGroupCount="updateGroupCount" :group="{name: group.temporaryGroupName, _id: group._id}" :students="group.students" :class="{'can-drag-in': dragging}"/>
+                  <groups-item :setDragging="setDragging" @studentsData_UpdateGroupCount="studentsData_UpdateGroupCount" :group="{name: group.temporaryGroupName, _id: group._id}" :students="group.students" :class="{'can-drag-in': dragging}"/>
                 </el-collapse-item>
               </el-collapse>
             </section>
@@ -106,19 +106,20 @@
 
     <!-- Add group dialog -->
     <el-dialog :title="$t('SW_ADD_GROUP')" append-to-body :visible.sync="addGroupDialog">
-        <create-group-item :studentsByGroup="studentsByGroup" :closeCreateGroupDialog="closeCreateGroupDialog"/>
+        <create-group-item :studentsByGroup="studentsData_GetGroupsList()" :closeCreateGroupDialog="closeCreateGroupDialog"/>
       </el-dialog>
   </fullscreen>
 </template>
 
 <script>
+import Vue from 'vue'
 import Affix from '../Affix'
 import draggable from 'vuedraggable'
 import GroupsItem from '../GroupsItem'
+import fullscreen from 'vue-fullscreen'
 import FullStudentList from '../FullStudentList'
 import CreateGroupItem from '../CreateGroupItem'
-import fullscreen from 'vue-fullscreen'
-import Vue from 'vue'
+import sortStudentsByGroup from '@/edpack-web/utils/sort-students-by-group'
 
 Vue.use(fullscreen)
 
@@ -135,13 +136,12 @@ export default {
       isChanged: false,
       status: false,
       removedStudents: [],
-      studentsByGroup: [],
-      allStudents: [],
-      studentsWithoutGroup: [],
       dragging: false,
       draggingMainList: false,
       searchText: this.$route.query.query || '',
-      fullKey: 0
+      fullStudentsKey: 0,
+      // studentsData: never try to access _inner_values, use studentsData functions
+      studentsData: { _groupsList: [], _fullStudentsList: [], _studentsWithoutGroup: [] }
     }
   },
 
@@ -154,38 +154,101 @@ export default {
       handler () {
         this.$store.dispatch('setUnsavedChanges', this.isChanged)
       }
-    }
+    },
+    // searchText: debounce(function () { this.doSearch() }, 400)
   },
 
   methods: {
-    toggleFullscreen () { this.$refs.fullscreenManageGroups.toggle() },
-    fullscreenChange (fullscreen) { this.fullscreen = fullscreen },
-    setStudentsWithoutGroup (value) { this.studentsWithoutGroup = value },
-    closeCreateGroupDialog () { this.addGroupDialog = false },
-    renameStudentsGroup (oldName, newName) {
-      if (oldName === newName) return
-      const groupIndex = this.studentsByGroup.findIndex(group => group.temporaryGroupName === newName)
+    // -----------------------
+    // students Data Functions
+    // -----------------------
+    studentsData_SetFullList (studentsList) { this.studentsData._fullStudentsList = studentsList },
+    studentsData_GetFullList () { return this.studentsData._fullStudentsList },
 
-      this.studentsByGroup[groupIndex].students.forEach(student => {
+    studentsData_SetStudentsWithoutGroup (students) { this.studentsData._studentsWithoutGroup = students },
+    studentsData_GetStudentsWithoutGroup () { return this.studentsData._studentsWithoutGroup },
+
+    studentsData_SetGroupsList (groupsList) { this.studentsData._groupsList = groupsList },
+    studentsData_GetGroupsList () { return this.studentsData._groupsList },
+
+    // studentToRemove should has { groupName: 'removing from group name', _id: 'user id' }
+    studentsData_RemoveStudent (studentToRemove) {
+      // run over all groups
+      this.studentsData_GetGroupsList().map(group => {
+        // not target group - return group without changes
+        if (group.groupName !== studentToRemove.groupName) return group
+
+        // create new group with filtered students
+        const filteredGroup = group.filter(student => { return student._id !== studentToRemove._id })
+
+        // add name to the group
+        filteredGroup.groupName = group.groupName
+        return filteredGroup
+      })
+    },
+    // group should has { name: 'removing group name' }
+    studentsData_RemoveGroup (group) {
+      const updatedGroupsList = this.studentsData_GetGroupsList().filter(g => g.name !== group.name)
+      this.studentsData_SetGroupsList(updatedGroupsList)
+      this.studentsData_UpdateGroupCount(true)
+    },
+    studentsData_RenameStudentsGroup (oldName, newName) {
+      if (oldName === newName) return
+
+      const groups = this.studentsData_GetGroupsList()
+      const groupIndex = groups.findIndex(group => group.temporaryGroupName === newName)
+
+      groups[groupIndex].students.forEach(student => {
         student.groupName = newName
         student.group.name = newName
       })
 
       this.isChanged = true
     },
+
+    studentsDataUpdateStudent () {
+      /* find and update student values */
+    },
+
+    studentsData_GetFilteredList (filter) {
+      /* filter all students and return list */
+      return this.studentsData_GetFullList().filter(participant => {
+        const trimmedName = participant.name.trim()
+        return trimmedName.includes(filter.trim())
+      })
+    },
+
+    studentsData_UpdateGroupCount (setIsChangedToTrue) {
+      const studentsGroupAmount = {}
+      const students = this.studentsData_GetGroupsList().map(group => { return group.students }).flat(1)
+      this.fullStudentsKey += 1
+
+      // count each student group amount
+      students.forEach(student => {
+        if (studentsGroupAmount[student._id]) { studentsGroupAmount[student._id]++ } else { studentsGroupAmount[student._id] = 1 }
+      })
+
+      const studentsList = this.studentsData_GetFullList()
+
+      studentsList.forEach(student => {
+        student.groupCount = studentsGroupAmount[student._id] || 0
+      })
+
+      if (setIsChangedToTrue) this.isChanged = true
+    },
+    // -----------------------
     getStudents () {
       if (this.status === 'loading') return
       this.status = 'loading'
 
       const params = { filter: this.searchText }
-
       if (this.courseId) params.course = this.courseId
 
       this.$http.get(`${this.url}/users`, { params })
         .then(res => {
-          this.allStudents = res.data.list
-          this.sortStudentsByGroup(res.data.list)
-          this.updateGroupCount()
+          this.studentsData_SetFullList(res.data.list)
+          this.studentsData_SetGroupsList(sortStudentsByGroup(res.data.list))
+          this.studentsData_UpdateGroupCount()
           this.status = res.data.total ? (res.data.done ? 'done' : 'incomplete') : (this.searchText ? 'noResults' : 'none')
         })
         .catch(err => {
@@ -194,37 +257,7 @@ export default {
           this.$message({ message: this.$i18n.t('SW_GENERIC_ERROR'), type: 'error' })
         })
     },
-    updateGroupCount (setIsChangedToTrue) {
-      const studentsGroupAmount = {}
-      const students = this.studentsByGroup.map(group => { return group.students }).flat(1)
-      this.fullKey += 1
 
-      // count each student group amount
-      students.forEach(student => {
-        if (studentsGroupAmount[student._id]) { studentsGroupAmount[student._id]++ } else { studentsGroupAmount[student._id] = 1 }
-      })
-
-      this.allStudents.forEach(student => {
-        student.groupCount = studentsGroupAmount[student._id] || 0
-      })
-
-      if (setIsChangedToTrue) this.isChanged = true
-    },
-    sortStudentsByGroup (unsortedStudents) {
-      const groups = []
-
-      unsortedStudents.forEach(user => {
-        if (!user.groupName) return
-
-        const groupIndex = groups.findIndex(group => group.name === user.groupName)
-        if (groupIndex > -1) return groups[groupIndex].students.push(user)
-
-        // Create & add group with student
-        groups.push({ name: user.groupName, _id: user.group._id, temporaryGroupName: user.groupName, students: [user] })
-      })
-
-      this.studentsByGroup = groups.sort(this.groupNameSort)
-    },
     confirmRemoveUser (action) {
       if (this.muteRemoveWarning) return this.removeUser(action)
 
@@ -234,60 +267,36 @@ export default {
       }).then(() => { this.removeUser(action) })
         .catch(() => { this.returnUserToGroup(action) })
     },
+    removeUser (action) {
+      // don't show remove warning anymore
+      this.muteRemoveWarning = true
+      this.studentsData_RemoveStudent(action.added.element)
+      this.studentsData_UpdateGroupCount(true)
+      this.$message({ message: this.$i18n.t('SW_USER_DELETED'), type: 'success' })
+    },
     returnUserToGroup (action) {
-      this.studentsByGroup = this.studentsByGroup.map(group => {
+      this.studentsData_GetGroupsList().map(group => {
         if (group.name === action.added.element.groupName) {
           group.students.push(action.added.element)
         }
         return group
       })
     },
-    removeUser (action) {
-      this.muteRemoveWarning = true
 
-      this.studentsByGroup = this.studentsByGroup.map(group => {
-        if (group.groupName !== action.added.element.groupName) {
-          return group
-        }
-
-        const filteredGroup = group.filter(student => {
-          return student._id !== action.added.element._id
-        })
-
-        filteredGroup.groupName = group.groupName
-        return filteredGroup
-      })
-
-      this.updateGroupCount(true)
-      this.$message({ message: this.$i18n.t('SW_USER_DELETED'), type: 'success' })
-    },
     confirmSubmitChanges () {
       this.$confirm(this.$i18n.t('SW_MANAGE_STAFF_EFFECT'), this.$i18n.t('SW_SUBMIT_MANAGE_GROUP_TITLE'), {
         confirmButtonText: this.$i18n.t('SW_SAVE_CHANGES'),
         cancelButtonText: this.$i18n.t('SW_CANCEL')
       }).then(() => { this.submitChanges() })
     },
-    removeGroup (group) {
-      this.studentsByGroup = this.studentsByGroup.filter(g => g.name !== group.name)
-      this.updateGroupCount(true)
-    },
-    setDragging (value, draggingMainList) {
-      this.dragging = value
-      this.draggingMainList = draggingMainList
-    },
-    groupNameSort (a, b) {
-      if (a.name < b.name) { return -1 }
-      if (a.name > b.name) { return 1 }
-      return 0
-    },
     submitChanges () {
       // get students from groups
-      const students = this.studentsByGroup.map(group => {
+      const students = this.studentsData_GetGroupsList().map(group => {
         return group.students.map(student => { return { ...student, groupName: group.temporaryGroupName, groupId: group._id } })
       }).flat(1)
 
-      // newly moved studentsWithoutGroup should be posted to
-      const allAvailableStudents = [...students, ...this.studentsWithoutGroup]
+      // newly moved students Without Group should be posted to
+      const allAvailableStudents = [...students, ...this.studentsData_GetStudentsWithoutGroup()]
 
       // prepare participants for request
       const participants = allAvailableStudents.map(student => {
@@ -298,9 +307,6 @@ export default {
 
       this.$http.put(url, { participants })
         .then(() => {
-          this.studentsWithoutGroup = []
-          this.studentsByGroup = []
-          this.allStudents = []
           this.getStudents()
           this.isChanged = false
 
@@ -310,7 +316,15 @@ export default {
           this.status = 'error'
           this.$message({ message: this.$i18n.t('SW_GENERIC_ERROR'), type: 'error' })
         })
-    }
+    },
+
+    setDragging (value, draggingMainList) {
+      this.dragging = value
+      this.draggingMainList = draggingMainList
+    },
+    toggleFullscreen () { this.$refs.fullscreenManageGroups.toggle() },
+    fullscreenChange (fullscreen) { this.fullscreen = fullscreen },
+    closeCreateGroupDialog () { this.addGroupDialog = false }
   }
 }
 </script>
