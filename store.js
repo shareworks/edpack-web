@@ -25,6 +25,8 @@ const state = {
   inLTI: window.self !== window.top,
   slug: null,
   isAdmin: false,
+  isManager: false,
+  manageFaculties: [],
   languages: config.languages,
   lang: config.defaultLanguage,
   unsavedChanges: false
@@ -55,6 +57,8 @@ const mutations = {
     state.slug = user.organization.slug
     state.isAdmin = user.role === 'admin' || user.systemAdmin
     state.languages = getLanguages(user.organization.languages)
+    state.isManager = user.faculties.length && user.faculties.filter(fac => fac.role === 'manager')
+    state.manageFaculties = user.faculties.length ? user.faculties.filter(fac => fac.role === 'manager') : []
     state.lang = user.language
   },
   [SET_UNSAVED_CHANGES] (state, data) {
