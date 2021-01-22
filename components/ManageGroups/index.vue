@@ -51,7 +51,7 @@
         <el-row class="groups mt-20" :class="{ 'hide-shadow': fullscreen }" justify="center" :gutter="30">
           <el-col :xs="10" :sm="8" :md="6" class="unsorted-row">
             <!-- Full student list -->
-            <full-student-list :key="fullStudentsKey" :setStudentsWithoutGroup="studentsData_SetStudentsWithoutGroup" :searchText="searchText"
+            <full-student-list :key="fullStudentsKey" :setStudentsWithoutGroup="studentsData_SetStudentsWithoutGroup" :searchText="searchText.trim()"
                                :studentsWithoutGroup="studentsData_GetStudentsWithoutGroup()" :setDragging="setDragging"
                                :updateGroupCount="studentsData_UpdateGroupCount" :allStudents="studentsData_GetFullList()" :dragging="dragging"/>
           </el-col>
@@ -75,8 +75,7 @@
                       <div class="group-item-controls">
                         <div class="top-minus-3">
                           <!-- Remove group -->
-                          <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @onConfirm="studentsData_RemoveGroup(group)"
-                                         hideIcon :title="$t('SW_DELETE_GROUP')">
+                          <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @onConfirm="studentsData_RemoveGroup(group)" hideIcon :title="$t('SW_DELETE_GROUP')">
                             <el-button slot="reference" plain size="small" @click.stop class="button-square mr-5 hidden-xs" type="danger">
                               <i class="icon-delete"/>
                             </el-button>
@@ -98,7 +97,7 @@
                   </template>
 
                   <!-- Draggable student group list -->
-                  <groups-item :setDragging="setDragging" @studentsData_UpdateGroupCount="studentsData_UpdateGroupCount" :group="{name: group.temporaryGroupName, _id: group._id}" :students="group.students" :class="{'can-drag-in': dragging}"/>
+                  <groups-item :setDragging="setDragging" :searchText="searchText.trim()" @updateGroupCount="studentsData_UpdateGroupCount" :group="{name: group.temporaryGroupName, _id: group._id}" :students="group.students" :class="{'can-drag-in': dragging}"/>
                 </el-collapse-item>
               </el-collapse>
             </section>
@@ -106,6 +105,7 @@
         </el-row>
       </div>
 
+      <!-- Table status -->
       <table-status :status="status" :noneText="$t('SW_NO_STUDENTS_FOUND')"/>
 
     <!-- Add group dialog -->
@@ -151,10 +151,6 @@ export default {
 
   mounted () {
     this.getStudents()
-  },
-
-  updated () {
-    console.log('ManageGroups updated')
   },
 
   watch: {
@@ -230,10 +226,7 @@ export default {
       if (this.status === 'loading') return
       this.status = 'loading'
 
-      const params = { filter: this.searchText }
-      if (this.courseId) params.course = this.courseId
-
-      this.$http.get(`${this.url}/users`, { params })
+      this.$http.get(`${this.url}/users`, { params: { course: this.courseId } })
         .then(res => {
           this.studentsData_SetFullList(res.data.list)
           this.studentsData_SetGroupsList(sortStudentsByGroup(res.data.list))

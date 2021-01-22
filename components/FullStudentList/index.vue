@@ -17,12 +17,12 @@
     <!-- Draggable students list -->
     <groups-item @updateGroupCount="updateGroupCount" class="students-list-padding"  :setDragging="setDragging"
                  :class="{'can-drag-in': dragging && noGroup}" :mode="noGroup ? 'without' : 'all'"
-                 :students="noGroup ? studentsWithoutGroup : studentsSorted"/>
+                 :students="noGroup ? studentsWithoutGroup : studentsSorted" :searchText="searchText"/>
   </section>
 </template>
 <script>
-import GroupsItem from '../GroupsItem'
 import debounce from 'lodash/debounce'
+import GroupsItem from '../GroupsItem'
 
 export default {
   name: 'FullStudentList',
@@ -39,25 +39,15 @@ export default {
     allStudents: {
       immediate: true,
       handler: debounce(function () { this.sortStudents() }, 400)
-    },
-    searchText: {
-      handler: debounce(function () { this.sortStudents() }, 400)
     }
-  },
-
-  updated () {
-    console.log('FullStudentList updated')
   },
 
   methods: {
     sortStudents () {
       const studentsSorted = []
       const studentsWithoutGroup = []
-      const trimmedSearch = this.searchText.trim()
 
       this.allStudents.forEach(student => {
-        if (trimmedSearch && !student.name.includes(trimmedSearch)) return
-
         const studentAlreadyAdded = studentsSorted.find(stud => stud._id === student._id)
         // Prevent adding same student to the list
         if (studentAlreadyAdded) return

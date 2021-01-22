@@ -5,7 +5,7 @@
                :group="mode === 'all' ? {name: 'students', pull: 'clone', put: false} : {name: 'students', pull: true, put: true }">
 
       <!-- Student card -->
-      <el-card v-for="(student, index) in students" class="student-card-item" :key="student._id + '_' + index">
+      <el-card v-for="(student, index) in students" v-show="!searchText || student.name.includes(searchText)" class="student-card-item" :key="student._id + '_' + index">
         <!-- Drag handle -->
         <el-button class="button-drag" type="text">
           <i class="icon-drag_handle"/>
@@ -21,7 +21,7 @@
 
         <!-- Amount of groups -->
         <el-tag v-if="mode === 'all'" class="group-amount-tag text-muted hidden-xs" size="small" type="info">
-          {{ student.groupCount || 0 }} <i class="icon-peers"></i>
+          {{ student.groupCount || 0 }} <i class="icon-peers"/>
         </el-tag>
       </el-card>
     </draggable>
@@ -34,7 +34,7 @@ import draggable from 'vuedraggable'
 export default {
   name: 'GroupsItem',
   components: { draggable },
-  props: ['students', 'setDragging', 'mode', 'group'],
+  props: ['students', 'setDragging', 'mode', 'group', 'searchText'],
 
   methods: {
     changeStudentGroup (action) {
@@ -45,7 +45,8 @@ export default {
         return stud._id === action.added.element._id
       })
 
-      // TODO: ??? <=
+      // The draggable code will add students card anyway, even if the student already exist in such group
+      // If it's happens, after that we find any duplicate of that user and removing it.
       if (sameStudentsInGroup.length <= 1) return
 
       // Find first same student and remove it
