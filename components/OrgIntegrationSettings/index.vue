@@ -193,7 +193,7 @@
           <div v-if="lms.name !== 'moodle'">
             <!-- URL -->
             <el-form-item :label="lmsTitle + ' URL'" v-if="lms.apiUrl">
-              <el-input @change="processHttp" v-model="form[lms.name].apiUrl" type="url" :placeholder="lms.apiUrl.placeholder"/>
+              <el-input @change="processHttp" v-model="form.lmsConfig.apiUrl" type="url" :placeholder="lms.apiUrl.placeholder"/>
             </el-form-item>
             <!-- Callback url -->
             <el-form-item :label="lmsTitle + ' Callback URI'" v-if="!['blackboard', 'ilearn'].includes(lms.name)">
@@ -205,7 +205,7 @@
             </el-form-item>
             <!-- App ID -->
             <el-form-item label="Application ID" v-if="lms.appId">
-              <el-input v-model="form[lms.name].appId">
+              <el-input v-model="form.lmsConfig.appId">
                 <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
                   <el-button v-clipboard="form[lms.name].appId"><i class="icon-copy"/></el-button>
                 </el-tooltip>
@@ -213,11 +213,11 @@
             </el-form-item>
             <!-- API key -->
             <el-form-item :label="lms.apiId.label" v-if="lms.apiId">
-              <el-input v-model="form[lms.name].apiId" type="text" :placeholder="lms.apiId.placeholder"/>
+              <el-input v-model="form.lmsConfig.apiId" type="text" :placeholder="lms.apiId.placeholder"/>
             </el-form-item>
             <!-- API Secret -->
             <el-form-item :label="lms.apiSecret.label" v-if="lms.apiSecret">
-              <el-input v-model="form[lms.name].apiSecret" :type="hideCredentials ? 'password' : 'text'" :placeholder="lms.apiSecret.placeholder"/>
+              <el-input v-model="form.lmsConfig.apiSecret" :type="hideCredentials ? 'password' : 'text'" :placeholder="lms.apiSecret.placeholder"/>
             </el-form-item>
           </div>
           <!-- No API integration -->
@@ -272,13 +272,13 @@ export default {
           name: 'canvas',
           apiUrl: { placeholder: 'ex. https://your-school.instructure.com ...' },
           apiId: { label: 'Canvas API key', placeholder: 'Canvas Developer Key ID ...' },
-          apiSecret: { label: 'Canvas API secret', placeholder: 'Canvas Developer Key Secret ...' },
+          apiSecret: { label: 'Canvas API secret', placeholder: 'Canvas Developer Key Secret ...' }
         },
         {
           name: 'brightspace',
           apiUrl: { placeholder: 'ex. https://your-school.brightspace.com/d2l ...' },
-          apiId: { label: 'Brightspace API client ID', placeholder: 'Brightspace OAuth Client ID ...' },
-          apiSecret: { label: 'Brightspace API client secret' },
+          apiId: { label: 'Brightspace API ID', placeholder: 'Brightspace OAuth Client ID ...' },
+          apiSecret: { label: 'Brightspace API secret', placeholder: 'Brightspace OAuth Client secret ...' }
         },
         {
           name: 'blackboard',
@@ -304,7 +304,7 @@ export default {
 
   computed: {
     callbackUrl () {
-      return this.apiUrl + '/auth/' + this.lms + '/callback'
+      return this.apiUrl + '/auth/' + this.form.lms + '/callback'
     },
     lmsTitle () {
       return this.form.lms.charAt(0).toUpperCase() + this.form.lms.substring(1)
