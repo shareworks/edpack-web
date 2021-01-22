@@ -159,7 +159,7 @@ export default {
 
   methods: {
     // -----------------------
-    // students Data Functions
+    // Students Data Functions
     // -----------------------
     studentsData_GetFullList () { return this.studentsData._fullStudentsList },
     studentsData_SetFullList (studentsList) { this.studentsData._fullStudentsList = studentsList },
@@ -222,6 +222,7 @@ export default {
       if (setIsChangedToTrue) this.isChanged = true
     },
     // -----------------------
+    // Get students
     getStudents () {
       if (this.status === 'loading') return
       this.status = 'loading'
@@ -240,6 +241,7 @@ export default {
         })
     },
 
+    // Remove user
     confirmRemoveUser (action) {
       if (this.muteRemoveWarning) return this.removeUser(action)
 
@@ -265,6 +267,7 @@ export default {
       })
     },
 
+    // Submit
     confirmSubmitChanges () {
       this.$confirm(this.$i18n.t('SW_MANAGE_STAFF_EFFECT'), this.$i18n.t('SW_SUBMIT_MANAGE_GROUP_TITLE'), {
         confirmButtonText: this.$i18n.t('SW_SAVE_CHANGES'),
