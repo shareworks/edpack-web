@@ -51,7 +51,7 @@
         <el-row class="groups mt-20" :class="{ 'hide-shadow': fullscreen }" justify="center" :gutter="30">
           <el-col :xs="10" :sm="8" :md="6" class="unsorted-row">
             <!-- Full student list -->
-            <full-student-list :key="fullStudentsKey" :setStudentsWithoutGroup="studentsData_SetStudentsWithoutGroup"
+            <full-student-list :key="fullStudentsKey" :setStudentsWithoutGroup="studentsData_SetStudentsWithoutGroup" :searchText="searchText"
                                :studentsWithoutGroup="studentsData_GetStudentsWithoutGroup()" :setDragging="setDragging"
                                :updateGroupCount="studentsData_UpdateGroupCount" :allStudents="studentsData_GetFullList()" :dragging="dragging"/>
           </el-col>
@@ -72,24 +72,28 @@
                       <div class="question-number">{{ index + 1 }}</div>
                       <div class="question-sentence capitalize bold">{{ group.temporaryGroupName }}</div>
 
-                      <!-- Remove group -->
-                      <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @onConfirm="studentsData_RemoveGroup(group)"
-                                     class="delete-group-button" hideIcon :title="$t('SW_DELETE_GROUP')">
-                        <el-button slot="reference" plain size="small" @click.stop class="button-square mr-5 delete-group-button hidden-xs" type="danger">
-                          <i class="icon-delete"/>
-                        </el-button>
-                      </el-popconfirm>
+                      <div class="group-item-controls">
+                        <div class="top-minus-3">
+                          <!-- Remove group -->
+                          <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @onConfirm="studentsData_RemoveGroup(group)"
+                                         hideIcon :title="$t('SW_DELETE_GROUP')">
+                            <el-button slot="reference" plain size="small" @click.stop class="button-square mr-5 hidden-xs" type="danger">
+                              <i class="icon-delete"/>
+                            </el-button>
+                          </el-popconfirm>
 
-                      <!-- Rename group -->
-                      <el-popover @after-leave="studentsData_RenameStudentsGroup(group.name, group.temporaryGroupName)" trigger="click" class="edit-group-button" :close-delay="0" :title="$tc('SW_CHANGE_GROUP_NAME')" placement="top-end">
-                        <el-input v-model="group.temporaryGroupName" :placeholder="$t('SW_GROUP_NAME')" :label="$t('SW_GROUP_NAME')"/>
+                          <!-- Rename group -->
+                          <el-popover @after-leave="studentsData_RenameStudentsGroup(group.name, group.temporaryGroupName)" trigger="click" :close-delay="0" :title="$tc('SW_CHANGE_GROUP_NAME')" placement="top-end">
+                            <el-input v-model="group.temporaryGroupName" :placeholder="$t('SW_GROUP_NAME')" :label="$t('SW_GROUP_NAME')"/>
 
-                        <el-button slot="reference" plain size="small" @click.stop class="button-square mr-10 delete-group-button hidden-xs">
-                          <i class="icon-pencil"/>
-                        </el-button>
-                      </el-popover>
+                            <el-button slot="reference" plain size="small" @click.stop class="button-square mr-10 hidden-xs">
+                              <i class="icon-pencil"/>
+                            </el-button>
+                          </el-popover>
+                        </div>
 
-                      <el-tag class="question-tag-info hidden-xs" type="info">{{ group.students.length }} {{ $tc('SW_STUDENT', group.students.length).toLowerCase() }}</el-tag>
+                        <el-tag class="question-tag-info hidden-xs" type="info">{{ group.students.length }} {{ $tc('SW_STUDENT', group.students.length).toLowerCase() }}</el-tag>
+                      </div>
                     </h3>
                   </template>
 
@@ -138,7 +142,7 @@ export default {
       removedStudents: [],
       dragging: false,
       draggingMainList: false,
-      searchText: this.$route.query.query || '',
+      searchText: '',
       fullStudentsKey: 0,
       // studentsData: never try to access _inner_values, use studentsData functions
       studentsData: { _groupsList: [], _fullStudentsList: [], _studentsWithoutGroup: [] }
@@ -149,29 +153,27 @@ export default {
     this.getStudents()
   },
 
+  updated () {
+    console.log('ManageGroups updated')
+  },
+
   watch: {
-    isChanged: {
-      handler () {
-        this.$store.dispatch('setUnsavedChanges', this.isChanged)
-      }
-    },
-    // searchText: debounce(function () { this.doSearch() }, 400)
+    isChanged () { this.$store.dispatch('setUnsavedChanges', this.isChanged) }
   },
 
   methods: {
     // -----------------------
     // students Data Functions
     // -----------------------
-    studentsData_SetFullList (studentsList) { this.studentsData._fullStudentsList = studentsList },
     studentsData_GetFullList () { return this.studentsData._fullStudentsList },
+    studentsData_SetFullList (studentsList) { this.studentsData._fullStudentsList = studentsList },
 
-    studentsData_SetStudentsWithoutGroup (students) { this.studentsData._studentsWithoutGroup = students },
     studentsData_GetStudentsWithoutGroup () { return this.studentsData._studentsWithoutGroup },
+    studentsData_SetStudentsWithoutGroup (students) { this.studentsData._studentsWithoutGroup = students },
 
-    studentsData_SetGroupsList (groupsList) { this.studentsData._groupsList = groupsList },
     studentsData_GetGroupsList () { return this.studentsData._groupsList },
+    studentsData_SetGroupsList (groupsList) { this.studentsData._groupsList = groupsList },
 
-    // studentToRemove should has { groupName: 'removing from group name', _id: 'user id' }
     studentsData_RemoveStudent (studentToRemove) {
       // run over all groups
       this.studentsData_GetGroupsList().map(group => {
@@ -186,12 +188,12 @@ export default {
         return filteredGroup
       })
     },
-    // group should has { name: 'removing group name' }
     studentsData_RemoveGroup (group) {
       const updatedGroupsList = this.studentsData_GetGroupsList().filter(g => g.name !== group.name)
       this.studentsData_SetGroupsList(updatedGroupsList)
       this.studentsData_UpdateGroupCount(true)
     },
+
     studentsData_RenameStudentsGroup (oldName, newName) {
       if (oldName === newName) return
 
@@ -205,19 +207,6 @@ export default {
 
       this.isChanged = true
     },
-
-    studentsDataUpdateStudent () {
-      /* find and update student values */
-    },
-
-    studentsData_GetFilteredList (filter) {
-      /* filter all students and return list */
-      return this.studentsData_GetFullList().filter(participant => {
-        const trimmedName = participant.name.trim()
-        return trimmedName.includes(filter.trim())
-      })
-    },
-
     studentsData_UpdateGroupCount (setIsChangedToTrue) {
       const studentsGroupAmount = {}
       const students = this.studentsData_GetGroupsList().map(group => { return group.students }).flat(1)
@@ -249,7 +238,7 @@ export default {
           this.studentsData_SetFullList(res.data.list)
           this.studentsData_SetGroupsList(sortStudentsByGroup(res.data.list))
           this.studentsData_UpdateGroupCount()
-          this.status = res.data.total ? (res.data.done ? 'done' : 'incomplete') : (this.searchText ? 'noResults' : 'none')
+          this.status = res.data.done ? 'done' : 'incomplete'
         })
         .catch(err => {
           console.log(err)
@@ -322,9 +311,9 @@ export default {
       this.dragging = value
       this.draggingMainList = draggingMainList
     },
-    toggleFullscreen () { this.$refs.fullscreenManageGroups.toggle() },
+    closeCreateGroupDialog () { this.addGroupDialog = false },
     fullscreenChange (fullscreen) { this.fullscreen = fullscreen },
-    closeCreateGroupDialog () { this.addGroupDialog = false }
+    toggleFullscreen () { this.$refs.fullscreenManageGroups.toggle() },
   }
 }
 </script>

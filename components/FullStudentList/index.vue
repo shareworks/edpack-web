@@ -22,11 +22,12 @@
 </template>
 <script>
 import GroupsItem from '../GroupsItem'
+import debounce from 'lodash/debounce'
 
 export default {
   name: 'FullStudentList',
   components: { GroupsItem },
-  props: ['allStudents', 'dragging', 'setDragging', 'updateGroupCount', 'setStudentsWithoutGroup', 'studentsWithoutGroup'],
+  props: ['allStudents', 'dragging', 'setDragging', 'updateGroupCount', 'setStudentsWithoutGroup', 'studentsWithoutGroup', 'searchText'],
   data () {
     return {
       noGroup: false,
@@ -34,20 +35,29 @@ export default {
     }
   },
 
-  mounted () {
-    this.sortStudents()
+  watch: {
+    allStudents: {
+      immediate: true,
+      handler: debounce(function () { this.sortStudents() }, 400)
+    },
+    searchText: {
+      handler: debounce(function () { this.sortStudents() }, 400)
+    }
   },
 
-  watch: {
-    allStudents () { this.sortStudents() }
+  updated () {
+    console.log('FullStudentList updated')
   },
 
   methods: {
     sortStudents () {
       const studentsSorted = []
       const studentsWithoutGroup = []
+      const trimmedSearch = this.searchText.trim()
 
       this.allStudents.forEach(student => {
+        if (trimmedSearch && !student.name.includes(trimmedSearch)) return
+
         const studentAlreadyAdded = studentsSorted.find(stud => stud._id === student._id)
         // Prevent adding same student to the list
         if (studentAlreadyAdded) return
