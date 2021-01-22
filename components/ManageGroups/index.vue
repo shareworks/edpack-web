@@ -91,7 +91,7 @@
                           </el-popover>
                         </div>
 
-                        <el-tag class="question-tag-info hidden-xs" type="info">{{ group.students.length }} {{ $tc('SW_STUDENT', group.students.length).toLowerCase() }}</el-tag>
+                        <el-tag class="question-tag-info hidden-xs" type="info">{{ countFilteredGroupsItem(group.students) }} {{ $tc('SW_STUDENT', countFilteredGroupsItem(group.students)).toLowerCase() }}</el-tag>
                       </div>
                     </h3>
                   </template>
@@ -300,13 +300,19 @@ export default {
         })
     },
 
+    countFilteredGroupsItem (students) {
+      // have to count amount in ManageGroups, at this time it seems impossible to transfer logic beautifully
+      if (!this.searchText.trim()) return students.length
+      return students.filter(student => student.name.includes(this.searchText)).length
+    },
+
     setDragging (value, draggingMainList) {
       this.dragging = value
       this.draggingMainList = draggingMainList
     },
     closeCreateGroupDialog () { this.addGroupDialog = false },
     fullscreenChange (fullscreen) { this.fullscreen = fullscreen },
-    toggleFullscreen () { this.$refs.fullscreenManageGroups.toggle() },
+    toggleFullscreen () { this.$refs.fullscreenManageGroups.toggle() }
   }
 }
 </script>
