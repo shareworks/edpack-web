@@ -45,6 +45,7 @@ export default {
         return stud._id === action.added.element._id
       })
 
+      // TODO: ??? <=
       if (sameStudentsInGroup.length <= 1) return
 
       // Find first same student and remove it
@@ -53,6 +54,7 @@ export default {
       })
       this.students.splice(removeStudentIndex, 1)
     },
+
     onEnd (draggableEvent) {
       this.setDragging(false, this.mode === 'all')
       // Drag to same element
