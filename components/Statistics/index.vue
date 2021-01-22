@@ -4,7 +4,7 @@
       <!-- completionStats -->
       <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}">
         <el-card v-for="(stat, index) in statisticCompletionValues" :key="`statisticCompletionValues${index}`" class="stat-counter">
-          <AnimatedCircleBar :realPercentage="stat.value" :width="200" :strokeWidth="30" :fullText="stat.name"/>
+          <AnimatedCircleBar :realPercentage="Math.round(stat.value)" :width="200" :strokeWidth="30" :fullText="stat.name"/>
         </el-card>
       </masonry>
 
