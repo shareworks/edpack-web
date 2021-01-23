@@ -1,0 +1,11 @@
+.opacity-enter-active {
+  animation: opacityAnim .3s ease;
+}
+.opacity-leave-active {
+  animation: opacityAnim .3s ease reverse;
+}
+
+@keyframes opacityAnim {
+  0%{ opacity: 0; }
+  100% { opacity: 1; }
+}

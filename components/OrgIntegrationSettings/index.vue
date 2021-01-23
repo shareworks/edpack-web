@@ -79,7 +79,7 @@
     </el-form-item>
 
     <!-- Lti Basic configuration -->
-    <transition name="fade" mode="out-in">
+    <transition name="opacity" mode="out-in">
       <div v-if="form.ltiVersion === 'basic'" class="mb-20" key="basic">
         <!-- LTI config url -->
         <el-form-item label="LTI config URL">
@@ -392,8 +392,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-  @import '~scss_vars';
-  @import './style.scss';
-</style>
