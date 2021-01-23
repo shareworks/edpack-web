@@ -1,7 +1,7 @@
 <template>
   <section>
     <draggable ghost-class="ghost" class="group-students" :list="students"
-               @start="setDragging(true, mode === 'all')" @end="onEnd" :sort="false" @change="changeStudentGroup"
+               @start="setDragging(true, mode === 'all')" @end="onEnd" :sort="false" @change="changeStudentGroup($event, students)"
                :group="mode === 'all' ? {name: 'students', pull: 'clone', put: false} : {name: 'students', pull: true, put: true }">
 
       <!-- Student card -->
@@ -21,7 +21,7 @@
 
         <!-- Amount of groups -->
         <el-tag v-if="mode === 'all'" class="group-amount-tag text-muted hidden-xs" size="small" type="info">
-          {{ student.groupCount || 0 }} <i class="icon-peers"/>
+          <span class="ml-5">{{ student.groupCount || 0 }} <i class="icon-peers"/></span>
         </el-tag>
       </el-card>
     </draggable>
@@ -34,28 +34,9 @@ import draggable from 'vuedraggable'
 export default {
   name: 'GroupsItem',
   components: { draggable },
-  props: ['students', 'setDragging', 'mode', 'group', 'searchText'],
+  props: ['students', 'setDragging', 'mode', 'group', 'searchText', 'changeStudentGroup'],
 
   methods: {
-    changeStudentGroup (action) {
-      if (!action.added) return
-
-      // Is there is same students in group
-      const sameStudentsInGroup = this.students.filter(stud => {
-        return stud._id === action.added.element._id
-      })
-
-      // The draggable code will add students card anyway, even if the student already exist in such group
-      // If it's happens, after that we find any duplicate of that user and removing it.
-      if (sameStudentsInGroup.length <= 1) return
-
-      // Find first same student and remove it
-      const removeStudentIndex = this.students.findIndex(stud => {
-        return stud._id === action.added.element._id
-      })
-      this.students.splice(removeStudentIndex, 1)
-    },
-
     onEnd (draggableEvent) {
       this.setDragging(false, this.mode === 'all')
       // Drag to same element

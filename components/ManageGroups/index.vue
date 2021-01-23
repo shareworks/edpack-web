@@ -52,7 +52,7 @@
           <el-col :xs="10" :sm="8" :md="6" class="unsorted-row">
             <!-- Full student list -->
             <full-student-list :key="fullStudentsKey" :setStudentsWithoutGroup="studentsData_SetStudentsWithoutGroup" :searchText="searchText.trim()"
-                               :studentsWithoutGroup="studentsData_GetStudentsWithoutGroup()" :setDragging="setDragging"
+                               :studentsWithoutGroup="studentsData_GetStudentsWithoutGroup()" :setDragging="setDragging" :changeStudentGroup="changeStudentGroup"
                                :updateGroupCount="studentsData_UpdateGroupCount" :allStudents="studentsData_GetFullList()" :dragging="dragging"/>
           </el-col>
 
@@ -63,41 +63,48 @@
               </h3>
 
               <!-- Students By Group -->
-              <el-collapse class="group-collapse students-list-padding" v-if="studentsData_GetGroupsList().length">
-                <el-collapse-item v-for="(group, index) in studentsData_GetGroupsList()" :key="index">
+              <el-collapse @change="setActiveCollapseItems" class="group-collapse students-list-padding" v-if="studentsData_GetGroupsList().length">
+                <el-collapse-item :name="group.name" v-for="(group, index) in studentsData_GetGroupsList()" :key="index">
 
                   <!-- Question title and number -->
                   <template slot="title">
-                    <h3 class="collapse-header">
-                      <div class="question-number">{{ index + 1 }}</div>
-                      <div class="question-sentence capitalize bold">{{ group.temporaryGroupName }}</div>
-
-                      <div class="group-item-controls">
-                        <div class="top-minus-3">
-                          <!-- Remove group -->
-                          <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @onConfirm="studentsData_RemoveGroup(group)" hideIcon :title="$t('SW_DELETE_GROUP')">
-                            <el-button slot="reference" plain size="small" @click.stop class="button-square mr-5 hidden-xs" type="danger">
-                              <i class="icon-delete"/>
-                            </el-button>
-                          </el-popconfirm>
-
-                          <!-- Rename group -->
-                          <el-popover @after-leave="studentsData_RenameStudentsGroup(group.name, group.temporaryGroupName)" trigger="click" :close-delay="0" :title="$tc('SW_CHANGE_GROUP_NAME')" placement="top-end">
-                            <el-input v-model="group.temporaryGroupName" :placeholder="$t('SW_GROUP_NAME')" :label="$t('SW_GROUP_NAME')"/>
-
-                            <el-button slot="reference" plain size="small" @click.stop class="button-square mr-10 hidden-xs">
-                              <i class="icon-pencil"/>
-                            </el-button>
-                          </el-popover>
+                    <!-- Can drag student on the title -->
+                      <h3 class="collapse-header">
+                        <div class="question-number">{{ index + 1 }}</div>
+                        <div class="basic-flex width-400">
+                          <div class="question-sentence capitalize bold">{{ group.temporaryGroupName }}</div>
+                          <!-- Drag to title -->
+                          <draggable v-show="!activeCollapseItems[group.name]" ghost-class="ghost" class="group-students group-title-dragin" :class="{ 'can-drag-in': dragging }"
+                                     :list="group.students" :sort="false" :group="{name: 'students', pull: true, put: true }"
+                                     @change="changeStudentGroup($event, group.students)"/>
                         </div>
 
-                        <el-tag class="question-tag-info hidden-xs" type="info">{{ countFilteredGroupsItem(group.students) }} {{ $tc('SW_STUDENT', countFilteredGroupsItem(group.students)).toLowerCase() }}</el-tag>
-                      </div>
-                    </h3>
+                        <div class="group-item-controls">
+                          <div class="top-minus-3">
+                            <!-- Remove group -->
+                            <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @onConfirm="studentsData_RemoveGroup(group)" hideIcon :title="$t('SW_DELETE_GROUP')">
+                              <el-button slot="reference" plain size="small" @click.stop class="button-square mr-5 hidden-xs" type="danger">
+                                <i class="icon-delete"/>
+                              </el-button>
+                            </el-popconfirm>
+
+                            <!-- Rename group -->
+                            <el-popover @after-leave="studentsData_RenameStudentsGroup(group.name, group.temporaryGroupName)" trigger="click" :close-delay="0" :title="$tc('SW_CHANGE_GROUP_NAME')" placement="top-end">
+                              <el-input v-model="group.temporaryGroupName" :placeholder="$t('SW_GROUP_NAME')" :label="$t('SW_GROUP_NAME')"/>
+
+                              <el-button slot="reference" plain size="small" @click.stop class="button-square mr-10 hidden-xs">
+                                <i class="icon-pencil"/>
+                              </el-button>
+                            </el-popover>
+                          </div>
+
+                          <el-tag class="question-tag-info hidden-xs" type="info">{{ countFilteredGroupsItem(group.students) }} {{ $tc('SW_STUDENT', countFilteredGroupsItem(group.students)).toLowerCase() }}</el-tag>
+                        </div>
+                      </h3>
                   </template>
 
                   <!-- Draggable student group list -->
-                  <groups-item :setDragging="setDragging" :searchText="searchText.trim()" @updateGroupCount="studentsData_UpdateGroupCount" :group="{name: group.temporaryGroupName, _id: group._id}" :students="group.students" :class="{'can-drag-in': dragging}"/>
+                  <groups-item :setDragging="setDragging" :changeStudentGroup="changeStudentGroup" :searchText="searchText.trim()" @updateGroupCount="studentsData_UpdateGroupCount" :group="{name: group.temporaryGroupName, _id: group._id}" :students="group.students" :class="{'can-drag-in': dragging}"/>
                 </el-collapse-item>
               </el-collapse>
             </section>
@@ -140,6 +147,7 @@ export default {
       isChanged: false,
       status: false,
       removedStudents: [],
+      activeCollapseItems: {},
       dragging: false,
       draggingMainList: false,
       searchText: '',
@@ -301,6 +309,28 @@ export default {
           this.status = 'error'
           this.$message({ message: this.$i18n.t('SW_GENERIC_ERROR'), type: 'error' })
         })
+    },
+
+    // basically check that user not exist in group already
+    changeStudentGroup (action, students) {
+      if (!action.added) return
+
+      // Is there is same students in group
+      const sameStudentsInGroup = students.filter(stud => stud._id === action.added.element._id )
+
+      // The draggable code will add students card anyway, even if the student already exist in such group
+      // If it's happens, after that we find any duplicate of that user and removing it.
+      if (sameStudentsInGroup.length <= 1) return
+
+      // Find first same student and remove it
+      const removeStudentIndex = students.findIndex(stud => stud._id === action.added.element._id)
+      students.splice(removeStudentIndex, 1)
+    },
+
+    setActiveCollapseItems (activeCollapseItems) {
+      const keysObject = {}
+      activeCollapseItems.forEach(prop => keysObject[prop] = prop)
+      this.activeCollapseItems = keysObject
     },
 
     countFilteredGroupsItem (students) {

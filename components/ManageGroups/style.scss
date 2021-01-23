@@ -6,6 +6,15 @@
   }
 }
 
+.group-title-dragin {
+  width: 200px;
+  height: 58px;
+
+  .student-card-item {
+    width: 100% !important;
+  }
+}
+
 .question-number {
   display: inline-block;
   width: 26px;

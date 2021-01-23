@@ -16,7 +16,7 @@
 
     <!-- Draggable students list -->
     <groups-item @updateGroupCount="updateGroupCount" class="students-list-padding"  :setDragging="setDragging"
-                 :class="{'can-drag-in': dragging && noGroup}" :mode="noGroup ? 'without' : 'all'"
+                 :class="{'can-drag-in': dragging && noGroup}" :mode="noGroup ? 'without' : 'all'" :changeStudentGroup="changeStudentGroup"
                  :students="noGroup ? studentsWithoutGroup : studentsSorted" :searchText="searchText"/>
   </section>
 </template>
@@ -27,7 +27,7 @@ import GroupsItem from '../GroupsItem'
 export default {
   name: 'FullStudentList',
   components: { GroupsItem },
-  props: ['allStudents', 'dragging', 'setDragging', 'updateGroupCount', 'setStudentsWithoutGroup', 'studentsWithoutGroup', 'searchText'],
+  props: ['allStudents', 'dragging', 'setDragging', 'changeStudentGroup', 'updateGroupCount', 'setStudentsWithoutGroup', 'studentsWithoutGroup', 'searchText'],
   data () {
     return {
       noGroup: false,

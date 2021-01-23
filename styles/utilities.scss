@@ -398,3 +398,13 @@
 .thumbnail-pointer {
   cursor: pointer;
 }
+
+.basic-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.width-400 {
+  width: 400px;
+}
