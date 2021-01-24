@@ -128,7 +128,6 @@ export default {
 
       Papa.parse(file.raw, {
         download: true,
-        encoding: 'ISO-8859-1',
         skipEmptyLines: true,
         header: true,
         transform: (value) => {
