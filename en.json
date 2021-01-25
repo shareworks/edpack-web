@@ -625,5 +625,6 @@
   "SW_SHORT_NAME_PLACEHOLDER": "Short name...",
   "SW_SCHOOL_TEMPLATE":"School template",
   "SW_ORG_TEMPLATE_PLACEHOLDER": "Optionally select school as template ...",
-  "SW_ORG_TEMPLATE_WARNING": "The template will only copy settings and configuration."
+  "SW_ORG_TEMPLATE_WARNING": "The template will only copy settings and configuration.",
+  "SW_NO_ORG_NAME": "School name is required."
 }

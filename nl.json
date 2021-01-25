@@ -609,5 +609,6 @@
   "SW_SHORT_NAME_PLACEHOLDER": "Korte naam...",
   "SW_SCHOOL_TEMPLATE":"School sjabloon",
   "SW_ORG_TEMPLATE_PLACEHOLDER": "Selecteer eventueel school als sjabloon ...",
-  "SW_ORG_TEMPLATE_WARNING": "De sjabloon kopieert alleen instellingen en configuratie."
+  "SW_ORG_TEMPLATE_WARNING": "De sjabloon kopieert alleen instellingen en configuratie.",
+  "SW_NO_ORG_NAME": "Schoolnaam is vereist."
 }

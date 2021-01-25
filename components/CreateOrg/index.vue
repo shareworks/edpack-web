@@ -43,6 +43,7 @@
 <script>
 import InputsWithFlags from '../InputsWithFlags'
 import copyObjectProps from '@/edpack-web/utils/copy-object-props'
+import mergeEmptyLanguageFields from '@/edpack-web/utils/merge-empty-language-fields'
 
 export default {
   name: 'CreateOrg',
@@ -67,16 +68,10 @@ export default {
     setNewName (lang, value) { this.form.name[lang] = value },
     createOrg () {
       if (this.submitting) return
-
-      // TODO: refactor that
       if (!this.form.name.nl.trim() && !this.form.name.en.trim()) return this.$message({ message: this.$i18n.t('SW_NO_ORG_NAME'), type: 'error' })
-      if (this.form.name.nl.trim() && !this.form.name.en.trim()) this.form.name.en = this.form.name.nl.trim()
-      if (!this.form.name.nl.trim() && this.form.name.en.trim()) this.form.name.nl = this.form.name.en.trim()
-
       if (!this.form.shortName.nl.trim() && !this.form.shortName.en.trim()) return this.$message({ message: this.$i18n.t('SW_NO_ORG_NAME'), type: 'error' })
-      if (this.form.shortName.nl.trim() && !this.form.shortName.en.trim()) this.form.shortName.en = this.form.shortName.nl.trim()
-      if (!this.form.shortName.nl.trim() && this.form.shortName.en.trim()) this.form.shortName.nl = this.form.shortName.en.trim()
 
+      mergeEmptyLanguageFields(this.form, ['name', 'shortName'])
       this.submitting = true
 
 
