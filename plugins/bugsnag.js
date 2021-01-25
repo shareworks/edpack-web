@@ -5,7 +5,7 @@ import BugsnagPluginVue from '@bugsnag/plugin-vue'
 Bugsnag.start({
   apiKey: config.bugsnag,
   notifyReleaseStages: ['development', 'staging', 'production'],
-  releaseStage: process.env.NODE_ENV,
+  releaseStage: config.releaseStage || process.env.NODE_ENV,
   plugins: [new BugsnagPluginVue()]
 })
 
