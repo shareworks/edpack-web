@@ -438,6 +438,7 @@
   "SW_SELECT_COURSE_SHORT": "Selecteer cursus ...",
   "SW_SELECT_CSV": "Upload .csv",
   "SW_SELECT_FACULTY": "Selecteer een {0} ...",
+  "SW_NOT_AVAILABLE": "Inloggen met wachtwoord is niet beschikbaar voor jouw school. Gebruik een andere methode.",
   "SW_SELECT_GROUP_IMPORT_TYPE": "Importeer groepen met of zonder groepset.",
   "SW_SELECT_OTHER_SCHOOL": "Selecteer andere school",
   "SW_SELECT_SCHOOL": "Selecteer school ...",
