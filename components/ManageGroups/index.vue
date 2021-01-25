@@ -20,17 +20,17 @@
                   <i class="icon-ok-sign"/>
                   <span>{{ $t('SW_SAVE_CHANGES') }}</span>
                 </el-button>
+
+                <!-- Fullscreen -->
+                <el-button type="text" class="hidden-xs ml-10" @click="toggleFullscreen">
+                  <i class="icon-fullscreen"/>
+                  <span>{{ $t(fullscreen ? 'SW_CLOSE_FULLSCREEN' : 'SW_FULLSCREEN') }}</span>
+                </el-button>
               </el-col>
 
               <el-col :xs="4" :sm="8" :span="4" class="to-right">
                 <!-- Search input -->
                 <el-input prefix-icon="icon-search" :placeholder="$t('SW_SEARCH_STUDENTS')" size="medium" v-model="searchText" clearable/>
-
-                <!-- Fullscreen -->
-                <el-button type="text" class="pull-right hidden-xs" @click="toggleFullscreen">
-                  <i class="icon-fullscreen"/>
-                  <span>{{ $t(fullscreen ? 'SW_CLOSE_FULLSCREEN' : 'SW_FULLSCREEN') }}</span>
-                </el-button>
               </el-col>
             </el-row>
 
