@@ -157,7 +157,7 @@
 
     <!-- Create org dialog -->
     <el-dialog :title="$t('SW_CREATE_ORG')" append-to-body :visible.sync="dialogOrg">
-      <create-org :closeDialog="closeDialog" v-if="dialogOrg"/>
+      <create-org :closeDialog="closeDialog" v-if="dialogOrg" :orgs="tableData"/>
     </el-dialog>
 
     <!-- Newsletter dialog -->
@@ -169,8 +169,8 @@
 
 <script>
 import moment from 'moment'
-import debounce from 'lodash/debounce'
 import config from 'config'
+import debounce from 'lodash/debounce'
 import OrgOptions from '@/components/OrgOptions'
 import dateSorter from '@/edpack-web/utils/date-sorter'
 import CreateOrg from '@/edpack-web/components/CreateOrg'

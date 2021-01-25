@@ -620,5 +620,9 @@
   "SW_CATEGORY": "Category | Categories",
   "SW_CONFIGURE_ERROR": "Error during course configuration with LMS",
   "SW_CAN_ACCESS_RESULTS": "can access results",
-  "SW_SEE_DISABLE_AS": "As {0}"
+  "SW_SEE_DISABLE_AS": "As {0}",
+  "SW_SHORT_NAME_PLACEHOLDER": "Short name...",
+  "SW_SCHOOL_TEMPLATE":"School template",
+  "SW_ORG_TEMPLATE_PLACEHOLDER": "Optionally select school as template ...",
+  "SW_ORG_TEMPLATE_WARNING": "The template will only copy settings and configuration."
 }
