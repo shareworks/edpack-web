@@ -602,6 +602,8 @@
   "SW_CONTRAST_MODE_TEXT": "Increase contrast of interface elements if you have reduced vision.",
   "SW_CLOSE_FULLSCREEN": "Close fullscreen",
   "SW_FIRST_TIME": "First time?",
+  "SW_LTI_USER_NOT_FOUND": "No matching user found",
+  "SW_LTI_USER_NOT_FOUND_TEXT": "No matching user has been found with the LTI information that has been provided. Please try again later or contact us.",
   "SW_NOTIFICATION_DISABLED": "'{0}' notification disabled",
   "SW_NOTIFICATION_DISABLED_TEXT": "You will not receive this type of email notification anymore.",
   "SW_STAFF_NOTIFICATION": "Staff",
