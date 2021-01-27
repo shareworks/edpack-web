@@ -1,9 +1,5 @@
 <template>
   <div>
-    <!-- Server is not working alert -->
-    <el-alert type="warning" show-icon :closable="false" v-if="!serverOnline"
-              :title="$t('SW_SERVER_MAINTENANCE', [appName])"/>
-
     <router-view v-if="status === 'done'"/>
 
     <div class="mt-30 text-muted text-center">
@@ -35,7 +31,6 @@ export default {
       course: false,
       status: 'loading',
       submitting: false,
-      serverOnline: true,
       appName: config.name
     }
   },
