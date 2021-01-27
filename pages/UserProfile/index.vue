@@ -147,12 +147,8 @@ export default {
         })
         .catch(err => {
           this.status = 'error'
-          if (err.status === 404) {
-            this.$router.replace({
-              name: 'error',
-              query: { type: 'not_found' }
-            })
-          }
+          console.log(err)
+          if (err.status === 404) this.$router.replace({ name: 'error', query: { type: 'not_found' } })
         })
     },
     getApps (userId) {

@@ -56,6 +56,7 @@ export default {
         })
         .catch((err) => {
           this.status = 'error'
+          console.log(err)
           if (this.$route.name === 'student') this.$router.replace({ name: 'error', query: { type: 'course_inactive' } })
           else if (err.status === 404) this.$router.replace({ name: 'error', query: { type: 'not_found' } })
         })
