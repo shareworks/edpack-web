@@ -1,7 +1,7 @@
 <template>
   <!-- Fullscreen -->
   <fullscreen :class="{ 'fullscreen-manage-groups': fullscreen }" ref="fullscreenManageGroups" @change="fullscreenChange">
-      <div v-if="status === 'done'">
+      <div v-if="status === 'done'" :class="{ 'functional-disabled': manipulationDisabled }">
 
         <!-- Affix with filter and remove user logic -->
         <affix class="sticky-bar" :relative-element-selector="'.groups'" :offset="{ top: fullscreen ? 0 : 130, bottom: -1000 }">
@@ -10,13 +10,13 @@
             <el-row type="flex" justify="center" align="baseline" v-if="!dragging" :key="1">
               <el-col :xs="20" :sm="16" :span="20">
                 <!-- Add group button -->
-                <el-button type="primary" plain size="medium" @click="addGroupDialog = true">
+                <el-button type="primary" plain size="medium" @click="addGroupDialog = true" :disabled="manipulationDisabled">
                   <i class="icon-add"/>
                   <span>{{ $t('SW_ADD_GROUP') }}</span>
                 </el-button>
 
                 <!-- Save button -->
-                <el-button type="success" size="medium" :plain="!isChanged" :disabled="!isChanged" @click="confirmSubmitChanges">
+                <el-button type="success" size="medium" :plain="!isChanged" :disabled="!isChanged || manipulationDisabled" @click="confirmSubmitChanges">
                   <i class="icon-ok-sign"/>
                   <span>{{ $t('SW_SAVE_CHANGES') }}</span>
                 </el-button>
@@ -51,7 +51,7 @@
         <el-row class="groups mt-20" :class="{ 'hide-shadow': fullscreen }" justify="center" :gutter="30">
           <el-col :xs="10" :sm="8" :md="6" class="unsorted-row">
             <!-- Full student list -->
-            <full-student-list :key="fullStudentsKey" :setStudentsWithoutGroup="studentsData_SetStudentsWithoutGroup" :searchText="searchText.trim()"
+            <full-student-list :key="fullStudentsKey" :setStudentsWithoutGroup="studentsData_SetStudentsWithoutGroup" :searchText="searchText.trim()" :manipulationDisabled="manipulationDisabled"
                                :studentsWithoutGroup="studentsData_GetStudentsWithoutGroup()" :setDragging="setDragging" :changeStudentGroup="changeStudentGroup"
                                :updateGroupCount="studentsData_UpdateGroupCount" :allStudents="studentsData_GetFullList()" :dragging="dragging"/>
           </el-col>
@@ -83,7 +83,7 @@
                           <div class="top-minus-3">
                             <!-- Remove group -->
                             <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @onConfirm="studentsData_RemoveGroup(group)" hideIcon :title="$t('SW_DELETE_GROUP')">
-                              <el-button slot="reference" plain size="small" @click.stop class="button-square mr-5 hidden-xs" type="danger">
+                              <el-button slot="reference" :disabled="manipulationDisabled" plain size="small" @click.stop class="button-square mr-5 hidden-xs" type="danger">
                                 <i class="icon-delete"/>
                               </el-button>
                             </el-popconfirm>
@@ -104,7 +104,7 @@
                   </template>
 
                   <!-- Draggable student group list -->
-                  <groups-item :setDragging="setDragging" :changeStudentGroup="changeStudentGroup" :searchText="searchText.trim()" @updateGroupCount="studentsData_UpdateGroupCount" :group="{name: group.temporaryGroupName, _id: group._id}" :students="group.students" :class="{'can-drag-in': dragging}"/>
+                  <groups-item :manipulationDisabled="manipulationDisabled" :setDragging="setDragging" :changeStudentGroup="changeStudentGroup" :searchText="searchText.trim()" @updateGroupCount="studentsData_UpdateGroupCount" :group="{name: group.temporaryGroupName, _id: group._id}" :students="group.students" :class="{'can-drag-in': dragging}"/>
                 </el-collapse-item>
               </el-collapse>
             </section>
@@ -136,7 +136,7 @@ Vue.use(fullscreen)
 
 export default {
   name: 'ManageGroups',
-  props: ['url', 'courseId'],
+  props: ['url', 'courseId', 'manipulationDisabled'],
   components: { Affix, GroupsItem, FullStudentList, draggable, CreateGroupItem },
 
   data () {

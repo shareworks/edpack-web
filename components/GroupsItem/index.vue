@@ -1,13 +1,13 @@
 <template>
   <section>
-    <draggable ghost-class="ghost" class="group-students" :list="students"
+    <draggable ghost-class="ghost" class="group-students" :list="students" :options="{ disabled: manipulationDisabled }"
                @start="setDragging(true, mode === 'all')" @end="onEnd" :sort="false" @change="changeStudentGroup($event, students)"
                :group="mode === 'all' ? {name: 'students', pull: 'clone', put: false} : {name: 'students', pull: true, put: true }">
 
       <!-- Student card -->
       <el-card v-for="(student, index) in students" v-show="!searchText || student.name.includes(searchText)" class="student-card-item" :key="student._id + '_' + index">
         <!-- Drag handle -->
-        <el-button class="button-drag" type="text">
+        <el-button class="button-drag" :disabled="manipulationDisabled" type="text">
           <i class="icon-drag_handle"/>
         </el-button>
 
@@ -34,7 +34,7 @@ import draggable from 'vuedraggable'
 export default {
   name: 'GroupsItem',
   components: { draggable },
-  props: ['students', 'setDragging', 'mode', 'group', 'searchText', 'changeStudentGroup'],
+  props: ['students', 'setDragging', 'mode', 'group', 'searchText', 'changeStudentGroup', 'manipulationDisabled'],
 
   methods: {
     onEnd (draggableEvent) {

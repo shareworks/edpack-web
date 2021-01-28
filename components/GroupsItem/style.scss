@@ -62,3 +62,9 @@
   margin-left: auto;
   padding: 0 2px !important;
 }
+
+.functional-disabled {
+  .student-name {
+    cursor: not-allowed;
+  }
+}
