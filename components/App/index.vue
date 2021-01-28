@@ -61,6 +61,7 @@ export default {
     return {
       browserUpdateConfig: browserConfig,
       inLTI: this.$store.state.inLTI,
+      lang: this.$store.state.lang,
       dialogWelcome: false,
       resetKey: 1,
       disableWelcome: false,
@@ -98,7 +99,9 @@ export default {
       if (user && !user.checks.welcome && !this.disableWelcome) this.toggleDialog()
     },
     language (language) {
-      if (language) this.resetKey++
+      if (this.lang === language) return
+      this.resetKey++
+      this.lang = language
     },
     school (school) {
       if (school && school.slug) return document.body.classList.add(school.slug + '-styling')
@@ -131,7 +134,6 @@ export default {
       loadFreshchat: (state) => {
         return state.user && state.school && state.school.enableFreshChat && state.user.role !== 'student'
       },
-
       navAvailable: (state) => {
         // Hide when not authenticated
         if (!state.route.meta.auth || state.route.meta.hideNav) return false

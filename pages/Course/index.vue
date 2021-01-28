@@ -8,7 +8,6 @@
 
       <!-- Error -->
       <div v-if="status === 'error'">{{ $t('SW_ERROR_LOADING') }}</div>
-
       <!-- Archived -->
       <div v-if="status === 'archived'">
         <p class="mb-30">{{ $t('SW_COURSE_IS_ARCHIVED') }}</p>
