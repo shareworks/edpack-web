@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="mb-20">{{ $t('SW_LIMIT_ASSESSMENT_FORM', [user.name]) }}</p>
+    <p class="mb-20">{{ $t('SW_LIMIT_CREDITS_FORM', [user.name]) }}</p>
     <el-form label-width="180px">
       <!-- Amount of assessments -->
       <el-form-item :label="$t('SW_NEW_ASSESSMENTS')">
@@ -8,9 +8,10 @@
         <span class="ml-10">{{ $t('SW_LIMIT_CURRENTLY')}}:</span>
         <strong> {{ this.user.credits.used + user.credits.limit + form.limitChange }}</strong>
       </el-form-item>
+
       <!-- Expire date -->
       <el-form-item :label="$t('SW_EXPIRE_DATE')">
-        <el-date-picker v-model="form.exp" type="datetime" :clearable="true" format="dd-MM-yyyy HH:mm" :placeholder="$t('SW_SELECT_DATE_TIME')" :picker-options="expireDateOptions"></el-date-picker>
+        <el-date-picker v-model="form.exp" type="datetime" :clearable="true" format="dd-MM-yyyy HH:mm" :placeholder="$t('SW_SELECT_DATE_TIME')" :picker-options="expireDateOptions"/>
         <el-button v-if="form.exp" class="ml-10" type="text" @click="form.exp = null">
           <span>{{ $t('SW_REMOVE_EXPIRE_DATE') }}</span>
         </el-button>
@@ -57,11 +58,10 @@ export default {
 
       this.$http.put('users/' + this.user._id + '/credits', {}, { params })
         .then(() => {
-          console.log(this.form)
           this.user.credits.isNew = false
           this.user.credits.limit = params.limit
           this.user.credits.exp = params.exp
-          this.$message({ message: this.$i18n.t('SW_ASSESSMENT_LIMIT_POSTED'), type: 'success' })
+          this.$message({ message: this.$i18n.t('SW_CREDITS_LIMIT_POSTED'), type: 'success' })
           this.closeDialog(this.user)
         })
         .catch((err) => { console.log(err) })
