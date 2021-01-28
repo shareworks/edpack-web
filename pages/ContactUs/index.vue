@@ -15,7 +15,7 @@
 
       <!-- Contact form -->
       <div class="contact-form-wrapper invisible text-left" v-observe-visibility="{ callback: visibilityChanged, throttle: 200, once: true }">
-        <contact-form/>
+        <contact-form :closeDialog="goToHome"/>
       </div>
     </el-col>
   </el-row>
@@ -40,6 +40,9 @@ export default {
   methods: {
     visibilityChanged (isVisible, entry) {
       basicVisibilityChanged(isVisible, entry, 'invisible', 'visible')
+    },
+    goToHome () {
+      this.$router.push('/')
     }
   }
 }
