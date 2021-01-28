@@ -19,7 +19,7 @@
         <el-button :type="user.credits && user.credits.used < user.credits.limit ? 'success' : 'warning'" size="small" class="assessment-limit"
                    @click="dialogRemaining = true" v-if="user.role !== 'student' && school.creditsEnabled">
           <strong class="visible-sm-inline visible-xs-inline"><i class="icon-done_all"/></strong>
-          <strong v-if="user.credits"> {{ user.credits.used > user.credits.limit ? 0 : user.credits.limit - user.credits.used }} </strong>
+          <strong v-if="user.credits"> {{ creditsLeft }} </strong>
           <strong v-else> 0 </strong>
           <strong class="hidden-xs hidden-sm">{{ $t('SW_ASSESSMENTS_LEFT') }}</strong>
         </el-button>
@@ -121,6 +121,10 @@ export default {
 
   computed: {
     user () { return this.$store.state.user },
+    creditsLeft () {
+      const user = this.$store.state.user
+      return user.credits.used > user.credits.limit ? 0 : user.credits.limit - user.credits.used
+    },
     userOrgs () {
       const orgs = this.$store.state.user.organizations
       return orgs.sort((a, b) => { return a.name.en.toLowerCase().localeCompare(b.name.en.toLowerCase()) })
