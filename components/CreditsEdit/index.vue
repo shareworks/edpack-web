@@ -31,7 +31,7 @@ import moment from 'moment'
 const momentConfig = { hour: 12, minute: 0, second: 0, millisecond: 0 }
 
 export default {
-  name: 'PayAsYouGoDialog',
+  name: 'CreditsEdit',
   props: ['closeDialog', 'user'],
 
   data () {

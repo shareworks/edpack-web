@@ -124,11 +124,11 @@
         </template>
       </el-table-column>
 
-      <!-- PayAsYouGo -->
+      <!-- Credits -->
       <el-table-column property="credits" v-if="school.creditsEnabled" :label="$t('SW_LIMIT_ASSESSMENT_CREATION')" width="120">
         <template slot-scope="props">
-          <!-- PayAsYouGoColumn -->
-          <pay-as-you-go-column :scope="props.row"/>
+          <!-- Credits column -->
+          <credits-column :scope="props.row"/>
         </template>
       </el-table-column>
 
@@ -163,8 +163,8 @@
     </el-dialog>
 
     <!-- Pay as you go dialog -->
-    <el-dialog :visible.sync="payAsYouGoDialog" destroy-on-close>
-      <pay-as-you-go-dialog :user="selectedUser" :closeDialog="closeDialog"/>
+    <el-dialog :visible.sync="creditsDialog" destroy-on-close>
+      <credits-edit :user="selectedUser" :closeDialog="closeDialog"/>
     </el-dialog>
   </div>
 </template>
@@ -180,13 +180,13 @@ import UsersMerge from '../../components/UsersMerge'
 import EmailUsers from '../../components/EmailUsers'
 import UsersCreate from '../../components/UsersCreate'
 import UserAccountForm from '../../components/UserAccountForm'
-import PayAsYouGoColumn from '../../components/PayAsYouGoColumn'
-import PayAsYouGoDialog from '../../components/PayAsYouGoDialog'
+import CreditsColumn from '../../components/CreditsColumn'
+import CreditsEdit from '../../components/CreditsEdit'
 import sortCaseInsensitive from '../../utils/sort-case-insensitive'
 
 export default {
   name: 'UsersTable',
-  components: { UserAccountForm, UsersCreate, EmailUsers, ExpandUser, UsersMerge, PayAsYouGoDialog, PayAsYouGoColumn },
+  components: { UserAccountForm, UsersCreate, EmailUsers, ExpandUser, UsersMerge, CreditsEdit, CreditsColumn },
 
   data () {
     const roles = config.usersTableRoles
@@ -213,7 +213,7 @@ export default {
       selectedUser: false,
       dialogAddUsers: false,
       dialogEditUser: false,
-      payAsYouGoDialog: false,
+      creditsDialog: false,
       dialogEmail: false,
       dialogMerge: false
     }
@@ -327,7 +327,7 @@ export default {
       this.dialogAddUsers = false
       this.dialogEmail = false
       this.dialogMerge = false
-      this.payAsYouGoDialog = false
+      this.creditsDialog = false
       this.selectedUser = false
       this.selectionChange()
       if (refresh) {

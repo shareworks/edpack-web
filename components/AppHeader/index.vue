@@ -17,7 +17,7 @@
         </el-menu-item>
 
         <el-button :type="user.credits && user.credits.used < user.credits.limit ? 'success' : 'danger'" size="small"
-                   @click="dialogRemaining = true" v-if="user.role !== 'student' && school.creditsEnabled && payAsYouGo"
+                   @click="dialogRemaining = true" v-if="user.role !== 'student' && school.creditsEnabled"
                    class="assessment-limit">
           <strong class="visible-sm-inline visible-xs-inline"><i class="icon-done_all"/></strong>
           <strong v-if="user.credits"> {{ user.credits.used > user.credits.limit ? 0 : user.credits.limit - user.credits.used }} </strong>
@@ -74,25 +74,21 @@
       </div>
     </div>
 
-    <!-- Pay as you go limit -->
-    <el-dialog :title="$t('SW_CREDITS_INFO')" append-to-body :visible.sync="dialogRemaining" v-if="payAsYouGo">
-      {{ $t('SW_CREDITS_REMAINING_INFO', [school.name[lang]])}} <a href="#" @click.prevent="contactUs">{{ $t('SW_CONTACT_SUPPORT') }}</a>.
-
-      <div v-if="user.credits && user.credits.exp">
-        <strong class="hidden-xs hidden-sm"><i class="icon-time"/></strong>
-        <strong>{{ prettyDate(user.credits.exp) }}</strong>
-      </div>
+    <!-- Pay as you go overview -->
+    <el-dialog :title="$t('SW_CREDITS_INFO')" append-to-body :visible.sync="dialogRemaining" v-if="hasCredits">
+      <credits-overview/>
     </el-dialog>
   </header>
 </template>
 
 <script>
-import moment from 'moment'
 import config from 'config'
+import CreditsOverview from '../../components/CreditsOverview'
 
 export default {
   name: 'AppHeader',
   props: ['openSidebar'],
+  components: { CreditsOverview },
 
   data () {
     return {
@@ -100,10 +96,10 @@ export default {
       activeTab: this.$route.name || 'admin',
       lang: this.$store.state.lang,
       showProfile: config.hasUserProfiles,
+      hasCredits: config.hasCredits,
       selectedOrg: this.$store.state.user.organization.name[this.$store.state.user.language],
       showSchoolSelect: false,
       showOrgButton: false,
-      payAsYouGo: config.payAsYouGo,
       dialogRemaining: false
     }
   },
@@ -142,7 +138,6 @@ export default {
         this.showOrgButton = true
       }
     },
-    prettyDate (date) { return moment(new Date(date)).format('LLL') },
     changeOrg (orgID) {
       this.$http.put(`session/context?organization=${orgID}`)
         .then(() => { window.location = window.location.origin })
@@ -152,10 +147,6 @@ export default {
       this.activeTab = tab
       const route = { name: tab, params: { slug: this.school.slug } }
       if (this.$route.name !== tab) this.$router.push(route)
-    },
-    contactUs () {
-      if (window.fcWidget) return window.fcWidget.open()
-      this.$store.dispatch('setContactForm', true)
     }
   }
 }

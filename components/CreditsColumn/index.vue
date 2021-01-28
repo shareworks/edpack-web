@@ -1,7 +1,7 @@
 <template>
   <div>
-    <!-- Open PayAsYouGo dialog -->
-    <el-button :type="isOverdue(scope) || !scope.credits || scope.credits.used >= scope.credits.limit ? 'danger' : 'success'" size="mini" @click="openPayAsYouGoDialog(scope)" v-if="scope.role === 'staff'">
+    <!-- Open Credits dialog -->
+    <el-button :type="isOverdue(scope) || !scope.credits || scope.credits.used >= scope.credits.limit ? 'danger' : 'success'" size="mini" @click="openCreditsDialog(scope)" v-if="scope.role === 'staff'">
             <span v-if="scope.credits.isNew">
               <i class="icon-done_all"/>
               <strong>0</strong>
@@ -20,16 +20,16 @@
 import moment from 'moment'
 
 export default {
-  name: 'PayAsYouGoColumn',
+  name: 'CreditsColumn',
   props: ['scope'],
 
   methods: {
     isOverdue (user) {
       return user.credits && user.credits.exp && (moment(user.credits.exp) < moment(new Date()))
     },
-    openPayAsYouGoDialog (student) {
+    openCreditsDialog (student) {
       this.selectedUser = student
-      this.payAsYouGoDialog = true
+      this.credits = true
     }
   }
 }
