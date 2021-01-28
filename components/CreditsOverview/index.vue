@@ -2,9 +2,15 @@
   <div>
     {{ $t('SW_CREDITS_REMAINING_INFO', [school.name[lang], appName])}} <a href="#" @click.prevent="contactUs">{{ $t('SW_CONTACT_SUPPORT') }}</a>.
 
-    <div v-if="user.credits && user.credits.exp">
-      <strong class="hidden-xs hidden-sm"><i class="icon-time"/></strong>
-      <strong>{{ prettyDate(user.credits.exp) }}</strong>
+    <h3 class="text-center mt-20 bold" v-if="inDialog">
+      You currently have <el-tag type="success">{{ creditsLeft || 0 }}</el-tag> credits.
+    </h3>
+    <div v-if="user.credits && user.credits.limit && user.credits.exp">
+      <p class="text-center mt-20 mb-10">You have to use these credits before:</p>
+      <h4 class="text-center bold">
+        <i class="hidden-xs hidden-sm icon-time"/>
+        {{ prettyDate(user.credits.exp) }}
+      </h4>
     </div>
   </div>
 </template>
@@ -15,13 +21,15 @@ import config from 'config'
 
 export default {
   name: 'CreditsOverview',
+  props: ['inDialog'],
 
   data () {
     return {
       school: this.$store.state.user.organization,
       appName: config.name,
       lang: this.$store.state.lang,
-      user: this.$store.state.user
+      user: this.$store.state.user,
+      creditsLeft: this.$store.state.user.credits.limit - this.$store.state.user.credits.used
     }
   },
 

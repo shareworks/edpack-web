@@ -32,8 +32,8 @@ export default {
 
   computed: {
     buttonColor () {
-      if (this.isOverdue(this.scope) || !this.scope.credits) return 'danger'
-      if (this.scope.credits.used >= this.scope.credits.limit) return 'danger'
+      if (this.isOverdue(this.scope) || !this.scope.credits) return 'warning'
+      if (this.scope.credits.used >= this.scope.credits.limit) return 'warning'
       return 'success'
     }
   },
