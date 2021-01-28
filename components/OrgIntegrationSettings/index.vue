@@ -70,159 +70,165 @@
       </el-radio-group>
     </el-form-item>
 
-    <!-- Set Lti version-->
-    <el-form-item label="LTI version">
-      <el-radio-group v-model="form.ltiVersion" size="small">
-        <el-radio-button label="basic">LTI Basic (v1.1)</el-radio-button>
-        <el-radio-button label="advantage">LTI Advantage (v1.3)</el-radio-button>
-      </el-radio-group>
-    </el-form-item>
-
-    <!-- Lti Basic configuration -->
-    <transition name="opacity" mode="out-in">
-      <div v-if="form.ltiVersion === 'basic'" class="mb-20" key="basic">
-        <!-- LTI config url -->
-        <el-form-item label="LTI config URL">
-          <el-input v-model="ltiConfigUrl" :readonly="true" type="url">
-            <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
-              <el-button v-clipboard="ltiConfigUrl" @success="clipboardSuccess">
-                <i class="icon-copy"/>
-              </el-button>
-            </el-tooltip>
-          </el-input>
-        </el-form-item>
-
-        <!-- LTI key -->
-        <el-form-item label="LTI key">
-          <el-input v-model="form._id" :readonly="true" type="text">
-            <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
-              <el-button v-clipboard="form._id" @success="clipboardSuccess">
-                <i class="icon-copy"/>
-              </el-button>
-            </el-tooltip>
-          </el-input>
-        </el-form-item>
-
-        <!-- LTI secret -->
-        <el-form-item label="LTI secret">
-          <el-input v-model="form.lmsConfig.ltiBasicSecret" :readonly="true" :type="hideCredentials ? 'password' : 'text'" :placeholder="$t('SW_SECRET_PLACEHOLDER')">
-            <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
-              <el-button v-clipboard="form.lmsConfig.ltiBasicSecret" @success="clipboardSuccess">
-                <i class="icon-copy"/>
-              </el-button>
-            </el-tooltip>
-
-            <el-tooltip slot="append" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_GENERATE_SECRET_TEXT')" placement="bottom-end">
-              <el-button @click="generateSecret">
-                <i class="icon-repeat"/>
-                {{ $t('SW_GENERATE') }}
-              </el-button>
-            </el-tooltip>
-          </el-input>
-
-          <!-- Generated key alert -->
-          <el-alert v-if="generatedSecretAlert" class="mt-10" show-icon center :title="$t('SW_GENERATED_KEY_ALERT')" type="warning" :closable="false"/>
-        </el-form-item>
-      </div>
-
-      <!-- Lti Advantage configuration -->
-      <div v-else-if="form.ltiVersion === 'advantage'" class="mb-20" key="advantage">
-        <!-- LTI config domain -->
-        <el-form-item label="LTI domain url">
-          <el-input v-model="ltiAdvantageDomainUrl" :readonly="true" type="url">
-            <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
-              <el-button v-clipboard="ltiAdvantageDomainUrl" @success="clipboardSuccess"><i class="icon-copy"/></el-button>
-            </el-tooltip>
-          </el-input>
-        </el-form-item>
-
-        <!-- LTI config Redirect Urls -->
-        <el-form-item label="LTI redirect url">
-          <el-input v-model="ltiAdvantageRedirectUrl" :readonly="true" type="url">
-            <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
-              <el-button v-clipboard="ltiAdvantageRedirectUrl" @success="clipboardSuccess"><i class="icon-copy"/></el-button>
-            </el-tooltip>
-          </el-input>
-        </el-form-item>
-        <!-- LTI config Redirect Urls -->
-        <el-form-item label="LTI login url">
-          <el-input v-model="ltiAdvantageLoginUrl" :readonly="true" type="url">
-            <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
-              <el-button v-clipboard="ltiAdvantageLoginUrl" @success="clipboardSuccess"><i class="icon-copy"/></el-button>
-            </el-tooltip>
-          </el-input>
-        </el-form-item>
-        <!-- LTI config Keyset Url -->
-        <el-form-item label="LTI keyset url">
-          <el-input v-model="ltiAdvantageKeysetUrl" :readonly="true" type="url">
-            <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
-              <el-button v-clipboard="ltiAdvantageKeysetUrl" @success="clipboardSuccess"><i class="icon-copy"/></el-button>
-            </el-tooltip>
-          </el-input>
-        </el-form-item>
-        <!-- Lti Key id -->
-        <el-form-item label="LTI key">
-          <el-input v-model="form.lmsConfig.ltiAdvantageId" type="text" :placeholder="lmsTitle + ' LTI Advantage key ...'"/>
-        </el-form-item>
-        <!-- Lti-advantage auth secret -->
-        <el-form-item label="LTI secret">
-          <el-input v-model="form.lmsConfig.ltiAdvantageSecret" :type="hideCredentials ? 'password' : 'text'" :placeholder="lmsTitle + ' LTI Advantage secret ...'"/>
-        </el-form-item>
-        <!-- Lti-advantage auth url -->
-        <el-form-item label="LTI auth url">
-          <el-input v-model="form.lmsConfig.ltiAdvantageAuthUrl" type="text" :placeholder="lmsTitle + ' LTI Advantage auth url ...'"/>
-        </el-form-item>
-        <!-- Ilearn only with Lti-advantage Deeplink-->
-        <el-form-item label="Deeplinking" v-if="form.lms === 'ilearn'">
-          <el-switch v-model="form.lmsConfig.ltiAdvantageDeeplinking" active-color="#13ce66" inactive-color="#ff4949"/>
-          <span class="text-muted ml-10">{{ $t('SW_USE_DEEPLINK_TEXT' )}}</span>
-        </el-form-item>
-      </div>
-    </transition>
-
-    <!-- Enable API Integration -->
-    <el-form-item class="mb-10" :label="$t('SW_TOGGLE_API_INTEGRATION')">
-      <el-switch v-model="form.lmsApiIntegration" active-color="#13ce66" inactive-color="#ff4949"/>
-      <span class="text-muted ml-10">{{ $t('SW_TOGGLE_API_INTEGRATION_TEXT' )}}</span>
-    </el-form-item>
-
-    <!-- Api Integration fields -->
+    <!-- LMS === none -> hide all -->
     <el-collapse-transition>
-      <div v-show="form.lmsApiIntegration">
-        <div v-for="lms in apiTemplates" :key="lms.name" v-show="lms.name === form.lms">
-          <div v-if="lms.name !== 'moodle'">
-            <!-- URL -->
-            <el-form-item :label="lmsTitle + ' URL'" v-if="lms.apiUrl">
-              <el-input @change="processHttp" v-model="form.lmsConfig.apiUrl" type="url" :placeholder="lms.apiUrl.placeholder"/>
-            </el-form-item>
-            <!-- Callback url -->
-            <el-form-item :label="lmsTitle + ' Callback URI'" v-if="!['blackboard', 'ilearn'].includes(lms.name)">
-              <el-input v-model="callbackUrl" :readonly="true" type="url">
+      <div v-show="form.lms !== 'none'">
+        <!-- Set Lti version-->
+        <el-form-item label="LTI version">
+          <el-radio-group v-model="form.ltiVersion" size="small">
+            <el-radio-button label="basic">LTI Basic (v1.1)</el-radio-button>
+            <el-radio-button label="advantage">LTI Advantage (v1.3)</el-radio-button>
+          </el-radio-group>
+        </el-form-item>
+
+        <!-- Lti Basic configuration -->
+        <transition name="opacity" mode="out-in">
+          <div v-if="form.ltiVersion === 'basic'" class="mb-20" key="basic">
+            <!-- LTI config url -->
+            <el-form-item label="LTI config URL">
+              <el-input v-model="ltiConfigUrl" :readonly="true" type="url">
                 <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
-                  <el-button v-clipboard="callbackUrl" @success="clipboardSuccess"><i class="icon-copy"/></el-button>
+                  <el-button v-clipboard="ltiConfigUrl" @success="clipboardSuccess">
+                    <i class="icon-copy"/>
+                  </el-button>
                 </el-tooltip>
               </el-input>
             </el-form-item>
-            <!-- App ID -->
-            <el-form-item label="Application ID" v-if="lms.appId">
-              <el-input v-model="form.lmsConfig.appId">
+
+            <!-- LTI key -->
+            <el-form-item label="LTI key">
+              <el-input v-model="form._id" :readonly="true" type="text">
                 <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
-                  <el-button v-clipboard="form[lms.name].appId"><i class="icon-copy"/></el-button>
+                  <el-button v-clipboard="form._id" @success="clipboardSuccess">
+                    <i class="icon-copy"/>
+                  </el-button>
                 </el-tooltip>
               </el-input>
             </el-form-item>
-            <!-- API key -->
-            <el-form-item :label="lms.apiId.label" v-if="lms.apiId">
-              <el-input v-model="form.lmsConfig.apiId" type="text" :placeholder="lms.apiId.placeholder"/>
-            </el-form-item>
-            <!-- API Secret -->
-            <el-form-item :label="lms.apiSecret.label" v-if="lms.apiSecret">
-              <el-input v-model="form.lmsConfig.apiSecret" :type="hideCredentials ? 'password' : 'text'" :placeholder="lms.apiSecret.placeholder"/>
+
+            <!-- LTI secret -->
+            <el-form-item label="LTI secret">
+              <el-input v-model="form.lmsConfig.ltiBasicSecret" :readonly="true" :type="hideCredentials ? 'password' : 'text'" :placeholder="$t('SW_SECRET_PLACEHOLDER')">
+                <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
+                  <el-button v-clipboard="form.lmsConfig.ltiBasicSecret" @success="clipboardSuccess">
+                    <i class="icon-copy"/>
+                  </el-button>
+                </el-tooltip>
+
+                <el-tooltip slot="append" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_GENERATE_SECRET_TEXT')" placement="bottom-end">
+                  <el-button @click="generateSecret">
+                    <i class="icon-repeat"/>
+                    {{ $t('SW_GENERATE') }}
+                  </el-button>
+                </el-tooltip>
+              </el-input>
+
+              <!-- Generated key alert -->
+              <el-alert v-if="generatedSecretAlert" class="mt-10" show-icon center :title="$t('SW_GENERATED_KEY_ALERT')" type="warning" :closable="false"/>
             </el-form-item>
           </div>
-          <!-- No API integration -->
-          <el-alert v-else :title="$t('SW_NO_API_INTEGRATION_YET')" class="mb-30" :description="$t('SW_NO_API_INTEGRATION_YET_TEXT')" type="warning" show-icon/>
-        </div>
+
+          <!-- Lti Advantage configuration -->
+          <div v-else-if="form.ltiVersion === 'advantage'" class="mb-20" key="advantage">
+            <!-- LTI config domain -->
+            <el-form-item label="LTI domain url">
+              <el-input v-model="ltiAdvantageDomainUrl" :readonly="true" type="url">
+                <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
+                  <el-button v-clipboard="ltiAdvantageDomainUrl" @success="clipboardSuccess"><i class="icon-copy"/></el-button>
+                </el-tooltip>
+              </el-input>
+            </el-form-item>
+
+            <!-- LTI config Redirect Urls -->
+            <el-form-item label="LTI redirect url">
+              <el-input v-model="ltiAdvantageRedirectUrl" :readonly="true" type="url">
+                <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
+                  <el-button v-clipboard="ltiAdvantageRedirectUrl" @success="clipboardSuccess"><i class="icon-copy"/></el-button>
+                </el-tooltip>
+              </el-input>
+            </el-form-item>
+            <!-- LTI config Redirect Urls -->
+            <el-form-item label="LTI login url">
+              <el-input v-model="ltiAdvantageLoginUrl" :readonly="true" type="url">
+                <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
+                  <el-button v-clipboard="ltiAdvantageLoginUrl" @success="clipboardSuccess"><i class="icon-copy"/></el-button>
+                </el-tooltip>
+              </el-input>
+            </el-form-item>
+            <!-- LTI config Keyset Url -->
+            <el-form-item label="LTI keyset url">
+              <el-input v-model="ltiAdvantageKeysetUrl" :readonly="true" type="url">
+                <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
+                  <el-button v-clipboard="ltiAdvantageKeysetUrl" @success="clipboardSuccess"><i class="icon-copy"/></el-button>
+                </el-tooltip>
+              </el-input>
+            </el-form-item>
+            <!-- Lti Key id -->
+            <el-form-item label="LTI key">
+              <el-input v-model="form.lmsConfig.ltiAdvantageId" type="text" :placeholder="lmsTitle + ' LTI Advantage key ...'"/>
+            </el-form-item>
+            <!-- Lti-advantage auth secret -->
+            <el-form-item label="LTI secret">
+              <el-input v-model="form.lmsConfig.ltiAdvantageSecret" :type="hideCredentials ? 'password' : 'text'" :placeholder="lmsTitle + ' LTI Advantage secret ...'"/>
+            </el-form-item>
+            <!-- Lti-advantage auth url -->
+            <el-form-item label="LTI auth url">
+              <el-input v-model="form.lmsConfig.ltiAdvantageAuthUrl" type="text" :placeholder="lmsTitle + ' LTI Advantage auth url ...'"/>
+            </el-form-item>
+            <!-- Ilearn only with Lti-advantage Deeplink-->
+            <el-form-item label="Deeplinking" v-if="form.lms === 'ilearn'">
+              <el-switch v-model="form.lmsConfig.ltiAdvantageDeeplinking" active-color="#13ce66" inactive-color="#ff4949"/>
+              <span class="text-muted ml-10">{{ $t('SW_USE_DEEPLINK_TEXT' )}}</span>
+            </el-form-item>
+          </div>
+        </transition>
+
+        <!-- Enable API Integration -->
+        <el-form-item class="mb-10" :label="$t('SW_TOGGLE_API_INTEGRATION')">
+          <el-switch v-model="form.lmsApiIntegration" active-color="#13ce66" inactive-color="#ff4949"/>
+          <span class="text-muted ml-10">{{ $t('SW_TOGGLE_API_INTEGRATION_TEXT' )}}</span>
+        </el-form-item>
+
+        <!-- Api Integration fields -->
+        <el-collapse-transition>
+          <div v-show="form.lmsApiIntegration">
+            <div v-for="lms in apiTemplates" :key="lms.name" v-show="lms.name === form.lms">
+              <div v-if="lms.name !== 'moodle'">
+                <!-- URL -->
+                <el-form-item :label="lmsTitle + ' URL'" v-if="lms.apiUrl">
+                  <el-input @change="processHttp" v-model="form.lmsConfig.apiUrl" type="url" :placeholder="lms.apiUrl.placeholder"/>
+                </el-form-item>
+                <!-- Callback url -->
+                <el-form-item :label="lmsTitle + ' Callback URI'" v-if="!['blackboard', 'ilearn'].includes(lms.name)">
+                  <el-input v-model="callbackUrl" :readonly="true" type="url">
+                    <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
+                      <el-button v-clipboard="callbackUrl" @success="clipboardSuccess"><i class="icon-copy"/></el-button>
+                    </el-tooltip>
+                  </el-input>
+                </el-form-item>
+                <!-- App ID -->
+                <el-form-item label="Application ID" v-if="lms.appId">
+                  <el-input v-model="form.lmsConfig.appId">
+                    <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
+                      <el-button v-clipboard="form[lms.name].appId"><i class="icon-copy"/></el-button>
+                    </el-tooltip>
+                  </el-input>
+                </el-form-item>
+                <!-- API key -->
+                <el-form-item :label="lms.apiId.label" v-if="lms.apiId">
+                  <el-input v-model="form.lmsConfig.apiId" type="text" :placeholder="lms.apiId.placeholder"/>
+                </el-form-item>
+                <!-- API Secret -->
+                <el-form-item :label="lms.apiSecret.label" v-if="lms.apiSecret">
+                  <el-input v-model="form.lmsConfig.apiSecret" :type="hideCredentials ? 'password' : 'text'" :placeholder="lms.apiSecret.placeholder"/>
+                </el-form-item>
+              </div>
+              <!-- No API integration -->
+              <el-alert v-else :title="$t('SW_NO_API_INTEGRATION_YET')" class="mb-30" :description="$t('SW_NO_API_INTEGRATION_YET_TEXT')" type="warning" show-icon/>
+            </div>
+          </div>
+        </el-collapse-transition>
+
       </div>
     </el-collapse-transition>
   </div>
@@ -266,7 +272,7 @@ export default {
       iLearn: config.iLearn,
 
       importantFields: ['canvas', 'brightspace', 'blackboard', 'ilearn'],
-      lmsTypes: ['canvas', 'brightspace', 'blackboard', 'moodle', 'ilearn'],
+      lmsTypes: ['canvas', 'brightspace', 'blackboard', 'moodle', 'ilearn', 'none'],
       apiTemplates: [
         {
           name: 'canvas',
