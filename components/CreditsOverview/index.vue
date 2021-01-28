@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ $t('SW_CREDITS_REMAINING_INFO', [school.name[lang]])}} <a href="#" @click.prevent="contactUs">{{ $t('SW_CONTACT_SUPPORT') }}</a>.
+    {{ $t('SW_CREDITS_REMAINING_INFO', [school.name[lang], appName])}} <a href="#" @click.prevent="contactUs">{{ $t('SW_CONTACT_SUPPORT') }}</a>.
 
     <div v-if="user.credits && user.credits.exp">
       <strong class="hidden-xs hidden-sm"><i class="icon-time"/></strong>
@@ -11,6 +11,7 @@
 
 <script>
 import moment from 'moment'
+import config from 'config'
 
 export default {
   name: 'CreditsOverview',
@@ -18,6 +19,7 @@ export default {
   data () {
     return {
       school: this.$store.state.user.organization,
+      appName: config.name,
       lang: this.$store.state.lang,
       user: this.$store.state.user
     }

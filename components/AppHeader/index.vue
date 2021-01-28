@@ -16,9 +16,8 @@
           <span>{{ $t('SW_DASHBOARD') }}</span>
         </el-menu-item>
 
-        <el-button :type="user.credits && user.credits.used < user.credits.limit ? 'success' : 'danger'" size="small"
-                   @click="dialogRemaining = true" v-if="user.role !== 'student' && school.creditsEnabled"
-                   class="assessment-limit">
+        <el-button :type="user.credits && user.credits.used < user.credits.limit ? 'success' : 'warning'" size="small" class="assessment-limit"
+                   @click="dialogRemaining = true" v-if="user.role !== 'student' && school.creditsEnabled">
           <strong class="visible-sm-inline visible-xs-inline"><i class="icon-done_all"/></strong>
           <strong v-if="user.credits"> {{ user.credits.used > user.credits.limit ? 0 : user.credits.limit - user.credits.used }} </strong>
           <strong v-else> 0 </strong>

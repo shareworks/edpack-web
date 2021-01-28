@@ -51,7 +51,6 @@
   "SW_ARCHIVE": "Archive",
   "SW_ARCHIVED": "Archived",
   "SW_ARCHIVE_COURSE": "Archive course | Archive courses",
-  "SW_ASSESSMENT_REMAINING_INFO": "{0} does not have a license yet, therefore assessments are offered on a 'pay as you go' basis. Each instructor can only create a given amount of assessments in {0}.",
   "SW_ATTENTION": "Attention!",
   "SW_ATTENTION_SECRET_GENERATE": "When you generate a new secret, the old secret will stop working! Are you sure?",
   "SW_ATTENTION_SECRET_GENERATE_TITLE": "Generate LTI key",

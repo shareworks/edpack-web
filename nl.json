@@ -49,7 +49,6 @@
   "SW_ARCHIVE": "Archiveren",
   "SW_ARCHIVED": "Gearchiveerd",
   "SW_ARCHIVE_COURSE": "Cursus archiveren | Archiveer cursussen",
-  "SW_ASSESSMENT_REMAINING_INFO": "{0} heeft nog geen licentie, daarom worden assessments aangeboden op basis van 'pay as you go'. Elke instructeur kan alleen een bepaald aantal assessments maken in {0}.",
   "SW_ATTENTION": "Let op!",
   "SW_ATTENTION_SECRET_GENERATE": "Als je een nieuwe secret aanmaakt, werkt de oude secret niet meer! Weet je het zeker?",
   "SW_ATTENTION_SECRET_GENERATE_TITLE": "Genereer LTI key",

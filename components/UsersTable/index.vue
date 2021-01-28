@@ -128,7 +128,7 @@
       <el-table-column property="credits" v-if="school.creditsEnabled" :label="$t('SW_LIMIT_ASSESSMENT_CREATION')" width="120">
         <template slot-scope="props">
           <!-- Credits column -->
-          <credits-column :scope="props.row"/>
+          <credits-column :scope="props.row" :updateUser="updateUser"/>
         </template>
       </el-table-column>
 
@@ -161,11 +161,6 @@
     <el-dialog :title="$t('SW_MERGE_USERS')" append-to-body :visible.sync="dialogMerge">
       <users-merge v-if="dialogMerge" :selectedUsers="multipleSelection" :closeDialog="closeDialog"/>
     </el-dialog>
-
-    <!-- Pay as you go dialog -->
-    <el-dialog :visible.sync="creditsDialog" destroy-on-close>
-      <credits-edit :user="selectedUser" :closeDialog="closeDialog"/>
-    </el-dialog>
   </div>
 </template>
 
@@ -181,12 +176,11 @@ import EmailUsers from '../../components/EmailUsers'
 import UsersCreate from '../../components/UsersCreate'
 import UserAccountForm from '../../components/UserAccountForm'
 import CreditsColumn from '../../components/CreditsColumn'
-import CreditsEdit from '../../components/CreditsEdit'
 import sortCaseInsensitive from '../../utils/sort-case-insensitive'
 
 export default {
   name: 'UsersTable',
-  components: { UserAccountForm, UsersCreate, EmailUsers, ExpandUser, UsersMerge, CreditsEdit, CreditsColumn },
+  components: { UserAccountForm, UsersCreate, EmailUsers, ExpandUser, UsersMerge, CreditsColumn },
 
   data () {
     const roles = config.usersTableRoles
@@ -210,7 +204,6 @@ export default {
       editUserForm: false,
       hideCourses: config.hideCourses,
       hasUserProfiles: config.hasUserProfiles,
-      selectedUser: false,
       dialogAddUsers: false,
       dialogEditUser: false,
       creditsDialog: false,
@@ -327,8 +320,6 @@ export default {
       this.dialogAddUsers = false
       this.dialogEmail = false
       this.dialogMerge = false
-      this.creditsDialog = false
-      this.selectedUser = false
       this.selectionChange()
       if (refresh) {
         this.searchText = ''
