@@ -27,6 +27,11 @@
     <el-dialog custom-class="welcome-dialog" :class="currentUser.contrastMode ? 'contrast-mode' : ''" append-to-body :visible.sync="dialogWelcome">
       <welcome-dialog :closeDialog="toggleDialog"/>
     </el-dialog>
+
+    <!-- Contact dialog -->
+    <el-dialog :title="$t('SW_CONTACT_US')" append-to-body :visible="contactFormOpened" @close="setContactForm">
+      <contact-form v-if="contactFormOpened" :closeDialog="setContactForm"/>
+    </el-dialog>
   </div>
 </template>
 
@@ -40,17 +45,16 @@ import AppSidebar from '../../components/AppSidebar'
 import browserConfig from '../../utils/browser-update'
 import WelcomeDialog from '../../components/WelcomeDialog'
 import ReloadAfterDeploy from '../../components/ReloadAfterDeploy'
-
-const mode = process.env.VUE_APP_MODE && process.env.VUE_APP_MODE !== 'production' ? process.env.VUE_APP_MODE.toUpperCase() : ''
+import ContactForm from '../../components/ContactForm'
 
 export default {
   name: 'App',
   metaInfo: {
     title: 'Welcome',
-    titleTemplate: '%s - ' + config.name + ' ' + mode
+    titleTemplate: '%s - ' + config.name + ' ' + config.releaseStage.toUpperCase()
   },
   components: {
-    WelcomeDialog, AppHeader, AppSidebar, AppFooter, ReloadAfterDeploy, Freshchat: () => import('../../components/Freshchat')
+    ContactForm, WelcomeDialog, AppHeader, AppSidebar, AppFooter, ReloadAfterDeploy, Freshchat: () => import('../../components/Freshchat')
   },
 
   data () {
@@ -111,7 +115,7 @@ export default {
       this.dialogWelcome = !this.dialogWelcome
       this.disableWelcome = true
     },
-    ...mapActions(['handleResize', 'openSidebar', 'closeSidebar'])
+    ...mapActions(['handleResize', 'openSidebar', 'closeSidebar', 'setContactForm'])
   },
 
   computed: {
@@ -121,6 +125,7 @@ export default {
       school: state => state.school,
       showFooter: state => state.route.meta.footer,
       sidebarOpened: state => state.sidebarOpened,
+      contactFormOpened: state => state.contactFormOpened,
       obfuscatorActive: state => state.obfuscatorActive,
       pageOffset: state => state.route.meta.auth,
       loadFreshchat: (state) => {

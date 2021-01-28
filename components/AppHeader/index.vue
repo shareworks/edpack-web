@@ -76,7 +76,7 @@
 
     <!-- Pay as you go limit -->
     <el-dialog :title="$t('SW_CREDITS_INFO')" append-to-body :visible.sync="dialogRemaining" v-if="payAsYouGo">
-      {{ $t('SW_CREDITS_REMAINING_INFO', [school.name[lang]])}} <a href="#" @click.prevent="openChat">{{ $t('SW_CONTACT_SUPPORT') }}</a>.
+      {{ $t('SW_CREDITS_REMAINING_INFO', [school.name[lang]])}} <a href="#" @click.prevent="contactUs">{{ $t('SW_CONTACT_SUPPORT') }}</a>.
 
       <div v-if="user.credits && user.credits.exp">
         <strong class="hidden-xs hidden-sm"><i class="icon-time"/></strong>
@@ -153,7 +153,10 @@ export default {
       const route = { name: tab, params: { slug: this.school.slug } }
       if (this.$route.name !== tab) this.$router.push(route)
     },
-    openChat () { window.fcWidget.open() }
+    contactUs () {
+      if (window.fcWidget) return window.fcWidget.open()
+      this.$store.dispatch('setContactForm', true)
+    }
   }
 }
 </script>

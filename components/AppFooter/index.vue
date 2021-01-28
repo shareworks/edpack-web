@@ -11,7 +11,7 @@
     <!-- Credit -->
     <div class="credits">
       <div class="mb-20" v-if="school && school.colofon && school.colofon[lang]">{{ $t('SW_AS_CLIENT_OF') }} {{ school.name[lang] }} &centerdot;
-        <a class="footer-link" href="#" v-if="school && school.colofon" @click.prevent="toggleDialog">{{ $t('SW_COLOFON') }}</a>
+        <a class="footer-link" href="#" v-if="school && school.colofon" @click.prevent="toggleColofon">{{ $t('SW_COLOFON') }}</a>
       </div>
 
       &copy; {{ (new Date()).getFullYear() }} &centerdot;
@@ -28,16 +28,11 @@
         <el-button type="text" aria-label="Open privacy page" class="footer-link" @click="openPrivacy">
           {{ $t('SW_PRIVACY') }}
         </el-button> |
-        <el-button type="text" aria-label="Open contact us dialog" class="footer-link" @click="openDialog">
+        <el-button type="text" aria-label="Open contact us dialog" class="footer-link" @click="openContact">
           {{ $t('SW_CONTACT_US') }}
         </el-button>
       </p>
     </div>
-
-    <!-- Contact dialog -->
-    <el-dialog :title="$t('SW_CONTACT_US')" append-to-body :visible.sync="dialogContact">
-      <contact-form v-if="dialogContact" :closeDialog="closeDialog"/>
-    </el-dialog>
 
     <!-- Colofon dialog -->
     <el-dialog :title="$t('SW_COLOFON')" v-if="school && school.colofon" append-to-body :visible.sync="dialogColofon">
@@ -50,12 +45,10 @@
 import config from 'config'
 export default {
   name: 'AppFooter',
-  components: { ContactForm: () => import('../../components/ContactForm') },
 
   data () {
     return {
       aboutUrl: config.aboutUrl,
-      dialogContact: false,
       dialogColofon: false,
       productName: config.name,
       school: this.$store.state.school,
@@ -68,9 +61,8 @@ export default {
     openAbout () { this.$router.push({ name: 'about' }) },
     openTerms () { this.$router.push({ name: 'terms' }) },
     openPrivacy () { this.$router.push({ name: 'privacy' }) },
-    openDialog () { this.dialogContact = true },
-    closeDialog () { this.dialogContact = false },
-    toggleDialog () { this.dialogColofon = !this.dialogColofon }
+    openContact () { this.$store.dispatch('setContactForm', true) },
+    toggleColofon () { this.dialogColofon = !this.dialogColofon }
   }
 }
 </script>

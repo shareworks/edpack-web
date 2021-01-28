@@ -33,15 +33,10 @@
       <span class="link-separator" v-if="$route.name !== 'about'">|</span>
 
       <!-- Contact us -->
-      <el-button size="large" type="text" @click="dialogContact = true">
+      <el-button size="large" type="text" @click="openContact">
         <strong>{{ $t('SW_CONTACT_US') }}</strong>
       </el-button>
     </div>
-
-    <!-- Contact dialog -->
-    <el-dialog :title="$t('SW_CONTACT_US')" append-to-body destroy-on-close :visible.sync="dialogContact">
-      <contact-form :closeDialog="toggleDialog"/>
-    </el-dialog>
   </div>
 </template>
 
@@ -50,19 +45,17 @@ import config from 'config'
 export default {
   name: 'FooterLinks',
   props: ['signin'],
-  components: { ContactForm: () => import('../ContactForm') },
 
   data () {
     return {
       aboutUrl: config.aboutUrl,
-      dialogContact: false,
       inLTI: this.$store.state.inLTI,
       currentUser: this.$store.state.user
     }
   },
 
   methods: {
-    toggleDialog () { this.dialogContact = !this.dialogContact }
+    openContact () { this.$store.dispatch('setContactForm', true) }
   }
 }
 </script>

@@ -13,6 +13,7 @@ export const SET_LANGUAGE = 'SET_LANGUAGE'
 export const SET_LANGUAGES = 'SET_LANGUAGES'
 export const SET_COURSE = 'SET_COURSE'
 export const SET_UNSAVED_CHANGES = 'SET_UNSAVED_CHANGES'
+export const SET_CONTACT_FORM = 'SET_CONTACT_FORM'
 
 const state = {
   navAvailable: false,
@@ -29,6 +30,7 @@ const state = {
   manageFaculties: [],
   languages: config.languages,
   lang: config.defaultLanguage,
+  contactFormOpened: false,
   unsavedChanges: false
 }
 
@@ -63,6 +65,9 @@ const mutations = {
   },
   [SET_UNSAVED_CHANGES] (state, data) {
     state.unsavedChanges = data.payload
+  },
+  [SET_CONTACT_FORM] (state, data) {
+    state.contactFormOpened = data.payload
   },
   [SET_LANGUAGE] (state, data) {
     state.lang = data.payload
@@ -102,6 +107,9 @@ const actions = {
   },
   setMobileView ({ commit }, payload) {
     commit({ type: WINDOW_RESIZE, payload })
+  },
+  setContactForm ({ commit }, payload) {
+    commit({ type: SET_CONTACT_FORM, payload })
   }
 }
 
