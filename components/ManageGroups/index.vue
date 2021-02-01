@@ -317,7 +317,7 @@ export default {
       if (!action.added) return
 
       // Is there is same students in group
-      const sameStudentsInGroup = students.filter(stud => stud._id === action.added.element._id )
+      const sameStudentsInGroup = students.filter(stud => stud._id === action.added.element._id)
 
       // The draggable code will add students card anyway, even if the student already exist in such group
       // If it's happens, after that we find any duplicate of that user and removing it.

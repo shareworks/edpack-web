@@ -74,7 +74,6 @@ export default {
       mergeEmptyLanguageFields(this.form, ['name', 'shortName'])
       this.submitting = true
 
-
       if (this.form.orgTemplate) {
         this.form.terminology = {}
         this.form.orgCourseIntro = {}
