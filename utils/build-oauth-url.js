@@ -11,7 +11,7 @@ const buildOauthUrl = ({
   tab, /* Required */
   postfix = ''
 } = {}) => {
-  const params = isCourseFirst ? `?course=${courseId}&organization=${schoolId}` : `?organization=${schoolId}&course=${courseId}`
+  const params = isCourseFirst ? `?course=${courseId}&organization=${schoolId}&origin=lti` : `?organization=${schoolId}&course=${courseId}&origin=lti`
 
   let authUrl = `${prefix}/auth/${lms}${params}`
   if ($http.defaults.headers.common['Lti-Access-Token']) authUrl = `${authUrl}&ltiAccessToken=${$http.defaults.headers.common['Lti-Access-Token']}`
