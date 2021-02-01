@@ -3,7 +3,7 @@
     <!-- Title -->
     <h1>{{ title }}</h1>
 
-    <div class="header-text mt-5 hidden-xs hidden-sm print-always-visible">
+    <div class="header-text mt-5 hidden-xs hidden-sm">
 
       <!-- Area info -->
       <span v-if="area">
