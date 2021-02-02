@@ -188,6 +188,7 @@
   "SW_NOT_PART_OF_ORG": "You are not part of a school yet.",
   "ORG_REMOVED": "Looks like your school has been removed.",
   "SW_USER_NOT_FOUND": "User not found or user has been deleted.",
+  "SW_USER_NOT_FOUND_HELP": "If you think this is a mistake, please contact us.",
   "SW_INVALID_PASSWORD": "Email or password was incorrect. Please try again.",
   "SW_EMAIL_PLACEHOLDER": "Type email here ...",
   "SW_EMAIL_RESET_SUBMITTED": "Email with reset link has been sent!",
