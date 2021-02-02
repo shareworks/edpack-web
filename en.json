@@ -200,6 +200,7 @@
   "SW_ERROR_LOADING": "Error reported. Please try again later.",
   "SW_EVALUATION_SYNC_EXCEL": "Sync completed. Please check if the updates were successful.",
   "SW_EXPIRED_TOKEN": "Your token has expired",
+  "SW_RECOVER_TOKEN_ALREADY_SEND": "You already requested a password reset recently. Please check your mail for the password recovery mail.",
   "SW_EXPIRED_TOKEN_HELP": "Please sign in again or try another browser. If the problem persists, please contact us.",
   "SW_EXPLAIN_FACULTY_LIST": "Add a list of all {0} here.",
   "SW_EXPORT": "Export results",
