@@ -26,7 +26,7 @@
 
           <!-- Delete email -->
           <el-popconfirm v-if="form.emails.length > 1" slot="append" :confirmButtonText="$t('SW_DELETE')" :cancelButtonText="$t('SW_CANCEL')"
-                         @on-confirm="deleteEmail(email)" hideIcon :title="$t('SW_DELETE_EMAIL_CONFIRM')">
+                         @confirm="deleteEmail(email)" hideIcon :title="$t('SW_DELETE_EMAIL_CONFIRM')">
             <el-button slot="reference" class="delete-email-button mr-5">
               <i class="icon-delete"/>
               <span v-if="!isMobile">{{ $t('SW_REMOVE') }}</span>
