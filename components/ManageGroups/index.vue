@@ -82,7 +82,7 @@
                         <div class="group-item-controls">
                           <div class="top-minus-3">
                             <!-- Remove group -->
-                            <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @onConfirm="studentsData_RemoveGroup(group)" hideIcon :title="$t('SW_DELETE_GROUP')">
+                            <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @confirm="studentsData_RemoveGroup(group)" hideIcon :title="$t('SW_DELETE_GROUP')">
                               <el-button slot="reference" :disabled="manipulationDisabled" plain size="small" @click.stop class="button-square mr-5 hidden-xs" type="danger">
                                 <i class="icon-delete"/>
                               </el-button>
