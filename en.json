@@ -13,6 +13,8 @@
   "SW_ADDED_GROUP": "New group has been created.",
   "SW_ADD_EMAIL": "Add email address",
   "SW_ADD_FACULTY": "Add {0}",
+  "SW_DUPLICATED_USERS": "Double user account in database",
+  "SW_DUPLICATED_USERS_HELP": "For some reason, there are two user accounts associated with your user credentials. Please contact us so we can fix this directly.",
   "SW_ADD_GROUP": "Add group",
   "SW_ACCOUNT_ID": "LMS subaccount ID",
   "SW_COOKIE_WARNING": "{0} needs cookies for security and other functionalities. Please enable third party cookies in your browser settings to make sure {0} works properly.",
