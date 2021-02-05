@@ -13,6 +13,8 @@
   "SW_ADDED_GROUP": "New group has been created.",
   "SW_ADD_EMAIL": "Add email address",
   "SW_ADD_FACULTY": "Add {0}",
+  "SW_DUPLICATED_USERS": "Double user account in database",
+  "SW_DUPLICATED_USERS_HELP": "For some reason, there are two user accounts associated with your user credentials. Please contact us so we can fix this directly.",
   "SW_ADD_GROUP": "Add group",
   "SW_ACCOUNT_ID": "LMS subaccount ID",
   "SW_COOKIE_WARNING": "{0} needs cookies for security and other functionalities. Please enable third party cookies in your browser settings to make sure {0} works properly.",
@@ -188,6 +190,7 @@
   "SW_NOT_PART_OF_ORG": "You are not part of a school yet.",
   "ORG_REMOVED": "Looks like your school has been removed.",
   "SW_USER_NOT_FOUND": "User not found or user has been deleted.",
+  "SW_USER_NOT_FOUND_HELP": "If you think this is a mistake, please contact us.",
   "SW_INVALID_PASSWORD": "Email or password was incorrect. Please try again.",
   "SW_EMAIL_PLACEHOLDER": "Type email here ...",
   "SW_EMAIL_RESET_SUBMITTED": "Email with reset link has been sent!",
@@ -199,6 +202,7 @@
   "SW_ERROR_LOADING": "Error reported. Please try again later.",
   "SW_EVALUATION_SYNC_EXCEL": "Sync completed. Please check if the updates were successful.",
   "SW_EXPIRED_TOKEN": "Your token has expired",
+  "SW_RECOVER_TOKEN_ALREADY_SEND": "You already requested a password reset recently. Please check your mail for the password recovery mail.",
   "SW_EXPIRED_TOKEN_HELP": "Please sign in again or try another browser. If the problem persists, please contact us.",
   "SW_EXPLAIN_FACULTY_LIST": "Add a list of all {0} here.",
   "SW_EXPORT": "Export results",
@@ -636,5 +640,7 @@
   "SW_SCHOOL_TEMPLATE":"School template",
   "SW_ORG_TEMPLATE_PLACEHOLDER": "Optionally select school as template ...",
   "SW_ORG_TEMPLATE_WARNING": "The template will only copy settings and configuration.",
-  "SW_NO_ORG_NAME": "School name is required."
+  "SW_NO_ORG_NAME": "School name is required.",
+  "SW_PRINT_TO_PDF": "Print to PDF",
+  "SW_COMPLETION": "completion"
 }

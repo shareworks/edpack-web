@@ -67,7 +67,6 @@
 <script>
 import config from 'config'
 import Statistics from '@/edpack-web/components/Statistics'
-import Courses from '@/edpack-web/components/Courses'
 import OrgsTable from '@/edpack-web/components/OrgsTable'
 import UsersTable from '@/edpack-web/components/UsersTable'
 
@@ -75,7 +74,7 @@ export default {
   name: 'AdminPanelWrapper',
   metaInfo: { title: 'Admin' },
   props: ['stats', 'tabs'],
-  components: { Statistics, OrgsTable, Courses, UsersTable },
+  components: { Statistics, OrgsTable, UsersTable },
 
   data () {
     return {

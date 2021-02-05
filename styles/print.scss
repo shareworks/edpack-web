@@ -1,0 +1,99 @@
+.thumbnail,
+.survey-questions,
+.survey-grid,
+.result-slider-circle,
+.result-slider-line,
+.page-cover,
+.el-progress-bar__inner,
+.el-progress-bar__outer,
+.el-tag {
+  -webkit-print-color-adjust: exact !important;
+  color-adjust: exact !important;
+}
+
+.print-only {
+  display: none;
+}
+
+@media print {
+  .overflow-auto {
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+  }
+
+  .print-only {
+    display: block;
+  }
+
+  .print-mode-single-page {
+    page-break-before: always;
+  }
+
+  .print-always-visible {
+    display: block !important;
+  }
+
+  .hide-print {
+    display: none;
+  }
+
+  .print-logo {
+    background-image: url('/images/logo-text.svg');
+    background-size: contain;
+    width: 160px;
+    display: inline-block;
+    background-position: center;
+    -webkit-print-color-adjust: exact;
+    height: 40px;
+    background-repeat: no-repeat;
+  }
+
+  .el-popup-parent--hidden {
+    overflow: auto !important;
+
+    #app {
+      display: none !important
+    }
+  }
+
+  body {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-y: auto !important;
+    line-height: 1.45;
+    color: #000;
+  }
+
+  #fc_frame, .hidden-print, .v-modal, .el-dialog__header {
+    display: none !important;
+  }
+
+  .el-dialog {
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+
+    .el-table {
+      position: static;
+      width: 650px !important;
+      max-width: 650px !important;
+    }
+  }
+
+  .el-dialog__body {
+    padding: 0;
+  }
+
+  .el-dialog__wrapper {
+    position: static !important;
+    overflow: visible;
+
+  }
+
+  .radar-wrap {
+    page-break-inside: avoid;
+  }
+}
