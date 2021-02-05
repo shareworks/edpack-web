@@ -17,6 +17,16 @@
       <el-input v-model="form.shortName.en"/>
     </el-form-item>
 
+    <!-- Custom app name (EDUAPP) -->
+    <el-form-item v-if="useCustomApp" :label="$t('SW_APP_NAME')">
+      <el-input v-model="form.appName" placeholder="Optionally use replace 'Eduapp' with ..."/>
+    </el-form-item>
+
+    <!-- Custom app header (EDUAPP) -->
+    <el-form-item v-if="useCustomApp" :label="$t('SW_APP_HEADER')">
+      <el-input v-model="form.appHeader" placeholder="Optionally replace header text with ..."/>
+    </el-form-item>
+
     <!-- Notification email -->
     <el-form-item :label="$t('SW_ORG_NOTIFICATION_EMAIL')" required>
       <el-input v-model="form.notificationEmail" type="email"/>
@@ -67,6 +77,11 @@
       </a>
     </el-form-item>
 
+    <!-- Logo link URL -->
+    <el-form-item v-if="useOrgLogoLink" :label="$t('SW_ORG_LOGO_LINK')">
+      <el-input v-model="form.logoLink" type="url" placeholder="https://department.your-school.com/section ..."/>
+    </el-form-item>
+
     <!-- Website URL -->
     <el-form-item :label="$t('SW_ORG_WEBSITE_LINK')">
       <el-input v-model="form.websiteUrl" type="url" placeholder="https://about.your-school.com ..."/>
@@ -93,6 +108,25 @@
       <p class="text-muted">{{ $t('SW_INTRO_FOR_NEWLY') }}</p>
       <redactor :config="editorOptions" v-model="form.orgCourseIntro.nl"/>
     </el-form-item>
+
+    <!-- Colofon EN -->
+    <el-form-item :label="$t('SW_COLOFON')" class="form-en" v-show="form.languages.en">
+      <redactor :config="editorOptions" ref="ColofonEN" v-model="form.colofon.en"/>
+    </el-form-item>
+    <!-- Colofon NL -->
+    <el-form-item :label="$t('SW_COLOFON')" class="form-nl" v-show="form.languages.nl">
+      <redactor :config="editorOptions" ref="ColofonNL" v-model="form.colofon.nl"/>
+    </el-form-item>
+
+    <!-- Plan term EN -->
+    <el-form-item :label="$t('SW_ORG_PLANTERM_NAME')" v-if="usePlansTerminology && school.enablePlans" required>
+      <inputs-with-flags :change="setNewPlan" :value="form.terminology.plan" name="planTerm"/>
+    </el-form-item>
+
+    <!-- Plans term EN -->
+    <el-form-item :label="$t('SW_ORG_PLANSTERM_NAME')" v-if="usePlansTerminology && school.enablePlans" required>
+      <inputs-with-flags :change="setNewPlans" :value="form.terminology.plans" name="plansTerm"/>
+    </el-form-item>
   </div>
 </template>
 
@@ -109,6 +143,9 @@ export default {
 
   data () {
     return {
+      useCustomApp: config.useCustomApp,
+      useOrgLogoLink: config.useOrgLogoLink,
+      usePlansTerminology: config.usePlansTerminology,
       school: this.$store.state.school,
       user: this.$store.state.user,
       lang: this.$store.state.lang,
@@ -152,7 +189,9 @@ export default {
     errorUploading () { this.$message({ message: this.$i18n.t('SW_ERROR_LOADING'), type: 'error' }) },
     setNewName (lang, value) { this.form.name[lang] = value },
     setNewFaculty (lang, value) { this.form.terminology.faculty[lang] = value },
-    setNewFaculties (lang, value) { this.form.terminology.faculties[lang] = value }
+    setNewFaculties (lang, value) { this.form.terminology.faculties[lang] = value },
+    setNewPlan (lang, value) { this.form.terminology.plan[lang] = value },
+    setNewPlans (lang, value) { this.form.terminology.plans[lang] = value }
   }
 }
 </script>
