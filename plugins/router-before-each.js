@@ -91,11 +91,11 @@ export default {
       // Redirect to home or admin
       let redirectTo = { name: 'home', params: { slug: user.organization.slug } }
       if (store.state.isAdmin) redirectTo = { name: 'admin', params: { slug: user.organization.slug } }
-      if (['landing', 'root'].includes(to.name)) return router.push(redirectTo)
+      if (['landing', 'root'].includes(to.name)) router.replace(redirectTo)
 
       // Check authorization
-      if (isAuthorized.check(user, to)) return next()
-      router.replace({ name: 'error', query: { type: 'restricted_access' } })
+      else if (isAuthorized.check(user, to)) return next()
+      else router.replace({ name: 'error', query: { type: 'restricted_access' } })
     }
 
     function onError (to, next) {
