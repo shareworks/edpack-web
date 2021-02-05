@@ -167,6 +167,14 @@
             <el-form-item label="LTI key">
               <el-input v-model="form.lmsConfig.ltiAdvantageId" type="text" :placeholder="lmsTitle + ' LTI Advantage key ...'"/>
             </el-form-item>
+            <!-- Lti-advantage app id -->
+            <el-form-item label="LTI app id">
+              <el-input v-model="form.lmsConfig.appId" type="text" :placeholder="lmsTitle + ' LTI Advantage App id ...'"/>
+            </el-form-item>
+            <!-- Lti-advantage deployment id -->
+            <el-form-item label="LTI deployment id">
+              <el-input v-model="form.lmsConfig.ltiAdvantageDeploymentId" type="text" :placeholder="lmsTitle + ' LTI Advantage deployment id ...'"/>
+            </el-form-item>
             <!-- Lti-advantage auth secret -->
             <el-form-item label="LTI secret">
               <el-input v-model="form.lmsConfig.ltiAdvantageSecret" :type="hideCredentials ? 'password' : 'text'" :placeholder="lmsTitle + ' LTI Advantage secret ...'"/>
