@@ -26,7 +26,7 @@ export default {
 
       // Check authorization for user with session
       if (store.state.user) {
-        if (!isAuthorized.check(store.state.user, to)) return router.replace({ name: 'error', query: { type: 'restricted_access' } })
+        if (!isAuthorized.check(store.state.user, to)) return next({ replace: true, name: 'error', query: { type: 'restricted_access' } })
         return next()
       }
 
@@ -62,14 +62,14 @@ export default {
           if (inLTI && res.data.ltiAccessToken) Axios.defaults.headers.common['Lti-Access-Token'] = res.data.ltiAccessToken
 
           // Check if org exists
-          if (!user.organization) return router.push({ name: 'error', query: { type: 'no_organization' } })
+          if (!user.organization) return next({ replace: true, name: 'error', query: { type: 'no_organization' } })
 
           // Set user if in correct org
           if (!to.params.slug || user.organization.slug === to.params.slug) return setUser(user, to, next)
 
           // Switch org or stop
           const switchToOrg = user.organizations.find(org => org.slug === to.params.slug)
-          if (!switchToOrg) return router.replace({ name: 'error', query: { type: 'restricted_access' } })
+          if (!switchToOrg) return next({ replace: true, name: 'error', query: { type: 'restricted_access' } })
           user.organization = switchToOrg
 
           // Update API session with other org
@@ -89,13 +89,13 @@ export default {
       loadLanguages(i18n, user.language)
 
       // Redirect to home or admin
-      let redirectTo = { name: 'home', params: { slug: user.organization.slug } }
-      if (store.state.isAdmin) redirectTo = { name: 'admin', params: { slug: user.organization.slug } }
-      if (['landing', 'root'].includes(to.name)) router.replace(redirectTo)
+      const redirectTo = { replace: true, name: 'home', params: { slug: user.organization.slug } }
+      if (store.state.isAdmin) redirectTo.name = 'admin'
+      if (['landing', 'root'].includes(to.name)) return next(redirectTo)
 
       // Check authorization
       else if (isAuthorized.check(user, to)) return next()
-      else router.replace({ name: 'error', query: { type: 'restricted_access' } })
+      else return next({ replace: true, name: 'error', query: { type: 'restricted_access' } })
     }
 
     function onError (to, next) {
@@ -103,8 +103,8 @@ export default {
       if (!to.meta.auth) return next()
 
       // In LTI, send to error page
-      if (inLTI) return router.push({ name: 'error', query: { type: 'lti_error' } })
-      return router.push({ name: 'landing', query: { redirect: window.location.pathname } })
+      if (inLTI) return next({ replace: true, name: 'error', query: { type: 'lti_error' } })
+      return next({ replace: true, name: 'landing', query: { redirect: window.location.pathname } })
     }
   }
 }
