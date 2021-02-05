@@ -131,10 +131,14 @@ export default {
 
       this.$http.put(this.assessmentUrl, payload)
         .then(() => {
+          if (this.updateMembers) {
+            // TODO: seems that we can remove this updateMembers at all
+            this.updateMembers()
+          }
+
           this.cleanForm()
-          this.updateMembers()
         })
-        .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
+        .catch((err) => { console.log(err); this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.sending = false })
     },
     sendPost (emails, self) {
