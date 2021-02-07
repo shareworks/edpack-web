@@ -7,7 +7,7 @@
 
         <!-- Name -->
         <el-form-item prop="name" required class="contact-form-item">
-          <el-input ref="nameInput" :placeholder="$t('SW_YOUR_NAME')" v-model="form.name" :disabled="!!user" name="name">
+          <el-input ref="nameInput" :placeholder="$t('SW_YOUR_NAME')" v-model="form.name" :disabled="!!user.name" name="name">
             <template slot="prepend">
               <i class="icon-user"/>
             </template>
@@ -21,7 +21,7 @@
 
         <!-- Email -->
         <el-form-item prop="email" required class="contact-form-item">
-          <el-input type="email" :placeholder="$t('SW_SCHOOL_EMAIL')" v-model="form.email" :disabled="!!user" name="email">
+          <el-input type="email" :placeholder="$t('SW_SCHOOL_EMAIL')" v-model="form.email" :disabled="!!user.email" name="email">
             <template slot="prepend">
               <i class="icon-email"/>
             </template>
@@ -78,11 +78,12 @@ export default {
       position: config.map.position,
       centerMap: config.map.centerMap,
       infoWinOpen: true,
-      user: this.$store.state.user,
+      user: this.$store.state.user || {},
       form: {
-        email: this.$store.state.user?.email || '',
-        name: this.$store.state.user?.name || '',
+        email: this.$store.state.user ? this.$store.state.user.email : '',
+        name: this.$store.state.user ? this.$store.state.user.name : '',
         message: '',
+        school: this.$store.state.school?._id,
         url: window.location.href
       },
       infoOptions: { pixelOffset: { width: 0, height: -38 } },
