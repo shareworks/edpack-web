@@ -199,7 +199,7 @@ export default {
       user: this.$store.state.user,
       lang: this.$store.state.lang,
       submitting: false,
-      customCounts: config.courseCounts
+      customCounts: config.orgCounts
     }
   },
 
