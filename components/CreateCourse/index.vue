@@ -9,7 +9,10 @@
       <!-- Course template -->
       <el-form-item class="mt-20" v-if="showCourseTemplate" :label="$t('SW_COURSE_TEMPLATE')">
         <el-select class="block" v-model="courseTemplate" :placeholder="$t('SW_COURSE_TEMPLATE_PLACEHOLDER')" :default-first-option="false" clearable>
-          <el-option v-for="course in courses" :key="course._id" :label="course.name" :value="course._id"/>
+          <el-option v-for="course in courses" :key="course._id" :label="course.name" :value="course._id">
+            <strong class="mr-10">{{ course.name }}</strong>
+            <span class="text-muted pull-right">{{ fromNow(course.createdDate) }}</span>
+          </el-option>
         </el-select>
       </el-form-item>
 
@@ -34,6 +37,7 @@
 <script>
 import config from 'config'
 import CreateCourseForm from '../../../components/CreateCourseForm'
+import moment from "moment";
 export default {
   name: 'CreateCourse',
   props: ['closeDialog'],
@@ -64,8 +68,10 @@ export default {
   },
 
   methods: {
+    fromNow (date) { return moment(date).fromNow() },
     getCourses () {
-      this.$http.get('courses')
+      const params = { sort: 'createdDate', order: '-1' }
+      this.$http.get('courses', { params })
         .then(res => { this.courses = res.data.list })
         .catch(e => console.log(e))
     },
