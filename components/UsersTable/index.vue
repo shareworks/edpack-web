@@ -117,10 +117,24 @@
       </el-table-column>
 
       <!-- Course count -->
-      <el-table-column v-if="!hideCourses" property="counts.courses" :label="$tc('SW_COURSE', 2)" width="120">
+      <el-table-column v-if="!hideCourses" property="counts.courses" :label="$tc('SW_COURSE', 2)" width="80">
         <template slot-scope="props">
           <i class="icon-graduation"/>
           {{ props.row.counts && props.row.counts.courses || 0 }}
+        </template>
+      </el-table-column>
+
+      <!-- Actions count -->
+      <el-table-column v-if="showActionsFeedbackUserStat" property="counts.actions" :label="$tc('SW_ACTIONS', 2)" width="80">
+        <template slot-scope="props">
+          {{ props.row.counts && props.row.counts.actions || 0 }}
+        </template>
+      </el-table-column>
+
+      <!-- Feedback count -->
+      <el-table-column v-if="showActionsFeedbackUserStat" property="counts.feedback" :label="$tc('SW_FEEDBACK', 2)" width="80">
+        <template slot-scope="props">
+          {{ props.row.counts && props.row.counts.feedback || 0 }}
         </template>
       </el-table-column>
 
@@ -204,6 +218,7 @@ export default {
       editUserForm: false,
       hideCourses: config.hideCourses,
       hasUserProfiles: config.hasUserProfiles,
+      showActionsFeedbackUserStat: config.showActionsFeedbackUserStat,
       dialogAddUsers: false,
       dialogEditUser: false,
       creditsDialog: false,
