@@ -1,6 +1,6 @@
 <template>
   <section>
-    <draggable ghost-class="ghost" class="group-students" :list="students" :options="{ disabled: manipulationDisabled }"
+    <draggable ghost-class="ghost" class="group-students" :list="students" :disabled="manipulationDisabled"
                @start="setDragging(true, mode === 'all')" @end="onEnd" :sort="false" @change="changeStudentGroup($event, students)"
                :group="mode === 'all' ? {name: 'students', pull: 'clone', put: false} : {name: 'students', pull: true, put: true }">
 
