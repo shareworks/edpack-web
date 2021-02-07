@@ -17,12 +17,12 @@
       <el-input v-model="form.shortName.en"/>
     </el-form-item>
 
-    <!-- Custom app name (EDUAPP) -->
+    <!-- Custom app name -->
     <el-form-item v-if="useCustomApp" :label="$t('SW_APP_NAME')">
-      <el-input v-model="form.appName" placeholder="Optionally use replace 'Eduapp' with ..."/>
+      <el-input v-model="form.appName" placeholder="Optionally use replace aApp name with ..."/>
     </el-form-item>
 
-    <!-- Custom app header (EDUAPP) -->
+    <!-- Custom app header -->
     <el-form-item v-if="useCustomApp" :label="$t('SW_APP_HEADER')">
       <el-input v-model="form.appHeader" placeholder="Optionally replace header text with ..."/>
     </el-form-item>
@@ -78,7 +78,7 @@
     </el-form-item>
 
     <!-- Logo link URL -->
-    <el-form-item v-if="useOrgLogoLink" :label="$t('SW_ORG_LOGO_LINK')">
+    <el-form-item v-if="useCustomApp" :label="$t('SW_ORG_LOGO_LINK')">
       <el-input v-model="form.logoLink" type="url" placeholder="https://department.your-school.com/section ..."/>
     </el-form-item>
 
@@ -95,6 +95,16 @@
     <!-- Faculties term EN -->
     <el-form-item :label="$t('SW_ORG_FACULTIESTERM_NAME')" v-if="school.enableManualCourses" required>
       <inputs-with-flags :change="setNewFaculties" :value="form.terminology.faculties" name="facultiesTerm"/>
+    </el-form-item>
+
+    <!-- Plan term EN -->
+    <el-form-item :label="$t('SW_ORG_PLANTERM_NAME')" v-if="usePlansTerminology && school.enablePlans" required>
+      <inputs-with-flags :change="setNewPlan" :value="form.terminology.plan" name="planTerm"/>
+    </el-form-item>
+
+    <!-- Plans term EN -->
+    <el-form-item :label="$t('SW_ORG_PLANSTERM_NAME')" v-if="usePlansTerminology && school.enablePlans" required>
+      <inputs-with-flags :change="setNewPlans" :value="form.terminology.plans" name="plansTerm"/>
     </el-form-item>
 
     <!-- Introduction by school EN -->
@@ -117,16 +127,6 @@
     <el-form-item :label="$t('SW_COLOFON')" class="form-nl" v-show="form.languages.nl">
       <redactor :config="editorOptions" ref="ColofonNL" v-model="form.colofon.nl"/>
     </el-form-item>
-
-    <!-- Plan term EN -->
-    <el-form-item :label="$t('SW_ORG_PLANTERM_NAME')" v-if="usePlansTerminology && school.enablePlans" required>
-      <inputs-with-flags :change="setNewPlan" :value="form.terminology.plan" name="planTerm"/>
-    </el-form-item>
-
-    <!-- Plans term EN -->
-    <el-form-item :label="$t('SW_ORG_PLANSTERM_NAME')" v-if="usePlansTerminology && school.enablePlans" required>
-      <inputs-with-flags :change="setNewPlans" :value="form.terminology.plans" name="plansTerm"/>
-    </el-form-item>
   </div>
 </template>
 
@@ -144,7 +144,6 @@ export default {
   data () {
     return {
       useCustomApp: config.useCustomApp,
-      useOrgLogoLink: config.useOrgLogoLink,
       usePlansTerminology: config.usePlansTerminology,
       school: this.$store.state.school,
       user: this.$store.state.user,
