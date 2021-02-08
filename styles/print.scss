@@ -11,6 +11,11 @@
   color-adjust: exact !important;
 }
 
+.adjust-color {
+  -webkit-print-color-adjust: exact !important;
+  color-adjust: exact !important;
+}
+
 .print-only {
   display: none;
 }
