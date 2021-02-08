@@ -14,6 +14,8 @@ import MugenScroll from 'vue-mugen-scroll'
 import vueNumeralFilterInstaller from 'vue-numeral-filter'
 import VueMeta from 'vue-meta'
 import VueMasonry from 'vue-masonry-css'
+import Bugsnag from '@bugsnag/js'
+import BugsnagPluginVue from '@bugsnag/plugin-vue'
 
 // Main app component
 import App from './components/App/index'
@@ -44,7 +46,6 @@ import { router } from '../router'
 // Custom Plugins
 import VueTruncate from 'vue-truncate-filter'
 import LanguagePlugin from './plugins/language'
-import Bugsnag from './plugins/bugsnag'
 import LocalStoragePlugin from './plugins/local-storage'
 import AxiosPlugin from './plugins/axios'
 import RouterAfterEachPlugin from './plugins/router-after-each'
@@ -55,8 +56,17 @@ import VueClipboards from 'vue-clipboards'
 
 sync(store, router)
 
-Bugsnag.getPlugin('vue')
-  .installVueErrorHandler(Vue)
+// Init Bugsnag for staging and production
+if (config.releaseStage !== 'development') {
+  Bugsnag.start({
+    apiKey: config.bugsnag,
+    enabledReleaseStages: ['staging', 'production'],
+    releaseStage: config.releaseStage || process.env.NODE_ENV,
+    plugins: [new BugsnagPluginVue()]
+  })
+
+  Bugsnag.getPlugin('vue').installVueErrorHandler(Vue)
+}
 
 // Init Custom plugins
 Vue.use(LocalStoragePlugin)
@@ -74,7 +84,7 @@ Vue.use(vueNumeralFilterInstaller, { locale: 'en-gb' })
 Vue.use(VueMeta)
 Vue.use(VueMasonry)
 
-// Initialize Google Analytics
+// Init Google Analytics
 Vue.use(VueAnalytics, { id: config.analytics })
 
 // Run in debug when not in production
