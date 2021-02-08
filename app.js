@@ -57,7 +57,7 @@ sync(store, router)
 
 Bugsnag.getPlugin('vue')
   .installVueErrorHandler(Vue)
-
+//Test
 // Init Custom plugins
 Vue.use(LocalStoragePlugin)
 Vue.use(LanguagePlugin)
