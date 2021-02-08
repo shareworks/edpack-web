@@ -307,6 +307,7 @@ export default {
 
           this.$message({ message: this.$i18n.t('SW_USERS_UPDATED'), type: 'success' })
         }).catch(err => {
+          console.log(err)
           this.status = 'error'
           this.$message({ message: this.$i18n.t('SW_GENERIC_ERROR'), type: 'error' })
         })
