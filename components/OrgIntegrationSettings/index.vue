@@ -230,6 +230,23 @@
                 <el-form-item :label="lms.apiSecret.label" v-if="lms.apiSecret">
                   <el-input v-model="form.lmsConfig.apiSecret" :type="hideCredentials ? 'password' : 'text'" :placeholder="lms.apiSecret.placeholder"/>
                 </el-form-item>
+                <!-- API Scope -->
+                <el-form-item :label="lms.apiScope.label" v-if="lms.apiScope">
+                    <!-- Scopes -->
+                    <div v-for="(scope, index) in form.lmsConfig.scope" :key="index">
+                      <div class="mb-10">
+                        <el-input v-model="form.lmsConfig.scope[index]">
+                          <template slot="prepend">#{{index + 1}}</template>
+                        </el-input>
+                      </div>
+                    </div>
+
+                  <!-- Add faculty -->
+                  <el-button v-if="['canvas', 'blackboard'].includes(lms.name)" @click="addScope" class="block">
+                    <i class="icon-add"/>
+                    {{ $t('SW_ADD_SCOPE') }}
+                  </el-button>
+                </el-form-item>
               </div>
               <!-- No API integration -->
               <el-alert v-else :title="$t('SW_NO_API_INTEGRATION_YET')" class="mb-30" :description="$t('SW_NO_API_INTEGRATION_YET_TEXT')" type="warning" show-icon/>
@@ -286,19 +303,22 @@ export default {
           name: 'canvas',
           apiUrl: { placeholder: 'ex. https://your-school.instructure.com ...' },
           apiId: { label: 'Canvas API key', placeholder: 'Canvas Developer Key ID ...' },
-          apiSecret: { label: 'Canvas API secret', placeholder: 'Canvas Developer Key Secret ...' }
+          apiSecret: { label: 'Canvas API secret', placeholder: 'Canvas Developer Key Secret ...' },
+          apiScope: { label: 'Canvas API scope', placeholder: 'Canvas scope ...' }
         },
         {
           name: 'brightspace',
           apiUrl: { placeholder: 'ex. https://your-school.brightspace.com/d2l ...' },
           apiId: { label: 'Brightspace API ID', placeholder: 'Brightspace OAuth Client ID ...' },
-          apiSecret: { label: 'Brightspace API secret', placeholder: 'Brightspace OAuth Client secret ...' }
+          apiSecret: { label: 'Brightspace API secret', placeholder: 'Brightspace OAuth Client secret ...' },
+          apiScope: { label: 'Brightspace API scope', placeholder: 'Brightspace scope ...' }
         },
         {
           name: 'blackboard',
           apiUrl: { placeholder: 'ex. https://your-school.blackboard.com ...' },
           appId: { label: 'Blackboard Application ID', placeholder: 'Blackboard Application ID ...' },
-          apiSecret: { label: 'Blackboard App secret', placeholder: 'Blackboard App Secret ...' }
+          apiSecret: { label: 'Blackboard App secret', placeholder: 'Blackboard App Secret ...' },
+          apiScope: { label: 'Blackboard App scope', placeholder: 'Blackboard scope ...' }
         },
         {
           name: 'ilearn',
@@ -402,7 +422,13 @@ export default {
       else this.form[type].splice(this.form[type].indexOf(item), 1)
       this.$nextTick()
     },
-    clipboardSuccess () { this.$message({ message: this.$i18n.t('SW_COPIED_TO_CLIPBOARD'), type: 'success' }) }
+    clipboardSuccess () { this.$message({ message: this.$i18n.t('SW_COPIED_TO_CLIPBOARD'), type: 'success' }) },
+    addScope () {
+      const length = this.form.lmsConfig.scope.length
+      if (!length || this.form.lmsConfig.scope[length - 1]) {
+        this.form.lmsConfig.scope.push('')
+      }
+    }
   }
 }
 </script>
