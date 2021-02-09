@@ -38,7 +38,7 @@
 <script>
 import config from 'config'
 import { mapActions, mapState } from 'vuex'
-import Bugsnag from '../../plugins/bugsnag'
+import Bugsnag from '@bugsnag/js'
 import AppHeader from '../../components/AppHeader'
 import AppFooter from '../../components/AppFooter'
 import AppSidebar from '../../components/AppSidebar'
@@ -51,7 +51,7 @@ export default {
   name: 'App',
   metaInfo: {
     title: 'Welcome',
-    titleTemplate: '%s - ' + config.name + ' ' + config.releaseStage.toUpperCase()
+    titleTemplate: '%s - ' + config.name + ' ' + config.releaseStage !== 'production' ? config.releaseStage.toUpperCase() : ''
   },
   components: {
     ContactForm, WelcomeDialog, AppHeader, AppSidebar, AppFooter, ReloadAfterDeploy, Freshchat: () => import('../../components/Freshchat')
@@ -67,6 +67,7 @@ export default {
       disableWelcome: false,
       serverOnline: true,
       appName: config.name,
+      releaseStage: config.releaseStage,
       cookieWarning: config.cookieWarning && !navigator.cookieEnabled
     }
   },
@@ -89,14 +90,15 @@ export default {
   },
 
   updated () {
-    if (this.currentUser?._id) Bugsnag.setUser(this.currentUser._id)
-    if (this.school._id) Bugsnag.setContext(this.school._id)
   },
 
   watch: {
     currentUser (user) {
       // Show welcome dialog to new user
       if (user && !user.checks.welcome && !this.disableWelcome) this.toggleDialog()
+
+      // Update bugsnag session
+      if (user) this.updateBugsnag(user)
     },
     language (language) {
       if (this.lang === language) return
@@ -109,6 +111,11 @@ export default {
   },
 
   methods: {
+    updateBugsnag (user) {
+      if (this.releaseStage === 'development') return
+      Bugsnag.setUser(user._id, user.email)
+      Bugsnag.addMetadata('school', { name: user.organization.slug, id: user.organization._id })
+    },
     checkConnection () {
       this.$http.get('status')
         .then(() => { this.serverOnline = true })
