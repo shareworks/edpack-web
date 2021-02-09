@@ -51,7 +51,7 @@ export default {
   name: 'App',
   metaInfo: {
     title: 'Welcome',
-    titleTemplate: '%s - ' + config.name + ' ' + config.releaseStage.toUpperCase()
+    titleTemplate: '%s - ' + config.name + ' ' + config.releaseStage !== 'production' ? config.releaseStage.toUpperCase() : ''
   },
   components: {
     ContactForm, WelcomeDialog, AppHeader, AppSidebar, AppFooter, ReloadAfterDeploy, Freshchat: () => import('../../components/Freshchat')
