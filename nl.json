@@ -191,6 +191,7 @@
   "SW_EXPIRED_TOKEN": "Uw token is verlopen",
   "SW_EXPIRED_TOKEN_HELP": "Log opnieuw in of probeer een andere browser. Neem contact met ons op als het probleem aanhoudt.",
   "SW_EXPORT": "Exporteer resultaten",
+  "SW_USERS_MERGED": "Gebruikeraccounts zijn samengevoegd.",
   "SW_EXPORTING_DATA_COURSE": "Cijfers worden bijgewerkt in cursus. Dit kan even duren.",
   "SW_FACULTY_INFO_TEXT": "Met faculteitsnamen kan je zien welke faculteiten deze applicatie gebruiken en hoeveel. Let op: veranderingen kunnen leiden tot het verliezen van de metadata. Als het bijhouden van gebruik per faculteit irrelevant is, kan je deze lijst gewoon leeg laten.",
   "SW_FACULTY_MANAGER": "Manager",
