@@ -622,7 +622,7 @@
   "SW_UNRESOLVED_PARAMS_TEXT": "The link you used has become invalid. The location of the link has been removed or has been changed. If you continue to have problems to gain access, please contact us.",
   "SW_FULL_NAME_REQUIRED": "Name is required.",
   "SW_INVITE_ONLY": "Invitation required",
-  "SW_INVITE_ONLY_HELP": "You need an invitation to use Buddycheck. Please contact your administrator to request an invitation. Also contact your administrator is you believe this is incorrect.",
+  "SW_INVITE_ONLY_HELP": "You need an invitation to use {0}. Please contact your administrator to request an invitation. Also contact your administrator is you believe this is incorrect.",
   "SW_EDIT_NOTIFICATIONS": "Edit email notifications",
   "SW_HIDE_NOTIFICATIONS": "Hide email notifications",
   "SW_STAFF_NOTIFICATION_DISABLING": "Staff notification",
