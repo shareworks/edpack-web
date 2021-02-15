@@ -41,6 +41,11 @@ export default {
     this.getCourse()
   },
 
+  beforeRouteLeave (to, from, next) {
+    this.$store.dispatch('setCourse', null)
+    next()
+  },
+
   methods: {
     getCourse () {
       return this.$http.get(`courses/${this.$route.params.course}`)
