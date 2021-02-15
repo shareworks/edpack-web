@@ -67,8 +67,8 @@ export default {
       // Check course role
       if (!course || !course.role) return false
       if (this.$route.meta.minimumCourseRole === 'staff') return course.role === 'staff'
-      if (this.$route.meta.minimumCourseRole === 'student') return course.role === 'student'
-      if (this.$route.meta.minimumCourseRole === 'assessor') return course.role === 'assessor'
+      if (this.$route.meta.minimumCourseRole === 'student') return ['student', 'staff', 'assessor'].includes(course.role)
+      if (this.$route.meta.minimumCourseRole === 'assessor') return ['staff', 'assessor'].includes(course.role)
     },
     unarchiveCourse () {
       if (this.submitting) return
