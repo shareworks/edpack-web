@@ -563,7 +563,7 @@
   "SW_MIN": "min. {0}x{1}",
   "SW_MAX": "max. {0}x{1}",
   "SW_LOG_IN_WITH_MS": "Log in met Microsoft",
-  "SW_SUCCESSFULLY_CONFIGURED": "Cursus succesvol geconfigureerd met LMS",
+  "SW_SUCCESSFULLY_CONFIGURED": "Cursus succesvol geconfigureerd met {0}",
   "SW_USER_COPIED": "Student is toegevoegd aan de groep.",
   "SW_USER_MOVED": "Student is verplaatst.",
   "SW_NOTIFICATIONS": "Notificaties",

@@ -21,6 +21,8 @@
 
 <script>
 import config from 'config'
+import getLmsType from '@/edpack-web/utils/get-lms-type'
+
 export default {
   name: 'Course',
   metaInfo: { title: 'Course' },
@@ -30,6 +32,7 @@ export default {
       course: false,
       status: 'loading',
       submitting: false,
+      school: this.$store.state.school,
       appName: config.name
     }
   },
@@ -47,11 +50,14 @@ export default {
           // If no access, stop here
           if (!this.isAuthorized(course)) return this.$router.replace({ name: 'error', query: { type: 'restricted_access' } })
 
-          // Set course
-          this.$store.dispatch('setCourse', course)
-          this.course = course
-          this.status = this.course ? 'done' : 'error'
-          if (this.course.archivedDate) this.status = 'archived'
+          // LMS access token available? Make sure API integration course config is done first
+          const lms = getLmsType(course)
+          if (lms && this.school.activeLmsTokens.includes(lms) && course.lmsApiIntegration && !course[lms].isConfiguredWithApi) {
+            return this.configureWithLms(lms, course)
+          }
+
+          // No LMS config required? Just set course
+          this.setCourse(course)
         })
         .catch((err) => {
           this.status = 'error'
@@ -59,6 +65,24 @@ export default {
           if (this.$route.name === 'student') this.$router.replace({ name: 'error', query: { type: 'course_inactive' } })
           else if (err.status === 404) this.$router.replace({ name: 'error', query: { type: 'not_found' } })
         })
+    },
+    configureWithLms (lms, course) {
+      // Configure course with lms API (build pageUrl and set faculty from LMS data)
+      this.$http.put(`courses/${course._id}/${lms}/configure`)
+        .then((res) => {
+          this.setCourse(res.data.list[0])
+          this.$message({ type: 'success', message: this.$i18n.t('SW_SUCCESSFULLY_CONFIGURED', [lms]) })
+        })
+        .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_CONFIGURE_ERROR') }) })
+        .finally(() => {
+          this.loading = false
+        })
+    },
+    setCourse (course) {
+      this.course = course
+      this.$store.dispatch('setCourse', course)
+      this.status = this.course ? 'done' : 'error'
+      if (this.course.archivedDate) this.status = 'archived'
     },
     isAuthorized (course) {
       if (this.$store.state.user.systemAdmin) return true
