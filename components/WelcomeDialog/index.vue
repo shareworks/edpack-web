@@ -173,7 +173,10 @@ export default {
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.submitting = false })
     },
-    openChat () { window.fcWidget.open() }
+    openChat () {
+      if (window.fcWidget) return window.fcWidget.open()
+      this.$store.dispatch('setContactForm', true)
+    }
   }
 }
 </script>
