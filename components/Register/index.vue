@@ -17,6 +17,21 @@
             </el-option>
           </el-select>
 
+          <!-- or -->
+          <div class="login-or">{{$t('SW_OR')}}</div>
+
+          <!-- Register with Google account -->
+          <el-button class="block no-margin" @click="selectGoogle">
+            <span class="google-icon"></span>
+            <strong>{{ $t('SW_REGISTER_WITH_GOOGLE') }}</strong>
+          </el-button>
+
+          <!-- Register with MS account -->
+          <el-button class="block no-margin mt-5" v-if="signinWithMS" @click="selectMicrosoft">
+            <span class="ms-icon"></span>
+            <strong>{{ $t('SW_REGISTER_WITH_MS') }}</strong>
+          </el-button>
+
           <!-- or Sign in By Password -->
           <div class="login-or" v-if="signinByPassword">{{$t('SW_OR')}}</div>
 
@@ -36,21 +51,6 @@
               <i class="icon-arrow_forward"/>
             </el-button>
           </div>
-
-          <!-- or -->
-          <div class="login-or">{{$t('SW_OR')}}</div>
-
-          <!-- Register with Google account -->
-          <el-button class="block no-margin" @click="selectGoogle">
-            <span class="google-icon"></span>
-            <strong>{{ $t('SW_REGISTER_WITH_GOOGLE') }}</strong>
-          </el-button>
-
-          <!-- Register with MS account -->
-          <el-button class="block no-margin mt-5" v-if="signinWithMS" @click="selectMicrosoft">
-            <span class="ms-icon"></span>
-            <strong>{{ $t('SW_REGISTER_WITH_MS') }}</strong>
-          </el-button>
         </div>
 
         <el-alert class="mt-10" type="error" show-icon v-if="errorType" :title="$t('SW_' + errorType.toUpperCase())"/>
