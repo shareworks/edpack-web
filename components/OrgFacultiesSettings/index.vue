@@ -8,12 +8,13 @@
       <p class="form-help-text">{{ $t('SW_EXPLAIN_FACULTY_LIST', [form.terminology.faculties[lang].toLowerCase()]) }}</p>
 
       <el-row v-if="form.faculties.length > 0" :gutter="10">
-        <!-- English part -->
+        <!-- EN part -->
         <el-col :span="calcSpan" v-if="form.languages.en">
           <strong class="mb-10" v-if="form.languages.en && form.languages.nl">
             {{ $t('SW_DEFAULT_EN') }}
             <img :src="'/images/en.png'" class="ml-5 language-icon" alt="language-icon">
           </strong>
+          <strong class="mb-10" v-else>{{ form.terminology.faculty[lang] }}</strong>
 
           <!-- Faculties -->
           <div v-for="(faculty, index) in form.faculties" :key="index">
@@ -25,12 +26,15 @@
           </div>
         </el-col>
 
-        <!-- Netherlands part -->
+        <!-- NL part -->
         <el-col :span="calcSpan" v-if="form.languages.nl">
           <strong class="mb-10" v-if="form.languages.en && form.languages.nl">
             {{ $t('SW_DEFAULT_NL') }}
             <img :src="'/images/nl.png'" class="ml-5 language-icon" alt="language-icon">
           </strong>
+          <strong class="mb-10" v-else>{{ form.terminology.faculty[lang] }}</strong>
+
+          <!-- Faculties -->
           <div v-for="(faculty, index) in form.faculties" :key="index">
             <div class="mb-10">
               <el-input v-model="faculty.nl">
