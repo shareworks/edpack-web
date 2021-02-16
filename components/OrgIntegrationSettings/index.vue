@@ -317,6 +317,7 @@ export default {
           name: 'blackboard',
           apiUrl: { placeholder: 'ex. https://your-school.blackboard.com ...' },
           appId: { label: 'Blackboard Application ID', placeholder: 'Blackboard Application ID ...' },
+          apiId: { label: 'Blackboard App key', placeholder: 'Blackboard App Key ...' },
           apiSecret: { label: 'Blackboard App secret', placeholder: 'Blackboard App Secret ...' },
           apiScope: { label: 'Blackboard App scope', placeholder: 'Blackboard scope ...' }
         },
