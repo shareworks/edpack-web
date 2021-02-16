@@ -169,7 +169,7 @@
             </el-form-item>
             <!-- Lti-advantage app id -->
             <el-form-item label="LTI app id">
-              <el-input v-model="form.lmsConfig.appId" type="text" :placeholder="lmsTitle + ' LTI Advantage App id ...'"/>
+              <el-input v-model="form.lmsConfig.ltiAdvantagAppId" type="text" :placeholder="lmsTitle + ' LTI Advantage App id ...'"/>
             </el-form-item>
             <!-- Lti-advantage deployment id -->
             <el-form-item label="LTI deployment id">
@@ -218,7 +218,7 @@
                 <el-form-item label="Application ID" v-if="lms.appId">
                   <el-input v-model="form.lmsConfig.appId">
                     <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
-                      <el-button v-clipboard="form[lms.name].appId"><i class="icon-copy"/></el-button>
+                      <el-button v-clipboard="form.lmsConfig.appId"><i class="icon-copy"/></el-button>
                     </el-tooltip>
                   </el-input>
                 </el-form-item>

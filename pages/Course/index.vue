@@ -42,7 +42,7 @@ export default {
   },
 
   beforeRouteLeave (to, from, next) {
-    this.$store.dispatch('setCourse', null)
+    this.$store.dispatch('setCourse', false)
     next()
   },
 
