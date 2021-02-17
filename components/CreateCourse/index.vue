@@ -37,7 +37,7 @@
 <script>
 import config from 'config'
 import CreateCourseForm from '../../../components/CreateCourseForm'
-import moment from "moment";
+import moment from 'moment'
 export default {
   name: 'CreateCourse',
   props: ['closeDialog'],
