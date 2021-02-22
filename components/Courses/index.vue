@@ -165,8 +165,8 @@ export default {
       if (this.searchText) params.filter = this.searchText
 
       // Show courses within a faculty
-      if (this.facultyFilter && this.facultyFilter !== 'school') {
-        params.faculty = this.facultyFilter
+      if (this.$route.query.context !== '' || this.$route.query.context !== 'school') {
+        params.faculty = this.$route.query.context
       }
 
       this.$http.get('courses', { params })
