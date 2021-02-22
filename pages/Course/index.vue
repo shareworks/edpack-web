@@ -95,7 +95,7 @@ export default {
 
       // Check course role
       if (!course || !course.role) return false
-      if (this.$route.meta.minimumCourseRole === 'staff') return (course.role === 'staff') || this.$store.state.manageFaculties.find(fac => fac._id === course.faculty)
+      if (this.$route.meta.minimumCourseRole === 'staff') return (course.role === 'staff') || this.isManager(course)
       if (this.$route.meta.minimumCourseRole === 'student') return ['student', 'staff', 'assessor'].includes(course.role)
       if (this.$route.meta.minimumCourseRole === 'assessor') return ['staff', 'assessor'].includes(course.role)
     },
@@ -111,6 +111,9 @@ export default {
         })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.submitting = false })
+    },
+    isManager (course) {
+      return this.$store.state.manageFaculties && this.$store.state.manageFaculties.find(fac => fac._id === course.faculty)
     }
   }
 }
