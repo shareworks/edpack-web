@@ -241,8 +241,8 @@
                       </div>
                     </div>
 
-                  <!-- Add faculty -->
-                  <el-button v-if="['canvas', 'blackboard'].includes(lms.name)" @click="addScope" class="block">
+                  <!-- Add scope -->
+                  <el-button @click="addScope" class="block">
                     <i class="icon-add"/>
                     {{ $t('SW_ADD_SCOPE') }}
                   </el-button>
@@ -308,7 +308,7 @@ export default {
         },
         {
           name: 'brightspace',
-          apiUrl: { placeholder: 'ex. https://your-school.brightspace.com/d2l ...' },
+          apiUrl: { placeholder: 'ex. https://your-school.brightspace.com ...' },
           apiId: { label: 'Brightspace API ID', placeholder: 'Brightspace OAuth Client ID ...' },
           apiSecret: { label: 'Brightspace API secret', placeholder: 'Brightspace OAuth Client secret ...' },
           apiScope: { label: 'Brightspace API scope', placeholder: 'Brightspace scope ...' }
