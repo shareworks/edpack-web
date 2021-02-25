@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog class="small-dialog" :title="$t('SW_CONTINUE_LAST_EDITING')" append-to-body :visible.sync="notFinishedFormDialog">
+    <el-alert v-if="notFinishedFormDialog" class="small-dialog" :title="$t('SW_CONTINUE_LAST_EDITING')" append-to-body>
       <div v-if="lastUsedValues">
         <p>{{ $t('SW_NOT_FINISHED_FORM_EXIST') }}</p>
         <!-- Last used name -->
@@ -9,14 +9,13 @@
         <p><strong>{{ $t('SW_STARTEND_DATE') }}:</strong> {{ lastUsedValues.startDate }}</p>
         <!-- Last used end date -->
         <p><strong>{{ $t('SW_UNTIL_DATE') }}:</strong> {{ lastUsedValues.endDate }}</p>
-        ...
       </div>
 
       <div class="mt-10">
         <el-button type="primary" class="mr-5" @click="acceptUsingOldData">{{ $t('SW_ACCEPT') }}</el-button>
         <el-button type="text" @click="declineUsingOldData">{{ $t('SW_CANCEL') }}</el-button>
       </div>
-    </el-dialog>
+    </el-alert>
   </div>
 </template>
 
