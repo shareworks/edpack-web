@@ -2,7 +2,7 @@
   <div>
     <el-dialog class="small-dialog" :title="$t('SW_CONTINUE_LAST_EDITING')" append-to-body :visible.sync="notFinishedFormDialog">
       <div v-if="lastUsedValues">
-        <p>{{ $t('SW_NOT_FINISHED_ASSESSMENT_EXIST') }}</p>
+        <p>{{ $t('SW_NOT_FINISHED_FORM_EXIST') }}</p>
         <!-- Last used name -->
         <p><strong>{{ $t('SW_NAME') }}:</strong> {{ lastUsedValues.name }}</p>
         <!-- Last used started date -->
@@ -25,7 +25,7 @@
 import copyObjectProps from '@/edpack-web/utils/copy-object-props'
 
 export default {
-  name: 'SaveEvaluationDraft',
+  name: 'SaveFormDraft',
   props: ['propertiesToBeCopied', 'localStorageKey', 'form'],
 
   watch: {
