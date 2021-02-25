@@ -336,14 +336,10 @@ export default {
   },
 
   computed: {
-    callbackUrl () {
-      return this.apiUrl + '/auth/' + this.form.lms + '/callback'
-    },
-    lmsTitle () {
-      return this.form.lms.charAt(0).toUpperCase() + this.form.lms.substring(1)
-    },
-    ltiAdvantageRedirectUrl: `${config.api_url}/lti/advantage/` + this.form.lms + '/launch',
-    ltiAdvantageLoginUrl: `${config.api_url}/lti/advantage/` + this.form.lms + '/initiation'
+    callbackUrl () { return this.apiUrl + '/auth/' + this.form.lms + '/callback' },
+    lmsTitle () { return this.form.lms.charAt(0).toUpperCase() + this.form.lms.substring(1) },
+    ltiAdvantageRedirectUrl () { return `${config.api_url}/lti/advantage/` + this.form.lms + '/launch' },
+    ltiAdvantageLoginUrl () { return `${config.api_url}/lti/advantage/` + this.form.lms + '/initiation' }
   },
 
   methods: {
