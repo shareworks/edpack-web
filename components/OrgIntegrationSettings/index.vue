@@ -289,8 +289,6 @@ export default {
       apiUrl: config.api_url,
       ltiConfigUrl: `${config.api_url}/lti`,
       ltiAdvantageDomainUrl: `${config.api_url.replace('/api/v1', '')}`,
-      ltiAdvantageRedirectUrl: `${config.api_url}/lti/advantage/launch`,
-      ltiAdvantageLoginUrl: `${config.api_url}/lti/advantage/initiation`,
       ltiAdvantageKeysetUrl: `${config.api_url}/lti/advantage/jwks`,
 
       blackboardAppId: config.blackboardAppId,
@@ -343,7 +341,9 @@ export default {
     },
     lmsTitle () {
       return this.form.lms.charAt(0).toUpperCase() + this.form.lms.substring(1)
-    }
+    },
+    ltiAdvantageRedirectUrl: `${config.api_url}/lti/advantage/` + this.form.lms + '/launch',
+    ltiAdvantageLoginUrl: `${config.api_url}/lti/advantage/` + this.form.lms + '/initiation'
   },
 
   methods: {
