@@ -625,6 +625,7 @@
   "SW_INVITE_ONLY_HELP": "You need an invitation to use {0}. Please contact your administrator to request an invitation. Also contact your administrator is you believe this is incorrect.",
   "SW_EDIT_NOTIFICATIONS": "Edit email notifications",
   "SW_HIDE_NOTIFICATIONS": "Hide email notifications",
+  "SW_DOMAIN_ISSUE": "At least one of the emails doesn't have a correct email domain of your school.",
   "SW_STAFF_NOTIFICATION_DISABLING": "Staff notification",
   "SW_STARTED_EVALUATION_NOTIFICATION_DISABLING":"Started notification",
   "SW_CLOSED_EVALUATION_NOTIFICATION_DISABLING": "Closed notification",

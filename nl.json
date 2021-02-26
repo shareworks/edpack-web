@@ -184,6 +184,7 @@
   "SW_EMAIL_RESET_SUBMITTED": "E-mail met reset link is verzonden!",
   "SW_EMAIL_SUBJECT_PLACEHOLDER": "Typ onderwerp hier ...",
   "SW_EMAIL_UNSUBSCRIPTION": "Afmelden e-mails",
+  "SW_DOMAIN_ISSUE": "Ten minste één van de e-mails heeft niet het e-maildomein van je school.",
   "SW_EMAIL_UNSUBSCRIPTION_TEXT": "Afmelden voor alle e-mailnotificaties. (Niet aanbevolen)",
   "SW_ENABLE_COOKIE": "Schakel cookies in door op de onderstaande knop te klikken",
   "SW_ERROR_LOADING": "Fout is gerapporteerd. Probeer het later nog eens.",
