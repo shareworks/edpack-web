@@ -61,7 +61,7 @@ export default {
       school: this.$store.state.school,
       role: 'staff',
       sending: false,
-      roles: this.$store.state.user.systemAdmin ? ['staff', 'student'] : ['admin', 'staff', 'student'],
+      roles: this.$store.state.user.systemAdmin ? ['admin', 'staff', 'student'] : ['staff', 'student'],
       form: { toSelf: true, recipients: '' },
       showDomainWarning: false,
       incorrectEmails: []
