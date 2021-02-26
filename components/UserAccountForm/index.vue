@@ -78,7 +78,7 @@
           <span>{{ $t('SW_CHANGE_ROLE') }}</span>
         </el-button>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item :command="{ newRole: 'admin' }" :disabled="form.role === 'admin'">{{ $tc('SW_ADMIN', 1) }}</el-dropdown-item>
+          <el-dropdown-item :command="{ newRole: 'admin' }" v-if="isSysAdmin" :disabled="form.role === 'admin'">{{ $tc('SW_ADMIN', 1) }}</el-dropdown-item>
           <el-dropdown-item :command="{ newRole: 'staff' }" :disabled="form.role === 'staff'">{{ $tc('SW_STAFF', 1) }}</el-dropdown-item>
           <el-dropdown-item :command="{ newRole: 'student' }" :disabled="form.role === 'student'">{{ $tc('SW_STUDENT', 1) }}</el-dropdown-item>
         </el-dropdown-menu>
@@ -146,6 +146,7 @@ export default {
       lang: this.$store.state.lang,
       school: this.$store.state.school,
       isAdmin: this.$store.state.isAdmin,
+      isSysAdmin: this.$store.state.user.systemAdmin,
       isMobile: this.$store.state.isMobile,
       submitting: false,
       faculties: this.$store.state.school.faculties,
