@@ -26,7 +26,7 @@
       <!-- Role -->
       <el-form-item v-if="!isManageStaff" class="role-select">
         <el-select v-model="role" class="block">
-          <el-option v-for="item in ['staff', 'admin', 'student']" :key="item" :label="$tc('SW_' + item.toUpperCase(), 1)" :value="item"/>
+          <el-option v-for="item in roles" :key="item" :label="$tc('SW_' + item.toUpperCase(), 1)" :value="item"/>
         </el-select>
       </el-form-item>
 
@@ -61,6 +61,7 @@ export default {
       school: this.$store.state.school,
       role: 'staff',
       sending: false,
+      roles: this.$store.state.user.systemAdmin ? ['staff', 'student'] : ['admin', 'staff', 'student'],
       form: { toSelf: true, recipients: '' },
       showDomainWarning: false,
       incorrectEmails: []
