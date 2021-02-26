@@ -3,6 +3,11 @@
     <router-view v-if="status === 'done'"/>
 
     <div class="mt-30 text-muted text-center">
+
+      <div v-if="status === 'removed'">
+        <p>{{ $t('SW_COURSE_REMOVED') }}</p>
+      </div>
+
       <!-- Loading -->
       <spinner v-if="status === 'loading'"/>
 
@@ -65,8 +70,15 @@ export default {
           this.setCourse(course)
         })
         .catch((err) => {
-          this.status = 'error'
           console.log(err)
+
+          if (err.status === 410) {
+            this.status = 'removed'
+            return
+          }
+
+          this.status = 'error'
+
           if (this.$route.name === 'student') this.$router.replace({ name: 'error', query: { type: 'course_inactive' } })
           else if (err.status === 404) this.$router.replace({ name: 'error', query: { type: 'not_found' } })
         })
