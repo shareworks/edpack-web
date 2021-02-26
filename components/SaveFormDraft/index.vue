@@ -25,13 +25,14 @@ import copyObjectProps from '@/edpack-web/utils/copy-object-props'
 
 export default {
   name: 'SaveFormDraft',
-  props: ['propertiesToBeCopied', 'localStorageKey', 'form'],
+  props: ['propertiesToBeCopied', 'localStorageKey', 'form', 'useWorkflow'],
 
   watch: {
     form: {
       deep: true,
       handler () {
         if (this.form.isNew) this.syncFormLocalStorage()
+        if (this.useWorkflow && this.form.workflowStatus === 'none') this.syncFormLocalStorage()
       }
     }
   },
@@ -45,7 +46,11 @@ export default {
 
   mounted() {
     const lastUsedFormValues = localStorage.getItem(this.localStorageKey)
-    if (this.form.isNew && !!lastUsedFormValues) {
+
+    const formNewAndHasPreviousData = this.form.isNew && !!lastUsedFormValues
+    const useWorkflowLogic = this.useWorkflow && this.form.workflowStatus === 'none' && !!lastUsedFormValues
+
+    if (formNewAndHasPreviousData || useWorkflowLogic) {
       this.notFinishedFormDialog = true
 
       this.lastUsedValues = {}

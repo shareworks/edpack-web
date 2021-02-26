@@ -619,5 +619,8 @@
   "SW_NO_ORG_NAME": "Schoolnaam is vereist.",
   "SW_PRINT_TO_PDF": "Print als PDF",
   "SW_COMPLETION": "voltooiing",
-  "SW_ADD_SCOPE": "Scope toevoegen"
+  "SW_ADD_SCOPE": "Scope toevoegen",
+  "SW_NOT_FINISHED_FORM_EXIST": "Het is Growflow opgevallen dat u de laatste aanmaak van een assessment niet heeft voltooid. Wilt u deze waarden in de huidige vorm toepassen? Bijvoorbeeld:",
+  "SW_CONTINUE_LAST_EDITING": "Doorgaan met laatste bewerking?",
+  "SW_ACCEPT": "Accepteren"
 }
