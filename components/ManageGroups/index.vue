@@ -253,7 +253,7 @@ export default {
     confirmRemoveUser (action) {
       if (this.muteRemoveWarning) return this.removeUser(action)
 
-      this.$confirm(this.$i18n.tc('SW_REMOVE_PARTICIPANT_TEXT', 1), this.$i18n.tc('SW_REMOVE_PARTICIPANT', 1), {
+      this.$confirm(this.$i18n.tc('SW_REMOVE_PARTICIPANT_FROM_GROUP_TEXT', 1), this.$i18n.tc('SW_REMOVE_PARTICIPANT_FROM_GROUP', 1), {
         confirmButtonText: this.$i18n.t('SW_REMOVE_SHOW_NEVER'),
         cancelButtonText: this.$i18n.t('SW_CANCEL')
       }).then(() => { this.removeUser(action) })

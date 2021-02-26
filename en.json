@@ -107,7 +107,7 @@
   "SW_COOKIE_BLOCKED_INFO": "Your browser seems to be blocking a cookie necessary for secure authentication. Possible solutions: ",
   "SW_COPIED_TO_CLIPBOARD": "Copied to your clipboard!",
   "SW_COPY_TO_CLIPBOARD": "Copy to your clipboard",
-  "SW_DRAG_REMOVE_STUDENTS": "Drag here to remove",
+  "SW_DRAG_REMOVE_STUDENTS": "Drag here to remove from group",
   "SW_COULD_NOT_GET_IDP": "Sign in with school account not available at this moment.",
   "SW_COURSE": "Course | Course | Courses",
   "SW_COURSES": "Courses",
@@ -648,5 +648,7 @@
   "SW_ADD_SCOPE": "Add scope",
   "SW_NOT_FINISHED_FORM_EXIST": "Growflow noticed that you didn't finish last evaluation creation, do you want to apply these values in current form? For example:",
   "SW_CONTINUE_LAST_EDITING": "Continue last editing?",
-  "SW_ACCEPT": "Accept"
+  "SW_ACCEPT": "Accept",
+  "SW_REMOVE_PARTICIPANT_FROM_GROUP_TEXT": "Are you sure you want to remove the student from group?",
+  "SW_REMOVE_PARTICIPANT_FROM_GROUP": "Remove participant from group"
 }
