@@ -141,7 +141,7 @@ export default {
       this.$http.post('/auth/local/password', this.form, { params: { accessToken: this.accessToken, organization: this.organizationId } })
         .then(() => {
           this.$message({ message: this.$i18n.t('SW_INVITATION_COMPLETED', [this.appName]), type: 'success' })
-          this.$router.push('/')
+          this.$router.push('/').catch(() => {})
         })
         .catch((err) => {
           this.form.password = ''

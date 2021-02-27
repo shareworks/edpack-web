@@ -188,6 +188,7 @@
   "SW_EMAIL_PASSWORD_INCOMPLETE": "Please type your email and password.",
   "SW_NO_PASSWORD_SYSTEMADMIN": "System admins not allowed to sign in by password.",
   "SW_INVALID_INVITATION_TOKEN": "Invitation token has expired or is invalid.",
+  "SW_INVALID_INVITATION_DATA": "Invitation token has expired or is invalid.",
   "SW_NO_ACCESS_TOKEN": "Invitation tokens are missing.",
   "SW_NO_PASSWORD": "You do not have a password yet. Please create one first.",
   "SW_NO_ORG_FOUND": "No school found.",
