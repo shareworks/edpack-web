@@ -654,5 +654,7 @@
   "SW_CONTINUE_LAST_EDITING": "Unfinished draft: ",
   "SW_ACCEPT": "Accept",
   "SW_REMOVE_PARTICIPANT_FROM_GROUP_TEXT": "Are you sure you want to remove the student from group?",
-  "SW_REMOVE_PARTICIPANT_FROM_GROUP": "Remove participant from group"
+  "SW_REMOVE_PARTICIPANT_FROM_GROUP": "Remove participant from group",
+  "SW_TOKEN_EXPIRED": "You access token is expired.",
+  "SW_TOKEN_EXPIRED_TEXT": "Ask your instructor to make a new invitation."
 }

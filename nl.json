@@ -627,5 +627,7 @@
   "SW_CONTINUE_LAST_EDITING": "Onopgeslagen bewerking: ",
   "SW_ACCEPT": "Accepteren",
   "SW_REMOVE_PARTICIPANT_FROM_GROUP_TEXT": "Weet u zeker dat u de leerling uit de groep wilt verwijderen?",
-  "SW_REMOVE_PARTICIPANT_FROM_GROUP": "Deelnemer uit groep verwijderen"
+  "SW_REMOVE_PARTICIPANT_FROM_GROUP": "Deelnemer uit groep verwijderen",
+  "SW_TOKEN_EXPIRED": "Je toegangstoken is verlopen.",
+  "SW_TOKEN_EXPIRED_TEXT": "Vraag je instructeur om een nieuwe uitnodiging te doen."
 }
