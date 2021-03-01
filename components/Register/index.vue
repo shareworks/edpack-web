@@ -125,8 +125,7 @@ export default {
       .then((res) => { this.schools = res.data.list })
       .catch(() => { this.$message({ message: this.$i18n.t('SW_COULD_NOT_GET_IDP'), type: 'error' }) })
 
-    // TODO: decomment when api ready
-    // this.checkInvitation()
+    this.checkInvitation()
   },
 
   methods: {
@@ -136,9 +135,9 @@ export default {
 
       this.$http.get(`organizations/${this.organizationId}/check-invitation/${this.accessToken}`)
       .then(res => {
-        this.userTokenValid = res.userTokenValid
-        this.samlLoginEnabled = res.samlLoginEnabled
-        this.localLoginEnabled = res.localLoginEnabled
+        this.userTokenValid = res.data.userTokenValid
+        this.samlLoginEnabled = res.data.samlLoginEnabled
+        this.localLoginEnabled = res.data.localLoginEnabled
       })
       //  TODO: add normal errors checking! no user/ no school/ school removed/ .....
       .catch(err => { console.log('err', err) })
