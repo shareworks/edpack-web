@@ -1,7 +1,14 @@
 <template>
   <div>
-    <p class="mb-20">{{ $t('SW_MERGE_DIALOG_USERS_TEXT') }}</p>
     <el-form label-position="top">
+
+      <el-form-item label="Original User Id">
+        <el-input type="text" v-model="originalUserId"></el-input>
+
+      </el-form-item>
+      <el-form-item label="Target User Id">
+        <el-input type="text" v-model="targetUserId"></el-input>
+      </el-form-item>
 
       <el-form-item v-if="originalUser">
         <el-col :span="8">
@@ -94,6 +101,8 @@ export default {
 
   data () {
     return {
+      originalUserId: this.selectedUsers[0] ? this.selectedUsers[0]._id : '',
+      targetUserId: this.selectedUsers[1] ? this.selectedUsers[1]._id : '',
       user: this.$store.state.user,
       school: this.$store.state.school,
       loading: false,
@@ -108,14 +117,16 @@ export default {
       const originalUser = this.originalUser
       this.originalUser = this.targetUser
       this.targetUser = originalUser
+      this.originalUserId = this.originalUser ? this.originalUser._id : ''
+      this.targetUserId = this.targetUser ? this.targetUser._id : ''
     },
 
     mergeUsers () {
       if (this.loading) return
       this.loading = true
 
-      const original = this.originalUser._id // Orginal user will stay
-      const target = this.targetUser._id // target user will be merged into original (and removed)
+      const original = this.originalUserId || this.originalUser._id // Original user will stay
+      const target = this.targetUserId || this.targetUser._id // Target user will be merged into original (and removed)
 
       this.$http.put('users/merge', {}, { params: { original, target } })
         .then(() => {

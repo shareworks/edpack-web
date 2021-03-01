@@ -27,8 +27,8 @@
               <span class="hidden-xs hidden-sm">{{ $t('SW_LOGIN_AS') }}</span>
             </el-button>
 
-            <!-- Log in as user -->
-            <el-button @click="dialogMerge = true" size="medium" v-if="multipleSelection.length === 2 && user.systemAdmin" class="ml-5">
+            <!-- Merge user -->
+            <el-button @click="dialogMerge = true" size="medium" v-if="user.systemAdmin" class="ml-5">
               <i class="icon-call_merge"/>
               <span class="hidden-xs hidden-sm">{{ $t('SW_MERGE') }}</span>
             </el-button>
@@ -45,6 +45,12 @@
             <el-button v-if="isAdmin" type="primary" plain @click="dialogAddUsers = true" size="medium" class="button-square-xs mr-10">
               <i class="icon-add"/>
               <span class="hidden-xs">{{ $t('SW_ADD_USERS') }}</span>
+            </el-button>
+
+            <!-- Merge user -->
+            <el-button @click="dialogMerge = true" size="medium" v-if="user.systemAdmin" class="mr-5">
+              <i class="icon-call_merge"/>
+              <span class="hidden-xs hidden-sm">{{ $t('SW_MERGE') }}</span>
             </el-button>
 
             <!-- Total users found -->
