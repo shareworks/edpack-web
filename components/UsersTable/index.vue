@@ -124,17 +124,11 @@
         </template>
       </el-table-column>
 
-      <!-- Actions count -->
-      <el-table-column v-if="showActionsFeedbackUserStat" property="counts.actions" :label="$tc('SW_ACTIONS', 2)" width="80">
+      <!-- Custom counts -->
+      <el-table-column class-name="update-cell-style" v-for="customCount in customCounts" :key="customCount.type" :property="'counts.' + customCount.type" :label="$tc('SW_' + customCount.type.toUpperCase(), 2)" width="120" sortable>
         <template slot-scope="props">
-          {{ props.row.counts && props.row.counts.actions || 0 }}
-        </template>
-      </el-table-column>
-
-      <!-- Feedback count -->
-      <el-table-column v-if="showActionsFeedbackUserStat" property="counts.feedback" :label="$tc('SW_FEEDBACK', 2)" width="80">
-        <template slot-scope="props">
-          {{ props.row.counts && props.row.counts.feedback || 0 }}
+          <i :class="customCount.icon"/>
+          {{ props.row.counts && props.row.counts[customCount.type] || 0 | numeral('0a') }}
         </template>
       </el-table-column>
 
@@ -208,6 +202,7 @@ export default {
       roles,
       roleFilter,
       tableData: [],
+      customCounts: config.userCounts,
       inLTI: this.$store.state.inLTI,
       skip: false,
       total: 0,
@@ -218,7 +213,6 @@ export default {
       editUserForm: false,
       hideCourses: config.hideCourses,
       hasUserProfiles: config.hasUserProfiles,
-      showActionsFeedbackUserStat: config.showActionsFeedbackUserStat,
       dialogAddUsers: false,
       dialogEditUser: false,
       creditsDialog: false,
