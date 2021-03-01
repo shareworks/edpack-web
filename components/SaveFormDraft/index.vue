@@ -17,8 +17,8 @@
 
 <script>
 
-import copyObjectProps from '@/edpack-web/utils/copy-object-props'
 import moment from 'moment'
+import copyObjectProps from '@/edpack-web/utils/copy-object-props'
 
 export default {
   name: 'SaveFormDraft',
@@ -38,6 +38,16 @@ export default {
     return {
       lastUsedValues: null,
       notFinishedFormDialog: false
+    }
+  },
+
+  created() {
+    const lastUsedFormValues = localStorage.getItem(this.localStorageKey)
+
+    // if values exist more than 30 days - remove them
+    const createdDate = JSON.parse(lastUsedFormValues)?.createdDate
+    if (createdDate && moment(createdDate).diff(new Date(), 'days') > 30) {
+      localStorage.removeItem(this.localStorageKey)
     }
   },
 
