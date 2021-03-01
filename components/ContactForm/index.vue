@@ -64,9 +64,10 @@
 <script>
 import Vue from 'vue'
 import config from 'config'
-import * as VueGoogleMaps from 'vue2-google-maps'
+import * as VueGoogleMaps from 'gmap-vue'
 
-Vue.use(VueGoogleMaps, { load: { key: config.google_maps_key } })
+Vue.use(VueGoogleMaps, { load: { key: config.google_maps_key, }, installComponents: true })
+
 
 export default {
   name: 'ContactForm',
