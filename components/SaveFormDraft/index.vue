@@ -41,7 +41,7 @@ export default {
     }
   },
 
-  created() {
+  created () {
     const lastUsedFormValues = localStorage.getItem(this.localStorageKey)
 
     // if values exist more than 30 days - remove them
