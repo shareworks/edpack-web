@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-alert v-if="notFinishedFormDialog" class="small-dialog" :title="$t('SW_CONTINUE_LAST_EDITING') + lastUsedValues.name" append-to-body>
+    <el-alert v-if="notFinishedFormDialog" class="small-dialog" :title="$t('SW_CONTINUE_LAST_EDITING') + lastUsedValues.name" append-to-body @close="declineUsingOldData">
       <div v-if="lastUsedValues">
         <p class="mb-10">{{ $t('SW_NOT_FINISHED_FORM_EXIST') }}</p>
         <!-- Created date -->
@@ -68,6 +68,7 @@ export default {
   methods: {
     acceptUsingOldData () {
       copyObjectProps(this.propertiesToBeCopied, this.form, this.lastUsedValues)
+      this.$message({ message: this.$i18n.t('SW_DRAFT_RESTORED'), type: 'success' })
       this.lastUsedValues = null
       this.notFinishedFormDialog = false
     },
