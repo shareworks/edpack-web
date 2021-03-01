@@ -134,14 +134,15 @@ export default {
       this.checkLoading = true
 
       this.$http.get(`organizations/${this.organizationId}/check-invitation/${this.accessToken}`)
-      .then(res => {
-        this.userTokenValid = res.data.userTokenValid
-        this.samlLoginEnabled = res.data.samlLoginEnabled
-        this.localLoginEnabled = res.data.localLoginEnabled
-      })
-      //  TODO: add normal errors checking! no user/ no school/ school removed/ .....
-      .catch(err => { console.log('err', err) })
-      .finally(() => { this.checkLoading = false })
+        .then(res => {
+          const result = res.data.list[0]
+          this.userTokenValid = result.userTokenValid
+          this.samlLoginEnabled = result.samlLoginEnabled
+          this.localLoginEnabled = result.localLoginEnabled
+        })
+        //  TODO: add normal errors checking! no user/ no school/ school removed/ .....
+        .catch(err => { console.log('err', err) })
+        .finally(() => { this.checkLoading = false })
     },
     selectSchool (school) {
       let redirect = this.$route.query.redirect || ''
