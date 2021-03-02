@@ -102,8 +102,10 @@ export default {
     },
     language (language) {
       if (this.lang === language) return
-      this.resetKey++
       this.lang = language
+
+      // Only reset the interface when not in LTI
+      if (!this.inLTI) this.resetKey++
     },
     school (school) {
       if (school && school.slug) return document.body.classList.add(school.slug + '-styling')
