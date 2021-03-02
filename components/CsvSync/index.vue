@@ -12,7 +12,7 @@
         <!-- Added -->
         <el-tab-pane>
           <div slot="label">
-            {{ $t('SW_NEW_WORKFLOW') }} <el-tag type="success" size="mini">{{statsAfterSync.newUsers.length}}</el-tag>
+            {{ $t('SW_NEW') }} <el-tag type="success" size="mini">{{statsAfterSync.newUsers.length}}</el-tag>
           </div>
           <el-table size="small" :data="statsAfterSync.newUsers">
             <el-table-column prop="name" :label="$t('SW_NAME')" width="180"/>
