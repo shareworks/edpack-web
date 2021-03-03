@@ -80,8 +80,8 @@ export default {
       infoWinOpen: true,
       user: this.$store.state.user || {},
       form: {
-        email: this.$store.state.user ? this.$store.state.user.email : '',
-        name: this.$store.state.user ? this.$store.state.user.name : '',
+        email: this.$store.state.user && this.$store.state.user.email ? this.$store.state.user.email : '',
+        name: this.$store.state.user && this.$store.state.user.name ? this.$store.state.user.name : '',
         message: '',
         school: this.$store.state.school?._id,
         url: window.location.href
