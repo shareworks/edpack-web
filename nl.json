@@ -255,7 +255,7 @@
   "SW_INCOMPLETE_SAML_HELP": "Als u een organisatiebeheerder bent, controleer dan de SAML-configuratie. Neem contact met ons op als het probleem aanhoudt.",
   "SW_INCOMPLETE_STATUS": "Status",
   "SW_INCORRECT_EMAIL": "Vul een geldig e-mailadres in.",
-  "SW_INDIVIDUAL_SELECTABLE": "Alleen cijfers in individuele opdrachten kunnen door {0} geupdate worden.",
+  "SW_INDIVIDUAL_SELECTABLE": "Alleen cijfers die per student te bewerken zijn kunnen {0} geupdate worden.",
   "SW_INTEGRATION": "Integratie",
   "SW_INTEGRATIONS_INFO_TEXT": "Het integreren van {0} kan op drie manieren: Met Single Sign-on (SSO), met LTI1.1/LTI1.3 en met de API van jullie leeromgeving (LMS). Iedere methode kan gebruikt worden en ze hebben verschillende voordelen. Met SSO kunnen leden (student, docent of beheerder) inloggen met hun schoolaccount. Met LTI kunnen docenten {0} eenvoudig aan hun cursus toevoegen. Bovendien zijn student en docent direct ingelogd. Als jullie een LMS gebruiken kunnen we ook koppelen met de API van die LMS om direct studenten en groepen op te halen uit de leeromgeving. Als je onbekend bent met onderstaande velden, neem dan gerust even contact op via de chat.",
   "SW_INTEGRATIONS_INFO_TITLE": "Hoe je {0} kan integreren",

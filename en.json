@@ -271,7 +271,7 @@
   "SW_INCOMPLETE_SAML_HELP": "If you are organization admin, please check the SAML configuration. If the problem persists, please contact us.",
   "SW_INCOMPLETE_STATUS": "Status",
   "SW_INCORRECT_EMAIL": "Please enter a correct email address.",
-  "SW_INDIVIDUAL_SELECTABLE": "{0} can only update grades for individual assignments",
+  "SW_INDIVIDUAL_SELECTABLE": "{0} can only update grades that allow individual grading.",
   "SW_INTEGRATION": "Integration",
   "SW_INTEGRATIONS_INFO_TEXT": "Integrating {0} can be done in three ways: Using Single Sign-on (SSO), using LTI1.1/LTI1.3 and using the API of your LMS. All these can be combined and they all have different benefits. With SSO, school members will be identified using their school e-mail. LTI allows you to launch {0} inside a course page in your LMS. If you use a supported LMS, we also integrate with the API to sync group data instead of relying on CSV imports. If you do not know how to fill the fields below, just contact us using the chat support.",
   "SW_INTEGRATIONS_INFO_TITLE": "How to integrate {0}",
