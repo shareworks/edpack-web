@@ -35,7 +35,7 @@
 import config from 'config'
 export default {
   name: 'EmailUsers',
-  props: ['closeDialog', 'selectedUsers', 'course', 'evaluation', 'needSupport'],
+  props: ['closeDialog', 'selectedUsers', 'course', 'evaluation', 'assessment', 'needSupport'],
 
   data () {
     return {
@@ -78,6 +78,9 @@ export default {
 
       // If evaluation context is given, add evaluation _id to body payload
       if (this.evaluation) body.evaluation = this.evaluation._id
+
+      // If assessment context is given, add assessment _id to body payload
+      if (this.assessment) body.assessment = this.assessment._id
 
       this.$http.post('messages/personal', body, { params: { toSelf: self } })
         .then(() => {
