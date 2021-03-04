@@ -83,6 +83,11 @@ export default {
   },
 
   mounted () {
+    window.addEventListener('unhandledrejection', e => {
+      if (e?.message?.includes('ResizeObserver')) {  return e.preventDefault(); }
+      if (e?.error?.message?.includes('ResizeObserver')) { return e.preventDefault(); }
+    })
+
     this.checkConnection()
 
     // Handle resize events
