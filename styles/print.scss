@@ -7,7 +7,8 @@
 .el-progress-bar__inner,
 .el-progress-bar__outer,
 .el-tag,
-.question-number {
+.question-number,
+.text-muted {
   -webkit-print-color-adjust: exact !important;
   color-adjust: exact !important;
 }
@@ -37,6 +38,10 @@
 
   .print-always-visible {
     display: block !important;
+  }
+
+  .no-padding-print {
+    padding: 0 !important;
   }
 
   .hide-print {
