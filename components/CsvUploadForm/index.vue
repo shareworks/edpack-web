@@ -38,7 +38,7 @@
         <span v-if="!useParticipantsCsv">{{ $t('SW_UPLOAD_NEW_CSV') }}</span>
         <!-- Comproved specific code -->
         <span v-else-if="useParticipantsCsv && isGroups">{{ $t('SW_UPLOAD_NEW_CSV') }}</span>
-        <span v-else>{{ $t('SW_UPLOAD_NEW_CSV_PARTICIPANTS') }}</span>
+        <span v-else>{{ $t(cancelButtonText ? cancelButtonText : 'SW_UPLOAD_NEW_CSV_PARTICIPANTS') }}</span>
       </el-button>
     </el-alert>
 
@@ -85,7 +85,7 @@ import emailsValidation from '../../utils/emails-validation'
 
 export default {
   name: 'CsvUploadForm',
-  props: ['existing', 'noGroup', 'downloadLink', 'buttonText', 'participantTypeText', 'isGroups', 'assessors'],
+  props: ['existing', 'noGroup', 'downloadLink', 'buttonText', 'cancelButtonText', 'participantTypeText', 'isGroups', 'assessors'],
   components: { StudentsTable },
 
   data () {
