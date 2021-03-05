@@ -630,5 +630,6 @@
   "SW_REMOVE_PARTICIPANT_FROM_GROUP": "Deelnemer uit groep verwijderen",
   "SW_TOKEN_EXPIRED": "Je toegangstoken is verlopen.",
   "SW_TOKEN_EXPIRED_TEXT": "Vraag je instructeur om een nieuwe uitnodiging te doen.",
-  "SW_DRAFT_RESTORED": "Concept is teruggehaald"
+  "SW_DRAFT_RESTORED": "Concept is teruggehaald",
+  "SW_AS_CLIENT_OF": "Als opdrachtgever van"
 }
