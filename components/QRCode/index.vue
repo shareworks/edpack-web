@@ -22,15 +22,14 @@
 </template>
 
 <script>
-import config from 'config'
 import QrcodeVue from 'qrcode.vue'
 export default {
   name: 'QrCode',
-  props: ['evaluationId'],
+  props: ['link'],
   components: { QrcodeVue },
   data () {
     return {
-      value: `${config.api_url}/pagelink/redirect?evaluation=${this.evaluationId}&role=participant`
+      value: `${process.env.VUE_APP_LOCAL_WEB_URL}/${this.link}`
     }
   },
   methods: {
