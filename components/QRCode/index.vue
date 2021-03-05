@@ -1,7 +1,7 @@
 <template>
   <section class="text-center">
     <!-- QR code -->
-    <qrcode-vue :value="value" :size="300" level="H"/>
+    <qrcode-vue :value="link" :size="300" level="H"/>
 
     <!-- instruction -->
     <p class="mt-10 mb-10">{{ $t('SW_QR_INSTRUCTION') }}</p>
@@ -27,11 +27,6 @@ export default {
   name: 'QrCode',
   props: ['link'],
   components: { QrcodeVue },
-  data () {
-    return {
-      value: `${process.env.VUE_APP_LOCAL_WEB_URL}/${this.link}`
-    }
-  },
   methods: {
     clipboardSuccess () { this.$message({ message: this.$i18n.t('SW_COPIED_TO_CLIPBOARD'), type: 'success' }) }
   }
