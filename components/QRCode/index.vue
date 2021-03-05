@@ -9,9 +9,9 @@
     <!-- Input with link -->
     <el-form>
       <el-form-item>
-        <el-input v-model="value" :readonly="true" type="url">
+        <el-input v-model="link" :readonly="true" type="url">
           <el-tooltip slot="prepend" :visible-arrow="false" :open-delay="300" :enterable="false" :content="$t('SW_COPY_TO_CLIPBOARD')" placement="bottom-start">
-            <el-button v-clipboard="value" @success="clipboardSuccess">
+            <el-button v-clipboard="link" @success="clipboardSuccess">
               <i class="icon-copy"/>
             </el-button>
           </el-tooltip>
