@@ -139,7 +139,7 @@ export default {
     clearTokens () {
       this.submitting = true
 
-      this.$http.put(`organizations/${this.school._id}/access-tokens`)
+      this.$http.put(`organizations/${this.school._id}/clean-access-tokens`)
         .then(() => { this.$message({ message: this.$i18n.t('SW_TOKENS_CLEARED'), type: 'success' }) })
         .catch(() => { this.$message({ message: this.$i18n.t('SW_GENERIC_ERROR'), type: 'error' }) })
         .catch(() => { this.submitting = false })
