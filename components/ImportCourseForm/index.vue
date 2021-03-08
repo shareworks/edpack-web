@@ -65,7 +65,8 @@ export default {
       lmsGroupSets: [],
       lmsCourseSections: [],
       requestedCourseGroupSets: false,
-      requestedCourseSections: false
+      requestedCourseSections: false,
+      course: this.$store.state.course
     }
   },
 
