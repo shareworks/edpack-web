@@ -2,8 +2,8 @@ import Papa from 'papaparse'
 import slugify from 'slugify'
 import downloadByLink from './download-by-link'
 
-const downloadCsv = (data, name) => {
-  const csv = Papa.unparse(data, { delimiter: ';' })
+const downloadCsv = (data, name, delimiter) => {
+  const csv = Papa.unparse(data, { delimiter: delimiter || ';' })
   const csvName = slugify(name) + '.csv'
   const blob = new Blob([csv])
 
