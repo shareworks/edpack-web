@@ -25,6 +25,10 @@
               <i class="icon-cloud_done"></i>
               <span>{{ $t('SW_UPTIME_MONITOR') }}</span>
             </el-dropdown-item>
+            <el-dropdown-item v-if="currentUser.systemAdmin" :command="{type: 'tokens'}">
+              <i class="icon-delete"></i>
+              <span>{{ $t('SW_CLEAR_TOKENS') }}</span>
+            </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
 
@@ -84,6 +88,7 @@ export default {
       toTab: this.$route.params.mode || config.defaultAdminTab,
       dialogStats: false,
       appName: config.name,
+      submitting: false,
       uptimeUrl: config.business.uptimeUrl,
       lang: this.$store.state.lang,
       status: 'loading'
@@ -116,7 +121,27 @@ export default {
         })
         .catch(() => { this.status = 'error' })
     },
-    handleCommand (command) { if (command.type === 'uptime') window.open(this.uptimeUrl, '_blank') },
+    handleCommand (command) {
+      if (command.type === 'uptime') window.open(this.uptimeUrl, '_blank')
+      if (command.type === 'tokens') this.confirmClearTokens()
+    },
+    confirmClearTokens () {
+      if (this.submitting) return
+
+      this.$confirm(this.$i18n.t('SW_CLEAR_TOKENS_TEXT'), this.$i18n.tc('SW_CLEAR_TOKENS'), {
+        confirmButtonText: this.$i18n.t('SW_REMOVE'),
+        cancelButtonText: this.$i18n.t('SW_CANCEL')
+      }).then(() => { this.clearTokens() })
+        .catch(() => { })
+    },
+    clearTokens () {
+      this.submitting = true
+
+      this.$http.put(`organizations/${this.school._id}/clean-access-tokens`)
+        .then(() => { this.$message({ message: this.$i18n.t('SW_TOKENS_CLEARED'), type: 'success' }) })
+        .catch(() => { this.$message({ message: this.$i18n.t('SW_GENERIC_ERROR'), type: 'error' }) })
+        .finally(() => { this.submitting = false })
+    },
     toggleStats () { this.dialogStats = !this.dialogStats },
     tabClick () {
       this.$router.replace({ name: 'admin', params: { mode: this.toTab, slug: this.school.slug } })
