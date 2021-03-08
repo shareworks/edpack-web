@@ -27,7 +27,12 @@
     <!-- Group categories -->
     <div v-else-if="form.isNew && course.lmsApiIntegration" class="mb-20">
       <el-form-item :label="$t('SW_AVAILABLE_GROUPS')" required>
-        <p class="form-help-text">{{$t('SW_AVAILABLE_GROUP_SETS_TEXT')}}</p>
+        <p class="form-help-text">
+          {{$t('SW_AVAILABLE_GROUP_SETS_TEXT')}}
+          <el-popover placement="top-start" width="400" trigger="click" :content="$t('SW_USER_IMPORT_SOURCE_HELP')">
+            <a class="cursor-pointer" slot="reference"><i class="icon-question question-circle question-pop ml-5"/></a>
+          </el-popover>
+        </p>
         <el-checkbox-group v-model="form.groupCategories" v-if="lmsGroupSets.length && (form.isNew || form.groupCategories)">
           <div v-for="(group, index) in lmsGroupSets" :key="index">
             <el-checkbox :disabled="!form.isNew" class="text-ellipsis" :label="group" :key="group.canvasId || group.brightspaceId || group.blackboardId">
