@@ -85,7 +85,7 @@ import emailsValidation from '../../utils/emails-validation'
 
 export default {
   name: 'CsvUploadForm',
-  props: ['existing', 'noGroup', 'downloadLink', 'buttonText', 'cancelButtonText', 'participantTypeText', 'isGroups', 'assessors'],
+  props: ['existing', 'noGroup', 'templatePrefix', 'buttonText', 'cancelButtonText', 'participantTypeText', 'isGroups', 'assessors'],
   components: { StudentsTable },
 
   data () {
@@ -221,7 +221,7 @@ export default {
       this.$message({ message: this.$i18n.t('SW_PLEASE_REMOVE_FIRST'), type: 'error' })
     },
     downloadTemplate () {
-      window.open(this.downloadLink ? this.downloadLink : '/default-template.csv')
+      window.open(this.templatePrefix + this.school.csvSeparator + '-separated.csv')
     }
   }
 }

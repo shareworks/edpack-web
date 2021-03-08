@@ -4,7 +4,7 @@
       <p class="mb-20">{{ $t('SW_CSV_SYNC_EXPLAIN_TEXT', [appName]) }}</p>
 
       <!-- Upload csv file -->
-      <csv-upload-form @addUsers="addUsers" @clearUsers="clearUsers" :existing="{students: currentUsers.length, groups: statsBeforeSync.groups.length}"/>
+      <csv-upload-form @addUsers="addUsers" @clearUsers="clearUsers" templatePrefix="template-" :existing="{students: currentUsers.length, groups: statsBeforeSync.groups.length}"/>
     </div>
 
     <div v-if="csvUsers.length" v-loading="loadingStats" class="mt-20">
