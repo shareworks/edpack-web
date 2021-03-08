@@ -17,8 +17,14 @@ const checkValue = (element) => {
 
 const mergeEmptyLanguageFields = (form, props = []) => {
   props.forEach(propertyName => {
+    console.log(propertyName)
     // run over each element in array and check its properties
     if (Array.isArray(form[propertyName])) {
+      if (form[propertyName].title) { // hack for team questions in Buddycheck
+        return form[propertyName].title.forEach(element => {
+          checkValue(element)
+        })
+      }
       form[propertyName].forEach(element => {
         checkValue(element)
       })
