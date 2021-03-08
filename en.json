@@ -658,5 +658,18 @@
   "SW_TOKEN_EXPIRED": "You access token is expired.",
   "SW_TOKEN_EXPIRED_TEXT": "Ask your instructor to make a new invitation.",
   "SW_DRAFT_RESTORED": "Draft has been restored",
-  "SW_AS_CLIENT_OF": "As a client of"
+  "SW_AS_CLIENT_OF": "As a client of",
+  "SW_USER_IMPORT_SOURCE": "Import source",
+  "SW_USER_IMPORT_SOURCE_TEXT": "Select where you want to add students from.",
+  "SW_COURSE_GROUP_SETS": "Course group sets",
+  "SW_COURSE_SECTIONS": "Course sections",
+  "SW_COURSE_STUDENTS": "Whole course",
+  "SW_COURSE_HAS": "Course has",
+  "SW_AVAILABLE_COURSE_SECTIONS": "Course sections",
+  "SW_AVAILABLE_COURSE_SECTIONS_TEXT": "Which course section(s) should be imported? Select at least one.",
+  "SW_AVAILABLE_GROUPS": "Group sets",
+  "SW_AVAILABLE_GROUP_SETS_TEXT": "Which group set(s) should be imported? Select at least one.",
+  "SW_NO_GROUP_CATEGORIES": "Groups are required to create a survey. Please check if groups with students are created in this course.",
+  "SW_NO_COURSE_SECTIONS": "Course sections are required to create a survey. Please check if sections with students are created in this course.",
+  "SW_USER_IMPORT_SOURCE_HELP": "You can add students for this survey in three different ways: Simply click on 'Whole course' for all students in this course. If you have several group sets in your learning environment and you want to import a specific set, click 'Course group sets'. If you have divided the course into sections and want to select a specific section, click 'Course Sections'. In the last two cases, a list of group sets or sections appears, of which you can select 1 or more. Only those students will be invited to this survey."
 }

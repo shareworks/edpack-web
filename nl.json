@@ -631,5 +631,18 @@
   "SW_TOKEN_EXPIRED": "Je toegangstoken is verlopen.",
   "SW_TOKEN_EXPIRED_TEXT": "Vraag je instructeur om een nieuwe uitnodiging te doen.",
   "SW_DRAFT_RESTORED": "Concept is teruggehaald",
-  "SW_AS_CLIENT_OF": "Als opdrachtgever van"
+  "SW_AS_CLIENT_OF": "Als opdrachtgever van",
+  "SW_AVAILABLE_COURSE_SECTIONS": "Cursussecties",
+  "SW_AVAILABLE_COURSE_SECTIONS_TEXT": "Welke cursussecties moeten er worden geimporteerd? Selecteer er minstens één.",
+  "SW_AVAILABLE_GROUPS": "Groepsets",
+  "SW_AVAILABLE_GROUP_SETS_TEXT": "Welke groepensets moeten geimporteerd worden? Selecteer minstens één.",
+  "SW_COURSE_GROUP_SETS": "Cursus groepsets",
+  "SW_COURSE_SECTIONS": "Cursussecties",
+  "SW_COURSE_STUDENTS": "Gehele cursus",
+  "SW_USER_IMPORT_SOURCE_HELP": "Je kunt studenten op drie verschillende manieren toevoegen aan deze bevraging: Voor simpelweg alle studenten in deze cursus klik je 'Gehele cursus'. Als je in je leeromgeving verschillende groepsets hebt en je wilt een specifieke set importeren, klik dan 'Cursus groepsets'. Als je de cursus hebt opgedeeld in secties en je wilt een specifieke sectie selecteren, klik dan 'Cursussecties'. In de laatste twee gevallen verschijnt er een lijst van groepsets of secties, waarvan je er 1 of meerderen kunt selecteren. Alle studenten die hierin zitten worden vervolgens uitgenodigd voor deze bevraging.",
+  "SW_NO_COURSE_SECTIONS": "Er zijn cursussecties nodig om een bevraging aan te maken. Controleer of er cursussecties zijn en of er ook studenten in zitten.",
+  "SW_NO_GROUP_CATEGORIES": "Er zijn geen groepen gevonden in deze cursus. Check of er in de cursus reeds groepen - met studenten erin - zijn aangemaakt.",
+  "SW_USER_IMPORT_SOURCE": "Importeren uit",
+  "SW_USER_IMPORT_SOURCE_TEXT": "Selecteer waar je studenten uit wilt importeren.",
+  "SW_COURSE_HAS": "Cursus heeft"
 }
