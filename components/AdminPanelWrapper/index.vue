@@ -25,9 +25,7 @@
               <i class="icon-cloud_done"></i>
               <span>{{ $t('SW_UPTIME_MONITOR') }}</span>
             </el-dropdown-item>
-          </el-dropdown-menu>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item :command="{type: 'tokens'}">
+            <el-dropdown-item v-if="currentUser.systemAdmin" :command="{type: 'tokens'}">
               <i class="icon-delete"></i>
               <span>{{ $t('SW_CLEAR_TOKENS') }}</span>
             </el-dropdown-item>
@@ -142,7 +140,7 @@ export default {
       this.$http.put(`organizations/${this.school._id}/clean-access-tokens`)
         .then(() => { this.$message({ message: this.$i18n.t('SW_TOKENS_CLEARED'), type: 'success' }) })
         .catch(() => { this.$message({ message: this.$i18n.t('SW_GENERIC_ERROR'), type: 'error' }) })
-        .catch(() => { this.submitting = false })
+        .finally(() => { this.submitting = false })
     },
     toggleStats () { this.dialogStats = !this.dialogStats },
     tabClick () {
