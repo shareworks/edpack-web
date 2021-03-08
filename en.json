@@ -677,5 +677,7 @@
   "SW_AVAILABLE_GROUP_SETS_TEXT": "Which group set(s) should be imported? Select at least one.",
   "SW_NO_GROUP_CATEGORIES": "Groups are required to create a survey. Please check if groups with students are created in this course.",
   "SW_NO_COURSE_SECTIONS": "Course sections are required to create a survey. Please check if sections with students are created in this course.",
-  "SW_USER_IMPORT_SOURCE_HELP": "You can add students for this survey in three different ways: Simply click on 'Whole course' for all students in this course. If you have several group sets in your learning environment and you want to import a specific set, click 'Course group sets'. If you have divided the course into sections and want to select a specific section, click 'Course Sections'. In the last two cases, a list of group sets or sections appears, of which you can select 1 or more. Only those students will be invited to this survey."
+  "SW_USER_IMPORT_SOURCE_HELP": "You can add students for this survey in three different ways: Simply click on 'Whole course' for all students in this course. If you have several group sets in your learning environment and you want to import a specific set, click 'Course group sets'. If you have divided the course into sections and want to select a specific section, click 'Course Sections'. In the last two cases, a list of group sets or sections appears, of which you can select 1 or more. Only those students will be invited to this survey.",
+  "SW_AVAILABLE_GROUPS_TEXT": "Which groups should be imported? Select at least one.",
+  "SW_NO_GROUPS_INDIVIDUAL": "No groups found. Groups are required to create an evaluation. Please check if groups with students are created (without a group set)."
 }
