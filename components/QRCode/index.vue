@@ -23,6 +23,7 @@
 
 <script>
 import QrcodeVue from 'qrcode.vue'
+
 export default {
   name: 'QrCode',
   props: ['link'],
