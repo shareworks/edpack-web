@@ -72,7 +72,6 @@ export default {
   },
 
   mounted () {
-    console.log('this.form.lmsImportType', this.form.lmsImportType)
     if (!this.form.isNew) this.handleImportType()
   },
 
