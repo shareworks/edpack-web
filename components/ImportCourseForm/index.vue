@@ -73,7 +73,7 @@ export default {
 
   methods: {
     handleImportType () {
-      if (!this.form.isNew || !this.lms) return
+      if (!this.lms) return
 
       if (this.form.lmsImportType === 'courseGroupSets' && !this.requestedCourseGroupSets) this.getLMSGroupSets(this.lms)
       if (this.form.lmsImportType === 'courseSections' && !this.requestedCourseSections) this.getLMSCourseSections(this.lms)
