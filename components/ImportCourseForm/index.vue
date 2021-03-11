@@ -43,6 +43,7 @@
         <el-checkbox-group :disabled="disabledEdit" v-model="form.canvas.courseSections">
           <div v-for="(section, index) in lmsCourseSections" :key="index">
             <el-checkbox class="text-ellipsis" :label="section" :key="section.id">
+              {{ section.name }} <el-tag size="mini" class="no-bold">{{ section.totalStudents }} {{ $tc('SW_STUDENT', section.totalStudents).toLowerCase() }}</el-tag>
             </el-checkbox>
           </div>
         </el-checkbox-group>
