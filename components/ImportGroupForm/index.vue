@@ -64,11 +64,11 @@ export default {
       lms: getLmsType(this.$store.state.course),
       course: this.$store.state.course,
       lmsGroupSets: [],
-      lmsGroups: [],
+      lmsGroups: []
     }
   },
 
-  mounted() {
+  mounted () {
     // Get different group sets/categories
     if (this.form.isNew && this.course.lmsApiIntegration) this.getLMSGroupSets(this.lms)
   },
@@ -90,7 +90,7 @@ export default {
       this.form.groupCategories = []
       if (this.lmsGroupSets.length === 1 && this.form.lmsImportType === 'groupSets') this.form.groupCategories = this.lmsGroupSets
       if (this.lmsGroups.length === 1 && this.form.lmsImportType === 'groups') this.form.groupCategories = this.lmsGroups
-    },
+    }
   }
 }
 </script>
