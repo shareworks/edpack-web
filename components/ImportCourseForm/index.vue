@@ -43,7 +43,6 @@
         <el-checkbox-group :disabled="disabledEdit" v-model="form.canvas.courseSections">
           <div v-for="(section, index) in lmsCourseSections" :key="index">
             <el-checkbox class="text-ellipsis" :label="section" :key="section.id">
-              <span> {{ section.name }} <el-tag size="mini" class="no-bold">{{ section.totalStudents }} {{ $tc('SW_STUDENT', section.totalStudents).toLowerCase() }}</el-tag></span>
             </el-checkbox>
           </div>
         </el-checkbox-group>
@@ -117,17 +116,35 @@ export default {
     },
 
     cleanSelectedGroupCategories () {
+      const selectedGroups = []
+      const filteredGroups = []
+
+      this.form.canvas.groupCategories.forEach(group => selectedGroups.push(group.id))
       this.form.canvas.groupCategories = []
-      if (this.lmsGroupSets.length === 1) {
-        this.form.canvas.groupCategories = this.lmsGroupSets
-      }
+
+      this.lmsGroupSets.forEach(group => {
+        if (selectedGroups.includes(group.id)) {
+          filteredGroups.push(group)
+        }
+      })
+
+      this.form.canvas.groupCategories = filteredGroups
     },
 
     cleanSelectedCourseSections () {
+      const selectedSections = []
+      const filteredSections = []
+
+      this.form.canvas.courseSections.forEach(section => selectedSections.push(section.id))
       this.form.canvas.courseSections = []
-      if (this.lmsCourseSections.length === 1) {
-        this.form.canvas.courseSections = this.lmsCourseSections
-      }
+
+      this.lmsCourseSections.forEach(section => {
+        if (selectedSections.includes(section.id)) {
+          filteredSections.push(section)
+        }
+      })
+
+      this.form.canvas.courseSections = filteredSections
     }
   }
 }
