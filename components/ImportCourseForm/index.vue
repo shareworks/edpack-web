@@ -58,30 +58,41 @@ import getLmsType from '../../utils/get-lms-type'
 
 export default {
   name: 'ImportCourseForm',
-  props: ['form', 'lmsCourse', 'loading'],
+  props: ['form', 'loading'],
   data () {
     return {
       lms: getLmsType(this.$store.state.course),
+      lmsCourse: false,
       lmsGroupSets: [],
       lmsCourseSections: [],
-      requestedCourseSections: false,
       disabledEdit: !this.form.isNew,
-      requestedCourseGroupSets: false,
       course: this.$store.state.course
     }
   },
 
   mounted () {
-    if (!this.form.isNew) this.handleImportType()
+    this.handleImportType()
   },
 
   methods: {
     handleImportType () {
       if (!this.lms) return
-
-      if (this.form.lmsImportType === 'courseGroupSets' && !this.requestedCourseGroupSets) this.getLMSGroupSets(this.lms)
-      if (this.form.lmsImportType === 'courseSections' && !this.requestedCourseSections) this.getLMSCourseSections(this.lms)
+      if (this.form.lmsImportType === 'courseUsers') this.getLMSCourse(this.lms)
+      if (this.form.lmsImportType === 'courseGroupSets') this.getLMSGroupSets(this.lms)
+      if (this.form.lmsImportType === 'courseSections') this.getLMSCourseSections(this.lms)
     },
+
+    getLMSCourse (lms) {
+      if (this.loading) return
+      this.$emit('setLoading', true)
+
+      this.$http.get(`courses/${this.course._id}/${lms}/course`)
+        .then((res) => {
+          this.lmsCourse = res.data.list[0]
+        })
+        .finally(() => { this.$emit('setLoading', false) })
+    },
+
     getLMSGroupSets (lms) {
       if (this.loading) return
       this.$emit('setLoading', true)
@@ -89,7 +100,6 @@ export default {
       this.$http.get(`courses/${this.course._id}/${lms}/group-categories`, { params: { includeGroups: true } })
         .then((res) => {
           this.lmsGroupSets = res.data.list
-          this.requestedCourseGroupSets = true
           this.cleanSelectedGroupCategories()
         })
         .finally(() => { this.$emit('setLoading', false) })
@@ -101,7 +111,6 @@ export default {
       this.$http.get(`courses/${this.course._id}/${lms}/course-sections`)
         .then((res) => {
           this.lmsCourseSections = res.data.list
-          this.requestedCourseSections = true
           this.cleanSelectedCourseSections()
         })
         .finally(() => { this.$emit('setLoading', false) })
