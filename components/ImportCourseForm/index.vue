@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form-item :label="$t('SW_USER_IMPORT_SOURCE')" v-if="lms && form.isNew" required>
+    <el-form-item :label="$t('SW_USER_IMPORT_SOURCE')" v-if="lms" required>
     <!-- Choose import source -->
       <p class="form-help-text">
         {{$t('SW_USER_IMPORT_SOURCE_TEXT')}}
@@ -9,25 +9,25 @@
         </el-popover>
       </p>
       <!-- Choose import type -->
-      <el-radio-group v-model="form.lmsImportType" size="small" class="pull-left" @change="handleImportType">
+      <el-radio-group :disabled="disabledEdit" v-model="form.lmsImportType" size="small" class="pull-left" @change="handleImportType">
         <el-radio-button label="allCourseUsers">{{ $t('SW_COURSE_STUDENTS') }}</el-radio-button>
         <el-radio-button label="courseGroupSets">{{ $t('SW_COURSE_GROUP_SETS') }}</el-radio-button>
         <el-radio-button label="courseSections">{{ $t('SW_COURSE_SECTIONS') }}</el-radio-button>
       </el-radio-group>
 
-      <div class="inline ml-10 vertical-top mt-5 normal-line-height" v-if="form.isNew && lms && lmsCourse && form.lmsImportType === 'allCourseUsers'">
+      <div class="inline ml-10 vertical-top mt-5 normal-line-height" v-if="lms && lmsCourse && form.lmsImportType === 'allCourseUsers'">
         <span class="text-muted mr-5">{{$t('SW_COURSE_HAS')}}</span>
         <el-tag size="mini">{{ lmsCourse.totalStudents }} {{ $tc('SW_STUDENT', lmsCourse.totalStudents).toLowerCase() }}</el-tag>
       </div>
     </el-form-item>
 
     <!-- Group categories -->
-    <div v-if="form.isNew && lms && form.lmsImportType === 'courseGroupSets'" class="mb-20">
-      <el-form-item v-if="lmsGroupSets.length && (form.isNew || form.canvas.groupCategories) && !loading" :label="$t('SW_AVAILABLE_GROUPS')" required>
+    <div v-if="lms && form.lmsImportType === 'courseGroupSets'" class="mb-20">
+      <el-form-item v-if="lmsGroupSets.length && form.canvas.groupCategories && !loading" :label="$t('SW_AVAILABLE_GROUPS')" required>
         <p class="form-help-text">{{$t('SW_AVAILABLE_GROUP_SETS_TEXT')}}</p>
-        <el-checkbox-group v-model="form.canvas.groupCategories">
+        <el-checkbox-group :disabled="disabledEdit" v-model="form.canvas.groupCategories">
           <div v-for="(group, index) in lmsGroupSets" :key="index">
-            <el-checkbox :disabled="!form.isNew" class="text-ellipsis" :label="group" :key="group.id">
+            <el-checkbox class="text-ellipsis" :label="group" :key="group.id">
               {{ group.name }} <el-tag size="mini" class="no-bold">{{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}</el-tag>
             </el-checkbox>
           </div>
@@ -37,12 +37,12 @@
     </div>
 
     <!-- Course sections -->
-    <div v-if="form.isNew && lms && form.lmsImportType === 'courseSections'" class="mb-20">
-      <el-form-item v-if="lmsCourseSections.length && (form.isNew || form.canvas.courseSections) && !loading" :label="$t('SW_AVAILABLE_COURSE_SECTIONS')" required>
+    <div v-if="lms && form.lmsImportType === 'courseSections'" class="mb-20">
+      <el-form-item v-if="lmsCourseSections.length && form.canvas.courseSections && !loading" :label="$t('SW_AVAILABLE_COURSE_SECTIONS')" required>
         <p class="form-help-text">{{$t('SW_AVAILABLE_COURSE_SECTIONS_TEXT')}}</p>
-        <el-checkbox-group v-model="form.canvas.courseSections">
+        <el-checkbox-group :disabled="disabledEdit" v-model="form.canvas.courseSections">
           <div v-for="(section, index) in lmsCourseSections" :key="index">
-            <el-checkbox :disabled="!form.isNew" class="text-ellipsis" :label="section" :key="section.id">
+            <el-checkbox class="text-ellipsis" :label="section" :key="section.id">
               <span> {{ section.name }} <el-tag size="mini" class="no-bold">{{ section.totalStudents }} {{ $tc('SW_STUDENT', section.totalStudents).toLowerCase() }}</el-tag></span>
             </el-checkbox>
           </div>
@@ -64,8 +64,9 @@ export default {
       lms: getLmsType(this.$store.state.course),
       lmsGroupSets: [],
       lmsCourseSections: [],
-      requestedCourseGroupSets: false,
       requestedCourseSections: false,
+      disabledEdit: !this.form.isNew,
+      requestedCourseGroupSets: false,
       course: this.$store.state.course
     }
   },
