@@ -10,12 +10,12 @@
       </p>
       <!-- Choose import type -->
       <el-radio-group :disabled="disabledEdit" v-model="form.lmsImportType" size="small" class="pull-left" @change="handleImportType">
-        <el-radio-button label="allCourseUsers">{{ $t('SW_COURSE_STUDENTS') }}</el-radio-button>
+        <el-radio-button label="courseUsers">{{ $t('SW_COURSE_STUDENTS') }}</el-radio-button>
         <el-radio-button label="courseGroupSets">{{ $t('SW_COURSE_GROUP_SETS') }}</el-radio-button>
         <el-radio-button label="courseSections">{{ $t('SW_COURSE_SECTIONS') }}</el-radio-button>
       </el-radio-group>
 
-      <div class="inline ml-10 vertical-top mt-5 normal-line-height" v-if="lms && lmsCourse && form.lmsImportType === 'allCourseUsers'">
+      <div class="inline ml-10 vertical-top mt-5 normal-line-height" v-if="lms && lmsCourse && form.lmsImportType === 'courseUsers'">
         <span class="text-muted mr-5">{{$t('SW_COURSE_HAS')}}</span>
         <el-tag size="mini">{{ lmsCourse.totalStudents }} {{ $tc('SW_STUDENT', lmsCourse.totalStudents).toLowerCase() }}</el-tag>
       </div>
