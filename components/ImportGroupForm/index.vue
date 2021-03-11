@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- Select groups or group sets -->
-    <el-form-item :label="$t('SW_SELECT')" v-if="form.isNew && course.lmsApiIntegration && lms === 'blackboard'">
-      <el-radio-group v-model="form.lmsImportType" size="small" @change="cleanSelectedGroupCategories">
+    <el-form-item :label="$t('SW_SELECT')" v-if="course.lmsApiIntegration && lms === 'blackboard'">
+      <el-radio-group :disabled="disabledEdit" v-model="form.lmsImportType" size="small" @change="cleanSelectedGroupCategories">
         <el-radio-button label="groupSets">{{ $t('SW_GROUP_SETS') }}</el-radio-button>
         <el-radio-button label="groups">{{ $t('SW_GROUPS') }}</el-radio-button>
       </el-radio-group>
@@ -10,12 +10,12 @@
     </el-form-item>
 
     <!-- Select groups from Blackboard -->
-    <div v-if="form.isNew && course.lmsApiIntegration && lms === 'blackboard' && form.lmsImportType === 'groups'" class="mb-20">
-      <el-form-item v-if="lmsGroups.length && (form.isNew || form.groupCategories)" :label="$t('SW_GROUPS')" required>
+    <div v-if="course.lmsApiIntegration && lms === 'blackboard' && form.lmsImportType === 'groups'" class="mb-20">
+      <el-form-item v-if="lmsGroups.length && form.groupCategories" :label="$t('SW_GROUPS')" required>
         <p class="form-help-text">{{$t('SW_AVAILABLE_GROUPS_TEXT')}}</p>
-        <el-checkbox-group v-model="form.groupCategories">
+        <el-checkbox-group :disabled="disabledEdit" v-model="form.groupCategories">
           <div v-for="(group, index) in lmsGroups" :key="index">
-            <el-checkbox :disabled="!form.isNew" class="text-ellipsis" :label="group" :key="group.blackboardId">
+            <el-checkbox class="text-ellipsis" :label="group" :key="group.blackboardId">
               {{ group.name }}
             </el-checkbox>
           </div>
@@ -25,7 +25,7 @@
     </div>
 
     <!-- Group categories -->
-    <div v-else-if="form.isNew && course.lmsApiIntegration" class="mb-20">
+    <div v-else-if="course.lmsApiIntegration" class="mb-20">
       <el-form-item :label="$t('SW_AVAILABLE_GROUPS')" required>
         <p class="form-help-text">
           {{$t('SW_AVAILABLE_GROUP_SETS_TEXT')}}
@@ -33,9 +33,9 @@
             <a class="cursor-pointer" slot="reference"><i class="icon-question question-circle question-pop ml-5"/></a>
           </el-popover>
         </p>
-        <el-checkbox-group v-model="form.groupCategories" v-if="lmsGroupSets.length && (form.isNew || form.groupCategories)">
+        <el-checkbox-group :disabled="disabledEdit" v-model="form.groupCategories" v-if="lmsGroupSets.length && form.groupCategories">
           <div v-for="(group, index) in lmsGroupSets" :key="index">
-            <el-checkbox :disabled="!form.isNew" class="text-ellipsis" :label="group" :key="group.canvasId || group.brightspaceId || group.blackboardId">
+            <el-checkbox class="text-ellipsis" :label="group" :key="group.canvasId || group.brightspaceId || group.blackboardId">
               <span v-if="lms !== 'blackboard' || !group.groupNames"> {{ group.name }} </span>
               <span v-else>
                 <span>{{group.name}} (</span>
@@ -63,6 +63,7 @@ export default {
     return {
       lms: getLmsType(this.$store.state.course),
       course: this.$store.state.course,
+      disabledEdit: !this.form.isNew,
       lmsGroupSets: [],
       lmsGroups: []
     }
@@ -70,7 +71,7 @@ export default {
 
   mounted () {
     // Get different group sets/categories
-    if (this.form.isNew && this.course.lmsApiIntegration) this.getLMSGroupSets(this.lms)
+    if (this.course.lmsApiIntegration) this.getLMSGroupSets(this.lms)
   },
 
   methods: {
