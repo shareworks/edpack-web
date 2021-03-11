@@ -279,6 +279,7 @@
   "SW_CSV_SEPARATOR": "CSV separator",
   "SW_COMMA": "Comma",
   "SW_SEMICOLON": "Semicolon",
+  "SW_ORG_TIMEZONE": "Timezone",
   "SW_TOKENS_CLEARED": "All access tokens in this school have been removed.",
   "SW_CLEAR_TOKENS_TEXT": "Are you sure you want to remove all access tokens? All users will have to give permission again for API integrations.",
   "SW_CLEAR_TOKENS": "Remove access tokens",

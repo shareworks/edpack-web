@@ -269,6 +269,7 @@
   "SW_CSV_SEPARATOR": "CSV separator",
   "SW_COMMA": "Komma",
   "SW_SEMICOLON": "Puntkomma",
+  "SW_ORG_TIMEZONE": "Timezone",
   "SW_TOKENS_CLEARED": "Alle toegangstokens zijn verwijderd.",
   "SW_CLEAR_TOKENS_TEXT": "Weet je zeker dat je alle toegangstokens wilt verwijderen? Alle gebruikers moeten voor API integraties opnieuw permissie geven.",
   "SW_CLEAR_TOKENS": "Toegangstokens verwijderen",
