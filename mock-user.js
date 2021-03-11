@@ -12,7 +12,6 @@ export default {
   organizations: [{
     slug: 'share-u',
     brandColor: '#00a1e1',
-    canvasClientID: '70000000000003',
     counts: { users: 0 },
     createdBy: null,
     createdByID: null,
