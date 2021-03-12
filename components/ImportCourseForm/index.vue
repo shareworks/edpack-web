@@ -62,6 +62,7 @@ export default {
   data () {
     return {
       lms: getLmsType(this.$store.state.course),
+      loading: false,
       lmsCourse: false,
       lmsGroupSets: [],
       lmsCourseSections: [],
@@ -77,38 +78,38 @@ export default {
   methods: {
     handleImportType () {
       if (!this.lms) return
-      if (this.form.lmsImportType === 'courseUsers') this.getLMSCourse(this.lms)
-      if (this.form.lmsImportType === 'courseGroupSets') this.getLMSGroupSets(this.lms)
-      if (this.form.lmsImportType === 'courseSections') this.getLMSCourseSections(this.lms)
+      if (this.form.lmsImportType === 'courseUsers') this.getLMSCourse()
+      if (this.form.lmsImportType === 'courseGroupSets') this.getLMSGroupSets()
+      if (this.form.lmsImportType === 'courseSections') this.getLMSCourseSections()
     },
 
-    getLMSCourse (lms) {
+    getLMSCourse () {
       if (this.loading) return
       this.$emit('setLoading', true)
 
-      this.$http.get(`courses/${this.course._id}/${lms}/course`)
+      this.$http.get(`courses/${this.course._id}/${this.lms}/course`)
         .then((res) => {
           this.lmsCourse = res.data.list[0]
         })
         .finally(() => { this.$emit('setLoading', false) })
     },
 
-    getLMSGroupSets (lms) {
+    getLMSGroupSets () {
       if (this.loading) return
       this.$emit('setLoading', true)
 
-      this.$http.get(`courses/${this.course._id}/${lms}/group-categories`, { params: { includeGroups: true } })
+      this.$http.get(`courses/${this.course._id}/${this.lms}/group-categories`, { params: { includeGroups: true } })
         .then((res) => {
           this.lmsGroupSets = res.data.list
           this.cleanSelectedGroupCategories()
         })
         .finally(() => { this.$emit('setLoading', false) })
     },
-    getLMSCourseSections (lms) {
+    getLMSCourseSections () {
       if (this.loading) return
       this.$emit('setLoading', true)
 
-      this.$http.get(`courses/${this.course._id}/${lms}/course-sections`)
+      this.$http.get(`courses/${this.course._id}/${this.lms}/course-sections`)
         .then((res) => {
           this.lmsCourseSections = res.data.list
           this.cleanSelectedCourseSections()
