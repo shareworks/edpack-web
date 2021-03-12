@@ -1,0 +1,36 @@
+<!-- Must be in basic html to activate Netlify Forms -->
+
+<!-- Contact form -->
+<form name="contact" netlify-honeypot="bt-field1" class="hidden" action="thanks-contact" netlify>
+    <p class="hidden">
+        <label><input name="bt-field1"></label>
+    </p>
+    <p>
+        <label>Name: <input type="text" name="name"></label>
+    </p>
+    <p>
+        <label>Email: <input type="email" name="email"></label>
+    </p>
+    <p>
+        <label>Message: <textarea name="message"></textarea></label>
+    </p>
+  <p>
+    <label>URL: <textarea name="url"></textarea></label>
+  </p>
+    <p>
+        <button type=”submit”>Send</button>
+    </p>
+</form>
+
+<!-- Request form -->
+<form name="request" netlify-honeypot="bt-field2" class="hidden" action="thanks-request" netlify>
+    <p class="hidden">
+        <label><input name="bt-field2"></label>
+    </p>
+    <p>
+        <label>Email: <input type="email" name="email"></label>
+    </p>
+    <p>
+        <button type=”submit”>Send</button>
+    </p>
+</form>
