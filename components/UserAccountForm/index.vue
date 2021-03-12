@@ -52,7 +52,7 @@
     <el-form-item :label="$t('SW_LANGUAGE')" class="additional" v-if="languages.length > 1">
       <el-select class="block" v-model="form.language">
         <el-option v-for="language in languages" :key="language" :label="$t('SW_DEFAULT_' + language.toUpperCase())" :value="language">
-          <img :src="'/images/' + language + '.png'" class="language-icon" alt="language-icon"> &nbsp;
+          <img :src="'/img/' + language + '.png'" class="language-icon" alt="language-icon"> &nbsp;
           <span>{{ $t('SW_DEFAULT_' + language.toUpperCase()) }}</span>
         </el-option>
       </el-select>

@@ -7,7 +7,7 @@
 .form-nl {
   .el-form-item__label:after {
     content: "";
-    background-image: url('/images/en.png');
+    background-image: url('/img/en.png');
     background-size: contain;
     display: inline-block;
     width: 16px;
@@ -17,5 +17,5 @@
 }
 
 .form-nl .el-form-item__label:after {
-  background-image: url('/images/nl.png');
+  background-image: url('/img/nl.png');
 }

@@ -1,5 +1,5 @@
 <template>
-    <img v-if="lms || lti" :src="`/images/${lms || lti}-logo.png`" class="lms-icon" alt="Learning Management System icon">
+    <img v-if="lms || lti" :src="`/img/${lms || lti}-logo.png`" class="lms-icon" alt="Learning Management System icon">
 </template>
 
 <script>

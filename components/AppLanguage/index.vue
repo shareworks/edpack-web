@@ -3,7 +3,7 @@
     <el-dropdown @command="checkUnsavedChanges">
       <!-- Language button -->
       <el-button aria-label="Choose language" :type="big ? 'default' : 'text'" :size="big ? '': 'medium'">
-        <img :src="'/images/' + currentLanguage + '.png'" class="language-icon" alt="language-icon">
+        <img :src="'/img/' + currentLanguage + '.png'" class="language-icon" alt="language-icon">
         <span v-if="big" class="ml-5">{{ $t('SW_DEFAULT_' + currentLanguage.toUpperCase()) }}</span>
 
         <i class="el-icon-caret-bottom el-icon--right"/>
@@ -11,7 +11,7 @@
       <el-dropdown-menu slot="dropdown">
         <!-- Language items -->
         <el-dropdown-item v-for="language in languages" :key="language" :command="language">
-          <img :src="'/images/' + language + '.png'" class="language-icon" alt="language-icon">
+          <img :src="'/img/' + language + '.png'" class="language-icon" alt="language-icon">
           <span class="ml-5">{{ $t('SW_DEFAULT_' + language.toUpperCase()) }}</span>
         </el-dropdown-item>
       </el-dropdown-menu>

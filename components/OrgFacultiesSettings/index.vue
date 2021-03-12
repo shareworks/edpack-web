@@ -12,7 +12,7 @@
         <el-col :span="calcSpan" v-if="form.languages.en">
           <strong class="mb-10" v-if="form.languages.en && form.languages.nl">
             {{ $t('SW_DEFAULT_EN') }}
-            <img :src="'/images/en.png'" class="ml-5 language-icon" alt="language-icon">
+            <img :src="'/img/en.png'" class="ml-5 language-icon" alt="language-icon">
           </strong>
           <strong class="mb-10" v-else>{{ form.terminology.faculty[lang] }}</strong>
 
@@ -30,7 +30,7 @@
         <el-col :span="calcSpan" v-if="form.languages.nl">
           <strong class="mb-10" v-if="form.languages.en && form.languages.nl">
             {{ $t('SW_DEFAULT_NL') }}
-            <img :src="'/images/nl.png'" class="ml-5 language-icon" alt="language-icon">
+            <img :src="'/img/nl.png'" class="ml-5 language-icon" alt="language-icon">
           </strong>
           <strong class="mb-10" v-else>{{ form.terminology.faculty[lang] }}</strong>
 

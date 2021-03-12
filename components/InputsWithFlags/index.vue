@@ -7,7 +7,7 @@
 
       <!-- Language icon -->
       <template v-if="!isJustOneLanguage" slot="prepend">
-        <img :src="`/images/${language}.png`" class="language-icon" alt="language-icon">
+        <img :src="`/img/${language}.png`" class="language-icon" alt="language-icon">
       </template>
     </el-input>
   </section>
