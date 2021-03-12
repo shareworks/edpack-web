@@ -48,7 +48,7 @@ export default {
       $script([
         '/redactor/plugins/video/video.js',
         '/redactor/plugins/limiter/limiter.js',
-        '/redactor/plugins/filestack.js'
+        '/redactor/custom-plugins/filestack.js'
       ], 'redactor-bundle', () => {
         this.init()
       })
