@@ -76,19 +76,11 @@ export default {
 
   methods: {
     handleImportType () {
-      if (!this.lms) return console.log('No LMS found!')
-      if (this.form.lmsImportType === 'courseUsers') {
-        console.log('courseUsers form', this.form)
-        this.getLMSCourse()
-      }
-      if (this.form.lmsImportType === 'courseGroupSets') {
-        console.log('courseGroupSets form', this.form)
-        this.getLMSGroupSets()
-      }
-      if (this.form.lmsImportType === 'courseSections') {
-        console.log('courseSections form', this.form)
-        this.getLMSCourseSections()
-      }
+      if (!this.lms) return
+      console.log('this.form.lmsImportType', this.form.lmsImportType)
+      if (this.form.lmsImportType === 'courseUsers') this.getLMSCourse()
+      if (this.form.lmsImportType === 'courseGroupSets') this.getLMSGroupSets()
+      if (this.form.lmsImportType === 'courseSections') this.getLMSCourseSections()
     },
 
     getLMSCourse () {
