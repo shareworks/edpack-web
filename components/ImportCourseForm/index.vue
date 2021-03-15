@@ -77,7 +77,6 @@ export default {
   methods: {
     handleImportType () {
       if (!this.lms) return
-      console.log('this.form.lmsImportType', this.form.lmsImportType)
       if (this.form.lmsImportType === 'courseUsers') this.getLMSCourse()
       if (this.form.lmsImportType === 'courseGroupSets') this.getLMSGroupSets()
       if (this.form.lmsImportType === 'courseSections') this.getLMSCourseSections()
