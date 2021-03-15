@@ -62,7 +62,6 @@ export default {
   data () {
     return {
       lms: getLmsType(this.$store.state.course),
-      loading: false,
       lmsCourse: false,
       lmsGroupSets: [],
       lmsCourseSections: [],
