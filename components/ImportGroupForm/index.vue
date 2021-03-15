@@ -38,10 +38,10 @@
             <el-checkbox class="text-ellipsis" :label="group" :key="group.canvasId || group.brightspaceId || group.blackboardId">
               <span v-if="lms !== 'blackboard' || !group.groupNames"> {{ group.name }} </span>
               <span v-else>
-                <span>{{group.name}} (</span>
+                <span>{{ group.name }} (</span>
                 <i class="icon-users"/>
-                <span>{{(group.groupNames.length || 0) + ' groups | Blackboard id:' }}</span>
-                <span> {{group.blackboardId}})</span>
+                <span>{{ (group.groupNames.length || 0) + ' groups | Blackboard id:' }}</span>
+                <span> {{ group.blackboardId }})</span>
               </span>
             </el-checkbox>
           </div>

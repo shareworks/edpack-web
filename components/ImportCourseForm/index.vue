@@ -9,7 +9,7 @@
         </el-popover>
       </p>
       <!-- Choose import type -->
-      <el-radio-group :disabled="disabledEdit" v-model="form.lmsImportType" size="small" class="pull-left" @change="handleImportType">
+      <el-radio-group :disabled="disabledEdit" v-model="form.lmsImportType" size="small" class="pull-left mb-5" @change="handleImportType">
         <el-radio-button label="courseUsers">{{ $t('SW_COURSE_STUDENTS') }}</el-radio-button>
         <el-radio-button label="courseGroupSets">{{ $t('SW_COURSE_GROUP_SETS') }}</el-radio-button>
         <el-radio-button label="courseSections">{{ $t('SW_COURSE_SECTIONS') }}</el-radio-button>
