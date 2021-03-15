@@ -117,10 +117,13 @@ export default {
     },
 
     cleanSelectedGroupCategories () {
+      console.log('cleanSelectedGroupCategories')
       const selectedGroups = []
       const filteredGroups = []
 
       this.form.canvas.groupCategories.forEach(group => selectedGroups.push(group.id))
+
+      console.log('this.form.canvas', this.form.canvas)
       this.form.canvas.groupCategories = []
 
       this.lmsGroupSets.forEach(group => {
@@ -128,6 +131,9 @@ export default {
           filteredGroups.push(group)
         }
       })
+
+      console.log('selectedGroups', selectedGroups)
+      console.log('filteredGroups', filteredGroups)
 
       this.form.canvas.groupCategories = filteredGroups
     },
