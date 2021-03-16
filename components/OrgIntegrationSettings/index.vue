@@ -232,6 +232,12 @@
                 </el-form-item>
                 <!-- API Scope -->
                 <el-form-item :label="lms.apiScope.label" v-if="lms.apiScope">
+                  <p class="form-help-text">
+                    <span class="text-muted font-13">{{ $t('SW_SCOPES_EXPLAINER') }}</span>
+                    <el-button type="text" @click="generateScopes" class="ml-5" size="small">
+                      {{ $t('SW_GENERATE_DEFAULT_SCOPES') }}
+                    </el-button>
+                  </p>
                     <!-- Scopes -->
                     <div v-for="(scope, index) in form.lmsConfig.scope" :key="index">
                       <div class="mb-10">
@@ -261,6 +267,7 @@
 
 <script>
 import config from 'config'
+import scopes from '@/edpack-web/lms-api-scopes.json'
 
 export default {
   name: 'OrgIntegrationSettings',
@@ -275,6 +282,7 @@ export default {
       incorrectDomains: [],
       generatedSecretAlert: false,
       processing: false,
+      scopes: scopes,
       inputVisible: {
         emailDomains: false,
         samlDomains: false,
@@ -418,6 +426,10 @@ export default {
       else if (type === 'samlDomains') this.form.saml.domains.splice(this.form.saml.domains.indexOf(item), 1)
       else this.form[type].splice(this.form[type].indexOf(item), 1)
       this.$nextTick()
+    },
+    generateScopes () {
+      this.form.lmsConfig.scope = scopes[this.form.lms]
+      this.$message({ message: this.$i18n.t('SW_SCOPES_GENERATED'), type: 'success' })
     },
     clipboardSuccess () { this.$message({ message: this.$i18n.t('SW_COPIED_TO_CLIPBOARD'), type: 'success' }) },
     addScope () {
