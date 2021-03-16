@@ -168,11 +168,11 @@
               <el-input v-model="form.lmsConfig.ltiAdvantageId" type="text" :placeholder="lmsTitle + ' LTI Advantage key ...'"/>
             </el-form-item>
             <!-- Lti-advantage app id -->
-            <el-form-item label="LTI app id">
+            <el-form-item label="LTI app id" v-if="form.lms === 'blackboard'">
               <el-input v-model="form.lmsConfig.ltiAdvantagAppId" type="text" :placeholder="lmsTitle + ' LTI Advantage App id ...'"/>
             </el-form-item>
             <!-- Lti-advantage deployment id -->
-            <el-form-item label="LTI deployment id">
+            <el-form-item label="LTI deployment id" v-if="['blackboard', 'brightspace'].includes(form.lms)">
               <el-input v-model="form.lmsConfig.ltiAdvantageDeploymentId" type="text" :placeholder="lmsTitle + ' LTI Advantage deployment id ...'"/>
             </el-form-item>
             <!-- Lti-advantage auth secret -->
