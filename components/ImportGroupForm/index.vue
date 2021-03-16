@@ -57,7 +57,7 @@ import getLmsType from '@/edpack-web/utils/get-lms-type'
 
 export default {
   name: 'ImportGroupForm',
-  props: ['form'],
+  props: ['form', 'loading'],
 
   data () {
     return {
