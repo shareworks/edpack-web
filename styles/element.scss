@@ -263,4 +263,8 @@ th .cell{
 // Fix table lazy scroll
 .el-table {
   position: inherit !important;
+
+  &:before {
+    display: none !important;
+  }
 }
