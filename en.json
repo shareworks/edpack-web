@@ -39,7 +39,7 @@
   "SW_ALLOW_BRIGHTSPACE_AVG_GRADING_TEXT": "Allow import of average score from each student into Brightspace Grades.",
   "SW_ALLOW_COOKIES": "Allow cookies",
   "SW_ALLOW_EMAIL_LOGIN": "Sign in by password",
-  "SW_ALLOW_EMAIL_LOGIN_TEXT": "Allow students to sign in with {0} passwords.",
+  "SW_ALLOW_EMAIL_LOGIN_TEXT": "Allow members to sign in with {0} passwords.",
   "SW_ALLOW_FUNNY_GIF": "Funny GIFs",
   "SW_ALLOW_GRADING": "Canvas grades",
   "SW_ALLOW_INVITE_ONLY": "Invite only",
