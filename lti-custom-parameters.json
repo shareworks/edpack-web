@@ -1,0 +1,14 @@
+{
+  "canvas": {
+    "basic": "",
+    "advantage": ""
+  },
+  "blackboard": {
+    "basic": "coursepk=@X@course.pk_string@X@\nuserpk=@X@user.pk_string@X@",
+    "advantage": "course_id=@X@course.pk_string@X@\nuser_id=@X@user.pk_string@X@"
+  },
+  "brightspace": {
+    "basic": "",
+    "advantage": ""
+  }
+}

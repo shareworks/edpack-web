@@ -43,6 +43,7 @@
   "SW_ALLOW_FUNNY_GIF": "Funny GIFs",
   "SW_ALLOW_GRADING": "Canvas grades",
   "SW_GENERATE_DEFAULT_SCOPES": "Generate default scope",
+  "SW_PARAMETERS_EXPLAINER": "Copy & paste the whole text below into the 'Custom tool parameters' textarea when setting up the LTI tool.",
   "SW_SCOPES_EXPLAINER": "It's possible to limit access to the api using a specific list of scopes. Click the link below to generate the default scope list. Please be aware that generating scopes will override the existing scope list.",
   "SW_SCOPES_GENERATED": "Scopes have been generated. Save changes to store them.",
   "SW_ALLOW_INVITE_ONLY": "Invite only",

@@ -191,6 +191,14 @@
           </div>
         </transition>
 
+        <!-- LTI Custom Tool parameters -->
+        <el-form-item label="LTI tool parameters" v-if="parameters[form.lms] && parameters[form.lms][form.ltiVersion]">
+          <p class="form-help-text">
+            <span class="text-muted font-13">{{ $t('SW_PARAMETERS_EXPLAINER') }}</span>
+          </p>
+          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" :readonly="true" v-model="parameters[form.lms][form.ltiVersion]"/>
+        </el-form-item>
+
         <!-- Enable API Integration -->
         <el-form-item class="mb-10" :label="$t('SW_TOGGLE_API_INTEGRATION')">
           <el-switch v-model="form.lmsApiIntegration" active-color="#13ce66" inactive-color="#ff4949"/>
@@ -268,6 +276,7 @@
 <script>
 import config from 'config'
 import scopes from '@/edpack-web/lms-api-scopes.json'
+import parameters from '@/edpack-web/lti-custom-parameters.json'
 
 export default {
   name: 'OrgIntegrationSettings',
@@ -283,6 +292,7 @@ export default {
       generatedSecretAlert: false,
       processing: false,
       scopes: scopes,
+      parameters: parameters,
       inputVisible: {
         emailDomains: false,
         samlDomains: false,
