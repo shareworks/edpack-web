@@ -17,7 +17,7 @@
 
       <div class="inline ml-10 vertical-top mt-5 normal-line-height" v-if="lms && lmsCourse && form.lmsImportType === 'courseUsers'">
         <span class="text-muted mr-5">{{$t('SW_COURSE_HAS')}}</span>
-        <el-tag size="mini">{{ lmsCourse.totalStudents }} {{ $tc('SW_STUDENT', lmsCourse.totalStudents).toLowerCase() }}</el-tag>
+        <el-tag size="mini" v-if="lmsCourse.totalStudents">{{ lmsCourse.totalStudents }} {{ $tc('SW_STUDENT', lmsCourse.totalStudents).toLowerCase() }}</el-tag>
       </div>
     </el-form-item>
 
@@ -28,7 +28,7 @@
         <el-checkbox-group :disabled="disabledEdit" v-model="form.canvas.groupCategories">
           <div v-for="(group, index) in lmsGroupSets" :key="index">
             <el-checkbox class="text-ellipsis" :label="group" :key="group.id">
-              {{ group.name }} <el-tag size="mini" class="no-bold">{{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}</el-tag>
+              {{ group.name }} <el-tag size="mini" class="no-bold" v-if="group.membersCount">{{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}</el-tag>
             </el-checkbox>
           </div>
         </el-checkbox-group>
@@ -43,7 +43,7 @@
         <el-checkbox-group :disabled="disabledEdit" v-model="form.canvas.courseSections">
           <div v-for="(section, index) in lmsCourseSections" :key="index">
             <el-checkbox class="text-ellipsis" :label="section" :key="section.id">
-              {{ section.name }} <el-tag size="mini" class="no-bold">{{ section.totalStudents }} {{ $tc('SW_STUDENT', section.totalStudents).toLowerCase() }}</el-tag>
+              {{ section.name }} <el-tag size="mini" class="no-bold" v-if="section.totalStudents">{{ section.totalStudents }} {{ $tc('SW_STUDENT', section.totalStudents).toLowerCase() }}</el-tag>
             </el-checkbox>
           </div>
         </el-checkbox-group>
