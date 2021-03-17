@@ -36,13 +36,16 @@
         <el-checkbox-group :disabled="disabledEdit" v-model="form.groupCategories" v-if="lmsGroupSets.length && form.groupCategories">
           <div v-for="(group, index) in lmsGroupSets" :key="index">
             <el-checkbox class="text-ellipsis" :label="group" :key="group.canvasId || group.brightspaceId || group.blackboardId">
-              <span v-if="lms !== 'blackboard' || !group.groupNames"> {{ group.name }} </span> <el-tag size="mini" class="no-bold" v-if="group.membersCount">{{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}</el-tag>
+              <span v-if="lms !== 'blackboard' || !group.groupNames">
+                {{ group.name }} <el-tag size="mini" class="no-bold" v-if="group.membersCount">{{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}</el-tag>
+              </span>
               <span v-else>
                 <span>{{ group.name }} (</span>
                 <i class="icon-users"/>
                 <span>{{ (group.groupNames.length || 0) + ' groups | Blackboard id:' }}</span>
                 <span> {{ group.blackboardId }})</span>
-              </span> <el-tag size="mini" class="no-bold" v-if="group.membersCount">{{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}</el-tag>
+                <el-tag size="mini" class="no-bold" v-if="group.membersCount">{{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}</el-tag>
+              </span>
             </el-checkbox>
           </div>
         </el-checkbox-group>
