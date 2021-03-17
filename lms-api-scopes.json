@@ -23,6 +23,6 @@
     "url:GET|/api/v1/users/:user_id/profile",
     "url:GET|/api/v1/courses/:course_id/external_tools"
   ],
-  "blackboard": "read write",
-  "brightspace": "core:*:* enrollment:orgunit:read users:userdata:read grades:gradeobjects:read grades:gradeobjects:write grades:gradevalues:write"
+  "blackboard": ["read write"],
+  "brightspace": ["core:*:* enrollment:orgunit:read users:userdata:read grades:gradeobjects:read grades:gradeobjects:write grades:gradevalues:write"]
 }
