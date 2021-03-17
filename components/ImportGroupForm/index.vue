@@ -2,7 +2,7 @@
   <div>
     <!-- Select groups or group sets -->
     <el-form-item :label="$t('SW_USER_IMPORT_SOURCE')" v-if="course.lmsApiIntegration && lms === 'blackboard'">
-      <el-radio-group :disabled="disabledEdit" v-model="form.lmsImportType" size="small" @change="handleImportType">
+      <el-radio-group :disabled="disabledEdit" v-model="form.lmsImportType" size="small" v-model="form.lmsImportType" @change="handleImportType">
         <el-radio-button label="groupSets">{{ $t('SW_GROUP_SETS') }}</el-radio-button>
         <el-radio-button label="groups">{{ $t('SW_GROUPS') }}</el-radio-button>
       </el-radio-group>
