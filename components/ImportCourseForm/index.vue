@@ -10,9 +10,9 @@
       </p>
       <!-- Choose import type -->
       <el-radio-group :disabled="disabledEdit" v-model="form.lmsImportType" size="small" class="pull-left mb-5" @change="handleImportType">
-        <el-radio-button label="courseUsers">{{ $t('SW_COURSE_STUDENTS') }}</el-radio-button>
-        <el-radio-button label="courseGroupSets">{{ $t('SW_COURSE_GROUP_SETS') }}</el-radio-button>
-        <el-radio-button label="courseSections" v-if="lms === 'canvas'">{{ $t('SW_COURSE_SECTIONS') }}</el-radio-button>
+        <el-radio-button :disabled="disabled && disabled.courseUsers" label="courseUsers">{{ $t('SW_COURSE_STUDENTS') }}</el-radio-button>
+        <el-radio-button :disabled="disabled && disabled.courseGroupSets" label="courseGroupSets">{{ $t('SW_COURSE_GROUP_SETS') }}</el-radio-button>
+        <el-radio-button :disabled="disabled && disabled.courseSections" label="courseSections" v-if="lms === 'canvas'">{{ $t('SW_COURSE_SECTIONS') }}</el-radio-button>
       </el-radio-group>
 
       <div class="inline ml-10 vertical-top mt-5 normal-line-height" v-if="lms && lmsCourse && form.lmsImportType === 'courseUsers'">
@@ -58,7 +58,7 @@ import getLmsType from '../../utils/get-lms-type'
 
 export default {
   name: 'ImportCourseForm',
-  props: ['form', 'loading'],
+  props: ['form', 'loading', 'disabled'],
   data () {
     return {
       lms: getLmsType(this.$store.state.course),
