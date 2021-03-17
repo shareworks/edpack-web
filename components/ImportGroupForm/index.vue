@@ -15,8 +15,8 @@
         <p class="form-help-text">{{$t('SW_AVAILABLE_GROUPS_TEXT')}}</p>
         <el-checkbox-group :disabled="disabledEdit" v-model="form.groupCategories">
           <div v-for="(group, index) in lmsGroups" :key="index">
-            <el-checkbox class="text-ellipsis" :label="group" :key="group.blackboardId">
-              {{ group.name }}
+            <el-checkbox class="text-ellipsis" :label="group" :key="group.id">
+              {{ group.name }} <el-tag size="mini" class="no-bold" v-if="group.membersCount">{{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}</el-tag>
             </el-checkbox>
           </div>
         </el-checkbox-group>
