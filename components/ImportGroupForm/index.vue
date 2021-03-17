@@ -2,7 +2,7 @@
   <div>
     <!-- Select groups or group sets -->
     <el-form-item :label="$t('SW_USER_IMPORT_SOURCE')" v-if="course.lmsApiIntegration && lms === 'blackboard'">
-      <el-radio-group :disabled="disabledEdit" v-model="form.lmsImportType" size="small" @change="cleanSelectedGroupCategories">
+      <el-radio-group :disabled="disabledEdit" v-model="form.lmsImportType" size="small" @change="handleImportType">
         <el-radio-button label="groupSets">{{ $t('SW_GROUP_SETS') }}</el-radio-button>
         <el-radio-button label="groups">{{ $t('SW_GROUPS') }}</el-radio-button>
       </el-radio-group>
@@ -83,14 +83,14 @@ export default {
           this.lmsGroupSets = this.lms === 'blackboard' ? res.data.list.filter(el => el.isGroupCategory) : res.data.list
           this.lmsGroups = this.lms === 'blackboard' ? res.data.list.filter(el => !el.isGroupCategory && !el.categoryId) : []
 
-          this.cleanSelectedGroupCategories()
+          this.handleImportType()
         })
         .finally(() => { this.$emit('setLoading', false) })
     },
-    cleanSelectedGroupCategories () {
+    handleImportType () {
       this.form.groupCategories = []
-      if (this.lmsGroupSets.length === 1 && this.form.lmsImportType === 'groupSets') this.form.groupCategories = this.lmsGroupSets
-      if (this.lmsGroups.length === 1 && this.form.lmsImportType === 'groups') this.form.groupCategories = this.lmsGroups
+      if (this.form.lmsImportType === 'groupSets' && (this.lmsGroupSets.length === 1)) this.form.groupCategories = this.lmsGroupSets
+      if (this.form.lmsImportType === 'groups' && (this.lmsGroups.length === 1)) this.form.groupCategories = this.lmsGroups
     }
   }
 }
