@@ -81,7 +81,7 @@ export default {
     getLMSGroupSets (lms) {
       this.$emit('setLoading', true)
 
-      this.$http.get(`courses/${this.course._id}/${lms}/group-categories`)
+      this.$http.get(`courses/${this.course._id}/${lms}/group-categories`, { params: { includeGroups: true } })
         .then((res) => {
           this.lmsGroupSets = this.lms === 'blackboard' ? res.data.list.filter(el => el.isGroupCategory) : res.data.list
           this.lmsGroups = this.lms === 'blackboard' ? res.data.list.filter(el => !el.isGroupCategory && !el.categoryId) : []
