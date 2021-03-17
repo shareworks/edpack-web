@@ -301,7 +301,7 @@
   "SW_INVALID_TOKEN_HELP": "Please sign in again or try another browser. If the problem persists, please contact us.",
   "SW_INVITATION_COMPLETED": "Your registration was successful. Welcome to {0}!",
   "SW_INVITE": "Invite",
-  "SW_INVITE_COACHES": "Invite coaches",
+  "SW_INVITE_COACHES": "Invite others",
   "SW_INVITE_PENDING": "Not logged in yet",
   "SW_IS_BUILT_BY": "is built by",
   "SW_LANGUAGE": "Language",
