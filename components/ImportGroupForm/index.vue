@@ -15,7 +15,7 @@
         <p class="form-help-text">{{$t('SW_AVAILABLE_GROUPS_TEXT')}}</p>
         <el-checkbox-group :disabled="disabledEdit" v-model="form.groupCategories">
           <div v-for="(group, index) in lmsGroups" :key="index">
-            <el-checkbox class="text-ellipsis" :label="group" :key="group.id">
+            <el-checkbox class="text-ellipsis" :label="group" :key="group.blackboardId">
               {{ group.name }} <el-tag size="mini" class="no-bold" v-if="group.membersCount">{{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}</el-tag>
             </el-checkbox>
           </div>
@@ -36,13 +36,13 @@
         <el-checkbox-group :disabled="disabledEdit" v-model="form.groupCategories" v-if="lmsGroupSets.length && form.groupCategories">
           <div v-for="(group, index) in lmsGroupSets" :key="index">
             <el-checkbox class="text-ellipsis" :label="group" :key="group.canvasId || group.brightspaceId || group.blackboardId">
-              <span v-if="lms !== 'blackboard' || !group.groupNames"> {{ group.name }} </span>
+              <span v-if="lms !== 'blackboard' || !group.groupNames"> {{ group.name }} </span> <el-tag size="mini" class="no-bold" v-if="group.membersCount">{{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}</el-tag>
               <span v-else>
                 <span>{{ group.name }} (</span>
                 <i class="icon-users"/>
                 <span>{{ (group.groupNames.length || 0) + ' groups | Blackboard id:' }}</span>
                 <span> {{ group.blackboardId }})</span>
-              </span>
+              </span> <el-tag size="mini" class="no-bold" v-if="group.membersCount">{{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}</el-tag>
             </el-checkbox>
           </div>
         </el-checkbox-group>
@@ -78,7 +78,7 @@ export default {
     getLMSGroupSets (lms) {
       this.$emit('setLoading', true)
 
-      this.$http.get(`courses/${this.course._id}/${lms}/group-categories`, { params: { includeGroups: true }} )
+      this.$http.get(`courses/${this.course._id}/${lms}/group-categories`)
         .then((res) => {
           this.lmsGroupSets = this.lms === 'blackboard' ? res.data.list.filter(el => el.isGroupCategory) : res.data.list
           this.lmsGroups = this.lms === 'blackboard' ? res.data.list.filter(el => !el.isGroupCategory && !el.categoryId) : []
