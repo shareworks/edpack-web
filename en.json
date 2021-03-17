@@ -378,7 +378,7 @@
   "SW_NO_STUDENTS": "No students",
   "SW_BRUTE_FORCE": "Too many failed attempts. Please try again in 10 minutes.",
   "SW_NO_STUDENTS_FOUND": "No students found.",
-  "SW_NO_STUDENTS_TEXT_LMS": "Please check if you correctly added groups in course and try again by clicking 'More' > 'Sync'.",
+  "SW_NO_STUDENTS_TEXT_LMS": "No students found. Please check if you correctly added groups in course and try again by clicking 'More' > 'Sync'.",
   "SW_NO_TOKEN": "No token found in the request",
   "SW_NO_TOKEN_HELP": "Please try again later or try another browser. If the problem persists, please contact us.",
   "SW_NO_UNSUBSCRIPTION_TOKEN": "No unsubscription token found, try provided link in email again, or contact us",
