@@ -23,9 +23,9 @@
 
     <!-- Group categories -->
     <div v-if="lms && form.lmsImportType === 'courseGroupSets'" class="mb-20">
-      <el-form-item v-if="lmsGroupSets.length && form.canvas.groupCategories && !loading" :label="$t('SW_AVAILABLE_GROUPS')" required>
+      <el-form-item v-if="lmsGroupSets.length && form[lms].groupCategories && !loading" :label="$t('SW_AVAILABLE_GROUPS')" required>
         <p class="form-help-text">{{$t('SW_AVAILABLE_GROUP_SETS_TEXT')}}</p>
-        <el-checkbox-group :disabled="disabledEdit" v-model="form.canvas.groupCategories">
+        <el-checkbox-group :disabled="disabledEdit" v-model="form[lms].groupCategories">
           <div v-for="(group, index) in lmsGroupSets" :key="index">
             <el-checkbox class="text-ellipsis" :label="group" :key="group.id">
               {{ group.name }} <el-tag size="mini" class="no-bold">{{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}</el-tag>
@@ -38,9 +38,9 @@
 
     <!-- Course sections -->
     <div v-if="lms && form.lmsImportType === 'courseSections'" class="mb-20">
-      <el-form-item v-if="lmsCourseSections.length && form.canvas.courseSections && !loading" :label="$t('SW_AVAILABLE_COURSE_SECTIONS')" required>
+      <el-form-item v-if="lmsCourseSections.length && form[lms].courseSections && !loading" :label="$t('SW_AVAILABLE_COURSE_SECTIONS')" required>
         <p class="form-help-text">{{$t('SW_AVAILABLE_COURSE_SECTIONS_TEXT')}}</p>
-        <el-checkbox-group :disabled="disabledEdit" v-model="form.canvas.courseSections">
+        <el-checkbox-group :disabled="disabledEdit" v-model="form[lms].courseSections">
           <div v-for="(section, index) in lmsCourseSections" :key="index">
             <el-checkbox class="text-ellipsis" :label="section" :key="section.id">
               {{ section.name }} <el-tag size="mini" class="no-bold">{{ section.totalStudents }} {{ $tc('SW_STUDENT', section.totalStudents).toLowerCase() }}</el-tag>
@@ -120,9 +120,9 @@ export default {
       const selectedGroups = []
       const filteredGroups = []
 
-      this.form.canvas.groupCategories.forEach(group => selectedGroups.push(group.id))
+      this.form[this.lms].groupCategories.forEach(group => selectedGroups.push(group.id))
 
-      this.form.canvas.groupCategories = []
+      this.form[this.lms].groupCategories = []
 
       this.lmsGroupSets.forEach(group => {
         if (selectedGroups.includes(group.id)) {
@@ -130,15 +130,15 @@ export default {
         }
       })
 
-      this.form.canvas.groupCategories = filteredGroups
+      this.form[this.lms].groupCategories = filteredGroups
     },
 
     cleanSelectedCourseSections () {
       const selectedSections = []
       const filteredSections = []
 
-      this.form.canvas.courseSections.forEach(section => selectedSections.push(section.id))
-      this.form.canvas.courseSections = []
+      this.form[this.lms].courseSections.forEach(section => selectedSections.push(section.id))
+      this.form[this.lms].courseSections = []
 
       this.lmsCourseSections.forEach(section => {
         if (selectedSections.includes(section.id)) {
@@ -146,7 +146,7 @@ export default {
         }
       })
 
-      this.form.canvas.courseSections = filteredSections
+      this.form[this.lms].courseSections = filteredSections
     }
   }
 }
