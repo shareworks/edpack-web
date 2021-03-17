@@ -15,9 +15,9 @@
         <el-radio-button :disabled="disable && disable.includes('courseSections')" label="courseSections" v-if="lms === 'canvas'">{{ $t('SW_COURSE_SECTIONS') }}</el-radio-button>
       </el-radio-group>
 
-      <div class="inline ml-10 vertical-top mt-5 normal-line-height" v-if="lms && lmsCourse && form.lmsImportType === 'courseUsers'">
+      <div class="inline ml-10 vertical-top mt-5 normal-line-height" v-if="lms && lmsCourse && (form.lmsImportType === 'courseUsers') && lmsCourse.totalStudents">
         <span class="text-muted mr-5">{{$t('SW_COURSE_HAS')}}</span>
-        <el-tag size="mini" v-if="lmsCourse.totalStudents">{{ lmsCourse.totalStudents }} {{ $tc('SW_STUDENT', lmsCourse.totalStudents).toLowerCase() }}</el-tag>
+        <el-tag size="mini">{{ lmsCourse.totalStudents }} {{ $tc('SW_STUDENT', lmsCourse.totalStudents).toLowerCase() }}</el-tag>
       </div>
     </el-form-item>
 
