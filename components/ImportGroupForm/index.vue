@@ -11,12 +11,15 @@
 
     <!-- Select groups from Blackboard -->
     <div v-if="course.lmsApiIntegration && lms === 'blackboard' && form.lmsImportType === 'groups'" class="mb-20">
-      <el-form-item v-if="lmsGroups.length && form.groupCategories" :label="$t('SW_GROUPS')" required>
+      <el-form-item v-if="lmsGroups.length && form[lms].groupCategories" :label="$t('SW_GROUPS')" required>
         <p class="form-help-text">{{$t('SW_AVAILABLE_GROUPS_TEXT')}}</p>
-        <el-checkbox-group :disabled="disabledEdit" v-model="form.groupCategories">
+        <el-checkbox-group :disabled="disabledEdit" v-model="form[lms].groupCategories">
           <div v-for="(group, index) in lmsGroups" :key="index">
             <el-checkbox class="text-ellipsis" :label="group" :key="group.blackboardId">
-              {{ group.name }} <el-tag size="mini" class="no-bold" v-if="group.membersCount">{{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}</el-tag>
+              {{ group.name }}
+              <el-tag size="mini" class="ml-5 no-bold" v-if="group.membersCount && !disabledEdit">
+                {{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}
+              </el-tag>
             </el-checkbox>
           </div>
         </el-checkbox-group>
@@ -33,18 +36,23 @@
             <a class="cursor-pointer" slot="reference"><i class="icon-question question-circle question-pop ml-5"/></a>
           </el-popover>
         </p>
-        <el-checkbox-group :disabled="disabledEdit" v-model="form.groupCategories" v-if="lmsGroupSets.length && form.groupCategories">
+        <el-checkbox-group :disabled="disabledEdit" v-model="form[lms].groupCategories" v-if="lmsGroupSets.length && form[lms].groupCategories">
           <div v-for="(group, index) in lmsGroupSets" :key="index">
             <el-checkbox class="text-ellipsis" :label="group" :key="group.canvasId || group.brightspaceId || group.blackboardId">
               <span v-if="lms !== 'blackboard' || !group.groupNames">
-                {{ group.name }} <el-tag size="mini" class="no-bold" v-if="group.membersCount">{{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}</el-tag>
+                {{ group.name }}
+                <el-tag size="mini" class="ml-5 no-bold" v-if="group.membersCount && !disabledEdit">
+                  {{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}
+                </el-tag>
               </span>
               <span v-else>
                 <span>{{ group.name }} (</span>
                 <i class="icon-users"/>
                 <span>{{ (group.groupNames.length || 0) + ' groups | Blackboard id:' }}</span>
                 <span> {{ group.blackboardId }})</span>
-                <el-tag size="mini" class="no-bold" v-if="group.membersCount">{{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}</el-tag>
+                <el-tag size="mini" class="ml-5 no-bold" v-if="group.membersCount && !disabledEdit">
+                  {{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}
+                </el-tag>
               </span>
             </el-checkbox>
           </div>
@@ -74,7 +82,14 @@ export default {
 
   mounted () {
     // Get different group sets/categories
-    if (this.course.lmsApiIntegration) this.getLMSGroupSets(this.lms)
+    if (this.course.lmsApiIntegration && this.form.isNew) return this.getLMSGroupSets(this.lms)
+
+    // In case something is wrong, stop here
+    if (!this.form[this.lms].groupCategories) return
+
+    // In edit mode, just show selected group categories
+    this.lmsGroupSets = this.lms === 'blackboard' ? this.form[this.lms].groupCategories.filter(el => el.isGroupCategory) : this.form[this.lms].groupCategories
+    this.lmsGroups = this.lms === 'blackboard' ? this.form[this.lms].groupCategories.filter(el => !el.isGroupCategory && !el.categoryId) : []
   },
 
   methods: {
@@ -85,15 +100,14 @@ export default {
         .then((res) => {
           this.lmsGroupSets = this.lms === 'blackboard' ? res.data.list.filter(el => el.isGroupCategory) : res.data.list
           this.lmsGroups = this.lms === 'blackboard' ? res.data.list.filter(el => !el.isGroupCategory && !el.categoryId) : []
-
           this.handleImportType()
         })
         .finally(() => { this.$emit('setLoading', false) })
     },
     handleImportType () {
-      this.form.groupCategories = []
-      if (this.form.lmsImportType === 'groupSets' && (this.lmsGroupSets.length === 1)) this.form.groupCategories = this.lmsGroupSets
-      if (this.form.lmsImportType === 'groups' && (this.lmsGroups.length === 1)) this.form.groupCategories = this.lmsGroups
+      this.form[this.lms].groupCategories = []
+      if (this.form.lmsImportType === 'groupSets' && (this.lmsGroupSets.length === 1)) this.form[this.lms].groupCategories = this.lmsGroupSets
+      if (this.form.lmsImportType === 'groups' && (this.lmsGroups.length === 1)) this.form[this.lms].groupCategories = this.lmsGroups
     }
   }
 }

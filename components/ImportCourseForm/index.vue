@@ -15,7 +15,7 @@
         <el-radio-button :disabled="disable && disable.includes('courseSections')" label="courseSections" v-if="lms === 'canvas'">{{ $t('SW_COURSE_SECTIONS') }}</el-radio-button>
       </el-radio-group>
 
-      <div class="inline ml-10 vertical-top mt-5 normal-line-height" v-if="lms && lmsCourse && (form.lmsImportType === 'courseUsers') && lmsCourse.totalStudents">
+      <div class="inline ml-10 vertical-top mt-5 normal-line-height" v-if="lms && lmsCourse && (form.lmsImportType === 'courseUsers') && lmsCourse.totalStudents  && !disabledEdit">
         <span class="text-muted mr-5">{{$t('SW_COURSE_HAS')}}</span>
         <el-tag size="mini">{{ lmsCourse.totalStudents }} {{ $tc('SW_STUDENT', lmsCourse.totalStudents).toLowerCase() }}</el-tag>
       </div>
@@ -28,7 +28,10 @@
         <el-checkbox-group :disabled="disabledEdit" v-model="form[lms].groupCategories">
           <div v-for="(group, index) in lmsGroupSets" :key="index">
             <el-checkbox class="text-ellipsis" :label="group" :key="group.id">
-              {{ group.name }} <el-tag size="mini" class="no-bold" v-if="group.membersCount">{{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}</el-tag>
+              {{ group.name }}
+              <el-tag size="mini" class="ml-5 no-bold" v-if="group.membersCount  && !disabledEdit">
+                {{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}
+              </el-tag>
             </el-checkbox>
           </div>
         </el-checkbox-group>
@@ -43,7 +46,10 @@
         <el-checkbox-group :disabled="disabledEdit" v-model="form[lms].courseSections">
           <div v-for="(section, index) in lmsCourseSections" :key="index">
             <el-checkbox class="text-ellipsis" :label="section" :key="section.id">
-              {{ section.name }} <el-tag size="mini" class="no-bold" v-if="section.totalStudents">{{ section.totalStudents }} {{ $tc('SW_STUDENT', section.totalStudents).toLowerCase() }}</el-tag>
+              {{ section.name }}
+              <el-tag size="mini" class="ml-5 no-bold" v-if="section.totalStudents && !disabledEdit">
+                {{ section.totalStudents }} {{ $tc('SW_STUDENT', section.totalStudents).toLowerCase() }}
+              </el-tag>
             </el-checkbox>
           </div>
         </el-checkbox-group>
