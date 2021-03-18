@@ -135,6 +135,9 @@ export default {
       mergeEmptyLanguageFields(this.form, propsToCheck)
       mergeEmptyLanguageFields(this.form.terminology, ['faculty', 'faculties'])
 
+      // filter scope items to prevent saving empty values
+      this.form.lmsConfig.scope = this.form.lmsConfig.scope.filter(scope => scope.trim().length)
+
       if (this.form.faculties) { this.form.faculties = this.form.faculties.filter(fac => fac.en || fac.nl || fac._id) }
       if (this.form.categories) { this.form.categories = this.form.categories.filter(cat => cat.en || cat.nl || cat._id) }
 

@@ -251,6 +251,15 @@
                       <div class="mb-10">
                         <el-input v-model="form.lmsConfig.scope[index]">
                           <template slot="prepend">#{{index + 1}}</template>
+
+                          <!-- Delete email -->
+                          <el-popconfirm slot="append" :confirmButtonText="$t('SW_DELETE')" :cancelButtonText="$t('SW_CANCEL')"
+                                         @confirm="removeScope(index)" hideIcon :title="$t('SW_DELETE_SCOPE_CONFIRM')">
+                            <el-button slot="reference">
+                              <i class="icon-delete"/>
+                              <span class="hidden-xs">{{ $t('SW_REMOVE') }}</span>
+                            </el-button>
+                          </el-popconfirm>
                         </el-input>
                       </div>
                     </div>
@@ -361,6 +370,7 @@ export default {
   },
 
   methods: {
+    removeScope (index) { this.form.lmsConfig.scope.splice(index, 1) },
     changeHttpToHttps (urlString) {
       if (!urlString) return
 
