@@ -14,6 +14,7 @@
 <script>
 import config from 'config'
 import Password from 'vue-password-strength-meter'
+import showErrorMessage from '@/edpack-web/utils/show-error-message'
 
 export default {
   name: 'ResetForm',
@@ -48,8 +49,8 @@ export default {
           this.$message({ message: this.$i18n.t('SW_PASSWORD_RESET_SUBMITTED'), type: 'success' })
           this.$router.push('/')
         })
-        .catch(() => {
-          this.$message({ message: this.$i18n.t('SW_ALREADY_RESET'), type: 'error' })
+        .catch((err) => {
+          showErrorMessage(this, err)
         })
         .finally(() => {
           this.form.email = ''
