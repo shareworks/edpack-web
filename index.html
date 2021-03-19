@@ -1,92 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="fragment" content="!">
-    <title><%= htmlWebpackPlugin.options.title %></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="fragment" content="!">
+  <title><%= htmlWebpackPlugin.options.title %></title>
 
-    <base href="<%= BASE_URL %>">
+  <base href="<%= BASE_URL %>">
 
-    <meta name="description" content="<%= htmlWebpackPlugin.options.description %>">
-    <meta name="keywords" content="<%= htmlWebpackPlugin.options.keywords %>">
-    <meta name="author" content="<%= htmlWebpackPlugin.options.author %>">
-    <meta name="thumbnail" content="<%= htmlWebpackPlugin.options.url %>/images/thumbnail.png">
+  <meta name="description" content="<%= htmlWebpackPlugin.options.description %>">
+  <meta name="keywords" content="<%= htmlWebpackPlugin.options.keywords %>">
+  <meta name="author" content="<%= htmlWebpackPlugin.options.author %>">
+  <meta name="thumbnail" content="<%= htmlWebpackPlugin.options.url %>/images/thumbnail.png">
 
-    <meta property="og:title" content="<%= htmlWebpackPlugin.options.title %>">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="<%= htmlWebpackPlugin.options.url %>">
-    <meta property="og:image" content="<%= htmlWebpackPlugin.options.url %>/images/thumbnail.png">
-    <meta property="og:description" content="<%= htmlWebpackPlugin.options.description %>">
-    <meta property="og:site_name" content="<%= htmlWebpackPlugin.options.title %>">
+  <meta property="og:title" content="<%= htmlWebpackPlugin.options.title %>">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="<%= htmlWebpackPlugin.options.url %>">
+  <meta property="og:image" content="<%= htmlWebpackPlugin.options.url %>/images/thumbnail.png">
+  <meta property="og:description" content="<%= htmlWebpackPlugin.options.description %>">
+  <meta property="og:site_name" content="<%= htmlWebpackPlugin.options.title %>">
 
-    <link rel="logo" type="image/png" href="/images/logo.png">
+  <link rel="logo" type="image/png" href="/images/logo.png">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
-    <link rel="manifest" href="/icons/site.webmanifest">
-    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#04a8d8">
-    <meta name="msapplication-TileColor" content="#00aba9">
-    <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/android-chrome-512x512.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
 
-    <style>
-        .sk-spinner.boot-spinner {
-            position: absolute;
-            left: 50%;
-            margin-left: -35px;
-            top: 30px;
-            z-index: 10000;
-        }
+  <link rel="manifest" href="/icons/site.webmanifest">
 
-        .sk-spinner {
-            display: inline-block;
-            margin: 10px;
-            width: 70px;
-            text-align: center;
-        }
+  <meta name="msapplication-TileColor" content="#00aba9">
+  <meta name="theme-color" content="#ffffff">
 
-        .sk-spinner > div {
-            width: 10px;
-            height: 10px;
-            background-color: #ccc;
-            margin-left: 5px;
-            border-radius: 100%;
-            display: inline-block;
-            -webkit-animation: sk-bouncedelay 1s infinite ease-in-out both;
-            animation: sk-bouncedelay 1s infinite ease-in-out both;
-        }
+  <style>
+    .sk-spinner.boot-spinner {
+      position: absolute;
+      left: 50%;
+      margin-left: -35px;
+      top: 30px;
+      z-index: 10000;
+    }
 
-        .sk-spinner .sk-bounce1 {
-            -webkit-animation-delay: -0.22s;
-            animation-delay: -0.22s;
-        }
+    .sk-spinner {
+      display: inline-block;
+      margin: 10px;
+      width: 70px;
+      text-align: center;
+    }
 
-        .sk-spinner .sk-bounce2 {
-            -webkit-animation-delay: -0.11s;
-            animation-delay: -0.11s;
-        }
+    .sk-spinner > div {
+      width: 10px;
+      height: 10px;
+      background-color: #ccc;
+      margin-left: 5px;
+      border-radius: 100%;
+      display: inline-block;
+      -webkit-animation: sk-bouncedelay 1s infinite ease-in-out both;
+      animation: sk-bouncedelay 1s infinite ease-in-out both;
+    }
 
-        @-webkit-keyframes sk-bouncedelay {
-            0%, 80%, 100% { opacity: 0;  }
-            40% { opacity: 1; }
-        }
+    .sk-spinner .sk-bounce1 {
+      -webkit-animation-delay: -0.22s;
+      animation-delay: -0.22s;
+    }
 
-        @keyframes sk-bouncedelay {
-            0%, 80%, 100% {
-                opacity: 0;
-            } 40% { opacity: 1; }
-        }
-    </style>
+    .sk-spinner .sk-bounce2 {
+      -webkit-animation-delay: -0.11s;
+      animation-delay: -0.11s;
+    }
+
+    @-webkit-keyframes sk-bouncedelay {
+      0%, 80%, 100% { opacity: 0;  }
+      40% { opacity: 1; }
+    }
+
+    @keyframes sk-bouncedelay {
+      0%, 80%, 100% {
+        opacity: 0;
+      } 40% { opacity: 1; }
+    }
+  </style>
 </head>
 <body>
 <div id="app">
-    <div class="sk-spinner boot-spinner">
-        <div class="sk-bounce1"></div>
-        <div class="sk-bounce2"></div>
-        <div class="sk-bounce3"></div>
-    </div>
+  <div class="sk-spinner boot-spinner">
+    <div class="sk-bounce1"></div>
+    <div class="sk-bounce2"></div>
+    <div class="sk-bounce3"></div>
+  </div>
 </div>
 </body>
 </html>
