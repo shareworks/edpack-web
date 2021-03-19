@@ -87,6 +87,7 @@
 <script>
 import config from 'config'
 import Password from 'vue-password-strength-meter'
+import showErrorMessage from '@/edpack-web/utils/show-error-message'
 import basicVisibilityChanged from '@/edpack-web/utils/basic-visibility-changed'
 
 export default {
@@ -140,8 +141,7 @@ export default {
           this.samlLoginEnabled = result.samlLoginEnabled
           this.localLoginEnabled = result.localLoginEnabled
         })
-        //  TODO: add normal errors checking! no user/ no school/ school removed/ .....
-        .catch(err => { console.log('err', err) })
+        .catch(err => { showErrorMessage(this, err) })
         .finally(() => { this.checkLoading = false })
     },
     selectSchool (school) {
