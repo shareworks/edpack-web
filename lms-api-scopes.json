@@ -1,0 +1,28 @@
+{
+  "canvas": [
+    "url:GET|/api/v1/courses/:course_id/assignment_groups",
+    "url:POST|/api/v1/courses/:course_id/assignment_groups",
+    "url:GET|/api/v1/courses/:course_id/assignments",
+    "url:POST|/api/v1/courses/:course_id/assignments",
+    "url:POST|/api/v1/calendar_events",
+    "url:PUT|/api/v1/calendar_events/:id",
+    "url:DELETE|/api/v1/calendar_events/:id",
+    "url:GET|/api/v1/courses/:id",
+    "url:GET|/api/v1/courses/:course_id/users",
+    "url:GET|/api/v1/courses/:course_id/group_categories",
+    "url:GET|/api/v1/courses/:course_id/groups",
+    "url:GET|/api/v1/courses/:course_id/sections",
+    "url:GET|/api/v1/courses/:course_id/sections/:id",
+    "url:GET|/api/v1/groups/:group_id/users",
+    "url:PUT|/api/v1/planner_notes/:id",
+    "url:POST|/api/v1/planner_notes",
+    "url:DELETE|/api/v1/planner_notes/:id",
+    "url:GET|/api/v1/courses/:course_id/assignments/:assignment_id/submissions",
+    "url:GET|/api/v1/courses/:course_id/students/submissions",
+    "url:PUT|/api/v1/courses/:course_id/assignments/:assignment_id/submissions/:user_id",
+    "url:GET|/api/v1/users/:user_id/profile",
+    "url:GET|/api/v1/courses/:course_id/external_tools"
+  ],
+  "blackboard": ["read write"],
+  "brightspace": ["core:*:* enrollment:orgunit:read users:userdata:read grades:gradeobjects:read grades:gradeobjects:write grades:gradevalues:write"]
+}

@@ -259,3 +259,12 @@ th .cell{
 .el-dialog__headerbtn:focus {
   outline: 1px $--color-primary solid !important;
 }
+
+// Fix table lazy scroll
+.el-table {
+  position: inherit !important;
+
+  &:before {
+    display: none !important;
+  }
+}

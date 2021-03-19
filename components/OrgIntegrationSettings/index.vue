@@ -168,11 +168,11 @@
               <el-input v-model="form.lmsConfig.ltiAdvantageId" type="text" :placeholder="lmsTitle + ' LTI Advantage key ...'"/>
             </el-form-item>
             <!-- Lti-advantage app id -->
-            <el-form-item label="LTI app id">
+            <el-form-item label="LTI app id" v-if="form.lms === 'blackboard'">
               <el-input v-model="form.lmsConfig.ltiAdvantagAppId" type="text" :placeholder="lmsTitle + ' LTI Advantage App id ...'"/>
             </el-form-item>
             <!-- Lti-advantage deployment id -->
-            <el-form-item label="LTI deployment id">
+            <el-form-item label="LTI deployment id" v-if="['blackboard', 'brightspace'].includes(form.lms)">
               <el-input v-model="form.lmsConfig.ltiAdvantageDeploymentId" type="text" :placeholder="lmsTitle + ' LTI Advantage deployment id ...'"/>
             </el-form-item>
             <!-- Lti-advantage auth secret -->
@@ -190,6 +190,14 @@
             </el-form-item>
           </div>
         </transition>
+
+        <!-- LTI Custom Tool parameters -->
+        <el-form-item label="LTI tool parameters" v-if="parameters[form.lms] && parameters[form.lms][form.ltiVersion]">
+          <p class="form-help-text">
+            <span class="text-muted font-13">{{ $t('SW_PARAMETERS_EXPLAINER') }}</span>
+          </p>
+          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" :readonly="true" v-model="parameters[form.lms][form.ltiVersion]"/>
+        </el-form-item>
 
         <!-- Enable API Integration -->
         <el-form-item class="mb-10" :label="$t('SW_TOGGLE_API_INTEGRATION')">
@@ -232,11 +240,26 @@
                 </el-form-item>
                 <!-- API Scope -->
                 <el-form-item :label="lms.apiScope.label" v-if="lms.apiScope">
+                  <p class="form-help-text">
+                    <span class="text-muted font-13">{{ $t('SW_SCOPES_EXPLAINER') }}</span>
+                    <el-button type="text" @click="generateScopes" class="ml-5" size="small">
+                      {{ $t('SW_GENERATE_DEFAULT_SCOPES') }}
+                    </el-button>
+                  </p>
                     <!-- Scopes -->
                     <div v-for="(scope, index) in form.lmsConfig.scope" :key="index">
                       <div class="mb-10">
                         <el-input v-model="form.lmsConfig.scope[index]">
                           <template slot="prepend">#{{index + 1}}</template>
+
+                          <!-- Delete email -->
+                          <el-popconfirm slot="append" :confirmButtonText="$t('SW_DELETE')" :cancelButtonText="$t('SW_CANCEL')"
+                                         @confirm="removeScope(index)" hideIcon :title="$t('SW_DELETE_SCOPE_CONFIRM')">
+                            <el-button slot="reference">
+                              <i class="icon-delete"/>
+                              <span class="hidden-xs">{{ $t('SW_REMOVE') }}</span>
+                            </el-button>
+                          </el-popconfirm>
                         </el-input>
                       </div>
                     </div>
@@ -261,6 +284,8 @@
 
 <script>
 import config from 'config'
+import scopes from '@/edpack-web/lms-api-scopes.json'
+import parameters from '@/edpack-web/lti-custom-parameters.json'
 
 export default {
   name: 'OrgIntegrationSettings',
@@ -275,6 +300,8 @@ export default {
       incorrectDomains: [],
       generatedSecretAlert: false,
       processing: false,
+      scopes: scopes,
+      parameters: parameters,
       inputVisible: {
         emailDomains: false,
         samlDomains: false,
@@ -343,6 +370,7 @@ export default {
   },
 
   methods: {
+    removeScope (index) { this.form.lmsConfig.scope.splice(index, 1) },
     changeHttpToHttps (urlString) {
       if (!urlString) return
 
@@ -418,6 +446,10 @@ export default {
       else if (type === 'samlDomains') this.form.saml.domains.splice(this.form.saml.domains.indexOf(item), 1)
       else this.form[type].splice(this.form[type].indexOf(item), 1)
       this.$nextTick()
+    },
+    generateScopes () {
+      this.form.lmsConfig.scope = scopes[this.form.lms]
+      this.$message({ message: this.$i18n.t('SW_SCOPES_GENERATED'), type: 'success' })
     },
     clipboardSuccess () { this.$message({ message: this.$i18n.t('SW_COPIED_TO_CLIPBOARD'), type: 'success' }) },
     addScope () {
