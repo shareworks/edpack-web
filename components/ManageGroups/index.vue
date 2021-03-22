@@ -10,13 +10,13 @@
             <el-row type="flex" justify="center" align="baseline" v-if="!dragging" :key="1">
               <el-col :xs="20" :sm="16" :span="20">
                 <!-- Add group button -->
-                <el-button type="primary" plain size="medium" @click="addGroupDialog = true" :disabled="manipulationDisabled">
+                <el-button type="primary" plain size="medium" @click="addGroupDialog = true" :disabled="manipulationDisabled" v-if="!manipulationDisabled">
                   <i class="icon-add"/>
                   <span>{{ $t('SW_ADD_GROUP') }}</span>
                 </el-button>
 
                 <!-- Save button -->
-                <el-button type="success" size="medium" :plain="!isChanged" :disabled="!isChanged || manipulationDisabled" @click="confirmSubmitChanges">
+                <el-button type="success" size="medium" :plain="!isChanged" :disabled="!isChanged || manipulationDisabled" v-if="!manipulationDisabled" @click="confirmSubmitChanges">
                   <i class="icon-ok-sign"/>
                   <span>{{ $t('SW_SAVE_CHANGES') }}</span>
                 </el-button>
@@ -35,7 +35,7 @@
             </el-row>
 
             <!-- Remove student area -->
-            <el-row type="flex" align="middle" v-else-if="dragging && !draggingMainList" :key="2">
+            <el-row type="flex" align="middle" v-else-if="dragging && !draggingMainList && !manipulationDisabled" :key="2">
               <el-col :xs="0" :span="24">
                 <div class="remove-draggable-wrapper">
                   <span class="copy-remove-user-title">{{ $t('SW_DRAG_REMOVE_STUDENTS') }}</span>
@@ -82,14 +82,14 @@
                         <div class="group-item-controls">
                           <div class="top-minus-3">
                             <!-- Remove group -->
-                            <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @confirm="studentsData_RemoveGroup(group)" hideIcon :title="$t('SW_DELETE_GROUP')">
+                            <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @confirm="studentsData_RemoveGroup(group)" v-if="!manipulationDisabled" hideIcon :title="$t('SW_DELETE_GROUP')">
                               <el-button slot="reference" :disabled="manipulationDisabled" plain size="small" @click.stop class="button-square mr-5 hidden-xs" type="danger">
                                 <i class="icon-delete"/>
                               </el-button>
                             </el-popconfirm>
 
                             <!-- Rename group -->
-                            <el-popover @after-leave="studentsData_RenameStudentsGroup(group.name, group.temporaryGroupName)" trigger="click" :close-delay="0" :title="$tc('SW_CHANGE_GROUP_NAME')" placement="top-end">
+                            <el-popover @after-leave="studentsData_RenameStudentsGroup(group.name, group.temporaryGroupName)" trigger="click" :close-delay="0" v-if="!manipulationDisabled" :title="$tc('SW_CHANGE_GROUP_NAME')" placement="top-end">
                               <el-input v-model="group.temporaryGroupName" :placeholder="$t('SW_GROUP_NAME')" :label="$t('SW_GROUP_NAME')"/>
 
                               <el-button slot="reference" plain size="small" @click.stop class="button-square mr-10 hidden-xs">
