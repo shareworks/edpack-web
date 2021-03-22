@@ -10,13 +10,13 @@
             <el-row type="flex" justify="center" align="baseline" v-if="!dragging" :key="1">
               <el-col :xs="20" :sm="16" :span="20">
                 <!-- Add group button -->
-                <el-button type="primary" plain size="medium" @click="addGroupDialog = true" :disabled="manipulationDisabled" v-if="!manipulationDisabled">
+                <el-button type="primary" plain size="medium" @click="addGroupDialog = true" v-if="!manipulationDisabled">
                   <i class="icon-add"/>
                   <span>{{ $t('SW_ADD_GROUP') }}</span>
                 </el-button>
 
                 <!-- Save button -->
-                <el-button type="success" size="medium" :plain="!isChanged" :disabled="!isChanged || manipulationDisabled" v-if="!manipulationDisabled" @click="confirmSubmitChanges">
+                <el-button type="success" size="medium" :plain="!isChanged" :disabled="!isChanged" v-if="!manipulationDisabled" @click="confirmSubmitChanges">
                   <i class="icon-ok-sign"/>
                   <span>{{ $t('SW_SAVE_CHANGES') }}</span>
                 </el-button>
