@@ -383,6 +383,7 @@ export default {
     },
     processHttp () {
       this.importantFields.forEach(field => {
+        if (!this.form[field]) return
         this.form[field].apiUrl = this.changeHttpToHttps(this.form[field].apiUrl)
       })
 
