@@ -60,6 +60,23 @@
             </div>
           </div>
         </el-col>
+
+        <!-- Brightspace account ID part -->
+        <el-col :span="calcSpan" v-if="form.lmsApiIntegration && form.lms === 'brightspace'">
+          <strong class="mb-10">
+            {{ $t('SW_ACCOUNT_ID') }}
+          </strong>
+          <div v-for="(faculty, index) in form.faculties" :key="index">
+            <div class="mb-10">
+              <el-input v-if="faculty.brightspace" v-model="faculty.brightspace.id">
+                <template slot="prepend">#{{index + 1}}</template>
+              </el-input>
+              <el-input v-else :disabled="true">
+                <template slot="prepend">#{{index + 1}}</template>
+              </el-input>
+            </div>
+          </div>
+        </el-col>
       </el-row>
 
       <!-- Add faculty -->
