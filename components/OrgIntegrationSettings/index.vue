@@ -169,7 +169,7 @@
             </el-form-item>
             <!-- Lti-advantage app id -->
             <el-form-item label="LTI app id" v-if="form.lms === 'blackboard'">
-              <el-input v-model="form.lmsConfig.ltiAdvantagAppId" type="text" :placeholder="lmsTitle + ' LTI Advantage App id ...'"/>
+              <el-input v-model="form.lmsConfig.ltiAdvantageAppId" type="text" :placeholder="lmsTitle + ' LTI Advantage App id ...'"/>
             </el-form-item>
             <!-- Lti-advantage deployment id -->
             <el-form-item label="LTI deployment id" v-if="['blackboard', 'brightspace'].includes(form.lms)">
