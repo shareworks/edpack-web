@@ -131,9 +131,7 @@ export default {
       this.submitting = true
       this.$http.post('users/invite', { invitations }, { params: { toSelf: false } })
         .then(() => {
-          console.log('this.staff', this.staff)
           this.evaluation.staff = this.staff.filter(staff => staff.role !== 'none')
-          // this.getInstructors()
           this.$message({ message: this.$i18n.t('SW_EVALUATION_ROLES_UPDATED'), type: 'success' })
           this.closeDialog()
         })
