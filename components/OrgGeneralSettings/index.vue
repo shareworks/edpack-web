@@ -115,23 +115,23 @@
     </el-form-item>
 
     <!-- Introduction by school EN -->
-    <el-form-item v-if="introBySchool" class="form-en" :label="$t('SW_INTRO_FOR')">
+    <el-form-item v-if="introBySchool" :class="isJustOneLanguage ? '' : 'form-en'" :label="$t('SW_INTRO_FOR')">
       <p class="text-muted">{{ $t('SW_INTRO_FOR_NEWLY') }}</p>
       <redactor :config="editorOptions" v-model="form.orgCourseIntro.en"/>
     </el-form-item>
 
     <!-- Introduction by school NL -->
-    <el-form-item v-if="introBySchool" class="form-nl" :label="$t('SW_INTRO_FOR')">
+    <el-form-item v-if="introBySchool" :class="isJustOneLanguage ? '' : 'form-nl'" :label="$t('SW_INTRO_FOR')">
       <p class="text-muted">{{ $t('SW_INTRO_FOR_NEWLY') }}</p>
       <redactor :config="editorOptions" v-model="form.orgCourseIntro.nl"/>
     </el-form-item>
 
     <!-- Colofon EN -->
-    <el-form-item :label="$t('SW_COLOFON')" class="form-en" v-show="form.languages.en">
+    <el-form-item :label="$t('SW_COLOFON')" :class="isJustOneLanguage ? '' : 'form-en'" v-show="form.languages.en">
       <redactor :config="editorOptions" ref="ColofonEN" v-model="form.colofon.en"/>
     </el-form-item>
     <!-- Colofon NL -->
-    <el-form-item :label="$t('SW_COLOFON')" class="form-nl" v-show="form.languages.nl">
+    <el-form-item :label="$t('SW_COLOFON')" :class="isJustOneLanguage ? '' : 'form-nl'" v-show="form.languages.nl">
       <redactor :config="editorOptions" ref="ColofonNL" v-model="form.colofon.nl"/>
     </el-form-item>
   </div>
@@ -148,6 +148,12 @@ export default {
   name: 'OrgGeneralSettings',
   props: ['form'],
   components: { InputsWithFlags, Redactor: () => import('@/edpack-web/components/Redactor') },
+
+  computed: {
+    isJustOneLanguage () {
+      return this.$store.state.languages.length === 1
+    }
+  },
 
   data () {
     return {
