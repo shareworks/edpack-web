@@ -32,9 +32,16 @@
       <el-input v-model="form.notificationEmail" type="email"/>
     </el-form-item>
 
+    <!-- Countries -->
+    <el-form-item :label="$t('SW_ORG_COUNTRY')" required>
+      <el-select class="block" v-model="form.country" filterable>
+        <el-option v-for="country in countries" :key="country" :label="country" :value="country"/>
+      </el-select>
+    </el-form-item>
+
     <!-- Timezone -->
     <el-form-item :label="$t('SW_ORG_TIMEZONE')" required>
-      <el-select class="block" v-model="form.timezone">
+      <el-select class="block" v-model="form.timezone" filterable>
         <el-option v-for="timezone in timezones" :key="timezone" :label="timezone" :value="timezone"/>
       </el-select>
     </el-form-item>
@@ -140,6 +147,7 @@
 <script>
 import config from 'config'
 import timezones from '@/edpack-web/timezones.json'
+import countries from '@/edpack-web/countries.json'
 import * as filestack from 'filestack-js'
 import InputsWithFlags from '../InputsWithFlags'
 import convertDiacritics from '../../utils/convert-diacritics'
@@ -166,7 +174,8 @@ export default {
       introBySchool: config.introBySchool,
       languages: config.languages,
       filepicker: filestack.init(config.filestack.key),
-      timezones: timezones.values
+      timezones: timezones.values,
+      countries: countries.values
     }
   },
 
