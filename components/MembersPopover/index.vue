@@ -48,7 +48,7 @@ export default {
   watch: {
     evaluation: {
       deep: true,
-      handler () { this.getInstructors() }
+      handler () { this.instructors = this.evaluation.staff }
     }
   },
 
