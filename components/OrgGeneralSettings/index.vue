@@ -102,12 +102,12 @@
     </el-form-item>
 
     <!-- Faculty term EN -->
-    <el-form-item :label="$t('SW_ORG_FACULTYTERM_NAME')" v-if="school.enableManualCourses" required>
+    <el-form-item :label="$t('SW_ORG_FACULTYTERM_NAME')" required>
       <inputs-with-flags :change="setNewFaculty" :value="form.terminology.faculty" name="facultyTerm"/>
     </el-form-item>
 
     <!-- Faculties term EN -->
-    <el-form-item :label="$t('SW_ORG_FACULTIESTERM_NAME')" v-if="school.enableManualCourses" required>
+    <el-form-item :label="$t('SW_ORG_FACULTIESTERM_NAME')" required>
       <inputs-with-flags :change="setNewFaculties" :value="form.terminology.faculties" name="facultiesTerm"/>
     </el-form-item>
 
