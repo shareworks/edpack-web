@@ -3,7 +3,7 @@
     <p class="mb-20">{{ $t('SW_DIALOG_MANAGE_STAFF_TEXT') }}</p>
 
     <!-- Table with instructors -->
-    <el-table v-if="!loading" v-show="staff.length" :data="staff" row-key="_id" ref="staffTable" :default-sort="{prop: 'activityDate', order: 'ascending'}">
+    <el-table v-if="!loading" v-show="staff.length" @sort-change="sortChange" :data="getTableData" row-key="_id" ref="staffTable">
       <!-- Name -->
       <el-table-column :label="$tc('SW_STAFF', 1)" prop="name" min-width="160">
         <template slot-scope="props">
@@ -23,14 +23,14 @@
       </el-table-column>
 
       <!-- Activity date -->
-      <el-table-column sortable property="activityDate" :formatter="dateFormatter" :sort-method="sortActivityDate" :label="$t('SW_ACTIVITY_DATE')" min-width="140"/>
+      <el-table-column sortable property="activityDate" :formatter="dateFormatter" :label="$t('SW_ACTIVITY_DATE')" min-width="140"/>
 
       <!-- Role -->
-      <el-table-column width="150" :label="$tc('SW_ROLE', 1)">
+      <el-table-column sortable property="role" width="150" :label="$tc('SW_ROLE', 1)">
         <template slot-scope="props">
           <div class="pull-right">
             <el-dropdown trigger="click" @command="handleCommand">
-              <el-button size="small" plain type="primary">
+              <el-button size="small" :plain="getRoleButtonType(props.row.role) === 'plain'" :type="props.row.role === 'none' ? '' : 'primary'">
                 {{ $t('SW_' + props.row.role.toUpperCase()) }}
                 <i class="el-icon-caret-bottom el-icon--right"/>
               </el-button>
@@ -61,6 +61,8 @@
       </el-button>
       <el-button @click="closeDialog" type="text">{{ $t('SW_CANCEL') }}</el-button>
     </div>
+
+    <el-pagination class="text-center" background layout="prev, pager, next" :total="total" :page-size="pageSize" @current-change="onPageChange"/>
   </div>
 </template>
 
@@ -80,7 +82,20 @@ export default {
       lang: this.$store.state.lang,
       staff: [],
       loading: false,
-      submitting: false
+      submitting: false,
+      pageSize: 5,
+      currentPage: 0,
+      total: 0,
+      noneRole: [],
+      viewerRole: [],
+      ownerRole: []
+    }
+  },
+
+  computed: {
+    getTableData () {
+      const takeValuesFrom = this.pageSize * this.currentPage
+      return [...this.staff].splice(takeValuesFrom, this.pageSize)
     }
   },
 
@@ -89,6 +104,20 @@ export default {
   },
 
   methods: {
+    sortChange (val) {
+      if (val.prop === 'activityDate' && val.order === 'ascending') {
+        this.staff.sort(this.sortActivityDate)
+      } else if (val.prop === 'activityDate' && val.order === 'descending') {
+        this.staff.sort(this.sortActivityDate).reverse()
+      }
+
+      if (val.prop === 'role' && val.order === 'ascending') {
+        this.staff = [...this.ownerRole, ...this.viewerRole, ...this.noneRole]
+      } else if (val.prop === 'role' && val.order === 'descending') {
+        this.staff = [...this.noneRole, ...this.viewerRole, ...this.ownerRole]
+      }
+    },
+    onPageChange (pageNumber) { this.currentPage = pageNumber - 1 },
     getInstructors () {
       this.loading = true
 
@@ -105,13 +134,28 @@ export default {
             courseStaff.role = roleMap[courseStaff._id] || 'none'
             this.staff.push(courseStaff)
           }
+          this.total = this.staff.length
+
+          this.staff.forEach(user => {
+            if (user.role === 'none') this.noneRole.push(user)
+            else if (user.role === 'viewer') this.viewerRole.push(user)
+            else if (user.role === 'owner') this.ownerRole.push(user)
+          })
         })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.loading = false })
     },
-    handleCommand (command) {
-      command.instructor.role = command.role
+    getRoleButtonType (role) {
+      switch (role) {
+      case 'owner':
+        return 'primary'
+      case 'viewer':
+        return 'plain'
+      default:
+        return 'default'
+      }
     },
+    handleCommand (command) { command.instructor.role = command.role },
     updateInstructors () {
       if (this.submitting) return
 
