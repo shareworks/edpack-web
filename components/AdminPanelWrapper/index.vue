@@ -54,12 +54,12 @@
       </el-tabs>
     </page-cover>
 
-    <!-- test mailing dialog -->
-    <el-dialog append-to-body>
-      <test-mailing-dialog v-if="testMailingDialog" :closeDialog="() => { testMailingDialog = false }"/>
-    </el-dialog>
-
     <div class="page-body" v-if="status === 'done'">
+      <!-- test mailing dialog -->
+      <el-dialog append-to-body :visible.sync="testMailingDialog" :title="$t('SW_TEST_MAILING')">
+        <test-mailing-dialog v-if="testMailingDialog" :closeDialog="closeTestMailingDialog"/>
+      </el-dialog>
+
       <!-- Content Component -->
       <component :is="tabs[mode].name"/>
 
@@ -158,6 +158,9 @@ export default {
     tabClick () {
       this.$router.replace({ name: 'admin', params: { mode: this.toTab, slug: this.school.slug } })
         .catch(() => { this.toTab = this.mode })
+    },
+    closeTestMailingDialog () {
+      this.testMailingDialog = false
     }
   }
 }

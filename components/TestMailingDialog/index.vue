@@ -1,13 +1,31 @@
 <template>
   <div>
-    <page-cover>
-        <!-- Headers -->
-        <h3 class="mb-20 font-18 max-600">
-          <div v-if="step === 0">
-            <p>{{ $t('SW_TEST_MAILING') }}</p>
-          </div>
-        </h3>
-    </page-cover>
+    <p class="mb-30">{{ $t('SW_TEST_MAILING_TEXT') }}</p>
+
+    <section>
+      <masonry :cols="{default: 4, 800: 2, 500: 1}" :gutter="{default: '20px'}">
+        <div></div>
+
+        <div class="mb-20 text-center">
+          <el-button class="download-button" type="primary" size="medium" @click="testTemplateMailing" :loading="loading">
+            <i class="icon-download"></i>
+            {{ $t('SW_TEST_TEMPLATE_MAILING') }}
+          </el-button>
+          <p class="mt-10 text-muted">{{ $t('SW_TEST_TEMPLATE_MAILING_TEXT') }}</p>
+        </div>
+
+        <!-- Download .zip -->
+        <div class="mb-20 text-center">
+          <el-button class="download-button" type="primary" size="medium" @click="testCronjobMailing" :loading="loading" :disabled="true">
+            <i class="icon-download"></i>
+            {{ $t('SW_TEST_CRONJOB_MAILING') }}
+          </el-button>
+          <p class="mt-10 text-muted">{{ $t('SW_TEST_CRONJOB_MAILING_TEXT') }}</p>
+        </div>
+
+        <div></div>
+      </masonry>
+    </section>
 
     <div class="mt-20">
       <el-button class="ml-10" type="text" @click="closeDialog()">{{ $t('SW_CANCEL') }}</el-button>
@@ -24,12 +42,37 @@ export default {
 
   data () {
     return {
-
+      loading: false,
     }
   },
 
   methods: {
+    testTemplateMailing () {
+      if (this.loading) return
+      this.loading = true
 
+      this.$http.get('messages/test-templates')
+        .then((res) => {
+          this.$message({ type: 'success', message: this.$i18n.t('SW_DONE') })
+        })
+        .catch(() => {
+          this.$message({ message: this.$i18n.t('SW_GENERIC_ERROR'), type: 'error' })
+        })
+        .finally(() => { this.loading = false })
+    },
+    testCronjobMailing () {
+      if (this.loading) return
+      this.loading = true
+
+      this.$http.get('messages/test-templates')
+        .then((res) => {
+          this.$message({ type: 'success', message: this.$i18n.t('SW_DONE') })
+        })
+        .catch(() => {
+          this.$message({ message: this.$i18n.t('SW_GENERIC_ERROR'), type: 'error' })
+        })
+        .finally(() => { this.loading = false })
+    }
   }
 }
 </script>
