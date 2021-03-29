@@ -1,7 +1,5 @@
 <template>
   <div>
-    <p class="mb-30">{{ $t('SW_TEST_MAILING_TEXT') }}</p>
-
     <section>
       <masonry :cols="{default: 4, 800: 2, 500: 1}" :gutter="{default: '20px'}">
         <div></div>
@@ -51,7 +49,7 @@ export default {
 
       this.$http.get('messages/test-templates')
         .then((res) => {
-          this.$message({ type: 'success', message: this.$i18n.t('SW_DONE') })
+          this.$message({ type: 'success', message: this.$i18n.t('SW_TEST_MAILING_DONE') })
         })
         .catch(() => {
           this.$message({ message: this.$i18n.t('SW_GENERIC_ERROR'), type: 'error' })
@@ -64,7 +62,7 @@ export default {
 
       this.$http.get('messages/test-templates')
         .then((res) => {
-          this.$message({ type: 'success', message: this.$i18n.t('SW_DONE') })
+          this.$message({ type: 'success', message: this.$i18n.t('SW_TEST_MAILING_DONE') })
         })
         .catch(() => {
           this.$message({ message: this.$i18n.t('SW_GENERIC_ERROR'), type: 'error' })
