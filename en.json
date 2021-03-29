@@ -690,5 +690,5 @@
   "SW_TEST_MAILING": "Test:mailing",
   "SW_TEST_MAILING_TEXT": "Test emails by: 1. either sending all email types at once (for testing templates) or 2. create a dummy evaluation and set dates with a timer, to prevoke the cronJob (for testing cronJobs)",
   "SW_TEST_TEMPLATE_MAILING": "Test templates",
-  "SW_TEST_CRONJOB_MAILING": "Test CronJobs (under construction)",
+  "SW_TEST_CRONJOB_MAILING": "Test CronJobs (under construction)"
 }
