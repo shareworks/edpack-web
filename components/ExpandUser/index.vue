@@ -1,7 +1,14 @@
 <template>
   <div>
     <!-- Id -->
-    <div class="mb-10"><strong class="mr-5">ID</strong> {{ _id }}</div>
+    <div class="mb-10" v-if="isAdmin"><strong class="mr-5">ID</strong> {{ _id }}</div>
+
+    <!-- modifiedBy -->
+    <p v-if="user.modifiedBy">
+      <strong class="mr-5">{{ $t('SW_MODIFIED_BY') }}</strong>
+      <thumbnail :model="user.modifiedBy" class="thumb-user thumb-24"/>
+      {{user.modifiedBy.name}} <span class="hidden-xs">(<a :href="'mailto:' + user.modifiedBy.email" target="_blank">{{ user.modifiedBy.email }}</a>)</span>
+    </p>
 
     <!-- Faculties Manager -->
     <div v-if="user.faculties.length" class="mb-10">
@@ -55,7 +62,8 @@ export default {
     return {
       userCourses: [],
       lang: this.$store.state.lang,
-      school: this.$store.state.school
+      school: this.$store.state.school,
+      isAdmin: this.$store.state.isAdmin
     }
   },
 

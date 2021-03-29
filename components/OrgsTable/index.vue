@@ -62,7 +62,19 @@
             <el-col :span="12">
               <!-- Name / Id -->
               <p><strong class="mr-5">{{ $t('SW_NAME') }}</strong>{{ props.row.name[lang] }}</p>
-              <p><strong class="mr-5">ID</strong> {{ props.row._id }}</p>
+              <p><strong v-if="isAdmin" class="mr-5">ID</strong> {{ props.row._id }}</p>
+
+              <!-- modifiedBy -->
+              <p v-if="props.row.modifiedBy">
+                <!-- Created by -->
+                <strong class="mr-5">{{ $t('SW_MODIFIED_BY') }}</strong>
+                <thumbnail :model="props.row.modifiedBy" class="thumb-user thumb-24"/>
+                {{props.row.modifiedBy.name}}
+                <span class="hidden-xs">
+                  (<a :href="'mailto:' + props.row.modifiedBy.email" target="_blank">{{ props.row.modifiedBy.email }}</a>)
+                </span>
+              </p>
+
             </el-col>
             <el-col :span="12">
               <!-- Slug -->
@@ -192,6 +204,7 @@ export default {
       skip: false,
       total: 0,
       school: this.$store.state.school,
+      isAdmin: this.$store.state.isAdmin,
       dialogOrg: false,
       dialogNewsletter: false,
       processing: false,

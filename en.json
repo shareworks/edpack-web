@@ -134,6 +134,7 @@
   "SW_COURSE_UPDATED": "Course has been updated!",
   "SW_CREATED": "Created",
   "SW_CREATED_BY": "Created by",
+  "SW_MODIFIED_BY": "Modified by",
   "SW_CREATED_DATE": "Created",
   "SW_CREATE_COURSE": "Add course",
   "SW_CREATE_COURSE_TEXT": "You need to have a course to continue.",
