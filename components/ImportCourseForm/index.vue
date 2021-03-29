@@ -29,7 +29,7 @@
           <div v-for="(group, index) in lmsGroupSets" :key="index">
             <el-checkbox class="text-ellipsis" :label="group" :key="group.id">
               {{ group.name }}
-              <el-tag size="mini" class="ml-5 no-bold" v-if="group.membersCount  && !disabledEdit">
+              <el-tag size="mini" class="ml-5 no-bold" v-if="group.membersCount !== undefined && !disabledEdit">
                 {{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}
               </el-tag>
             </el-checkbox>
