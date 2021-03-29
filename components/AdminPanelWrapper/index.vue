@@ -29,6 +29,10 @@
               <i class="icon-delete"></i>
               <span>{{ $t('SW_CLEAR_TOKENS') }}</span>
             </el-dropdown-item>
+            <el-dropdown-item v-if="currentUser.systemAdmin" :command="{type: 'test-mailing'}">
+              <i class="icon-delete"></i>
+              <span>{{ $t('SW_TEST_MAILING') }}</span>
+            </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
 
@@ -60,6 +64,12 @@
       </el-dialog>
     </div>
 
+    <!-- Statistics dialog -->
+    <el-dialog append-to-body>
+      <test-mailing-dialog v-if="testMailingDialog" :closeDialog="() => { testMailingDialog = false }"/>
+    </el-dialog>
+
+
     <!-- Loading -->
     <spinner v-else-if="status === 'loading'" class="mt-30"></spinner>
 
@@ -73,12 +83,13 @@ import config from 'config'
 import Statistics from '@/edpack-web/components/Statistics'
 import OrgsTable from '@/edpack-web/components/OrgsTable'
 import UsersTable from '@/edpack-web/components/UsersTable'
+import TestMailingDialog from '@/edpack-web/components/TestMailingDialog'
 
 export default {
   name: 'AdminPanelWrapper',
   metaInfo: { title: 'Admin' },
   props: ['stats', 'tabs'],
-  components: { Statistics, OrgsTable, UsersTable },
+  components: { Statistics, OrgsTable, UsersTable, TestMailingDialog },
 
   data () {
     return {
@@ -91,7 +102,8 @@ export default {
       submitting: false,
       uptimeUrl: config.business.uptimeUrl,
       lang: this.$store.state.lang,
-      status: 'loading'
+      status: 'loading',
+      testMailingDialog: false
     }
   },
 
@@ -124,6 +136,7 @@ export default {
     handleCommand (command) {
       if (command.type === 'uptime') window.open(this.uptimeUrl, '_blank')
       if (command.type === 'tokens') this.confirmClearTokens()
+      if (command.type === 'test-mailing') this.testMailingDialog = true
     },
     confirmClearTokens () {
       if (this.submitting) return
