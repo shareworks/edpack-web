@@ -686,5 +686,9 @@
   "SW_AVAILABLE_GROUPS_TEXT": "Which groups should be imported? Select at least one.",
   "SW_NO_GROUPS_INDIVIDUAL": "No groups found. Groups are required to continue. Please check if groups with students are created (without a group set).",
   "SW_DELETE_SCOPE_CONFIRM": "Are you sure you want to remove API scope?",
-  "SW_ORG_COUNTRY": "Country"
+  "SW_ORG_COUNTRY": "Country",
+  "SW_TEST_MAILING": "Test:mailing",
+  "SW_TEST_MAILING_TEXT": "Test emails by: 1. either sending all email types at once (for testing templates) or 2. create a dummy evaluation and set dates with a timer, to prevoke the cronJob (for testing cronJobs)",
+  "SW_TEST_TEMPLATE_MAILING": "Test templates",
+  "SW_TEST_CRONJOB_MAILING": "Test CronJobs (under construction)",
 }

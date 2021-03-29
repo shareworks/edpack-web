@@ -659,5 +659,9 @@
   "SW_AVAILABLE_GROUPS_TEXT": "Welke groepen moeten geïmporteerd worden? Selecteer minstens één.",
   "SW_NO_GROUPS_INDIVIDUAL": "Er zijn geen losse groepen gevonden in deze cursus. Check of er in de cursus reeds groepen - met studenten erin - zijn aangemaakt zonder een groepenset.",
   "SW_DELETE_SCOPE_CONFIRM": "Weet u zeker dat u het API-bereik wilt verwijderen?",
-  "SW_ORG_COUNTRY": "Land"
+  "SW_ORG_COUNTRY": "Land",
+  "SW_TEST_MAILING": "Test:mailing",
+  "SW_TEST_MAILING_TEXT": "Test emails by: 1. either sending all email types at once (for testing templates) or 2. create a dummy evaluation and set dates with a timer, to prevoke the cronJob (for testing cronJobs)",
+  "SW_TEST_TEMPLATE_MAILING": "Test templates",
+  "SW_TEST_CRONJOB_MAILING": "Test CronJobs (under construction)"
 }

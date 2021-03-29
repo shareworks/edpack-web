@@ -11,7 +11,6 @@
             <i class="icon-download"></i>
             {{ $t('SW_TEST_TEMPLATE_MAILING') }}
           </el-button>
-          <p class="mt-10 text-muted">{{ $t('SW_TEST_TEMPLATE_MAILING_TEXT') }}</p>
         </div>
 
         <!-- Download .zip -->
@@ -20,7 +19,6 @@
             <i class="icon-download"></i>
             {{ $t('SW_TEST_CRONJOB_MAILING') }}
           </el-button>
-          <p class="mt-10 text-muted">{{ $t('SW_TEST_CRONJOB_MAILING_TEXT') }}</p>
         </div>
 
         <div></div>
