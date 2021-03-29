@@ -9,8 +9,9 @@
         </h3>
     </page-cover>
 
-  <div class="mt-20">
-    <el-button class="ml-10" type="text" @click="closeDialog()">{{ $t('SW_CANCEL') }}</el-button>
+    <div class="mt-20">
+      <el-button class="ml-10" type="text" @click="closeDialog()">{{ $t('SW_CANCEL') }}</el-button>
+    </div>
   </div>
 </template>
 
