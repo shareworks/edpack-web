@@ -5,8 +5,8 @@
         <h3 class="mb-20 font-18 max-600">
           <div v-if="step === 0">
             <p>{{ $t('SW_TEST_MAILING') }}</p>
+          </div>
         </h3>
-      </div>
     </page-cover>
 
   <div class="mt-20">

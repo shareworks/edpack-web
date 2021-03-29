@@ -54,6 +54,11 @@
       </el-tabs>
     </page-cover>
 
+    <!-- test mailing dialog -->
+    <el-dialog append-to-body>
+      <test-mailing-dialog v-if="testMailingDialog" :closeDialog="() => { testMailingDialog = false }"/>
+    </el-dialog>
+
     <div class="page-body" v-if="status === 'done'">
       <!-- Content Component -->
       <component :is="tabs[mode].name"/>
@@ -63,12 +68,6 @@
         <statistics v-if="dialogStats" :closeDialog="toggleStats" :stats="stats"/>
       </el-dialog>
     </div>
-
-    <!-- Statistics dialog -->
-    <el-dialog append-to-body>
-      <test-mailing-dialog v-if="testMailingDialog" :closeDialog="() => { testMailingDialog = false }"/>
-    </el-dialog>
-
 
     <!-- Loading -->
     <spinner v-else-if="status === 'loading'" class="mt-30"></spinner>
