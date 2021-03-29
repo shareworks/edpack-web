@@ -30,7 +30,7 @@
       <span>{{ intro }}</span>
 
       <!-- Show more link -->
-      <a v-if="!showMore && $slots.default"  href="#" @click.prevent="moreInfo" class="hidden-xs ml-5 bold">
+      <a v-if="!showMore && $slots.default" href="#" @click.prevent="moreInfo" class="hidden-xs ml-5 bold">
         {{ $t('SW_MORE_INFO') }}
       </a>
 
