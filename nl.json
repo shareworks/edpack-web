@@ -664,5 +664,6 @@
   "SW_TEST_MAILING": "Test:mailing",
   "SW_TEST_TEMPLATE_MAILING": "Test templates",
   "SW_TEST_CRONJOB_MAILING": "Test CronJobs (under construction)",
-  "SW_TEST_MAILING_DONE": "Test finished, please check your inbox"
+  "SW_TEST_MAILING_DONE": "Test finished, please check your inbox",
+  "SW_UNTITLED": "Ongetiteld"
 }
