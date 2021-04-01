@@ -95,12 +95,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 20px;
+  font-size: 1.25rem;
   margin-top: 0;
 }
 
 h2 {
-  font-size: 18px;
+  font-size: 1.125rem;
 }
 
 h3 {
@@ -123,14 +123,14 @@ strong {
 
 @media (min-width: $--sm) {
   h1 {
-    font-size: 24px;
+    font-size: 1.5rem;
   }
 
   h2 {
-    font-size: 20px;
+    font-size: 1.25rem;
   }
 
   h3 {
-    font-size: 18px;
+    font-size: 1.125rem;
   }
 }

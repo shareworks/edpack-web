@@ -23,7 +23,7 @@
 .redactor-air a {
     display: inline-block;
     box-sizing: border-box;
-	font-size: 14px;
+	font-size: 0.875rem;
 	text-align: center;
 	padding: 10px 15px 9px 15px;
 	cursor: pointer;
@@ -43,7 +43,7 @@
 .redactor-toolbar,
 .redactor-air {
     a.re-button-icon {
-	    font-size: 16px;
+	    font-size: 1rem;
         padding: 9px 15px 6px 15px;
     }
 }
@@ -99,7 +99,7 @@
     border-radius: 3px;
     padding: 5px 9px;
     color: rgba(255, 255, 255, .8);
-    font-size: 12px;
+    font-size: 0.75rem;
     line-height: 1;
     font-family: $monospace-font-family;
 

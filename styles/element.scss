@@ -1,3 +1,15 @@
+/* Tabs
+-------------------------- */
+.el-tabs__item {
+  font-size: 0.875rem;
+}
+
+/* Table
+-------------------------- */
+.el-table {
+  font-size: 0.875rem;
+}
+
 /* Forms
 -------------------------- */
 .el-popconfirm__main {
@@ -89,6 +101,7 @@
 }
 
 .el-dialog__body {
+  font-size: 0.875rem;
   padding: 20px;
   word-break: normal;
 }

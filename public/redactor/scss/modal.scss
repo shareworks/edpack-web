@@ -31,7 +31,7 @@
         display: block;
         width: 100%;
     	font-family: inherit;
-    	font-size: 16px;
+    	font-size: 1rem;
     	height: 40px;
         outline: none;
         vertical-align: middle;
@@ -100,7 +100,7 @@
         display: block;
         color: #555;
         margin-bottom: 0.25em;
-        font-size: 14px;
+        font-size: 0.875rem;
         & .desc,
         & .success,
         & .error {
@@ -109,7 +109,7 @@
         }
     }
     & label.checkbox {
-        font-size: 16px;
+        font-size: 1rem;
         line-height: 1.5;
     	cursor: pointer;
     	color: inherit;
@@ -176,7 +176,7 @@
     }
     & .desc {
         color: rgba(#333, .5);
-        font-size: 12px;
+        font-size: 0.75rem;
     }
     & span.desc {
         margin-left: 0.25em;
@@ -186,7 +186,7 @@
     }
     & span.success,
     & span.error {
-        font-size: 12px;
+        font-size: 0.75rem;
         margin-left: 0.25em;;
     }
     & div.desc {
@@ -301,7 +301,7 @@
 }
 .redactor-modal-header {
 	padding: 20px;
-	font-size: 18px;
+	font-size: 1.125rem;
 	line-height: 24px;
 	font-weight: bold;
 	color: #000;

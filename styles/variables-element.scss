@@ -106,17 +106,17 @@ $--fill-base: $--color-white !default;
 $--font-path: '../../src/edpack-web/public/fonts/element' !default;
 $--font-display: 'auto' !default;
 /// fontSize|1|Font Size|0
-$--font-size-extra-large: 20px !default;
+$--font-size-extra-large: 1.25rem !default; // 20px;
 /// fontSize|1|Font Size|0
-$--font-size-large: 18px !default;
+$--font-size-large: 1.125rem !default; // 18px;
 /// fontSize|1|Font Size|0
-$--font-size-medium: 16px !default;
+$--font-size-medium: 1rem !default; // 16px;
 /// fontSize|1|Font Size|0
-$--font-size-base: 14px !default;
+$--font-size-base: 0.875rem !default; // 14px;
 /// fontSize|1|Font Size|0
-$--font-size-small: 13px !default;
+$--font-size-small: 0.82rem !default; // 13px;
 /// fontSize|1|Font Size|0
-$--font-size-extra-small: 12px !default;
+$--font-size-extra-small: 0.75rem !default; // 12px;
 /// fontWeight|1|Font Weight|1
 $--font-weight-primary: 500 !default;
 /// fontWeight|1|Font Weight|1
@@ -150,7 +150,7 @@ $--icon-color-base: $--color-info !default;
 /* Checkbox
 -------------------------- */
 /// fontSize||Font|1
-$--checkbox-font-size: 14px !default;
+$--checkbox-font-size: 0.875rem !default;
 /// fontWeight||Font|1
 $--checkbox-font-weight: $--font-weight-primary !default;
 /// color||Color|0
@@ -289,7 +289,7 @@ $--select-multiple-input-color: #666 !default;
 /// color||Color|0
 $--select-input-focus-border-color: $--color-primary !default;
 /// fontSize||Font|1
-$--select-input-font-size: 14px !default;
+$--select-input-font-size: 0.875rem !default;
 
 $--select-option-color: $--color-text-regular !default;
 $--select-option-disabled-color: $--color-text-placeholder !default;
@@ -303,7 +303,7 @@ $--select-option-selected-hover: $--background-color-base !default;
 
 $--select-group-color: $--color-info !default;
 $--select-group-height: 30px !default;
-$--select-group-font-size: 12px !default;
+$--select-group-font-size: 0.75rem !default;
 
 $--select-dropdown-background: $--color-white !default;
 $--select-dropdown-shadow: $--box-shadow-light !default;
@@ -320,13 +320,13 @@ $--alert-padding: 10px 16px !default;
 /// borderRadius||Border|2
 $--alert-border-radius: $--border-radius-base !default;
 /// fontSize||Font|1
-$--alert-title-font-size: 14px !default;
+$--alert-title-font-size: 0.875rem !default;
 /// fontSize||Font|1
-$--alert-description-font-size: 14px !default;
+$--alert-description-font-size: 0.875rem !default;
 /// fontSize||Font|1
-$--alert-close-font-size: 14px !default;
+$--alert-close-font-size: 0.875rem !default;
 /// fontSize||Font|1
-$--alert-close-customed-font-size: 14px !default;
+$--alert-close-customed-font-size: 0.875rem !default;
 
 $--alert-success-color: $--color-success-lighter !default;
 $--alert-info-color: $--color-info-lighter !default;
@@ -351,7 +351,7 @@ $--messagebox-content-font-size: $--font-size-base !default;
 /// color||Color|0
 $--messagebox-content-color: $--color-text-regular !default;
 /// fontSize||Font|1
-$--messagebox-error-font-size: 12px !default;
+$--messagebox-error-font-size: 0.75rem !default;
 $--msgbox-padding-primary: 15px !default;
 /// color||Color|0
 $--messagebox-success-color: $--color-success !default;
@@ -456,15 +456,15 @@ $--input-disabled-color: $--disabled-color-base !default;
 $--input-disabled-placeholder-color: $--color-text-placeholder !default;
 
 /// fontSize||Font|1
-$--input-medium-font-size: 14px !default;
+$--input-medium-font-size: 0.875rem !default;
 /// height||Other|4
 $--input-medium-height: 36px !default;
 /// fontSize||Font|1
-$--input-small-font-size: 13px !default;
+$--input-small-font-size: 0.82rem !default;
 /// height||Other|4
 $--input-small-height: 32px !default;
 /// fontSize||Font|1
-$--input-mini-font-size: 12px !default;
+$--input-mini-font-size: 0.75rem !default;
 /// height||Other|4
 $--input-mini-height: 28px !default;
 
@@ -529,14 +529,14 @@ $--button-medium-padding-vertical: 10px !default;
 $--button-medium-padding-horizontal: 20px !default;
 
 /// fontSize||Font|1
-$--button-small-font-size: 12px !default;
+$--button-small-font-size: 0.75rem !default;
 $--button-small-border-radius: #{$--border-radius-base - 1} !default;
 /// padding||Spacing|3
 $--button-small-padding-vertical: 9px !default;
 /// padding||Spacing|3
 $--button-small-padding-horizontal: 15px !default;
 /// fontSize||Font|1
-$--button-mini-font-size: 12px !default;
+$--button-mini-font-size: 0.75rem !default;
 $--button-mini-border-radius: #{$--border-radius-base - 1} !default;
 /// padding||Spacing|3
 $--button-mini-padding-vertical: 7px !default;
@@ -644,7 +644,7 @@ $--table-fixed-box-shadow: 0 0 10px rgba(0, 0, 0, .12) !default;
 /* Pagination
 -------------------------- */
 /// fontSize||Font|1
-$--pagination-font-size: 13px !default;
+$--pagination-font-size: 0.82rem !default;
 /// color||Color|0
 $--pagination-background-color: $--color-white !default;
 /// color||Color|0
@@ -683,7 +683,7 @@ $--popover-arrow-size: 6px !default;
 $--popover-padding: 12px !default;
 $--popover-padding-large: 18px 20px !default;
 /// fontSize||Font|1
-$--popover-title-font-size: 16px !default;
+$--popover-title-font-size: 1rem !default;
 /// color||Color|0
 $--popover-title-font-color: $--color-text-primary !default;
 
@@ -694,7 +694,7 @@ $--tooltip-fill: $--color-text-primary !default;
 /// color|1|Color|0
 $--tooltip-color: $--color-white !default;
 /// fontSize||Font|1
-$--tooltip-font-size: 12px !default;
+$--tooltip-font-size: 0.75rem !default;
 /// color||Color|0
 $--tooltip-border-color: $--color-text-primary !default;
 $--tooltip-arrow-size: 6px !default;
@@ -714,7 +714,7 @@ $--tag-warning-color: $--color-warning !default;
 /// color||Color|0
 $--tag-danger-color: $--color-danger !default;
 /// fontSize||Font|1
-$--tag-font-size: 12px !default;
+$--tag-font-size: 0.75rem !default;
 $--tag-border-radius: 4px !default;
 $--tag-padding: 0 10px !default;
 
@@ -739,7 +739,7 @@ $--dropdown-menuItem-hover-color: $--link-color !default;
 $--badge-background-color: $--color-danger !default;
 $--badge-radius: 10px !default;
 /// fontSize||Font|1
-$--badge-font-size: 12px !default;
+$--badge-font-size: 0.75rem !default;
 /// padding||Spacing|3
 $--badge-padding: 6px !default;
 /// height||Other|4
@@ -833,7 +833,7 @@ $--scrollbar-hover-background-color: rgba($--color-text-secondary, .5) !default;
 /* Carousel
 --------------------------*/
 /// fontSize||Font|1
-$--carousel-arrow-font-size: 12px !default;
+$--carousel-arrow-font-size: 0.75rem !default;
 $--carousel-arrow-size: 36px !default;
 $--carousel-arrow-background: rgba(31, 45, 61, 0.11) !default;
 $--carousel-arrow-hover-background: rgba(31, 45, 61, 0.23) !default;
@@ -856,11 +856,11 @@ $--collapse-header-background-color: $--color-white !default;
 /// color||Color|0
 $--collapse-header-font-color: $--color-text-primary !default;
 /// fontSize||Font|1
-$--collapse-header-font-size: 13px !default;
+$--collapse-header-font-size: 0.82rem !default;
 /// color||Color|0
 $--collapse-content-background-color: $--color-white !default;
 /// fontSize||Font|1
-$--collapse-content-font-size: 13px !default;
+$--collapse-content-font-size: 0.82rem !default;
 /// color||Color|0
 $--collapse-content-font-color: $--color-text-primary !default;
 
@@ -952,9 +952,9 @@ $--avatar-font-color: #fff !default;
 /// color||Color|0
 $--avatar-background-color: #C0C4CC !default;
 /// fontSize||Font Size|1
-$--avatar-text-font-size: 14px !default;
+$--avatar-text-font-size: 0.875rem !default;
 /// fontSize||Font Size|1
-$--avatar-icon-font-size: 18px !default;
+$--avatar-icon-font-size: 1.125rem !default;
 /// borderRadius||Border|2
 $--avatar-border-radius: $--border-radius-base !default;
 /// size|1|Avatar Size|3

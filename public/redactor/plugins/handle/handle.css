@@ -10,7 +10,7 @@
     max-height: 250px;
     margin: 0;
     overflow: auto;
-    font-size: 14px;
+    font-size: 0.875rem;
     padding: 0;
 }
 #redactor-handle-list a {

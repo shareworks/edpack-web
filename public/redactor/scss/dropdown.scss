@@ -52,7 +52,7 @@
         text-align: center;
         padding: 0;
         margin: 0;
-        font-size: 14px;
+        font-size: 0.875rem;
     }
 }
 .redactor-dropdown-selector {
@@ -61,7 +61,7 @@
 
     & span {
         flex-grow: 1;
-        font-size: 12px;
+        font-size: 0.75rem;
         padding: 8px;
         cursor: pointer;
         &:hover {
@@ -95,22 +95,22 @@
 		line-height: 32px;
 	}
 	& .redactor-dropdown-item-h3 {
-		font-size: 24px;
+		font-size: 1.5rem;
 		font-weight: bold;
 		line-height: 24px;
 	}
 	& .redactor-dropdown-item-h4 {
-		font-size: 21px;
+		font-size: 1.35rem;
 		font-weight: bold;
 		line-height: 24px;
 	}
 	& .redactor-dropdown-item-h5 {
-		font-size: 18px;
+		font-size: 1.125rem;
 		font-weight: bold;
 		line-height: 24px;
 	}
 	& .redactor-dropdown-item-h6 {
-		font-size: 14px;
+		font-size: 0.875rem;
 		text-transform: uppercase;
 		font-weight: bold;
 		line-height: 24px;

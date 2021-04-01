@@ -43,7 +43,7 @@
         <el-alert class="mt-10" type="error" show-icon v-if="errorType" :title="$t('SW_' + errorType.toUpperCase())"/>
 
         <!-- Login statement -->
-        <div class="login-statement">
+        <div class="login-statement font-12">
           <span class="hidden-xs">{{ $t('SW_LOGIN_STATEMENT', [appName]) }} </span>
           <a :href="aboutUrl ? aboutUrl : businessUrl" target="_blank">{{ businessName }}</a>
           {{ $t('SW_LOGIN_STATEMENT2') }}
@@ -83,7 +83,7 @@
         <el-alert class="mt-10" type="error" show-icon v-if="errorType" :title="$t('SW_' + errorType.toUpperCase())"/>
 
         <!-- Login statement -->
-        <div class="login-statement">
+        <div class="login-statement font-12">
           <span class="hidden-xs">{{ $t('SW_LOGIN_STATEMENT', [appName]) }} </span>
           <a :href="aboutUrl ? aboutUrl : businessUrl" target="_blank">{{ businessName }}</a>
           {{ $t('SW_LOGIN_STATEMENT2') }}
