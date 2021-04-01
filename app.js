@@ -53,6 +53,7 @@ import RouterBeforeEachPlugin from './plugins/router-before-each'
 import RouterUnsavedChanges from './plugins/router-unsaved-changes'
 import VueObserveVisibility from 'vue-observe-visibility'
 import VueClipboards from 'vue-clipboards'
+import VueAnnouncer from '@vue-a11y/announcer'
 
 sync(store, router)
 
@@ -75,6 +76,7 @@ Vue.use(AxiosPlugin)
 Vue.use(VueObserveVisibility)
 Vue.use(VueTruncate)
 Vue.use(VueClipboards)
+Vue.use(VueAnnouncer, {}, router)
 
 // Init Vue dependencies
 Vue.use(Element, { locale: elLocaleEn, size: 'normal' })

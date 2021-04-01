@@ -1,5 +1,6 @@
 <template>
   <div id="app" :class="currentUser.contrastMode ? 'contrast-mode' : ''">
+    <VueAnnouncer />
     <vue-progress-bar/>
     <app-sidebar v-if="navAvailable" :closeSidebar="closeSidebar" :active="sidebarOpened" />
     <app-header v-if="navAvailable" :openSidebar="openSidebar"/>
@@ -92,9 +93,6 @@ export default {
 
     // Handle resize events
     window.addEventListener('resize', this.handleResize)
-  },
-
-  updated () {
   },
 
   watch: {
