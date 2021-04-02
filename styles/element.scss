@@ -256,6 +256,11 @@
 }
 
 // Update element-ui
+
+.el-message__content {
+  font-size: 0.875rem;
+}
+
 @media (max-width: $--sm) {
   .el-message-box {
     max-width: 90%;
