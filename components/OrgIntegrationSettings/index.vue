@@ -1,6 +1,15 @@
 <template>
   <div>
-    <el-alert :title="$t('SW_INTEGRATIONS_INFO_TITLE', [appName])" class="mb-30" :description="$t('SW_INTEGRATIONS_INFO_TEXT', [appName])" type="info" show-icon/>
+    <el-alert :title="$t('SW_INTEGRATIONS_INFO_TITLE', [appName])" class="mb-30" type="info" show-icon>
+      <div>
+        {{ $t('SW_INTEGRATIONS_INFO_TEXT', [appName]) }}
+
+        <p class="mt-5 bold">
+          {{ $t('SW_HELP_SETUP_INTEGRATION') }}
+          <a v-if="showChatLink" href="#" @click.prevent="openChat">{{ $t('SW_CONTACT_US').toLowerCase() }}</a>.
+        </p>
+      </div>
+    </el-alert>
 
     <!-- Show credentials in UI -->
     <el-switch v-model="hideCredentials" active-color="#13ce66" inactive-color="#ff4949" class="mb-20" :active-text="$t('SW_VIEW_CREDENTIALS')"/>
@@ -297,6 +306,7 @@ export default {
       school: this.$store.state.school,
       user: this.$store.state.user,
       lang: this.$store.state.lang,
+      showChatLink: this.$store.state.school.enableFreshChat,
       incorrectDomains: [],
       generatedSecretAlert: false,
       processing: false,
@@ -370,6 +380,9 @@ export default {
   },
 
   methods: {
+    openChat () {
+      this.$store.dispatch('setContactForm', true)
+    },
     removeScope (index) { this.form.lmsConfig.scope.splice(index, 1) },
     changeHttpToHttps (urlString) {
       if (!urlString) return
