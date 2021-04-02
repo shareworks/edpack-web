@@ -10,6 +10,8 @@
         <span>{{ $t('SW_BACK') }}</span>
       </el-button>
 
+      <skip-to-main/>
+
       <!-- Header -->
       <page-header :title="$t('SW_SETTINGS')" icon="icon-lock" :area="$t('SW_ADMIN_ONLY')" :intro="$t('SW_SETTINGS_SHORT', { school: form.name.en })"/>
 

@@ -31,6 +31,8 @@
         <el-button type="text" aria-label="Open contact us dialog" class="footer-link" @click="openContact">
           {{ $t('SW_CONTACT_US') }}
         </el-button>
+
+        <skip-to-main/>
       </p>
     </div>
 

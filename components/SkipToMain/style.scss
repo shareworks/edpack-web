@@ -1,0 +1,23 @@
+.skip-to-main-content {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border-width: 0;
+
+  &:focus {
+    left: 0;
+    top: 0;
+    clip: auto;
+    width: auto;
+    height: auto;
+    background-color: #fff;
+    border: 2px solid #000;
+    z-index: 1000;
+    padding: 10px;
+  }
+}

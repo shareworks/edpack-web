@@ -38,6 +38,7 @@ import PageCover from './components/PageCover'
 import PageHeader from './components/PageHeader'
 import Affix from './components/Affix'
 import TableStatus from './components/TableStatus'
+import SkipToMain from './components/SkipToMain'
 
 // Store & Router stuff
 import store from './store'
@@ -115,6 +116,7 @@ Vue.component('tableStatus', TableStatus)
 Vue.component('affix', Affix)
 Vue.component('mugenScroll', MugenScroll)
 Vue.component('FocusTrap', FocusTrap)
+Vue.component('SkipToMain', SkipToMain)
 
 const app = new Vue({
   router,
