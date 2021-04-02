@@ -86,9 +86,11 @@
     </div>
 
     <!-- Create course dialog -->
-    <el-dialog :title="$t('SW_CREATE_COURSE')" append-to-body :visible.sync="dialogCourse">
-      <create-course :closeDialog="closeDialog" v-if="dialogCourse"/>
-    </el-dialog>
+    <focus-trap :active="dialogCourse">
+      <el-dialog :title="$t('SW_CREATE_COURSE')" append-to-body :visible.sync="dialogCourse">
+        <create-course :closeDialog="closeDialog" v-if="dialogCourse"/>
+      </el-dialog>
+    </focus-trap>
   </div>
 </template>
 

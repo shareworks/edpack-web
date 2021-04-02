@@ -1,5 +1,8 @@
 <template>
   <div>
+    <!-- input bring focus to modal -->
+    <input type="text" class="opacity-0" ref="focusInput" autofocus aria-hidden="true">
+
     <page-cover>
       <div class="dialog-logo">
         <section class="logo-wrapper">
@@ -130,6 +133,13 @@ export default {
   created () {
     if (this.acceptTerms && !this.currentUser.checks.acceptedTerms) this.steps.push('terms')
     if (this.verifyAccountInfo && !this.currentUser.checks.verifiedAccount) this.steps.push('verify')
+  },
+
+  mounted () {
+    this.$nextTick(() => {
+      this.$refs.focusInput.focus()
+      this.$refs.focusInput.remove()
+    })
   },
 
   methods: {

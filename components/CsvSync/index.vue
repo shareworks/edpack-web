@@ -1,5 +1,9 @@
 <template>
   <div v-loading="loading" element-loading-text="Loading groups">
+
+    <!-- input bring focus to modal -->
+    <input type="text" class="opacity-0" ref="focusInput" autofocus aria-hidden="true">
+
     <div>
       <p class="mb-20">{{ $t('SW_CSV_SYNC_EXPLAIN_TEXT', [appName]) }}</p>
 
@@ -105,6 +109,13 @@ export default {
 
   created () {
     this.getMembers()
+  },
+
+  mounted () {
+    this.$nextTick(() => {
+      this.$refs.focusInput.focus()
+      this.$refs.focusInput.remove()
+    })
   },
 
   methods: {

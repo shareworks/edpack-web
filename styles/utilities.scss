@@ -409,6 +409,10 @@
   align-items: center;
 }
 
+.flex-end {
+  justify-content: flex-end;
+}
+
 .mr-auto {
   margin-right: auto;
 }
@@ -437,4 +441,8 @@
 
 .no-padding {
   padding: 0 !important;
+}
+
+.opacity-0 {
+  opacity: 0;
 }

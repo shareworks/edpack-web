@@ -54,6 +54,7 @@ import RouterUnsavedChanges from './plugins/router-unsaved-changes'
 import VueObserveVisibility from 'vue-observe-visibility'
 import VueClipboards from 'vue-clipboards'
 import VueAnnouncer from '@vue-a11y/announcer'
+import { FocusTrap } from 'focus-trap-vue'
 
 sync(store, router)
 
@@ -113,6 +114,7 @@ Vue.component('pageHeader', PageHeader)
 Vue.component('tableStatus', TableStatus)
 Vue.component('affix', Affix)
 Vue.component('mugenScroll', MugenScroll)
+Vue.component('FocusTrap', FocusTrap)
 
 const app = new Vue({
   router,
