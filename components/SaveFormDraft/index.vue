@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-alert v-if="notFinishedFormDialog" class="small-dialog" :title="$t('SW_CONTINUE_LAST_EDITING') + lastUsedValues.name" append-to-body @close="declineUsingOldData">
+    <el-alert v-if="notFinishedFormDialog" :title="$t('SW_CONTINUE_LAST_EDITING') + (formName)" class="small-dialog" append-to-body @close="declineUsingOldData">
       <div v-if="lastUsedValues">
         <p class="mb-10">{{ $t('SW_NOT_FINISHED_FORM_EXIST') }}</p>
         <!-- Created date -->
@@ -22,7 +22,15 @@ import copyObjectProps from '@/edpack-web/utils/copy-object-props'
 
 export default {
   name: 'SaveFormDraft',
-  props: ['propertiesToBeCopied', 'localStorageKey', 'form', 'useWorkflow'],
+  props: ['propertiesToBeCopied', 'localStorageKey', 'form', 'useWorkflow', 'useLanguage', 'nameProp'],
+
+  computed: {
+    formName () {
+      return this.useLanguage
+        ? this.lastUsedValues[this.nameProp || 'name'][this.lang]
+        : this.lastUsedValues[this.nameProp || 'name']
+    }
+  },
 
   watch: {
     form: {
@@ -37,6 +45,7 @@ export default {
   data () {
     return {
       lastUsedValues: null,
+      lang: this.$store.state.lang,
       notFinishedFormDialog: false
     }
   },
