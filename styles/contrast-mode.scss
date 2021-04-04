@@ -1,6 +1,24 @@
 .contrast-mode {
+  .btn-link:focus, input:focus {
+    text-decoration: none;
+    outline: 2px dotted #ff9039 !important;
+  }
+
   *:focus {
-    outline: 1px dotted #ff9039 !important;
+    outline: 2px dotted #ff9039 !important;
+  }
+
+  a:focus {
+    color: orangered !important;
+  }
+
+  .el-button:focus {
+    outline: 2px dotted #ff9039 !important;
+  }
+
+  .header-container .el-menu.header-tabs .el-menu-item:focus {
+    color: white !important;
+    background-color: $--main-color !important;
   }
 
   .el-input {
@@ -14,11 +32,6 @@
 
   .el-input__inner {
     color: #343434 !important;
-  }
-
-  input:focus,
-  textarea:focus {
-    outline: none !important;
   }
 
   .el-menu-item {

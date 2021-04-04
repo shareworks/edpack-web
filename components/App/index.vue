@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="currentUser.contrastMode ? 'contrast-mode' : ''">
+  <div id="app">
     <VueAnnouncer />
     <vue-progress-bar/>
     <app-sidebar v-if="navAvailable" :closeSidebar="closeSidebar" :active="sidebarOpened" />
@@ -106,6 +106,15 @@ export default {
 
       // Update bugsnag session
       if (user) this.updateBugsnag(user)
+
+      // turn on/off contrast mode
+      if (this.currentUser.contrastMode) {
+        document.querySelector('body').classList.add('contrast-mode')
+        console.log('contrast mode ON')
+      } else {
+        document.querySelector('body').classList.remove('contrast-mode')
+        console.log('contrast mode OFF')
+      }
     },
     language (language) {
       if (this.lang === language) return
