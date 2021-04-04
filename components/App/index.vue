@@ -108,13 +108,8 @@ export default {
       if (user) this.updateBugsnag(user)
 
       // turn on/off contrast mode
-      if (this.currentUser.contrastMode) {
-        document.querySelector('body').classList.add('contrast-mode')
-        console.log('contrast mode ON')
-      } else {
-        document.querySelector('body').classList.remove('contrast-mode')
-        console.log('contrast mode OFF')
-      }
+      if (this.currentUser.contrastMode) document.querySelector('body').classList.add('contrast-mode')
+      else document.querySelector('body').classList.remove('contrast-mode')
     },
     language (language) {
       if (this.lang === language) return
