@@ -68,6 +68,7 @@ export default {
   data () {
     return {
       lms: getLmsType(this.$store.state.course),
+      inLTI: this.$store.state.inLTI,
       lmsCourse: false,
       lmsGroupSets: [],
       lmsCourseSections: [],
@@ -82,7 +83,7 @@ export default {
 
   methods: {
     handleImportType () {
-      if (!this.lms) return
+      if (!this.lms || !this.inLTI) return
       if (this.form.lmsImportType === 'courseUsers') this.getLMSCourse()
       if (this.form.lmsImportType === 'courseGroupSets') this.getLMSGroupSets()
       if (this.form.lmsImportType === 'courseSections') this.getLMSCourseSections()
