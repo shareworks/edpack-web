@@ -15,13 +15,13 @@
         </el-button>
 
         <!-- More options -->
-        <el-dropdown rigger="click" @command="handleCommand" v-if="uptimeUrl">
+        <el-dropdown rigger="click" @command="handleCommand">
           <el-button type="primary" size="medium" class="button-square-xs ml-5">
             <span class="hidden-xs">{{ $t('SW_MORE') }}</span>
             <i class="el-icon-caret-bottom el-icon--right"></i>
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item :command="{type: 'uptime'}">
+            <el-dropdown-item :command="{type: 'uptime'}" v-if="uptimeUrl">
               <i class="icon-cloud_done"></i>
               <span>{{ $t('SW_UPTIME_MONITOR') }}</span>
             </el-dropdown-item>
