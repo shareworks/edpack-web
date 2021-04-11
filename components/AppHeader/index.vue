@@ -7,6 +7,8 @@
         <i class="icon-menu"/>
       </el-button>
 
+      <skip-to-main/>
+
       <!-- Menu buttons-->
       <el-menu class="hidden-xs hidden-sm header-tabs pull-left" mode="horizontal" :default-active="activeTab">
         <el-menu-item index="home" @click="tabClick('home')">
