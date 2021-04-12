@@ -23,7 +23,6 @@
 
   .el-input {
     color: #161616 !important;
-    font-weight: 500 !important;
   }
 
   .el-input__inner::placeholder {
@@ -107,6 +106,10 @@
     color: #393939 !important;
   }
 
+  .el-tabs__active-bar {
+    height: 4px;
+  }
+
   .el-button.is-disabled {
     color: #5d5d5d;
   }
@@ -115,26 +118,15 @@
     color: #343434 !important;
   }
 
-  .newsletter > .el-checkbox__label {
-    font-weight: 500 !important;
-  }
-
-  .el-form-item__content {
-    font-weight: 500 !important;
-  }
+  .el-form-item__content {}
 
   .el-dropdown-menu {
-    font-weight: 500 !important;
-  }
-
-  .el-dropdown-menu__item {
     font-weight: 500 !important;
   }
 
   .el-alert,
   .btn-back,
   .el-checkbox__label {
-    font-weight: 500 !important;
     color: #2b2b2b !important;
   }
 
