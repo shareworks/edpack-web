@@ -25,14 +25,14 @@
     <reload-after-deploy/>
 
     <!-- Welcome dialog -->
-    <focus-trap :active="dialogWelcome">
+    <focus-trap :active="dialogWelcome" v-if="dialogWelcome">
       <el-dialog custom-class="welcome-dialog" :class="currentUser.contrastMode ? 'contrast-mode' : ''" append-to-body :visible.sync="dialogWelcome">
         <welcome-dialog :closeDialog="toggleDialog"/>
       </el-dialog>
     </focus-trap>
 
     <!-- Contact dialog -->
-    <focus-trap :active="contactFormOpened">
+    <focus-trap :active="contactFormOpened" v-if="contactFormOpened">
       <el-dialog :title="$t('SW_CONTACT_US')" append-to-body :visible="contactFormOpened" @close="setContactForm">
         <contact-form v-if="contactFormOpened" :closeDialog="setContactForm"/>
       </el-dialog>

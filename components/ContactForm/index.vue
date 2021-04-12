@@ -30,7 +30,7 @@
 
         <!-- Message -->
         <el-form-item prop="message" required class="contact-form-item">
-          <el-input name="message" :placeholder="$t('SW_MESSAGE')" type="textarea" v-model="form.message" :autosize="{ minRows: 3, maxRows: 6}"/>
+          <el-input ref="messageInput" name="message" :placeholder="$t('SW_MESSAGE')" type="textarea" v-model="form.message" :autosize="{ minRows: 3, maxRows: 6}"/>
         </el-form-item>
 
         <!-- URL -->
@@ -101,7 +101,12 @@ export default {
   },
 
   mounted () {
-    this.$nextTick(() => this.$refs.nameInput.focus())
+    if (this.form.email && this.form.name) {
+      this.$nextTick(() => this.$refs.messageInput.focus())
+    } else {
+      this.$nextTick(() => this.$refs.nameInput.focus())
+    }
+
   },
 
   methods: {
