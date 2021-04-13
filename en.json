@@ -492,8 +492,6 @@
   "SW_SESSION_EXPIRED": "Your session expired. Please sign in again.",
   "SW_SETTINGS": "School settings",
   "SW_SETTINGS_SHORT": "Manage settings, optional functionalities and integrations for {school}.",
-  "SW_SHOW_LABELS_TO_STUDENT": "Auto student feedback",
-  "SW_SHOW_LABELS_TO_STUDENT_TEXT": "Show automated feedback - based on feedback labels - to students when the results are released.",
   "SW_SHOW_RESULTS_GROUP": "Show group results",
   "SW_SIGN_IN_BY_ACCOUNT": "Sign in with {0} account",
   "SW_SIGN_IN_BY_PASSWORD": "Sign in with email + password",

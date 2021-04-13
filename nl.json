@@ -472,8 +472,6 @@
   "SW_SESSION_EXPIRED": "Je sessie is verlopen. Log opnieuw in.",
   "SW_SETTINGS": "Schoolinstellingen",
   "SW_SETTINGS_SHORT": "Hier kan je alle instellingen beheren voor {school}.",
-  "SW_SHOW_LABELS_TO_STUDENT": "Automatische feedback van studenten",
-  "SW_SHOW_LABELS_TO_STUDENT_TEXT": "Toon geautomatiseerde feedback aan de student wanneer de resultaten zijn vrijgegeven.",
   "SW_SHOW_RESULTS_GROUP": "Bekijk groepresultaten",
   "SW_SIGN_IN_BY_ACCOUNT": "Log in met {0} account",
   "SW_SIGN_IN_BY_PASSWORD": "Log in met e-mail + wachtwoord",
