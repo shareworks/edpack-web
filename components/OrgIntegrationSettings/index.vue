@@ -250,8 +250,9 @@
                 <!-- API Scope -->
                 <el-form-item :label="lms.apiScope.label" v-if="lms.apiScope">
                   <p class="form-help-text">
-                    <span class="text-muted font-13">{{ $t('SW_SCOPES_EXPLAINER') }}</span>
-                    <el-button type="text" @click="generateScopes" class="ml-5" size="small">
+                    <span class="">{{ $t('SW_SCOPES_EXPLAINER') }}</span>
+                    <strong class="ml-5" v-if="lms.name === 'canvas'">{{ $t('SW_SCOPES_EXPLAINER_CANVAS') }}</strong>
+                    <el-button type="text" @click="generateScopes" class="ml-5" size="medium">
                       {{ $t('SW_GENERATE_DEFAULT_SCOPES') }}
                     </el-button>
                   </p>

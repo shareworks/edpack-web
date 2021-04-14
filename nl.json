@@ -473,6 +473,7 @@
   "SW_SETTINGS": "Schoolinstellingen",
   "SW_SETTINGS_SHORT": "Hier kan je alle instellingen beheren voor {school}.",
   "SW_SHOW_RESULTS_GROUP": "Bekijk groepresultaten",
+  "SW_SCOPES_EXPLAINER_CANVAS": "Belangrijk: Zorg dat je 'Allow include parameters' activeert wanneer je scopes vereist in Canvas.",
   "SW_SIGN_IN_BY_ACCOUNT": "Log in met {0} account",
   "SW_SIGN_IN_BY_PASSWORD": "Log in met e-mail + wachtwoord",
   "SW_SLOGAN_LONG": "{0} is een eenvoudig leermiddel. Het maakt peerevaluatie in uw cursussen eenvoudig en efficiënt.",
