@@ -376,6 +376,8 @@
   "SW_NO_ORGS_FOUND": "No schools found.",
   "SW_NO_SCHOOLS_FOUND": "No schools found.",
   "SW_NO_STAFF_FOUND": "No instructors found.",
+  "SW_404": "Page not found",
+  "SW_404_HELP": "Please try again later and contact us if this error keeps coming back.",
   "SW_NO_STUDENTS": "No students",
   "SW_BRUTE_FORCE": "Too many failed attempts. Please try again in 10 minutes.",
   "SW_NO_STUDENTS_FOUND": "No students found.",
