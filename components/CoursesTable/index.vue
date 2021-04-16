@@ -7,7 +7,7 @@
       <template slot-scope="props">
         <el-row type="flex">
           <el-col :span="12">
-            <div class="mb-10" v-if="isAdmin"><strong class="mr-5">ID</strong> {{ props.row._id }}</div>
+            <p class="mb-10" v-if="isAdmin"><strong class="mr-5">ID</strong> {{ props.row._id }}</p>
 
             <p>
               <!-- Name -->
@@ -27,12 +27,8 @@
               <strong class="mr-5">{{ $t('SW_CANVAS_ID') }}</strong>
               {{ props.row.canvas.id }}
             </p>
-            <p>
-              <!-- Course Id -->
-              <strong class="mr-5">{{ $t('SW_COURSE_ID') }}</strong> {{ props.row._id }}
-            </p>
+            <!-- Created by -->
             <p v-if="props.row.createdBy">
-              <!-- Created by -->
               <strong class="mr-5">{{ $t('SW_CREATED_BY') }}</strong>
               <thumbnail :model="props.row.createdBy" class="thumb-user thumb-24"/>
               {{props.row.createdBy.name}}
@@ -45,9 +41,14 @@
               <span class="text-muted">{{ $t('SW_UNKNOWN') }}</span>
             </p>
 
-            <!-- modifiedBy -->
+            <!-- Modified date -->
+            <p v-if="props.row.modifiedDate">
+              <strong class="mr-5">{{ $t('SW_MODIFIED_DATE') }}</strong>
+              {{ props.row.modifiedDate | fromNow }}
+              {{ $t('SW_AGO') }}
+            </p>
+            <!-- Modified by -->
             <p v-if="props.row.modifiedBy">
-              <!-- Created by -->
               <strong class="mr-5">{{ $t('SW_MODIFIED_BY') }}</strong>
               <thumbnail :model="props.row.modifiedBy" class="thumb-user thumb-24"/>
               {{props.row.modifiedBy.name}}
@@ -139,6 +140,11 @@ export default {
       isAdmin: this.$store.state.isAdmin
     }
   },
+
+  filters: {
+    fromNow: function (date) { return moment(date).fromNow(true) },
+  },
+
   methods: {
     getFaculty (id) {
       let faculty = null

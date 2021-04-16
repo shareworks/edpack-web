@@ -61,10 +61,36 @@
           <el-row type="flex">
             <el-col :span="12">
               <!-- Name / Id -->
+              <p class="mb-10"><strong v-if="isAdmin" class="mr-5">ID</strong> {{ props.row._id }}</p>
               <p><strong class="mr-5">{{ $t('SW_NAME') }}</strong>{{ props.row.name[lang] }}</p>
-              <p><strong v-if="isAdmin" class="mr-5">ID</strong> {{ props.row._id }}</p>
 
-              <!-- modifiedBy -->
+            </el-col>
+            <el-col :span="12">
+              <!-- Slug -->
+              <p><strong class="mr-5">Slug</strong> {{ props.row.slug }}</p>
+
+              <!-- Created by -->
+              <p v-if="props.row.createdBy">
+                <strong class="mr-5">{{ $t('SW_CREATED_BY') }}</strong>
+                <thumbnail :model="props.row.createdBy" class="thumb-user thumb-24"/>
+                {{props.row.createdBy.name}}
+                <span class="hidden-xs">
+                  (<a :href="'mailto:' + props.row.createdBy.email" target="_blank">{{ props.row.createdBy.email }}</a>)
+                </span>
+              </p>
+              <p v-else>
+                <strong class="mr-5">{{ $t('SW_CREATED_BY') }}</strong>
+                <span class="text-muted">{{ $t('SW_UNKNOWN') }}</span>
+              </p>
+
+              <!-- Modified date -->
+              <p v-if="props.row.modifiedDate">
+                <strong class="mr-5">{{ $t('SW_MODIFIED_DATE') }}</strong>
+                {{ props.row.modifiedDate | fromNow }}
+                {{ $t('SW_AGO') }}
+              </p>
+
+              <!-- Modified By -->
               <p v-if="props.row.modifiedBy">
                 <!-- Created by -->
                 <strong class="mr-5">{{ $t('SW_MODIFIED_BY') }}</strong>
@@ -74,16 +100,11 @@
                   (<a :href="'mailto:' + props.row.modifiedBy.email" target="_blank">{{ props.row.modifiedBy.email }}</a>)
                 </span>
               </p>
-
-            </el-col>
-            <el-col :span="12">
-              <!-- Slug -->
-              <p><strong class="mr-5">Slug</strong> {{ props.row.slug }}</p>
             </el-col>
           </el-row>
           <el-form :model="props.row" label-width="220px" :disabled="true">
             <!-- Org options -->
-            <org-options :form="props.row" class="org-options-table"/>
+            <org-options :form="props.row" class="mt-20 org-options-table"/>
           </el-form>
         </template>
       </el-table-column>
@@ -228,6 +249,11 @@ export default {
 
   mounted () {
     this.getOrgs()
+  },
+
+
+  filters: {
+    fromNow: function (date) { return moment(date).fromNow(true) }
   },
 
   methods: {
