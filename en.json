@@ -699,5 +699,6 @@
   "SW_TEST_MAILING_DONE": "Test finished, please check your inbox",
   "SW_UNTITLED": "Untitled",
   "SW_SKIP_TO_MAIN_CONTENT": "SKIP TO MAIN CONTENT",
-  "SW_HELP_SETUP_INTEGRATION": "We can help you to setup integration, please, "
+  "SW_HELP_SETUP_INTEGRATION": "We can help you to setup integration, please, ",
+  "SW_UPDATING_GRADES": "Updating grades..."
 }
