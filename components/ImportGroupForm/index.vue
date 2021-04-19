@@ -88,8 +88,8 @@ export default {
     if (!this.form[this.lms].groupCategories) return
 
     // In edit mode, just show selected group categories
-    this.lmsGroupSets = this.lms === 'blackboard' ? res.data.list.filter(el => el.isGroupCategory) : res.data.list
-    this.lmsGroups = this.lms === 'blackboard' ? res.data.list.filter(el => !el.isGroupCategory && !el.categoryId) : []
+    this.lmsGroupSets = this.lms === 'blackboard' && this.form.lmsImportType === 'groupSets' ? this.form[this.lms].groupCategories : []
+    this.lmsGroups = this.lms === 'blackboard' && this.form.lmsImportType === 'groups' ? this.form[this.lms].groupCategories : []
   },
 
   methods: {
