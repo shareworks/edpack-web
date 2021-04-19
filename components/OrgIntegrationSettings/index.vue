@@ -332,7 +332,6 @@ export default {
       blackboardAppId: config.blackboardAppId,
       iLearn: config.iLearn,
 
-      importantFields: ['canvas', 'brightspace', 'blackboard', 'ilearn'],
       lmsTypes: ['canvas', 'brightspace', 'blackboard', 'moodle', 'ilearn', 'none'],
       apiTemplates: [
         {
@@ -396,10 +395,7 @@ export default {
       return url.toString()
     },
     processHttp () {
-      this.importantFields.forEach(field => {
-        if (!this.form[field]) return
-        this.form[field].apiUrl = this.changeHttpToHttps(this.form[field].apiUrl)
-      })
+      this.form.lmsConfig.apiUrl = this.changeHttpToHttps(this.form.lmsConfig.apiUrl)
 
       this.trimImportantValues()
     },
@@ -434,13 +430,11 @@ export default {
       })
     },
     trimImportantValues () {
-      this.importantFields.forEach(formField => {
-        for (const key in this.form[formField]) {
-          if (this.form[formField] && typeof this.form[formField][key] === 'string') {
-            this.form[formField][key] = this.form[formField][key].trim()
-          }
+      for (const key in this.form.lmsConfig) {
+        if (typeof this.form.lmsConfig[key] === 'string') {
+          this.form.lmsConfig[key] = this.form.lmsConfig[key].trim()
         }
-      })
+      }
     },
     showInput (type) {
       this.inputVisible[type] = true
