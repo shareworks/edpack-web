@@ -141,13 +141,6 @@
     <el-form-item :label="$t('SW_COLOFON')" :class="isJustOneLanguage ? '' : 'form-nl'" v-show="form.languages.nl">
       <redactor :config="editorOptions" ref="ColofonNL" v-model="form.colofon.nl"/>
     </el-form-item>
-
-    <!-- just Comproved -->
-    <!-- use grading -->
-    <el-form-item v-if="showGrading" :label="$t('SW_GRADE')">
-      <el-switch v-model="form.useGrading" active-color="#13ce66" inactive-color="#ff4949"/>
-      <span class="text-muted ml-10">{{ $t('SW_USE_GRADING') }}</span>
-    </el-form-item>
   </div>
 </template>
 
@@ -182,8 +175,7 @@ export default {
       languages: config.languages,
       filepicker: filestack.init(config.filestack.key),
       timezones: timezones.values,
-      countries: countries.values,
-      showGrading: config.showGrading
+      countries: countries.values
     }
   },
 

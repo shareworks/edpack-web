@@ -3,7 +3,14 @@
     <!-- Id -->
     <div class="mb-10" v-if="isAdmin"><strong class="mr-5">ID</strong> {{ _id }}</div>
 
-    <!-- modifiedBy -->
+    <!-- Modified date -->
+    <p v-if="user.modifiedDate">
+      <strong class="mr-5">{{ $t('SW_MODIFIED_DATE') }}</strong>
+      {{ user.modifiedDate | fromNow }}
+      {{ $t('SW_AGO') }}
+    </p>
+
+    <!-- Modified by -->
     <p v-if="user.modifiedBy">
       <strong class="mr-5">{{ $t('SW_MODIFIED_BY') }}</strong>
       <thumbnail :model="user.modifiedBy" class="thumb-user thumb-24"/>
@@ -19,7 +26,7 @@
     </div>
 
     <!-- User Courses -->
-    <div v-if="userCourses && userCourses.length">
+    <div v-if="userCourses && userCourses.length" class="mt-20">
       <el-table :data="userCourses" row-key="_id" :default-sort="{prop: 'createdDate', order: 'descending'}">
         <!-- Course Name -->
         <el-table-column property="name" :label="$tc('SW_COURSE', 1)" min-width="180">
@@ -46,12 +53,13 @@
     </div>
 
     <!-- No course found -->
-    <div v-else>{{ $t('SW_NO_COURSES_FOUND') }}</div>
+    <div class="mt-20" v-else>{{ $t('SW_NO_COURSES_FOUND') }}</div>
   </div>
 </template>
 
 <script>
 import LmsIcon from '../../components/LmsIcon'
+import moment from 'moment'
 
 export default {
   name: 'ExpandUser',
@@ -65,6 +73,11 @@ export default {
       school: this.$store.state.school,
       isAdmin: this.$store.state.isAdmin
     }
+  },
+
+
+  filters: {
+    fromNow: function (date) { return moment(date).fromNow(true) },
   },
 
   computed: {
