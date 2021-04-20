@@ -106,7 +106,12 @@ export default {
 
       this.$http.get(`courses/${this.course._id}/${this.lms}/group-categories`, { params: { includeGroups: true } })
         .then((res) => {
-          this.lmsGroupSets = res.data.list
+
+          if (this.lms === 'blackboard') {
+            this.lmsGroupSets = res.data.list.filter(el => el.isGroupCategory)
+          } else {
+            this.lmsGroupSets = res.data.list
+          }
           this.cleanSelectedGroupCategories()
         })
         .finally(() => { this.$emit('setLoading', false) })
