@@ -50,7 +50,7 @@
 
       <!-- Tabs -->
       <el-tabs v-model="toTab" @tab-click="tabClick" class="mt-10">
-        <el-tab-pane :label="tab.label" :name="tab.value" :key="tab.value" v-for="tab in tabs"/>
+        <el-tab-pane v-for="tab in tabs" :label="tab.label" :name="tab.value" :key="tab.value"/>
       </el-tabs>
     </page-cover>
 
@@ -61,7 +61,7 @@
       </el-dialog>
 
       <!-- Content Component -->
-      <component :is="tabs[mode].name"/>
+      <component :is="tabs[mode].name" :class="componentClass"/>
 
       <!-- Statistics dialog -->
       <el-dialog :title="$t('SW_STATS')" append-to-body :visible.sync="dialogStats">
@@ -70,7 +70,7 @@
     </div>
 
     <!-- Loading -->
-    <spinner v-else-if="status === 'loading'" class="mt-30"></spinner>
+    <spinner v-else-if="status === 'loading'" class="mt-30"/>
 
     <!-- Error -->
     <div v-else-if="status === 'error'" class="text-muted text-center mt-30">{{ $t('SW_ERROR_LOADING') }}</div>
@@ -92,6 +92,7 @@ export default {
 
   data () {
     return {
+      componentClass: '',
       school: this.$store.state.school,
       currentUser: this.$store.state.user,
       mode: this.$route.params.mode || config.defaultAdminTab,
@@ -155,9 +156,41 @@ export default {
         .finally(() => { this.submitting = false })
     },
     toggleStats () { this.dialogStats = !this.dialogStats },
-    tabClick () {
-      this.$router.replace({ name: 'admin', params: { mode: this.toTab, slug: this.school.slug } })
+    timeout (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
+    },
+    async tabClick () {
+      if (this.toTab === this.mode) return
+
+      // initial value
+      let fromTabIndex = null
+      let toTabIndex = null
+
+      let index = 0
+      // run over object props
+      for (const tab in this.tabs) {
+        const tabValue = this.tabs[tab].value
+
+        if (tabValue === this.mode) fromTabIndex = index
+        if (tabValue === this.toTab) toTabIndex = index
+        index++
+      }
+      // to direction
+      this.componentClass = fromTabIndex > toTabIndex ? 'tab-to-right' : 'tab-to-left'
+
+      // wait till end of animation
+      await this.timeout(300)
+
+      // show new tab
+      await this.$router.replace({ name: 'admin', params: { mode: this.toTab, slug: this.school.slug } })
         .catch(() => { this.toTab = this.mode })
+
+      // from direction
+      this.componentClass = fromTabIndex > toTabIndex ? 'tab-from-left' : 'tab-from-right'
+
+      // wait till end of animation and remove animation
+      this.timeout(300)
+        .finally(() => { this.componentClass = '' })
     },
     closeTestMailingDialog () {
       this.testMailingDialog = false
