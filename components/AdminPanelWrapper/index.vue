@@ -61,9 +61,11 @@
       </el-dialog>
 
       <!-- Content Component -->
-      <transition mode="out-in" :enter-active-class="enterClass" :leave-active-class="leaveClass">
-        <component :is="tabs[mode].name"/>
-      </transition>
+      <animated-tabs :to-left="toLeftDirection">
+        <template v-slot>
+          <component :is="tabs[mode].name"/>
+        </template>
+      </animated-tabs>
 
       <!-- Statistics dialog -->
       <el-dialog :title="$t('SW_STATS')" append-to-body :visible.sync="dialogStats">
@@ -81,21 +83,21 @@
 
 <script>
 import config from 'config'
-import Statistics from '@/edpack-web/components/Statistics'
 import OrgsTable from '@/edpack-web/components/OrgsTable'
+import Statistics from '@/edpack-web/components/Statistics'
 import UsersTable from '@/edpack-web/components/UsersTable'
+import AnimatedTabs from '@/edpack-web/components/AnimatedTabs'
 import TestMailingDialog from '@/edpack-web/components/TestMailingDialog'
 
 export default {
   name: 'AdminPanelWrapper',
   metaInfo: { title: 'Admin' },
   props: ['stats', 'tabs'],
-  components: { Statistics, OrgsTable, UsersTable, TestMailingDialog },
+  components: { Statistics, OrgsTable, UsersTable, TestMailingDialog, AnimatedTabs },
 
   data () {
     return {
-      enterClass: '',
-      leaveClass: '',
+      toLeftDirection: false,
       school: this.$store.state.school,
       currentUser: this.$store.state.user,
       mode: this.$route.params.mode || config.defaultAdminTab,
@@ -180,8 +182,7 @@ export default {
       }
 
       // calculate direction
-      this.leaveClass = fromTabIndex > toTabIndex ? 'to-right' : 'to-left'
-      this.enterClass = fromTabIndex > toTabIndex ? 'from-left' : 'from-right'
+      this.toLeftDirection = fromTabIndex > toTabIndex
 
       // show new tab
       this.$router.replace({ name: 'admin', params: { mode: this.toTab, slug: this.school.slug } })
@@ -190,8 +191,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-  @import '~scss_vars';
-  @import 'style';
-</style>
