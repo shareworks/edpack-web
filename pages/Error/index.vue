@@ -34,7 +34,7 @@
             <div class="text-center mt-20 mb-20">
               <el-button type="success" icon="el-icon-check" size="normal" @click="allowCookies">
                 {{ $t('SW_ALLOW_COOKIES') }}
-                <i class="icon-arrow_forward"></i>
+                <i class="icon-arrow_forward"/>
               </el-button>
             </div>
           </el-alert>
