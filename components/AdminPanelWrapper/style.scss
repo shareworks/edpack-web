@@ -1,5 +1,3 @@
-// make this animations global?
-
 @keyframes leaveToLeft {
   0%{
     opacity: 1;
@@ -21,18 +19,15 @@
   }
 }
 
-.tab-to-left {
+.to-left {
   animation: leaveToLeft .3s ease;
 }
-
-.tab-from-left {
-  animation: leaveToLeft .3s reverse;
-}
-
-.tab-to-right {
+.to-right {
   animation: leaveToRight .3s ease;
 }
-
-.tab-from-right {
+.from-left {
+  animation: leaveToLeft .3s reverse;
+}
+.from-right {
   animation: leaveToRight .3s reverse;
 }

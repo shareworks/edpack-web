@@ -61,7 +61,9 @@
       </el-dialog>
 
       <!-- Content Component -->
-      <component :is="tabs[mode].name" :class="componentClass"/>
+      <transition mode="out-in" :enter-active-class="enterClass" :leave-active-class="leaveClass">
+        <component :is="tabs[mode].name"/>
+      </transition>
 
       <!-- Statistics dialog -->
       <el-dialog :title="$t('SW_STATS')" append-to-body :visible.sync="dialogStats">
@@ -92,7 +94,8 @@ export default {
 
   data () {
     return {
-      componentClass: '',
+      enterClass: '',
+      leaveClass: '',
       school: this.$store.state.school,
       currentUser: this.$store.state.user,
       mode: this.$route.params.mode || config.defaultAdminTab,
@@ -156,11 +159,11 @@ export default {
         .finally(() => { this.submitting = false })
     },
     toggleStats () { this.dialogStats = !this.dialogStats },
-    timeout (ms) {
-      return new Promise(resolve => setTimeout(resolve, ms))
-    },
-    async tabClick () {
+    closeTestMailingDialog () { this.testMailingDialog = false },
+    tabClick () {
       if (this.toTab === this.mode) return
+      this.enterClass = ''
+      this.leaveClass = ''
 
       // initial value
       let fromTabIndex = null
@@ -175,25 +178,14 @@ export default {
         if (tabValue === this.toTab) toTabIndex = index
         index++
       }
-      // to direction
-      this.componentClass = fromTabIndex > toTabIndex ? 'tab-to-right' : 'tab-to-left'
 
-      // wait till end of animation
-      await this.timeout(300)
+      // calculate direction
+      this.leaveClass = fromTabIndex > toTabIndex ? 'to-right' : 'to-left'
+      this.enterClass = fromTabIndex > toTabIndex ? 'from-left' : 'from-right'
 
       // show new tab
-      await this.$router.replace({ name: 'admin', params: { mode: this.toTab, slug: this.school.slug } })
+      this.$router.replace({ name: 'admin', params: { mode: this.toTab, slug: this.school.slug } })
         .catch(() => { this.toTab = this.mode })
-
-      // from direction
-      this.componentClass = fromTabIndex > toTabIndex ? 'tab-from-left' : 'tab-from-right'
-
-      // wait till end of animation and remove animation
-      this.timeout(300)
-        .finally(() => { this.componentClass = '' })
-    },
-    closeTestMailingDialog () {
-      this.testMailingDialog = false
     }
   }
 }
