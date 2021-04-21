@@ -25,7 +25,9 @@
       <el-form ref="form" :model="form" label-width="220px" :label-position="['questions'].includes(settingsMode) ? 'top' : 'left'">
 
         <!-- Content Component -->
-        <component :is="tabs[settingsMode].name" :form="form"/>
+        <animated-tabs :to-left="toLeftDirection">
+          <component :is="tabs[settingsMode].name" :form="form"/>
+        </animated-tabs>
 
         <!-- Submit or cancel -->
         <el-form-item class="mt-20" v-if="canShowControlsButton">
@@ -48,11 +50,13 @@
 import Vue from 'vue'
 import isEqual from 'lodash/isEqual'
 import VueClipboards from 'vue-clipboards'
+import mergeEmptyLanguageFields from '@/edpack-web/utils/merge-empty-language-fields'
+
 import OrgOptions from '@/components/OrgOptions'
+import AnimatedTabs from '@/edpack-web/components/AnimatedTabs'
 import OrgGeneralSettings from '@/edpack-web/components/OrgGeneralSettings'
 import OrgFacultiesSettings from '@/edpack-web/components/OrgFacultiesSettings'
 import OrgIntegrationSettings from '@/edpack-web/components/OrgIntegrationSettings'
-import mergeEmptyLanguageFields from '@/edpack-web/utils/merge-empty-language-fields'
 
 Vue.use(VueClipboards)
 
@@ -60,7 +64,7 @@ export default {
   name: 'OrgSettingsWrapper',
   metaInfo: { title: 'Settings' },
   props: ['tabs'],
-  components: { OrgGeneralSettings, OrgOptions, OrgFacultiesSettings, OrgIntegrationSettings },
+  components: { OrgGeneralSettings, OrgOptions, OrgFacultiesSettings, OrgIntegrationSettings, AnimatedTabs },
 
   data () {
     return {
@@ -69,7 +73,8 @@ export default {
       settingsMode: this.$route.params.settingsMode || 'general',
       toTab: this.$route.params.settingsMode || 'general',
       submitting: false,
-      status: 'loading'
+      status: 'loading',
+      toLeftDirection: false
     }
   },
 
@@ -119,6 +124,26 @@ export default {
         .catch(() => { this.status = 'error' })
     },
     tabClick () {
+      if (this.toTab === this.settingsMode) return
+
+      // initial value
+      let fromTabIndex = null
+      let toTabIndex = null
+
+      let index = 0
+      // run over object props
+      for (const tab in this.tabs) {
+        const tabValue = this.tabs[tab].value
+
+        if (tabValue === this.settingsMode) fromTabIndex = index
+        if (tabValue === this.toTab) toTabIndex = index
+        index++
+      }
+
+      // calculate direction
+      this.toLeftDirection = fromTabIndex > toTabIndex
+
+      // show new tab
       this.$router.replace({ name: 'settings', params: { slug: this.school.slug, settingsMode: this.toTab } })
         .then(() => { this.form = JSON.parse(JSON.stringify(this.school)) })
         .catch(() => { this.toTab = this.settingsMode })

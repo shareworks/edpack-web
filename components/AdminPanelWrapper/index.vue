@@ -164,8 +164,6 @@ export default {
     closeTestMailingDialog () { this.testMailingDialog = false },
     tabClick () {
       if (this.toTab === this.mode) return
-      this.enterClass = ''
-      this.leaveClass = ''
 
       // initial value
       let fromTabIndex = null
