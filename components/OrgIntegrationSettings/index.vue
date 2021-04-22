@@ -25,13 +25,13 @@
 
     <!-- Email domains -->
     <el-form-item :label="$t('SW_EMAIL_DOMAINS')" required>
-      <el-tag v-for="domain in form.emailDomains" :key="domain" closable :disable-transitions="false" @close="handleClose('emailDomains', domain); domainsValidation()">
+      <el-tag v-for="domain in form.emailDomains" :key="domain" closable :disable-transitions="false" @close="handleClose('emailDomains', domain)">
         {{ domain }}
       </el-tag>
 
       <el-input size="small" ref="emailDomains" class="inline ml-5" v-if="inputVisible.emailDomains" v-model="inputValue.emailDomains"
                 placeholder="@role.your-school.com" @keyup.enter.native="handleInputConfirm('emailDomains')"
-                @blur="handleInputConfirm('emailDomains'); domainsValidation()"/>
+                @blur="handleInputConfirm('emailDomains')"/>
 
       <!-- New domain -->
       <el-button v-else size="small" class="ml-5" @click="showInput('emailDomains')">
@@ -305,8 +305,6 @@ export default {
     return {
       appName: config.name,
       school: this.$store.state.school,
-      user: this.$store.state.user,
-      lang: this.$store.state.lang,
       showChatLink: this.$store.state.school.enableFreshChat,
       incorrectDomains: [],
       generatedSecretAlert: false,
@@ -328,9 +326,6 @@ export default {
       ltiConfigUrl: `${config.api_url}/lti`,
       ltiAdvantageDomainUrl: `${config.api_url.replace('/api/v1', '')}`,
       ltiAdvantageKeysetUrl: `${config.api_url}/lti/advantage/jwks`,
-
-      blackboardAppId: config.blackboardAppId,
-      iLearn: config.iLearn,
 
       lmsTypes: ['canvas', 'brightspace', 'blackboard', 'moodle', 'ilearn', 'none'],
       apiTemplates: [
@@ -368,7 +363,9 @@ export default {
   watch: {
     form: {
       deep: true,
-      handler () { this.trimImportantValues() }
+      handler () {
+        this.trimImportantValues()
+      }
     }
   },
 
@@ -380,24 +377,16 @@ export default {
   },
 
   methods: {
-    openChat () {
-      this.$store.dispatch('setContactForm', true)
-    },
+    openChat () { this.$store.dispatch('setContactForm', true) },
     removeScope (index) { this.form.lmsConfig.scope.splice(index, 1) },
-    changeHttpToHttps (urlString) {
-      if (!urlString) return
-
-      const url = new URL(urlString)
-      if (url.protocol === 'http:') {
-        url.protocol = 'https:'
-      }
-
-      return url.toString()
-    },
     processHttp () {
-      this.form.lmsConfig.apiUrl = this.changeHttpToHttps(this.form.lmsConfig.apiUrl)
+      if (!this.form.lmsConfig.apiUrl) return
 
-      this.trimImportantValues()
+      const url = new URL(this.form.lmsConfig.apiUrl)
+      // update protocol
+      if (url.protocol === 'http:') url.protocol = 'https:'
+
+      this.form.lmsConfig.apiUrl = url.toString()
     },
     domainsValidation () {
       const failedDomains = []
@@ -449,12 +438,16 @@ export default {
       }
       this.inputVisible[type] = false
       this.inputValue[type] = ''
+
+      if (type === 'emailDomains') { this.domainsValidation() }
     },
     handleClose (type, item) {
       if (type === 'samlEntityIds') this.form.saml.entityIds.splice(this.form.saml.entityIds.indexOf(item), 1)
       else if (type === 'samlDomains') this.form.saml.domains.splice(this.form.saml.domains.indexOf(item), 1)
       else this.form[type].splice(this.form[type].indexOf(item), 1)
       this.$nextTick()
+
+      if (type === 'emailDomains') { this.domainsValidation() }
     },
     generateScopes () {
       this.form.lmsConfig.scope = scopes[this.form.lms]
