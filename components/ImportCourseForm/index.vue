@@ -106,7 +106,6 @@ export default {
 
       this.$http.get(`courses/${this.course._id}/${this.lms}/group-categories`, { params: { includeGroups: true } })
         .then((res) => {
-
           if (this.lms === 'blackboard') {
             this.lmsGroupSets = res.data.list.filter(el => el.isGroupCategory)
           } else {

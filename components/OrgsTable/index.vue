@@ -251,7 +251,6 @@ export default {
     this.getOrgs()
   },
 
-
   filters: {
     fromNow: function (date) { return moment(date).fromNow(true) }
   },

@@ -142,7 +142,7 @@ export default {
   },
 
   filters: {
-    fromNow: function (date) { return moment(date).fromNow(true) },
+    fromNow: function (date) { return moment(date).fromNow(true) }
   },
 
   methods: {

@@ -106,7 +106,6 @@ export default {
     } else {
       this.$nextTick(() => this.$refs.nameInput.focus())
     }
-
   },
 
   methods: {
