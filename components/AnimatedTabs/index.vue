@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO: ALWAYS ADD :KEY TO CHILDREN!!! ALWAYSSS -->
   <transition mode="out-in" :leave-active-class="toLeft ? 'to-right' : 'to-left'" :enter-active-class="toLeft ? 'from-left' : 'from-right'">
     <!-- Children -->
     <slot/>
