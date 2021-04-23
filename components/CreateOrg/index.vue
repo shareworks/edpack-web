@@ -85,7 +85,7 @@ export default {
           'customTeamQuestions', 'enableCategories', 'peerMessages', 'topsTips', 'openQuestions', 'minimumAdjustmentFactor',
           'maximumAdjustmentFactor', 'adjustedFactorOnDefault', 'peerWitSelfDefault', 'positiveFactorWeight', 'negativeFactorWeight',
           'enableAdjustedToggle', 'enableWithSelfToggle', 'showLabelsToStudent', 'showMissingStudents', 'disableAutomatedEmails',
-          'enableFreshChat', 'defaultOpenQuestion', 'defaultPeerQuestion', 'canvasGrading', 'brightspaceAvgGrading', 'brightspaceAdvancedGrading',
+          'enableFreshChat', 'defaultOpenQuestion', 'defaultPeerQuestion', 'lmsAvgGrading', 'lmsGrading',
           'enableGradingWeights', 'enableGradingNotification', 'gradableAssignments', 'enableManualCourses', 'manualInviteOnly', 'loginByPassword'
         ]
         // run over props and copy them from template school
