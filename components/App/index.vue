@@ -3,7 +3,8 @@
     <VueAnnouncer />
     <vue-progress-bar/>
     <app-sidebar v-if="navAvailable" :closeSidebar="closeSidebar" :active="sidebarOpened" />
-    <app-header v-if="navAvailable" :openSidebar="openSidebar"/>
+<!--    <app-header v-if="navAvailable" :openSidebar="openSidebar"/>-->
+    <lti-header v-if="currentUser && showLtiHeader"></lti-header>
 
     <!-- Main content -->
     <main :class="{ 'page-offset': pageOffset, 'nav-offset': navAvailable, 'page-lti': inLTI }">
@@ -45,6 +46,7 @@ import config from 'config'
 import { mapActions, mapState } from 'vuex'
 import Bugsnag from '@bugsnag/js'
 import AppHeader from '../../components/AppHeader'
+import LtiHeader from '../../components/LtiHeader'
 import AppFooter from '../../components/AppFooter'
 import AppSidebar from '../../components/AppSidebar'
 import browserConfig from '../../utils/browser-update'
@@ -59,7 +61,7 @@ export default {
     titleTemplate: '%s - ' + config.name + ' ' + (config.releaseStage !== 'production' ? config.releaseStage.toUpperCase() : '')
   },
   components: {
-    ContactForm, WelcomeDialog, AppHeader, AppSidebar, AppFooter, ReloadAfterDeploy, Freshchat: () => import('../../components/Freshchat')
+    ContactForm, WelcomeDialog, AppHeader, LtiHeader, AppSidebar, AppFooter, ReloadAfterDeploy, Freshchat: () => import('../../components/Freshchat')
   },
 
   data () {
@@ -73,7 +75,8 @@ export default {
       serverOnline: true,
       appName: config.name,
       releaseStage: config.releaseStage,
-      cookieWarning: config.cookieWarning && !navigator.cookieEnabled
+      cookieWarning: config.cookieWarning && !navigator.cookieEnabled,
+      showLtiHeader: this.$store.state.inLTI && (window.self === window.top)
     }
   },
 
