@@ -3,11 +3,11 @@
     <VueAnnouncer />
     <vue-progress-bar/>
     <app-sidebar v-if="navAvailable" :closeSidebar="closeSidebar" :active="sidebarOpened" />
-<!--    <app-header v-if="navAvailable" :openSidebar="openSidebar"/>-->
-    <lti-header v-if="currentUser && showLtiHeader"></lti-header>
+    <app-header v-if="navAvailable" :openSidebar="openSidebar"/>
+    <lti-header v-if="showLtiHeader"></lti-header>
 
     <!-- Main content -->
-    <main :class="{ 'page-offset': pageOffset, 'nav-offset': navAvailable, 'page-lti': inLTI }">
+    <main :class="{ 'page-offset': pageOffset, 'nav-offset': navAvailable || showLtiHeader, 'page-lti': inLTI && !showLtiHeader }">
       <el-alert type="error" class="no-border-radius text-center" effect="dark" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE', [appName])" v-if="!serverOnline"/>
       <el-alert type="warning" class="no-border-radius text-center" effect="dark" show-icon :title="$t('SW_COOKIE_WARNING', [appName])" v-if="cookieWarning"/>
 
@@ -75,8 +75,7 @@ export default {
       serverOnline: true,
       appName: config.name,
       releaseStage: config.releaseStage,
-      cookieWarning: config.cookieWarning && !navigator.cookieEnabled,
-      showLtiHeader: this.$store.state.inLTI && (window.self === window.top)
+      cookieWarning: config.cookieWarning && !navigator.cookieEnabled
     }
   },
 
@@ -154,6 +153,7 @@ export default {
       contactFormOpened: state => state.contactFormOpened,
       obfuscatorActive: state => state.obfuscatorActive,
       pageOffset: state => state.route.meta.auth,
+      showLtiHeader: state => state.user && state.inLTI && (window.self === window.top),
       loadFreshchat: (state) => {
         return state.user && state.school && state.school.enableFreshChat && state.user.role !== 'student'
       },
