@@ -10,7 +10,7 @@ export {
 const urlParams = new URLSearchParams(window.location.search)
 const origin = urlParams.get('origin')
 
-const inLTI = Vue.ls.get('inLti') || (origin === 'lti') || (window.self !== window.top)
+const inLTI = (origin === 'lti') || (window.self !== window.top)
 
 // Load from local storage
 function loadCsrfToken () {
