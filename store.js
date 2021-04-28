@@ -15,6 +15,11 @@ export const SET_COURSE = 'SET_COURSE'
 export const SET_UNSAVED_CHANGES = 'SET_UNSAVED_CHANGES'
 export const SET_CONTACT_FORM = 'SET_CONTACT_FORM'
 
+const urlParams = new URLSearchParams(window.location.search)
+const origin = urlParams.get('origin')
+
+let inLTI = (window.self !== window.top) || (origin === 'lti')
+
 const state = {
   navAvailable: false,
   sidebarOpened: false,
@@ -23,7 +28,7 @@ const state = {
   school: false,
   course: false,
   user: false,
-  inLTI: window.self !== window.top,
+  inLTI: inLTI,
   slug: null,
   isAdmin: false,
   isManager: false,

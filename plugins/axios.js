@@ -88,8 +88,9 @@ export default {
     if (!bool) {
       const urlParams = new URLSearchParams(window.location.search)
       const issuer = urlParams.get('issuer')
+      const origin = urlParams.get('origin')
 
-      bool = (issuer === 'ilearn')
+      bool = (issuer === 'ilearn') || (origin === 'lti')
     }
 
     this.inLTI = bool
