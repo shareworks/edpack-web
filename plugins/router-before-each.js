@@ -21,6 +21,9 @@ export default {
     }
 
     router.beforeEach((to, from, next) => {
+      // If was in LTI session but rewrote url, stop LTI session
+      if ((window.top && window.self) && (to.name === 'root')) sessionStorage.removeItem('origin')
+
       // Abort some routes in LTI mode
       if (to.meta.abortInLTI && inLTI && from.name) return next(from)
 
