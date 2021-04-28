@@ -23,8 +23,8 @@
             </el-checkbox>
           </div>
         </el-checkbox-group>
-        <el-alert class="mt-5" type="warning" v-if="!loading && !lmsGroups.length" :title="$t('SW_NO_GROUPS_INDIVIDUAL')"/>
       </el-form-item>
+      <el-alert class="mt-5" type="warning" v-if="!loading && !lmsGroups.length" :title="$t('SW_NO_GROUPS_INDIVIDUAL')"/>
     </div>
 
     <!-- Group categories -->
