@@ -173,9 +173,10 @@ export default {
     logout () {
       this.$http.post('users/logout', {})
         .then(() => {
+          sessionStorage.removeItem('origin')
           if (window.fcWidget) window.fcWidget.destroy()
           removeCsrfToken()
-          this.$router.push('/')
+          window.location.assign('/')
         })
     }
   }

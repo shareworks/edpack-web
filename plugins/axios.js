@@ -37,6 +37,7 @@ export default {
           if (store.state.user) {
             Axios.post('users/logout', {})
               .then(() => {
+                sessionStorage.removeItem('origin')
                 if (window.fcWidget) window.fcWidget.destroy()
                 else router.push({ name: 'landing', query: { redirect: window.location.pathname } })
               })
