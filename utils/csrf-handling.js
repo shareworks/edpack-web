@@ -7,10 +7,12 @@ export {
   removeCsrfToken
 }
 
+
 const urlParams = new URLSearchParams(window.location.search)
 const origin = urlParams.get('origin')
+const sessionOrigin = sessionStorage.getItem('origin')
 
-const inLTI = (origin === 'lti') || (window.self !== window.top)
+let inLTI = (window.self !== window.top) || (origin === 'lti') || (sessionOrigin === 'lti')
 
 // Load from local storage
 function loadCsrfToken () {

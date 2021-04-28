@@ -89,10 +89,12 @@ export default {
       const urlParams = new URLSearchParams(window.location.search)
       const issuer = urlParams.get('issuer')
       const origin = urlParams.get('origin')
+      const sessionOrigin = sessionStorage.getItem('origin')
 
-      bool = (issuer === 'ilearn') || (origin === 'lti')
+      bool = (issuer === 'ilearn') || (origin === 'lti') || (sessionOrigin === 'lti')
     }
 
+    if (bool) sessionStorage.setItem('origin', 'lti')
     this.inLTI = bool
     return this.inLTI
   },

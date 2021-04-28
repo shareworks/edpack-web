@@ -17,8 +17,9 @@ export const SET_CONTACT_FORM = 'SET_CONTACT_FORM'
 
 const urlParams = new URLSearchParams(window.location.search)
 const origin = urlParams.get('origin')
+const sessionOrigin = sessionStorage.getItem('origin')
 
-let inLTI = (window.self !== window.top) || (origin === 'lti')
+let inLTI = (window.self !== window.top) || (origin === 'lti') || (sessionOrigin === 'lti')
 
 const state = {
   navAvailable: false,
