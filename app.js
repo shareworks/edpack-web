@@ -18,7 +18,7 @@ import Bugsnag from '@bugsnag/js'
 import BugsnagPluginVue from '@bugsnag/plugin-vue'
 
 // Main app component
-import App from './components/App/index'
+import App from './components/App'
 
 // Element
 import Element from 'element-ui'
