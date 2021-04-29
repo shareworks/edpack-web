@@ -12,7 +12,7 @@ import LanguagePlugin from './language'
 export default {
   install (Vue, options) {
     const i18n = LanguagePlugin.geti18n()
-    let inLTI = AxiosPlugin.getInLTI()
+    const inLTI = store.state.inLTI
 
     // Mock user
     if (config.mock_user) {
@@ -21,9 +21,6 @@ export default {
     }
 
     router.beforeEach((to, from, next) => {
-      // If was in LTI session but rewrote url, stop LTI session
-      if ((window.top && window.self) && (to.name === 'root')) sessionStorage.removeItem('origin')
-
       // Abort some routes in LTI mode
       if (to.meta.abortInLTI && inLTI && from.name) return next(from)
 
@@ -39,16 +36,17 @@ export default {
 
       // Get user and check
       const params = {}
+      console.log(inLTI)
 
       if (to.query.ltiForwardToken && to.query.organization) {
-        inLTI = AxiosPlugin.setInLTI(true)
+        store.dispatch('setLTI', true)
         AxiosPlugin.addLtiOrigin()
         params.params = { organization: to.query.organization }
         params.headers = { 'Lti-Forward-Token': to.query.ltiForwardToken }
       }
 
       if (to.query.ltiAccessToken && to.query.organization) {
-        inLTI = AxiosPlugin.setInLTI(true)
+        store.dispatch('setLTI', true)
         AxiosPlugin.addLtiOrigin()
         params.params = { organization: to.query.organization }
         params.headers = { 'Lti-Access-Token': to.query.ltiAccessToken }

@@ -11,15 +11,17 @@ export const WINDOW_RESIZE = 'WINDOW_RESIZE'
 export const SET_USER = 'SET_USER'
 export const SET_LANGUAGE = 'SET_LANGUAGE'
 export const SET_LANGUAGES = 'SET_LANGUAGES'
+export const SET_LTI = 'SET_LTI'
 export const SET_COURSE = 'SET_COURSE'
 export const SET_UNSAVED_CHANGES = 'SET_UNSAVED_CHANGES'
 export const SET_CONTACT_FORM = 'SET_CONTACT_FORM'
 
+// Find out if in LTI or not
 const urlParams = new URLSearchParams(window.location.search)
 const origin = urlParams.get('origin')
 const sessionOrigin = sessionStorage.getItem('origin')
-
-let inLTI = (window.self !== window.top) || (origin === 'lti') || (sessionOrigin === 'lti')
+const inLTI = (window.self !== window.top) || (origin === 'lti') || (sessionOrigin === 'lti')
+inLTI ? sessionStorage.setItem('origin', 'lti') : sessionStorage.removeItem('origin')
 
 const state = {
   navAvailable: false,
@@ -72,6 +74,9 @@ const mutations = {
   [SET_UNSAVED_CHANGES] (state, data) {
     state.unsavedChanges = data.payload
   },
+  [SET_LTI] (state, data) {
+    state.inLTI = data.payload
+  },
   [SET_CONTACT_FORM] (state, data) {
     state.contactFormOpened = data.payload
   },
@@ -113,6 +118,9 @@ const actions = {
   },
   setMobileView ({ commit }, payload) {
     commit({ type: WINDOW_RESIZE, payload })
+  },
+  setLti ({ commit }, payload) {
+    commit({ type: SET_LTI, payload })
   },
   setContactForm ({ commit }, payload) {
     commit({ type: SET_CONTACT_FORM, payload })
