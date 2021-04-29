@@ -73,7 +73,7 @@ export default {
     logout () {
       this.$http.post('users/logout', {})
         .then(() => {
-          sessionStorage.removeItem('origin')
+          if (window.self === window.top) sessionStorage.removeItem('origin')
           if (window.fcWidget) window.fcWidget.destroy()
           removeCsrfToken()
           window.location.assign('/')
