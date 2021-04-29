@@ -36,6 +36,8 @@ export default {
     form: {
       deep: true,
       handler () {
+        // check that localStorage exist
+        if (window.self !== window.top) return
         if (this.form.isNew) this.syncFormLocalStorage()
         if (this.useWorkflow && this.form.workflowStatus === 'none') this.syncFormLocalStorage()
       }
@@ -51,6 +53,9 @@ export default {
   },
 
   created () {
+    // check that localStorage exist
+    if (window.self !== window.top) return
+
     const lastUsedFormValues = localStorage.getItem(this.localStorageKey)
 
     // if values exist more than 30 days - remove them
@@ -61,6 +66,9 @@ export default {
   },
 
   mounted () {
+    // check that localStorage exist
+    if (window.self !== window.top) return
+
     const lastUsedFormValues = localStorage.getItem(this.localStorageKey)
 
     const formNewAndHasPreviousData = this.form.isNew && !!lastUsedFormValues
