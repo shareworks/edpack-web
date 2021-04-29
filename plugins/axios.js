@@ -8,7 +8,7 @@ import Language from './language'
 
 export default {
   install (Vue, options) {
-    const inLTI = this.setInLTI()
+    const inLTI = store.state.inLTI
     const i18n = Language.geti18n()
 
     // Directly call load csrf token
@@ -82,25 +82,5 @@ export default {
         response.params.origin = 'lti'
         return response
       })
-  },
-
-  setInLTI (bool) {
-    if (typeof bool === 'undefined') bool = (window.self !== window.top)
-    if (!bool) {
-      const urlParams = new URLSearchParams(window.location.search)
-      const issuer = urlParams.get('issuer')
-      const origin = urlParams.get('origin')
-      const sessionOrigin = sessionStorage.getItem('origin')
-
-      bool = (issuer === 'ilearn') || (origin === 'lti') || (sessionOrigin === 'lti')
-    }
-
-    if (bool) sessionStorage.setItem('origin', 'lti')
-    this.inLTI = bool
-    return this.inLTI
-  },
-
-  getInLTI () {
-    return this.inLTI
   }
 }
