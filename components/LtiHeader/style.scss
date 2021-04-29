@@ -55,6 +55,12 @@ header.app-header {
   position: absolute;
 }
 
+.app-header-course {
+  line-height: $--header-height;
+  font-weight: bold;
+  max-width: 200px;
+}
+
 .app-header-title {
   position: absolute;
   top: 50%;
@@ -82,4 +88,10 @@ header.app-header {
   color: $--color-text-primary;
   white-space: nowrap;
   margin-left: 3px;
+}
+
+@media (min-width: $--md) {
+  .app-header-course {
+    max-width: 300px;
+  }
 }

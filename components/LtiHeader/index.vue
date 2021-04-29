@@ -1,9 +1,15 @@
 <template>
   <header class="app-header clearfix">
     <div class="header-container">
+      <div v-if="course" class="app-header-course text-ellipsis">
+        <router-link :to="{ name: (course.role || 'staff'), params: { course: course._id, slug: school.slug } }">
+          {{ course.name }}
+        </router-link>
+      </div>
+
       <!-- Header logo or text -->
-      <div v-if="school.appName" class="app-header-title">{{ school.appName }}</div>
-      <div v-else class="header-logo"></div>
+      <div v-if="school.appName" class="hidden-xs hidden-sm app-header-title">{{ school.appName }}</div>
+      <div v-else class="hidden-xs header-logo"></div>
 
       <!-- User dropdown menu -->
       <div class="header-user-container" v-if="user">
@@ -32,7 +38,8 @@ export default {
   },
 
   computed: {
-    user () { return this.$store.state.user }
+    user () { return this.$store.state.user },
+    course () { return this.$store.state.course }
   }
 }
 </script>
