@@ -37,18 +37,12 @@ export default {
       // Get user and check
       const params = {}
 
-      if (to.query.ltiForwardToken && to.query.organization) {
+      // TODO: explain what this does here
+      if ((to.query.ltiForwardToken || to.query.ltiAccessToken) && to.query.organization) {
         store.dispatch('setLTI', true)
         AxiosPlugin.addLtiOrigin()
         params.params = { organization: to.query.organization }
-        params.headers = { 'Lti-Forward-Token': to.query.ltiForwardToken }
-      }
-
-      if (to.query.ltiAccessToken && to.query.organization) {
-        store.dispatch('setLTI', true)
-        AxiosPlugin.addLtiOrigin()
-        params.params = { organization: to.query.organization }
-        params.headers = { 'Lti-Access-Token': to.query.ltiAccessToken }
+        params.headers = to.query.ltiForwardToken ? { 'Lti-Forward-Token': to.query.ltiForwardToken } : { 'Lti-Access-Token': to.query.ltiAccessToken }
       }
 
       return router.app.$http.get('users/self', params)
