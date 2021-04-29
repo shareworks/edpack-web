@@ -16,4 +16,4 @@ const inLTI = () => {
   return false
 }
 
-export default inLTI
+export default inLTI()
