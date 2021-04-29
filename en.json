@@ -700,5 +700,7 @@
   "SW_UNTITLED": "Untitled",
   "SW_SKIP_TO_MAIN_CONTENT": "SKIP TO MAIN CONTENT",
   "SW_HELP_SETUP_INTEGRATION": "We can help you to setup integration, please, ",
-  "SW_UPDATING_GRADES": "Updating grades. This can take some time."
+  "SW_UPDATING_GRADES": "Updating grades. This can take some time.",
+  "SW_NEW_LTI_TAB": "New LTI tab",
+  "SW_NEW_LTI_TAB_TEXT": "Enable instructors to open {0} in a new window when in LTI"
 }
