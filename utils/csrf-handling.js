@@ -1,5 +1,6 @@
 import Axios from 'axios'
 import Vue from 'vue'
+import checkLtiState from './check-lti-state'
 
 export {
   loadCsrfToken,
@@ -7,12 +8,7 @@ export {
   removeCsrfToken
 }
 
-
-const urlParams = new URLSearchParams(window.location.search)
-const origin = urlParams.get('origin')
-const sessionOrigin = sessionStorage.getItem('origin')
-
-let inLTI = (window.self !== window.top) || (origin === 'lti') || (sessionOrigin === 'lti')
+const inLTI = checkLtiState
 
 // Load from local storage
 function loadCsrfToken () {

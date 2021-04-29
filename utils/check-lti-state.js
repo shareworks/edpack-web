@@ -1,11 +1,19 @@
-// Find out if in LTI or not
-const urlParams = new URLSearchParams(window.location.search)
-const origin = urlParams.get('origin')
-const sessionOrigin = sessionStorage.getItem('origin')
+const inLTI = () => {
+  // In iframe LTI
+  if (window.self !== window.top) return true
 
-const inLTI = (window.self !== window.top) || (origin === 'lti') || (sessionOrigin === 'lti')
+  // In blank page LTI
+  const urlParams = new URLSearchParams(window.location.search)
+  const origin = urlParams.get('origin')
+  const sessionOrigin = sessionStorage.getItem('origin')
+  if (origin === 'lti' || sessionOrigin === 'lti') {
+    sessionStorage.setItem('origin', 'lti')
+    return true
+  }
 
-// Set/Remove sessionStorage
-inLTI ? sessionStorage.setItem('origin', 'lti') : sessionStorage.removeItem('origin')
+  // Not in LTI
+  sessionStorage.removeItem('origin')
+  return false
+}
 
 export default inLTI
