@@ -36,7 +36,6 @@ export default {
 
       // Get user and check
       const params = {}
-      console.log(inLTI)
 
       if (to.query.ltiForwardToken && to.query.organization) {
         store.dispatch('setLTI', true)

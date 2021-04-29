@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import config from 'config'
+import checkLtiState from './utils/check-lti-state'
 
 Vue.use(Vuex)
 
@@ -16,13 +17,6 @@ export const SET_COURSE = 'SET_COURSE'
 export const SET_UNSAVED_CHANGES = 'SET_UNSAVED_CHANGES'
 export const SET_CONTACT_FORM = 'SET_CONTACT_FORM'
 
-// Find out if in LTI or not
-const urlParams = new URLSearchParams(window.location.search)
-const origin = urlParams.get('origin')
-const sessionOrigin = sessionStorage.getItem('origin')
-const inLTI = (window.self !== window.top) || (origin === 'lti') || (sessionOrigin === 'lti')
-inLTI ? sessionStorage.setItem('origin', 'lti') : sessionStorage.removeItem('origin')
-
 const state = {
   navAvailable: false,
   sidebarOpened: false,
@@ -31,7 +25,7 @@ const state = {
   school: false,
   course: false,
   user: false,
-  inLTI: inLTI,
+  inLTI: checkLtiState,
   slug: null,
   isAdmin: false,
   isManager: false,
@@ -62,10 +56,11 @@ const mutations = {
   },
   [SET_USER] (state, data) {
     const user = data.payload
+    if (state.inLTI) user.systemAdmin = false
     state.user = user
     state.school = user.organization
     state.slug = user.organization.slug
-    state.isAdmin = user.role === 'admin' || user.systemAdmin
+    state.isAdmin = !state.inLTI && (user.role === 'admin' || user.systemAdmin)
     state.languages = getLanguages(user.organization.languages)
     state.isManager = user.faculties.length && user.faculties.filter(fac => fac.role === 'manager')
     state.manageFaculties = user.faculties.length ? user.faculties.filter(fac => fac.role === 'manager') : []
