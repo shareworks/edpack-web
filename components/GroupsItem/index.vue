@@ -7,7 +7,7 @@
       <!-- Student card -->
       <el-card v-for="(student, index) in students" v-show="!searchText || student.name.includes(searchText)" class="student-card-item" :key="student._id + '_' + index">
         <!-- Drag handle -->
-        <el-button class="button-drag" :disabled="manipulationDisabled" type="text">
+        <el-button class="button-drag mr-5 ml-5" size="small" v-if="!manipulationDisabled" type="text">
           <i class="icon-drag_handle"/>
         </el-button>
 
