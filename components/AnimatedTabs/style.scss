@@ -5,7 +5,7 @@
   }
   100% {
     opacity: 0;
-    transform: translateX(-50px);
+    transform: translateX(-20px);
   }
 }
 @keyframes leaveToRight {
@@ -15,7 +15,7 @@
   }
   100% {
     opacity: 0;
-    transform: translateX(50px);
+    transform: translateX(20px);
   }
 }
 
