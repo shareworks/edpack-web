@@ -1,7 +1,7 @@
 <template>
   <!-- Open in new tab -->
   <el-button v-if="newTabButtonVisible && school.openNewLtiTab" size="medium" type="primary" class="button-square-xs mr-5" plain @click="openNewTab">
-    <i class="icon-newtab"/>
+    <i class="icon-newtab no-margin"/>
   </el-button>
 </template>
 
