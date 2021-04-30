@@ -446,3 +446,22 @@
 .opacity-0 {
   opacity: 0;
 }
+
+.no-padding-dialog {
+  .el-dialog {
+    .el-dialog__header,
+    .el-dialog__body {
+      padding: 0;
+      overflow: hidden;
+    }
+  }
+}
+
+
+.no-header-button-dialog {
+  .el-dialog {
+    .el-dialog__headerbtn {
+      display: none;
+    }
+  }
+}
