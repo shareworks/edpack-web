@@ -72,6 +72,12 @@ export default {
         .catch((err) => {
           console.log(err)
 
+          if (!err) {
+            // somehow in some reason err can be undefined
+            this.status = 'error'
+            return
+          }
+
           if (err.status === 410) {
             this.status = 'removed'
             return
