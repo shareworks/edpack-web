@@ -39,7 +39,7 @@ export default {
 
       // TODO: explain what this does here
       if ((to.query.ltiForwardToken || to.query.ltiAccessToken) && to.query.organization) {
-        store.dispatch('setLTI', true)
+        store.dispatch('setLti', true)
         AxiosPlugin.addLtiOrigin()
         params.params = { organization: to.query.organization }
         params.headers = to.query.ltiForwardToken ? { 'Lti-Forward-Token': to.query.ltiForwardToken } : { 'Lti-Access-Token': to.query.ltiAccessToken }
