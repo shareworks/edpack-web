@@ -1,8 +1,7 @@
 <template>
   <!-- Open in new tab -->
   <el-button v-if="newTabButtonVisible && school.openNewLtiTab" size="medium" type="primary" class="button-square-xs mr-5" plain @click="openNewTab">
-    <!-- I propose to use icon-tab-plus from mdi -->
-    <i class="icon-line-plus no-margin"/>
+    <i class="icon-newtab"/>
   </el-button>
 </template>
 

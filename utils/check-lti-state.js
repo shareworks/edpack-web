@@ -5,12 +5,10 @@ const inLTI = () => {
   // In blank page LTI
   const urlParams = new URLSearchParams(window.location.search)
 
-  // opened from lms in new tab
-  if (urlParams.get('fromLtiTab') === 'true') return true
-
+  const newLtiTab = urlParams.get('fromLtiTab')
   const origin = urlParams.get('origin')
   const sessionOrigin = sessionStorage.getItem('origin')
-  if (origin === 'lti' || sessionOrigin === 'lti') {
+  if (newLtiTab || (origin === 'lti' || sessionOrigin === 'lti')) {
     sessionStorage.setItem('origin', 'lti')
     return true
   }
