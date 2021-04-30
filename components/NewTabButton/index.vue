@@ -18,7 +18,9 @@ export default {
 
   methods: {
     openNewTab () {
-      const url = new URL(window.location + '&fromLtiTab=true')
+      const url = new URL(window.location)
+      url.searchParams.append('fromLtiTab', 'true')
+
       window.open(url.toString())
     }
   }
