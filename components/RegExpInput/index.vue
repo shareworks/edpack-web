@@ -1,11 +1,11 @@
 <template>
-  <el-input v-model="form[propName]" :autofocus="autofocus" ref="name" :required="required" @input="validateValue"/>
+  <el-input v-model="form[propName]" :autofocus="autofocus" ref="name" :placeholder="$t(placeholder)" @input="validateValue"/>
 </template>
 
 <script>
 export default {
   name: 'RegExpInput',
-  props: ['form', 'propName', 'autofocus', 'required', 'regExp', 'replace'],
+  props: ['form', 'propName', 'autofocus', 'regExp', 'replace', 'placeholder'],
 
   mounted () {
     if (this.autofocus) this.$nextTick(() => this.$refs.name.focus())
