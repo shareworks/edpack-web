@@ -24,6 +24,18 @@
   margin-left: 5px;
 }
 
+.el-tag.el-tag--hello {
+  background-color: #f5e2f5;
+  border-color: #e5c0e0;
+  color: #9010ae;
+}
+
+.el-tag.el-tag--attention {
+  background-color: #f8e4d5;
+  border-color: #e7c8b8;
+  color: #b15707;
+}
+
 .el-form-item__label {
   font-weight: 500;
 }
