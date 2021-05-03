@@ -366,7 +366,7 @@
   "SW_NO_USER_SESSION": "Je sessie is geëindigd. Log svp opnieuw in.",
   "SW_ONLY_CSV": "Alleen .csv bestanden zijn toegestaan!",
   "SW_BRUTE_FORCE": "Teveel mislukte pogingen. Probeer het nog eens over 10 minuten.",
-  "SW_ONLY_SYNC_IN_LMS": "Je kan de sync functionaliteit alleen binnen je online leeromgeving gebruiken.",
+  "SW_ONLY_SYNC_IN_LMS": "Je kan deze functionaliteit alleen binnen je online leeromgeving gebruiken.",
   "SW_OPEN_NEW_TAB_COOKIE": "Ga naar het nieuwe venster dat zojuist is aangemaakt en kijk of de authenticatie cookie nu wel goed werkt.",
   "SW_OR": "of",
   "SW_NEW_WORKFLOW": "Nieuw",
