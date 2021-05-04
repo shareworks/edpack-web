@@ -30,18 +30,22 @@
         <template slot-scope="props">
           <div class="pull-right">
             <el-dropdown trigger="click" @command="handleCommand">
-              <el-button size="small" plain type="primary">
+              <el-button size="small" :plain="props.row.role !== 'owner'" :type="props.row.role !== 'none' ? 'primary' : 'default'">
+                <i v-if="props.row.role !== 'none'" :class="props.row.role === 'owner' ? 'icon-star-full' : 'icon-star-empty'"></i>
                 {{ $t('SW_' + props.row.role.toUpperCase()) }}
                 <i class="el-icon-caret-bottom el-icon--right"/>
               </el-button>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item :command="{instructor: props.row, role: 'owner'}">
+                  <i class="icon-star-full"></i>
                   <span>{{ $t('SW_OWNER') }}</span>
                 </el-dropdown-item>
                 <el-dropdown-item :command="{instructor: props.row, role: 'viewer'}">
+                  <i class="icon-star-empty"></i>
                   <span>{{ $t('SW_VIEWER') }}</span>
                 </el-dropdown-item>
                 <el-dropdown-item :command="{instructor: props.row, role: 'none'}">
+                  <i class="icon-lock"></i>
                   <span>{{ $t('SW_NO_ROLE') }}</span>
                 </el-dropdown-item>
               </el-dropdown-menu>
