@@ -83,7 +83,7 @@ export default {
         const orgOptions = [
           'calculationModel', 'customPeerQuestions', 'enablePublicScoring', 'scoreMotivations', 'teamQuestions',
           'customTeamQuestions', 'enableCategories', 'peerMessages', 'topsTips', 'openQuestions', 'minimumAdjustmentFactor',
-          'maximumAdjustmentFactor', 'adjustedFactorOnDefault', 'peerWitSelfDefault', 'positiveFactorWeight', 'negativeFactorWeight',
+          'maximumAdjustmentFactor', 'adjustedFactorOnDefault', 'peerWithSelfDefault', 'positiveFactorWeight', 'negativeFactorWeight',
           'enableAdjustedToggle', 'enableWithSelfToggle', 'showLabelsToStudent', 'showMissingStudents', 'disableAutomatedEmails',
           'enableFreshChat', 'defaultOpenQuestion', 'defaultPeerQuestion', 'lmsAvgGrading', 'lmsGrading',
           'enableGradingWeights', 'enableGradingNotification', 'gradableAssignments', 'enableManualCourses', 'manualInviteOnly', 'loginByPassword'
