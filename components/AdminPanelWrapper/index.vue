@@ -4,13 +4,13 @@
       <div class="pull-right">
         <!-- Statistics -->
         <el-button size="medium" @click="toggleStats" class="button-square-xs">
-          <i class="icon-stats"></i>
+          <i class="icon-stats"/>
           <span class="hidden-xs hidden-sm">{{ $t('SW_STATS') }}</span>
         </el-button>
 
         <!-- School settings -->
         <el-button class="button-square-xs" plain size="medium" type="primary" @click="$router.push({name: 'settings', params: { slug: school.slug, settingsMode: 'general' }})">
-          <i class="icon-cog"></i>
+          <i class="icon-cog"/>
           <span class="hidden-xs">{{ $t('SW_SETTINGS') }}</span>
         </el-button>
 
@@ -18,19 +18,19 @@
         <el-dropdown rigger="click" @command="handleCommand">
           <el-button type="primary" size="medium" class="button-square-xs ml-5">
             <span class="hidden-xs">{{ $t('SW_MORE') }}</span>
-            <i class="el-icon-caret-bottom el-icon--right"></i>
+            <i class="el-icon-caret-bottom el-icon--right"/>
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item :command="{type: 'uptime'}" v-if="uptimeUrl">
-              <i class="icon-cloud_done"></i>
+              <i class="icon-cloud_done"/>
               <span>{{ $t('SW_UPTIME_MONITOR') }}</span>
             </el-dropdown-item>
             <el-dropdown-item v-if="currentUser.systemAdmin" :command="{type: 'tokens'}">
-              <i class="icon-delete"></i>
+              <i class="icon-delete"/>
               <span>{{ $t('SW_CLEAR_TOKENS') }}</span>
             </el-dropdown-item>
             <el-dropdown-item v-if="currentUser.systemAdmin" :command="{type: 'test-mailing'}">
-              <i class="icon-delete"></i>
+              <i class="icon-delete"/>
               <span>{{ $t('SW_TEST_MAILING') }}</span>
             </el-dropdown-item>
           </el-dropdown-menu>
@@ -69,7 +69,7 @@
 
       <!-- Statistics dialog -->
       <el-dialog :title="$t('SW_STATS')" append-to-body :visible.sync="dialogStats">
-        <statistics v-if="dialogStats" :closeDialog="toggleStats" :stats="stats"/>
+        <statistics v-if="dialogStats" :closeDialog="toggleStats" :statsObject="statsObject"/>
       </el-dialog>
     </div>
 
@@ -92,7 +92,7 @@ import TestMailingDialog from '@/edpack-web/components/TestMailingDialog'
 export default {
   name: 'AdminPanelWrapper',
   metaInfo: { title: 'Admin' },
-  props: ['stats', 'tabs'],
+  props: ['tabs', 'statsObject'],
   components: { Statistics, OrgsTable, UsersTable, TestMailingDialog, AnimatedTabs },
 
   data () {

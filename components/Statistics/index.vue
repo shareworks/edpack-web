@@ -4,7 +4,7 @@
       <!-- completionStats -->
       <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}">
         <el-card v-for="(stat, index) in statisticCompletionValues" :key="`statisticCompletionValues${index}`" class="stat-counter">
-          <AnimatedCircleBar :realPercentage="Math.round(stat.value)" :width="200" :strokeWidth="30" :fullText="stat.name"/>
+          <animated-circle-bar :realPercentage="Math.round(stat.value)" :width="200" :strokeWidth="30" :fullText="stat.name"/>
         </el-card>
       </masonry>
 
@@ -47,7 +47,7 @@ export default {
   name: 'Statistics',
   props: {
     faculty: { default: false },
-    stats: Array
+    statsObject: Object
   },
   components: { countTo, AnimatedCircleBar },
 
@@ -90,23 +90,18 @@ export default {
       setTimeout(() => { this.checkSchoolCountsAndCallSetup() }, 100)
     },
     setupStatisticValues (newStatisticValues) {
-      const wholeValues = {}
-
       // prepare containers for statistic
       const statCompletionValues = []
       const statUserValues = []
       const statStatsValues = []
 
-      // use just statistics from the stats list
-      this.stats.forEach(statProperty => {
-        wholeValues[statProperty.prop] = { ...statProperty, value: newStatisticValues[statProperty.prop] || 0 }
-      })
+      for (const key in this.statsObject) {
+        this.statsObject[key].value = newStatisticValues[key] || 0
 
-      for (const statProp in wholeValues) {
         // filter statistic by type
-        if (wholeValues[statProp].type === 'completionStats') { statCompletionValues.push(wholeValues[statProp]) }
-        if (wholeValues[statProp].type === 'userStats') { statUserValues.push(wholeValues[statProp]) }
-        if (wholeValues[statProp].type === 'usersStats') { statStatsValues.push(wholeValues[statProp]) }
+        if (this.statsObject[key].type === 'completionStats') { statCompletionValues.push(this.statsObject[key]) }
+        else if (this.statsObject[key].type === 'userStats') { statUserValues.push(this.statsObject[key]) }
+        else if (this.statsObject[key].type === 'usersStats') { statStatsValues.push(this.statsObject[key]) }
       }
 
       this.statisticCompletionValues = statCompletionValues
