@@ -390,7 +390,7 @@ export default {
     },
     domainsValidation () {
       const failedDomains = []
-      const domainRegex = /^@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
+      const domainRegex = /^@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))+([a-zA-Z]{2,63}|[0-9]{1,3})(\]?)$/
 
       // Filter all emails that don't match regex:
       this.form.emailDomains.forEach(domain => {
