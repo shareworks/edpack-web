@@ -673,5 +673,6 @@
   "SW_NEW_LTI_TAB": "Nieuw LTI-tabblad",
   "SW_NEW_LTI_TAB_TEXT": "Stel docenten in staat om {0} in een nieuw venster te openen in LTI.",
   "SW_INVITED": "Uitgenodigd",
-  "SW_SUBMITTED": "Ingediend"
+  "SW_SUBMITTED": "Ingediend",
+  "SW_CALENDAR_MODE": "Je ziet nu statistiek voor zo'n periode: {0} - {1}"
 }
