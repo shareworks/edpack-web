@@ -125,7 +125,7 @@
       <!-- Course count -->
       <el-table-column v-if="!hideCourses" property="counts.courses" :label="$tc('SW_COURSE', 2)" width="80">
         <template slot-scope="props">
-          <i class="icon-graduation"/>
+          <i class="icon-school"/>
           {{ props.row.counts && props.row.counts.courses || 0 }}
         </template>
       </el-table-column>
