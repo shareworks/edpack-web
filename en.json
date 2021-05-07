@@ -707,5 +707,6 @@
   "SW_SUBMITTED": "Submitted",
   "SW_CALENDAR_MODE": "You now see statistic for such period: {0} - {1}",
   "SW_SELECT_DATE": "Select date",
-  "SW_GET_STATISTIC": "Get statistic"
+  "SW_GET_STATISTIC": "Get statistic",
+  "SW_UNTIL_DATE": "until"
 }

@@ -676,5 +676,6 @@
   "SW_SUBMITTED": "Ingediend",
   "SW_CALENDAR_MODE": "Je ziet nu statistiek voor zo'n periode: {0} - {1}",
   "SW_SELECT_DATE": "Selecteer een datum",
-  "SW_GET_STATISTIC": "Krijg statistiek"
+  "SW_GET_STATISTIC": "Krijg statistiek",
+  "SW_UNTIL_DATE": "tot"
 }
