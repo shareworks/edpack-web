@@ -6,7 +6,7 @@
         <el-form-item :label="$t('SW_STARTEND_DATE')">
           <el-row type="flex" justify="center" align="middle">
             <el-col :xs="24" :sm="8">
-              <el-date-picker v-model="minDate" class="auto-width" type="date" format="dd-MM-yyyy" :picker-options="endDateOptions" :placeholder="$t('SW_SELECT_DATE')"/>
+              <el-date-picker v-model="minDate" @change="clearCalendar" class="auto-width" type="date" format="dd-MM-yyyy" :picker-options="endDateOptions" :placeholder="$t('SW_SELECT_DATE')"/>
             </el-col>
             <el-col :xs="24" :sm="4" class="hidden-xs">
               <div class="text-muted text-center">
@@ -18,13 +18,17 @@
             </el-col>
 
             <el-col :xs="24" :sm="4" class="hidden-xs ml-5">
-              <el-button type="primary" size="medium" class="button-square-xs" plain @click="getStatisticsByDate" :disabled="!minDate && !maxDate">
+              <el-button type="primary" size="medium" class="button-square-xs" plain @click="getStatisticsByDate" :disabled="!minDate">
                 <span class="hidden-xs hidden-sm">{{ $tc('SW_GET_STATISTIC', 1) }}</span>
               </el-button>
             </el-col>
           </el-row>
         </el-form-item>
       </el-form>
+
+      <el-alert :closable="false" type="warning" :title="$t('SW_CALENDAR_MODE', [startEndFormat(minDate), startEndFormat(maxDate, true)])" v-if="calendarMode" class="mt-10 mb-10">
+        <el-button type="text" @click="clearCalendar()">{{ $t('SW_CLEAR_SEARCH') }}</el-button>
+      </el-alert>
 
       <!-- completionStats -->
       <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}">
@@ -34,7 +38,7 @@
       </masonry>
 
       <!-- userStats -->
-      <masonry :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}">
+      <masonry v-if="!calendarMode" :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}">
         <el-card v-for="(stat, index) in statisticUserValues" :key="`statisticUserValues${index}`" class="stat-counter">
           <div class="font-26">
             <i :class="stat.icon"/>
@@ -51,7 +55,9 @@
             <i :class="stat.icon"/>
             <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'/></strong>
           </div>
-          <div>{{ $t('SW_TOTAL') }} {{ stat.name }}</div>
+
+          <div v-if="calendarMode">{{ $t(stat.calendarText) }} {{ stat.name.toLowerCase() }}</div>
+          <div v-else>{{ $t('SW_TOTAL') }} {{ stat.name.toLowerCase() }}</div>
         </el-card>
       </masonry>
     </div>
@@ -65,6 +71,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import countTo from 'vue-count-to'
 import AnimatedCircleBar from '@/edpack-web/components/AnimatedCircleBar'
 
@@ -78,6 +85,7 @@ export default {
 
   data () {
     return {
+      calendarMode: false,
       minDate: '',
       maxDate: '',
       endDateOptions: { disabledDate (time) { return new Date(time) > new Date() } },
@@ -103,8 +111,23 @@ export default {
   },
 
   methods: {
+    clearCalendar (startDateValue) {
+      // because date-picker doesn't have clear function we should check on Change that
+      // values isn't set, don't want to separate it to another function, so checking it here
+      if (startDateValue) return
+
+      this.setupStatisticValues(this.school.counts)
+      this.calendarMode = false
+      this.minDate = ''
+      this.maxDate = ''
+    },
+    startEndFormat (date, endDate = false) {
+      if (!endDate) return moment(date).format('ll')
+      else return date ? moment(date).format('ll') : moment(new Date()).format('ll')
+    },
     getStatisticsByDate () {
       this.status = 'loading'
+      this.calendarMode = true
       const params = { minDate: this.minDate, maxDate: this.maxDate }
 
       this.$http.get(`organizations/${this.school._id}/counts`, { params })
@@ -113,6 +136,7 @@ export default {
     },
     getFacultyStatistic () {
       this.status = 'loading'
+      this.calendarMode = false
 
       this.$http.get(`organizations/${this.school._id}/faculty/${this.facultyFilter}/counts`)
         .then(res => { this.setupStatisticValues(res.data.list[0]) })
