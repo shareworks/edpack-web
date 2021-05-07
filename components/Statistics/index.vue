@@ -8,7 +8,7 @@
             <el-col :xs="24" :sm="8">
               <el-date-picker v-model="minDate" @change="clearCalendar" class="auto-width" type="date" format="dd-MM-yyyy" :picker-options="endDateOptions" :placeholder="$t('SW_SELECT_DATE')"/>
             </el-col>
-            <el-col :xs="24" :sm="4" class="hidden-xs">
+            <el-col :xs="24" :sm="4" class="">
               <div class="text-muted text-center">
                 {{ $t('SW_UNTIL_DATE') }}
               </div>
@@ -17,9 +17,9 @@
               <el-date-picker v-model="maxDate" class="auto-width" type="date" format="dd-MM-yyyy" :placeholder="$t('SW_SELECT_DATE')" :picker-options="endDateOptions"/>
             </el-col>
 
-            <el-col :xs="24" :sm="4" class="hidden-xs ml-5">
+            <el-col :xs="24" :sm="4" class="ml-5">
               <el-button type="primary" size="medium" class="button-square-xs" plain @click="getStatisticsByDate" :disabled="!minDate">
-                <span class="hidden-xs hidden-sm">{{ $tc('SW_GET_STATISTIC', 1) }}</span>
+                <span>{{ $tc('SW_GET_STATISTIC', 1) }}</span>
               </el-button>
             </el-col>
           </el-row>
