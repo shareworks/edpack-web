@@ -8,11 +8,13 @@
           <a class="cursor-pointer" slot="reference"><i class="icon-question question-circle question-pop ml-5"/></a>
         </el-popover>
       </p>
+
       <!-- Choose import type -->
       <el-radio-group :disabled="disabledEdit" v-model="form.lmsImportType" size="small" class="pull-left mb-5" @change="handleImportType">
         <el-radio-button :disabled="disable && disable.includes('courseUsers')" label="courseUsers">{{ $t('SW_COURSE_STUDENTS') }}</el-radio-button>
         <el-radio-button :disabled="disable && disable.includes('courseGroupSets')" label="courseGroupSets">{{ $t('SW_COURSE_GROUP_SETS') }}</el-radio-button>
-        <el-radio-button :disabled="disable && disable.includes('courseSections')" label="courseSections" v-if="lms === 'canvas'">{{ $t('SW_COURSE_SECTIONS') }}</el-radio-button>
+        <el-radio-button  v-if="lms === 'blackboard'" :disabled="disable && disable.includes('courseGroup')" label="courseGroup">{{ $tc('SW_GROUP', 1) }}</el-radio-button>
+        <el-radio-button v-if="lms === 'canvas'" :disabled="disable && disable.includes('courseSections')" label="courseSections">{{ $t('SW_COURSE_SECTIONS') }}</el-radio-button>
       </el-radio-group>
 
       <div class="inline ml-10 vertical-top mt-5 normal-line-height" v-if="lms && lmsCourse && (form.lmsImportType === 'courseUsers') && lmsCourse.totalStudents  && !disabledEdit">
