@@ -295,6 +295,7 @@
 <script>
 import config from 'config'
 import scopes from '@/edpack-web/lms-api-scopes.json'
+import checkRegex from '@/edpack-web/utils/check-regex'
 import parameters from '@/edpack-web/lti-custom-parameters.json'
 
 export default {
@@ -390,11 +391,10 @@ export default {
     },
     domainsValidation () {
       const failedDomains = []
-      const domainRegex = /^@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))+([a-zA-Z]{2,63}|[0-9]{1,3})(\]?)$/
 
       // Filter all emails that don't match regex:
       this.form.emailDomains.forEach(domain => {
-        const isIncorrect = !domainRegex.test(domain.trim())
+        const isIncorrect = !checkRegex(domain.trim(), 'domain')
         if (domain.trim() && isIncorrect) failedDomains.push(domain.trim())
       })
 
