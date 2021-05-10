@@ -664,7 +664,7 @@
   "SW_ORG_TEMPLATE_PLACEHOLDER": "Optionally select school as template ...",
   "SW_ORG_TEMPLATE_WARNING": "The template will only copy settings and configuration.",
   "SW_NO_ORG_NAME": "School name is required.",
-  "SW_PRINT_TO_PDF": "Print to PDF",
+  "SW_PRINT_TO_PDF": "Save as PDF",
   "SW_COMPLETION": "completion",
   "SW_ADD_SCOPE": "Add scope",
   "SW_NOT_FINISHED_FORM_EXIST": "You didn't finish this form last time. Do you want to retrieve this draft?",
