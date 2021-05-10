@@ -710,5 +710,6 @@
   "SW_GET_STATISTIC": "Get statistic",
   "SW_UNTIL_DATE": "until",
   "SW_STARTEND_DATE": "Start/end date",
-  "SW_EMAILS_NOT_CORRECT": "These emails are not correct, please check them again"
+  "SW_EMAILS_NOT_CORRECT": "These emails are not correct, please check them again",
+  "SW_DOWNLOAD_TEXT": "By clicking this button, you will see the modal screen where in settings you can choose between 'save file as PDF' or 'print it'."
 }

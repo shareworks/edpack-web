@@ -679,5 +679,6 @@
   "SW_GET_STATISTIC": "Krijg statistiek",
   "SW_UNTIL_DATE": "tot",
   "SW_STARTEND_DATE": "Start/einddatum",
-  "SW_EMAILS_NOT_CORRECT": "Deze e-mails zijn niet correct, controleer ze opnieuw"
+  "SW_EMAILS_NOT_CORRECT": "Deze e-mails zijn niet correct, controleer ze opnieuw",
+  "SW_DOWNLOAD_TEXT": "Door op deze knop te klikken, komt u in het modale scherm waar u in de instellingen kunt kiezen tussen 'bestand opslaan als pdf' of 'afdrukken'."
 }
