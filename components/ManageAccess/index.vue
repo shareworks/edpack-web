@@ -3,7 +3,7 @@
     <p class="mb-20">{{ $t('SW_DIALOG_MANAGE_STAFF_TEXT') }}</p>
 
     <!-- Table with instructors -->
-    <el-table v-if="!loading" v-show="staff.length" :data="staff" row-key="_id" ref="staffTable" :default-sort="{prop: 'activityDate', order: 'ascending'}">
+    <el-table v-if="!loading" v-show="staff.length" :data="dataInStep" row-key="_id" ref="staffTable" :default-sort="{prop: 'activityDate', order: 'ascending'}">
       <!-- Name -->
       <el-table-column :label="$tc('SW_STAFF', 1)" prop="name" min-width="160">
         <template slot-scope="props">
@@ -55,6 +55,10 @@
       </el-table-column>
     </el-table>
 
+    <div class="block text-center mt-10">
+      <el-pagination layout="prev, pager, next" :page-size="5" :current-page.sync="page" :total="staff.length" @current-change="updateDataInPage"/>
+    </div>
+
     <!-- Loading -->
     <spinner v-if="loading"/>
 
@@ -82,7 +86,9 @@ export default {
       school: this.$store.state.school,
       user: this.$store.state.user,
       lang: this.$store.state.lang,
+      page: 1,
       staff: [],
+      dataInStep: [],
       loading: false,
       submitting: false
     }
@@ -95,8 +101,10 @@ export default {
   methods: {
     getInstructors () {
       this.loading = true
+      // TODO: WE HAVE HARDCODED AMOUNT
+      const params = { role: 'staff', entity: this.course._id, amount: 2000, skip: 0 }
 
-      this.$http.get('users', { params: { role: 'staff', entity: this.course._id } })
+      this.$http.get('users', { params })
         .then((res) => {
           this.staff = []
           const roleMap = {}
@@ -109,9 +117,14 @@ export default {
             courseStaff.role = roleMap[courseStaff._id] || 'none'
             this.staff.push(courseStaff)
           }
+
+          this.updateDataInPage()
         })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.loading = false })
+    },
+    updateDataInPage () {
+      this.dataInStep = this.staff.slice(((this.page - 1) * 5) || 0, this.page * 5)
     },
     handleCommand (command) {
       command.instructor.role = command.role
