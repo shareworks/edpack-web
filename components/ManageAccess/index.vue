@@ -3,7 +3,8 @@
     <p class="mb-20">{{ $t('SW_DIALOG_MANAGE_STAFF_TEXT') }}</p>
 
     <!-- Table with instructors -->
-    <el-table v-if="!loading" v-show="staff.length" :data="dataInStep" row-key="_id" ref="staffTable" :default-sort="{prop: 'activityDate', order: 'ascending'}">
+    <el-table v-if="!loading" v-show="staff.length" :data="dataInStep" row-key="_id"
+              ref="staffTable" :default-sort="{prop: 'activityDate', order: 'ascending'}">
       <!-- Name -->
       <el-table-column :label="$tc('SW_STAFF', 1)" prop="name" min-width="160">
         <template slot-scope="props">
@@ -26,7 +27,7 @@
       <el-table-column sortable property="activityDate" :formatter="dateFormatter" :sort-method="sortActivityDate" :label="$t('SW_ACTIVITY_DATE')" min-width="140"/>
 
       <!-- Role -->
-      <el-table-column width="150" :label="$tc('SW_ROLE', 1)">
+      <el-table-column sortable property="role" width="150" :label="$tc('SW_ROLE', 1)">
         <template slot-scope="props">
           <div class="pull-right">
             <el-dropdown trigger="click" @command="handleCommand">
@@ -56,7 +57,7 @@
     </el-table>
 
     <div class="block text-center mt-10">
-      <el-pagination layout="prev, pager, next" :page-size="5" :current-page.sync="page" :total="staff.length" @current-change="updateDataInPage"/>
+      <el-pagination layout="prev, pager, next" background :page-size="5" :current-page.sync="page" :total="staff.length" @current-change="updateDataInPage"/>
     </div>
 
     <!-- Loading -->
