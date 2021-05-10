@@ -3,8 +3,8 @@
     <p class="mb-20">{{ $t('SW_DIALOG_MANAGE_STAFF_TEXT') }}</p>
 
     <!-- Table with instructors -->
-    <el-table v-if="!loading" v-show="staff.length" :data="dataInStep" row-key="_id"
-              ref="staffTable" :default-sort="{prop: 'activityDate', order: 'ascending'}">
+    <el-table v-if="!loading && staff.length" :data="dataInStep" row-key="_id" @sort-change="sortChange"
+              ref="staffTable" :default-sort="{prop: 'activityDate', order: 'descending'}">
       <!-- Name -->
       <el-table-column :label="$tc('SW_STAFF', 1)" prop="name" min-width="160">
         <template slot-scope="props">
@@ -24,7 +24,7 @@
       </el-table-column>
 
       <!-- Activity date -->
-      <el-table-column sortable property="activityDate" :formatter="dateFormatter" :sort-method="sortActivityDate" :label="$t('SW_ACTIVITY_DATE')" min-width="140"/>
+      <el-table-column sortable property="activityDate" :formatter="dateFormatter" :label="$t('SW_ACTIVITY_DATE')" min-width="140"/>
 
       <!-- Role -->
       <el-table-column sortable property="role" width="150" :label="$tc('SW_ROLE', 1)">
@@ -100,9 +100,37 @@ export default {
   },
 
   methods: {
+    roleSort (ownerStart = true) {
+      const owner = []
+      const viewer = []
+      const none = []
+
+      this.staff.forEach(user => {
+        if (user.role === 'owner') owner.push(user)
+        if (user.role === 'viewer') viewer.push(user)
+        if (user.role === 'none') none.push(user)
+      })
+
+      this.staff = ownerStart ? [...owner, ...viewer, ...none] : [...none, ...viewer, ...owner]
+    },
+    sortChange (val) {
+      if (val.prop === 'activityDate' && val.order === 'ascending') {
+        this.staff.sort((a, b) => this.sortActivityDate(b, a))
+      } else if (val.prop === 'activityDate' && val.order === 'descending') {
+        this.staff.sort((a, b) => this.sortActivityDate(a, b))
+      }
+
+      if (val.prop === 'role' && val.order === 'ascending') {
+        this.roleSort(false)
+      } else if (val.prop === 'role' && val.order === 'descending') {
+        this.roleSort(true)
+      }
+
+      this.updateDataInPage()
+    },
     getInstructors () {
       this.loading = true
-      // TODO: WE HAVE HARDCODED AMOUNT
+      // TODO: WE HAVE HARDCODED AMOUNT for now
       const params = { role: 'staff', entity: this.course._id, amount: 2000, skip: 0 }
 
       this.$http.get('users', { params })
@@ -119,6 +147,8 @@ export default {
             this.staff.push(courseStaff)
           }
 
+          // initial sorting
+          this.staff.sort((a, b) => this.sortActivityDate(a, b))
           this.updateDataInPage()
         })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
@@ -126,9 +156,6 @@ export default {
     },
     updateDataInPage () {
       this.dataInStep = this.staff.slice(((this.page - 1) * 5) || 0, this.page * 5)
-    },
-    handleCommand (command) {
-      command.instructor.role = command.role
     },
     updateInstructors () {
       if (this.submitting) return
@@ -157,6 +184,7 @@ export default {
         .finally(() => { this.submitting = false })
     },
     sortActivityDate (a, b) { return dateSorter(a.activityDate, b.activityDate) },
+    handleCommand (command) { command.instructor.role = command.role },
     dateFormatter (row, column, value) { return value ? moment(value).fromNow() : this.$i18n.t('SW_INVITE_PENDING') }
   }
 }
