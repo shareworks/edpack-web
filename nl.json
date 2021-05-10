@@ -678,5 +678,6 @@
   "SW_SELECT_DATE": "Selecteer een datum",
   "SW_GET_STATISTIC": "Krijg statistiek",
   "SW_UNTIL_DATE": "tot",
-  "SW_STARTEND_DATE": "Start/einddatum"
+  "SW_STARTEND_DATE": "Start/einddatum",
+  "SW_EMAILS_NOT_CORRECT": "Deze e-mails zijn niet correct, controleer ze opnieuw"
 }

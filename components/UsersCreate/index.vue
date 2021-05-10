@@ -74,7 +74,7 @@ export default {
 
   methods: {
     emailsValidation (emails) {
-      let failedEmails = []
+      let failedEmails = [] // out param
 
       // Filter all emails that don't match regex:
       emails.forEach(email => { emailsValidation(email, failedEmails, [], email, email) })
