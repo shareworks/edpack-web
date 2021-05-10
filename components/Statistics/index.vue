@@ -56,7 +56,7 @@
             <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'/></strong>
           </div>
 
-          <div v-if="calendarMode">{{ $t(stat.calendarText) }} {{ stat.name.toLowerCase() }}</div>
+          <div v-if="calendarMode">{{ stat.calendarText }} {{ stat.name.toLowerCase() }}</div>
           <div v-else>{{ $t('SW_TOTAL') }} {{ stat.name.toLowerCase() }}</div>
         </el-card>
       </masonry>
