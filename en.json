@@ -711,5 +711,12 @@
   "SW_UNTIL_DATE": "until",
   "SW_STARTEND_DATE": "Start/end date",
   "SW_EMAILS_NOT_CORRECT": "These emails are not correct, please check them again",
-  "SW_DOWNLOAD_TEXT": "By clicking this button, you will see the modal screen where in settings you can choose between 'save file as PDF' or 'print it'."
+  "SW_DOWNLOAD_TEXT": "By clicking this button, you will see the modal screen where in settings you can choose between 'save file as PDF' or 'print it'.",
+  "SW_ALLOW_AUTO_REMINDER_DATES": "Auto reminder dates",
+  "SW_ALLOW_AUTO_REMINDER_DATES_TEXT": "Allow instructor to set automatic reminder date when creating evaluation.",
+  "SW_ALLOW_AUTO_LOCK_DATES": "Auto lock dates",
+  "SW_ALLOW_AUTO_LOCK_DATES_TEXT": "Allow instructor to set automatic lock date when creating evaluation.",
+  "SW_ADVANCED_OPTIONS": "Show advanced options",
+  "SW_AUTOLOCK_DATE": "Auto lock date",
+  "SW_REMINDER_DATE": "Reminder date"
 }

@@ -680,5 +680,12 @@
   "SW_UNTIL_DATE": "tot",
   "SW_STARTEND_DATE": "Start/einddatum",
   "SW_EMAILS_NOT_CORRECT": "Deze e-mails zijn niet correct, controleer ze opnieuw",
-  "SW_DOWNLOAD_TEXT": "Door op deze knop te klikken, komt u in het modale scherm waar u in de instellingen kunt kiezen tussen 'bestand opslaan als pdf' of 'afdrukken'."
+  "SW_DOWNLOAD_TEXT": "Door op deze knop te klikken, komt u in het modale scherm waar u in de instellingen kunt kiezen tussen 'bestand opslaan als pdf' of 'afdrukken'.",
+  "SW_ALLOW_AUTO_REMINDER_DATES": "Auto. reminder",
+  "SW_ALLOW_AUTO_REMINDER_DATES_TEXT": "Sta docenten toe om automatische reminder datum te gebruiken in de evaluatie.",
+  "SW_ALLOW_AUTO_LOCK_DATES": "Auto. vergrendelen",
+  "SW_ALLOW_AUTO_LOCK_DATES_TEXT": "Sta docenten toe om een automatische vergrendelingsdatum te gebruiken in de evaluatie.",
+  "SW_ADVANCED_OPTIONS": "Toon geavanceerde opties",
+  "SW_PUBLISH_TITLE": "Cijfers bijwerken in {0} voor {1}.",
+  "SW_SHOW_LABELS_TO_STUDENT": "Auto. feedback student"
 }
