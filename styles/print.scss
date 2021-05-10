@@ -8,6 +8,7 @@
 .el-progress-bar__outer,
 .el-tag,
 .question-number,
+.bg-gradient,
 .text-muted {
   -webkit-print-color-adjust: exact !important;
   color-adjust: exact !important;
@@ -20,6 +21,23 @@
 
 .print-only {
   display: none;
+}
+
+.print-logo {
+  background-image: url('/images/logo-text.svg');
+  background-size: contain;
+  width: 160px;
+  display: none;
+  background-position: center;
+  -webkit-print-color-adjust: exact;
+  height: 40px;
+  background-repeat: no-repeat;
+}
+
+.preload-print-logo {
+  display: inline-block;
+  width: 0;
+  height: 0;
 }
 
 @media print {
@@ -49,14 +67,7 @@
   }
 
   .print-logo {
-    background-image: url('/images/logo-text.svg');
-    background-size: contain;
-    width: 160px;
     display: inline-block;
-    background-position: center;
-    -webkit-print-color-adjust: exact;
-    height: 40px;
-    background-repeat: no-repeat;
   }
 
   .el-popup-parent--hidden {
