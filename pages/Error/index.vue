@@ -21,21 +21,17 @@
           </p>
 
           <!-- Cookies blocked warning -->
-          <el-alert v-if="errorType === 'lti_error'" type="warning" class="mt-20 text-left" :closable="false">
+          <el-alert v-if="errorType === 'lti_error'" effect="dark" class="mt-20 text-left" :closable="false">
             <h3 class="text-center mb-10">{{ $t('SW_COOKIE_BLOCKED') }}</h3>
             <p class="mb-10">{{ $t('SW_COOKIE_BLOCKED_INFO') }}</p>
             <ul>
               <li>{{ $t('SW_COOKIE_ALLOW') }}</li>
               <li>{{ $t('SW_USE_ANOTHER_BROWSER') }}</li>
-              <li>{{ $t('SW_ENABLE_COOKIE') }}</li>
             </ul>
 
-            <!-- Open 'cookie allow' page in new tab -->
+            <!-- Open app in new tab -->
             <div class="text-center mt-20 mb-20">
-              <el-button type="success" icon="el-icon-check" size="normal" @click="allowCookies">
-                {{ $t('SW_ALLOW_COOKIES') }}
-                <i class="icon-arrow_forward"/>
-              </el-button>
+              <new-tab-button/>
             </div>
           </el-alert>
         </div>
@@ -50,11 +46,12 @@
 <script>
 import config from 'config'
 import FooterLinks from '../../components/FooterLinks'
+import NewTabButton from '../../components/NewTabButton'
 
 export default {
   name: 'Error',
   metaInfo: { title: 'Error' },
-  components: { FooterLinks },
+  components: { FooterLinks, NewTabButton },
 
   data () {
     return {
