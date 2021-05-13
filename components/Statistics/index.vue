@@ -60,6 +60,18 @@
           <div v-else>{{ $t('SW_TOTAL') }} {{ stat.name.toLowerCase() }}</div>
         </el-card>
       </masonry>
+
+      <!-- calendar stats -->
+      <masonry class="hidden-xs" :cols="{default: 3, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
+        <el-card v-for="(stat, index) in calendarStatisticsValues" :key="`calendarStatisticsValues${index}`" class="stat-counter">
+          <div class="font-20">
+            <i :class="stat.icon"/>
+            <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'/></strong>
+          </div>
+
+          <div>{{ stat.name }}</div>
+        </el-card>
+      </masonry>
     </div>
 
     <!-- Loading -->
@@ -94,6 +106,7 @@ export default {
       statisticCompletionValues: [],
       statisticUserValues: [],
       statisticStatsValues: [],
+      calendarStatisticsValues: [],
       status: 'loading'
     }
   },
@@ -154,6 +167,7 @@ export default {
       const statCompletionValues = []
       const statUserValues = []
       const statStatsValues = []
+      const calendarStatsValues = []
 
       for (const key in this.statsObject) {
         this.statsObject[key].value = newStatisticValues[key] || 0
@@ -162,11 +176,13 @@ export default {
         if (this.statsObject[key].type === 'completionStats') { statCompletionValues.push(this.statsObject[key]) }
         else if (this.statsObject[key].type === 'userStats') { statUserValues.push(this.statsObject[key]) }
         else if (this.statsObject[key].type === 'usersStats') { statStatsValues.push(this.statsObject[key]) }
+        else if (this.calendarMode && this.statsObject[key].type === 'calendarStats') { calendarStatsValues.push(this.statsObject[key]) }
       }
 
       this.statisticCompletionValues = statCompletionValues
       this.statisticUserValues = statUserValues
       this.statisticStatsValues = statStatsValues
+      this.calendarStatisticsValues = calendarStatsValues
       this.status = 'done'
     }
   }
