@@ -86,7 +86,7 @@
               <!-- Modified date -->
               <p v-if="props.row.modifiedDate">
                 <strong class="mr-5">{{ $t('SW_MODIFIED_DATE') }}</strong>
-                {{ props.row.modifiedDate | fromNow }}
+                {{ fromNow(props.row.modifiedDate) }}
                 {{ $t('SW_AGO') }}
               </p>
 
@@ -251,10 +251,6 @@ export default {
     this.getOrgs()
   },
 
-  filters: {
-    fromNow: function (date) { return moment(date).fromNow(true) }
-  },
-
   methods: {
     getOrgs (refresh) {
       if (this.status === 'loading') return
@@ -357,6 +353,7 @@ export default {
       this.order = val.order
       if (this.status !== 'done') this.getOrgs(true)
     },
+    fromNow (date) { return moment(date).fromNow(true) },
     dateFormatter (row, column, value) { return moment(value).fromNow() },
     sortCreatedDate (a, b) { return dateSorter(a.createdDate, b.createdDate) },
     sortName (a, b) { return sortCaseInsensitive(a.name[this.lang], b.name[this.lang]) }

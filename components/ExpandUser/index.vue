@@ -6,7 +6,7 @@
     <!-- Modified date -->
     <p v-if="user.modifiedDate">
       <strong class="mr-5">{{ $t('SW_MODIFIED_DATE') }}</strong>
-      {{ user.modifiedDate | fromNow }}
+      {{ fromNow(user.modifiedDate) }}
       {{ $t('SW_AGO') }}
     </p>
 
@@ -75,10 +75,6 @@ export default {
     }
   },
 
-  filters: {
-    fromNow: function (date) { return moment(date).fromNow(true) }
-  },
-
   computed: {
     facultiesManager () {
       const faculties = this.school.faculties.map(fac => {
@@ -95,6 +91,7 @@ export default {
   },
 
   methods: {
+    fromNow (date) { return moment(date).fromNow(true) },
     getUserCourses () {
       this.$http.get(`users/${this._id}/courses`)
         .then(res => {

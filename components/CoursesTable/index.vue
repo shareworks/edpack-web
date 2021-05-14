@@ -44,7 +44,7 @@
             <!-- Modified date -->
             <p v-if="props.row.modifiedDate">
               <strong class="mr-5">{{ $t('SW_MODIFIED_DATE') }}</strong>
-              {{ props.row.modifiedDate | fromNow }}
+              {{ fromNow(props.row.modifiedDate) }}
               {{ $t('SW_AGO') }}
             </p>
             <!-- Modified by -->
@@ -141,10 +141,6 @@ export default {
     }
   },
 
-  filters: {
-    fromNow: function (date) { return moment(date).fromNow(true) }
-  },
-
   methods: {
     getFaculty (id) {
       let faculty = null
@@ -157,6 +153,7 @@ export default {
 
       return faculty
     },
+    fromNow (date) { return moment(date).fromNow(true) },
     sortCaseInsensitive (a, b) { return sortCaseInsensitive(a.name, b.name) },
     sortCreatedDate (a, b) { return dateSorter(a.createdDate, b.createdDate) },
     dateFormatter (row, column, value) { return moment(value).fromNow() }
