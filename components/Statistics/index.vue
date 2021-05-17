@@ -1,29 +1,34 @@
 <template>
   <div>
-    <div v-if="status === 'done'">
+    <page-cover class="mb-30">
+      <!-- Download products results -->
+      <page-header :title="$t('SW_STATS')"/>
+
       <el-form class="mb-10">
         <!-- Start & End date -->
-          <el-row type="flex" align="middle">
-            <el-col :xs="24" :md="4" :sm="8">
-              <el-date-picker v-model="minDate" @change="clearCalendar" size="medium" class="auto-width" type="date" format="dd-MM-yyyy" :picker-options="endDateOptions" :placeholder="$t('SW_SELECT_START_DATE')"/>
-            </el-col>
-            <el-col :xs="24" :md="2" :sm="2" class="">
-              <div class="text-muted text-center">
-                {{ $t('SW_UNTIL_DATE') }}
-              </div>
-            </el-col>
-            <el-col :xs="24" :md="4" :sm="8">
-              <el-date-picker v-model="maxDate" size="medium" class="auto-width" type="date" format="dd-MM-yyyy" :placeholder="$t('SW_SELECT_END_DATE')" :picker-options="endDateOptions"/>
-            </el-col>
+        <el-row type="flex" align="middle">
+          <el-col :xs="24" :md="4" :sm="8">
+            <el-date-picker v-model="minDate" @change="clearCalendar" size="medium" class="auto-width" type="date" format="dd-MM-yyyy" :picker-options="endDateOptions" :placeholder="$t('SW_SELECT_START_DATE')"/>
+          </el-col>
+          <el-col :xs="24" :md="2" :sm="2" class="">
+            <div class="text-muted text-center">
+              {{ $t('SW_UNTIL_DATE') }}
+            </div>
+          </el-col>
+          <el-col :xs="24" :md="4" :sm="8">
+            <el-date-picker v-model="maxDate" size="medium" class="auto-width" type="date" format="dd-MM-yyyy" :placeholder="$t('SW_SELECT_END_DATE')" :picker-options="endDateOptions"/>
+          </el-col>
 
-            <el-col :xs="24" :md="3" :sm="8" class="ml-5">
-              <el-button type="primary" size="medium" class="button-square-xs" plain @click="getStatisticsByDate" :disabled="!minDate">
-                <span>{{ $tc('SW_GET_STATISTIC', 1) }}</span>
-              </el-button>
-            </el-col>
-          </el-row>
+          <el-col :xs="24" :md="3" :sm="8" class="ml-5">
+            <el-button type="primary" size="medium" class="button-square-xs" plain @click="getStatisticsByDate" :disabled="!minDate">
+              <span>{{ $tc('SW_GET_STATISTIC', 1) }}</span>
+            </el-button>
+          </el-col>
+        </el-row>
       </el-form>
+    </page-cover>
 
+    <div v-if="status === 'done'" :class="isMobile ? 'px-10' : 'px-20'">
       <el-alert :closable="false" type="warning" :title="$t('SW_CALENDAR_MODE', [startEndFormat(minDate), startEndFormat(maxDate, true)])" v-if="calendarMode" class="mt-10 mb-10">
         <el-button type="text" @click="clearCalendar()">{{ $t('SW_CLEAR_SEARCH') }}</el-button>
       </el-alert>
@@ -98,6 +103,7 @@ export default {
       calendarMode: false,
       minDate: '',
       maxDate: '',
+      isMobile: this.$store.state.isMobile,
       endDateOptions: { disabledDate (time) { return new Date(time) > new Date() } },
       school: this.$store.state.school,
       facultyFilter: this.faculty ? this.faculty._id : this.$route.query.context || '',

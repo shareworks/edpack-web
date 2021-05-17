@@ -1,6 +1,6 @@
 <template>
   <div>
-    <page-cover>
+    <page-cover v-if="status === 'done'">
       <div class="pull-right">
         <!-- Statistics -->
         <el-button size="medium" @click="toggleStats" class="button-square-xs">
@@ -68,7 +68,7 @@
       </animated-tabs>
 
       <!-- Statistics dialog -->
-      <el-dialog :title="$t('SW_STATS')" append-to-body :visible.sync="dialogStats">
+      <el-dialog class="no-padding-dialog padding-bottom-dialog" append-to-body :visible.sync="dialogStats">
         <statistics v-if="dialogStats" :closeDialog="toggleStats" :statsObject="statsObject"/>
       </el-dialog>
     </div>
