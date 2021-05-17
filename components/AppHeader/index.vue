@@ -76,7 +76,7 @@
     </div>
 
     <!-- Pay as you go overview -->
-    <el-dialog :title="$t('SW_CREDITS_INFO')" append-to-body :visible.sync="dialogRemaining" v-if="hasCredits">
+    <el-dialog class="no-padding-dialog padding-bottom-dialog" append-to-body :visible.sync="dialogRemaining" v-if="hasCredits">
       <credits-overview :in-dialog="true"/>
     </el-dialog>
   </header>

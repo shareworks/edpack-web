@@ -457,11 +457,18 @@
   }
 }
 
-
 .no-header-button-dialog {
   .el-dialog {
     .el-dialog__headerbtn {
       display: none;
+    }
+  }
+}
+
+.padding-bottom-dialog {
+  .el-dialog {
+    .el-dialog__body {
+      padding-bottom: 10px !important;
     }
   }
 }
