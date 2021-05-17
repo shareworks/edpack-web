@@ -3,20 +3,20 @@
     <div v-if="status === 'done'">
       <el-form class="mb-10">
         <!-- Start & End date -->
-          <el-row type="flex" justify="center" align="middle">
-            <el-col :xs="24" :sm="8">
+          <el-row type="flex" align="middle">
+            <el-col :xs="24" :md="5" :sm="8">
               <el-date-picker v-model="minDate" @change="clearCalendar" size="medium" class="auto-width" type="date" format="dd-MM-yyyy" :picker-options="endDateOptions" :placeholder="$t('SW_SELECT_START_DATE')"/>
             </el-col>
-            <el-col :xs="24" :sm="4" class="">
+            <el-col :xs="24" :md="2" :sm="8" class="">
               <div class="text-muted text-center">
                 {{ $t('SW_UNTIL_DATE') }}
               </div>
             </el-col>
-            <el-col :xs="24" :sm="8">
+            <el-col :xs="24" :md="5" :sm="8">
               <el-date-picker v-model="maxDate" size="medium" class="auto-width" type="date" format="dd-MM-yyyy" :placeholder="$t('SW_SELECT_END_DATE')" :picker-options="endDateOptions"/>
             </el-col>
 
-            <el-col :xs="24" :sm="4" class="ml-5">
+            <el-col :xs="24" :md="3" :sm="8" class="ml-5">
               <el-button type="primary" size="medium" class="button-square-xs" plain @click="getStatisticsByDate" :disabled="!minDate">
                 <span>{{ $tc('SW_GET_STATISTIC', 1) }}</span>
               </el-button>
