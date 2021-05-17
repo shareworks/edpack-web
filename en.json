@@ -706,7 +706,7 @@
   "SW_NEW_LTI_TAB_TEXT": "Enable instructors to open {0} in a new window when in LTI.",
   "SW_INVITED": "Invited",
   "SW_SUBMITTED": "Submitted",
-  "SW_CALENDAR_MODE": "You now see statistic for such period: {0} - {1}",
+  "SW_CALENDAR_MODE": "Statistics between {0} and {1}",
   "SW_SELECT_DATE": "Select date",
   "SW_GET_STATISTIC": "Apply",
   "SW_UNTIL_DATE": "until",

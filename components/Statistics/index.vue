@@ -29,8 +29,11 @@
     </page-cover>
 
     <div v-if="status === 'done'" :class="isMobile ? 'px-10' : 'px-20'">
-      <el-alert :closable="false" type="warning" :title="$t('SW_CALENDAR_MODE', [startEndFormat(minDate), startEndFormat(maxDate, true)])" v-if="calendarMode" class="mt-10 mb-10">
-        <el-button type="text" @click="clearCalendar()">{{ $t('SW_CLEAR_SEARCH') }}</el-button>
+      <el-alert :closable="false" type="warning" v-if="calendarMode" class="mt-10 mb-10" closable @close="clearCalendar">
+        <p>
+          {{ $t('SW_CALENDAR_MODE', [startEndFormat(minDate), startEndFormat(maxDate, true)]) }}
+          <el-button type="text" @click="clearCalendar()">{{ $t('SW_CLEAR_SEARCH') }}</el-button>
+        </p>
       </el-alert>
 
       <!-- completionStats -->
