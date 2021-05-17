@@ -51,6 +51,18 @@
         </el-card>
       </masonry>
 
+      <!-- calendar stats -->
+      <masonry v-if="calendarMode" :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}">
+        <el-card v-for="(stat, index) in calendarStatisticsValues" :key="`calendarStatisticsValues${index}`" class="stat-counter">
+          <div class="font-26">
+            <i :class="stat.icon"/>
+            <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'/></strong>
+          </div>
+
+          <div>{{ stat.name }}</div>
+        </el-card>
+      </masonry>
+
       <!-- stats -->
       <masonry class="hidden-xs" :cols="{default: 3, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
         <el-card v-for="(stat, index) in statisticStatsValues" :key="`statisticStatsValues${index}`" class="stat-counter">
@@ -61,18 +73,6 @@
 
           <div v-if="calendarMode">{{ stat.calendarText }} {{ stat.name.toLowerCase() }}</div>
           <div v-else>{{ $t('SW_TOTAL') }} {{ stat.name.toLowerCase() }}</div>
-        </el-card>
-      </masonry>
-
-      <!-- calendar stats -->
-      <masonry class="hidden-xs" :cols="{default: 3, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
-        <el-card v-for="(stat, index) in calendarStatisticsValues" :key="`calendarStatisticsValues${index}`" class="stat-counter">
-          <div class="font-20">
-            <i :class="stat.icon"/>
-            <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'/></strong>
-          </div>
-
-          <div>{{ stat.name }}</div>
         </el-card>
       </masonry>
     </div>

@@ -691,5 +691,6 @@
   "SW_ADVANCED_OPTIONS": "Toon geavanceerde opties",
   "SW_PUBLISH_TITLE": "Cijfers bijwerken in {0} voor {1}.",
   "SW_SHOW_LABELS_TO_STUDENT": "Auto. feedback student",
-  "SW_LOGIN_TO_SELECTED_SCHOOL": "Log in {0} vanuit {1}"
+  "SW_LOGIN_TO_SELECTED_SCHOOL": "Log in {0} vanuit {1}",
+  "SW_CREATED_AFTER_MIN_DATE": "Gemaakt na min. datum"
 }
