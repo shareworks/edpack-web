@@ -49,8 +49,8 @@
 
       <!-- Accept terms and privacy statement -->
       <section v-else-if="steps[step] === 'terms'">
-        <el-card shadow="never" class="mb-20">
-          <div class="terms-window">
+        <el-card shadow="never" class="mb-20 terms-window">
+          <div>
             <div v-if="!acceptTermsOnWelcome" v-html="school.colofon[lang]"/>
             <static-terms v-else/>
           </div>
