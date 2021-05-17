@@ -4,7 +4,7 @@
       <!-- Download products results -->
       <page-header :title="$t('SW_STATS')"/>
 
-      <el-form class="mb-10">
+      <el-form>
         <!-- Start & End date -->
         <el-row type="flex" align="middle">
           <el-col :xs="24" :md="4" :sm="8">
@@ -29,10 +29,13 @@
     </page-cover>
 
     <div v-if="status === 'done'" :class="isMobile ? 'px-10' : 'px-20'">
-      <el-alert :closable="false" type="warning" v-if="calendarMode" class="mt-10 mb-10" closable @close="clearCalendar">
+      <el-alert :closable="false" type="warning" v-if="calendarMode" class="mb-20" @close="clearCalendar">
         <p>
-          {{ $t('SW_CALENDAR_MODE', [startEndFormat(minDate), startEndFormat(maxDate, true)]) }}
-          <el-button type="text" @click="clearCalendar()">{{ $t('SW_CLEAR_SEARCH') }}</el-button>
+          <strong>{{ $t('SW_CALENDAR_MODE', [startEndFormat(minDate), startEndFormat(maxDate, true)]) }}</strong>
+          <el-button class="ml-10" type="text" @click="clearCalendar()">
+            <i class="icon-clear"></i>
+            {{ $t('SW_CLEAR') }}
+          </el-button>
         </p>
       </el-alert>
 

@@ -21,6 +21,7 @@
         {{ prettyDate(user.credits.exp) }}
       </h4>
     </div>
+    <p class="mb-30" v-if="inDialog"></p>
   </div>
 </template>
 
