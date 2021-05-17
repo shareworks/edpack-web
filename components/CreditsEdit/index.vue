@@ -1,6 +1,11 @@
 <template>
   <div>
-    <p class="mb-20">{{ $t('SW_LIMIT_CREDITS_FORM', [user.name]) }}</p>
+    <page-cover class="mb-30">
+      <!-- Download products results -->
+      <page-header :title="$t('SW_CREDITS')"/>
+      <p class="mb-20">{{ $t('SW_LIMIT_CREDITS_FORM', [user.name]) }}</p>
+    </page-cover>
+
     <el-form label-width="180px">
       <!-- Amount of assessments -->
       <el-form-item :label="$t('SW_NEW_ASSESSMENTS')">
@@ -18,11 +23,13 @@
       </el-form-item>
 
       <!-- Action buttons -->
-      <el-button type="primary" @click="submitCreditLimit()" :loading="submitting">
-        <i class="icon-send"></i>
-        {{ $t('SW_SUBMIT') }}
-      </el-button>
-      <el-button type="text" @click="closeDialog()">{{ $t('SW_CANCEL') }}</el-button>
+      <el-form-item>
+        <el-button type="primary" @click="submitCreditLimit()" :loading="submitting">
+          <i class="icon-send"></i>
+          {{ $t('SW_SUBMIT') }}
+        </el-button>
+        <el-button type="text" @click="closeDialog()">{{ $t('SW_CANCEL') }}</el-button>
+      </el-form-item>
     </el-form>
   </div>
 </template>

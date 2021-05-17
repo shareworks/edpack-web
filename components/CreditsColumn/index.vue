@@ -9,7 +9,7 @@
     <span v-else class="text-muted">-</span>
 
     <!-- Pay as you go dialog -->
-    <el-dialog :visible.sync="creditsDialog" :title="$t('SW_CREDITS')" destroy-on-close>
+    <el-dialog :visible.sync="creditsDialog" class="no-padding-dialog padding-bottom-dialog" destroy-on-close>
       <credits-edit :user="scope" :closeDialog="toggleCreditsDialog"/>
     </el-dialog>
   </div>
