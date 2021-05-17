@@ -4,15 +4,15 @@
       <el-form class="mb-10">
         <!-- Start & End date -->
           <el-row type="flex" align="middle">
-            <el-col :xs="24" :md="5" :sm="8">
+            <el-col :xs="24" :md="4" :sm="8">
               <el-date-picker v-model="minDate" @change="clearCalendar" size="medium" class="auto-width" type="date" format="dd-MM-yyyy" :picker-options="endDateOptions" :placeholder="$t('SW_SELECT_START_DATE')"/>
             </el-col>
-            <el-col :xs="24" :md="2" :sm="8" class="">
+            <el-col :xs="24" :md="2" :sm="2" class="">
               <div class="text-muted text-center">
                 {{ $t('SW_UNTIL_DATE') }}
               </div>
             </el-col>
-            <el-col :xs="24" :md="5" :sm="8">
+            <el-col :xs="24" :md="4" :sm="8">
               <el-date-picker v-model="maxDate" size="medium" class="auto-width" type="date" format="dd-MM-yyyy" :placeholder="$t('SW_SELECT_END_DATE')" :picker-options="endDateOptions"/>
             </el-col>
 
