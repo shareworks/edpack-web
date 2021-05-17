@@ -3,22 +3,26 @@
     <transition name="login" mode="out-in">
       <!-- Main screen where you choose the way to login -->
       <div class="login" :key="'google'" v-if="!passwordMode">
-        <div>
+        <div v-loading="submitting">
           <el-alert v-if="serverStatus === 'offline'" class="mb-10" center :title="$t('SW_SERVER_OFFLINE')" type="error" :closable="false"/>
-          <p class="title"><strong>{{ $t('SW_LOGIN_SCHOOL') }}</strong></p>
 
-          <!-- School selection -->
-          <el-select class="block" v-model="selectedSchool" filterable :placeholder="$t('SW_SELECT_YOUR_SCHOOL')"
-                     @change="selectSchool" :no-data-text="$t('SW_NO_DATA')" :no-match-text="$t('SW_NO_SCHOOLS_FOUND')"
-                     :loading-text="$t('SW_LOADING')">
-            <el-option v-for="(item, index) in schools" :key="index" :value="item">
-              <i class="icon-school"/>
-              <span>{{ item.name }}</span>
-            </el-option>
-          </el-select>
+          <p v-if="selectedSchool" class="title mb-10"><strong>{{ $t('SW_LOGIN_TO_SELECTED_SCHOOL', [appName, selectedSchool.name]) }}</strong></p>
+          <p v-else class="title"><strong>{{ $t('SW_LOGIN_SCHOOL') }}</strong></p>
 
-          <!-- or -->
-          <div class="login-or">{{$t('SW_OR')}}</div>
+          <div v-if="!selectedSchool">
+            <!-- School selection -->
+            <el-select class="block" v-model="selectedSchool" filterable :placeholder="$t('SW_SELECT_YOUR_SCHOOL')"
+                       @change="selectSchool" :no-data-text="$t('SW_NO_DATA')" :no-match-text="$t('SW_NO_SCHOOLS_FOUND')"
+                       :loading-text="$t('SW_LOADING')">
+              <el-option v-for="(item, index) in schools" :key="index" :value="item">
+                <i class="icon-school"/>
+                <span>{{ item.name }}</span>
+              </el-option>
+            </el-select>
+
+            <!-- or -->
+            <div class="login-or">{{$t('SW_OR')}}</div>
+          </div>
 
           <!-- MS log in -->
           <el-button v-if="signinWithMS" class="block mb-5 no-margin" @click="selectMicrosoft">
@@ -27,14 +31,14 @@
           </el-button>
 
           <!-- Google log in -->
-          <el-button class="block no-margin" @click="selectGoogle">
+          <el-button v-if="signInWithGoogle" class="block no-margin" @click="selectGoogle">
             <span class="google-icon"/>
             <strong>{{ $t('SW_LOG_IN_WITH_GOOGLE') }}</strong>
           </el-button>
 
           <!-- Sign in by password -->
-          <el-button class="mt-10 block no-margin" type="primary" plain @click="passwordMode = true" v-if="signinByPassword">
-            <i class="icon-user"></i>
+          <el-button v-if="signinByPassword" class="mt-10 block no-margin" type="primary" plain @click="passwordMode = true">
+            <i class="icon-user"/>
             {{ $t('SW_SIGN_IN_BY_PASSWORD') }}
           </el-button>
         </div>
@@ -105,12 +109,9 @@ export default {
     return {
       appName: config.name,
       apiUrl: config.api_url,
-      signinByPassword: config.signinByPassword,
-      signinWithMS: config.signinWithMS,
       showRequestPasswordLink: config.showRequestPasswordLink,
       passwordMode: false,
       submitting: false,
-      selectedSchool: '',
       loading: false,
       schools: [],
       errorType: this.$route.query.error,
@@ -118,8 +119,15 @@ export default {
       aboutUrl: config.aboutUrl,
       businessName: config.business.shortName,
       form: { email: '', password: '' },
-      serverStatus: 'loading'
+      serverStatus: 'loading',
+      selectedSchool: null
     }
+  },
+
+  computed: {
+    signInWithGoogle () { return !this.selectedSchool || this.selectedSchool.singInByPassword },
+    signinWithMS () { return config.signinWithMS && (!this.selectedSchool || this.selectedSchool.singInWithMS) },
+    signinByPassword () { return config.signinByPassword && (!this.selectedSchool || this.selectedSchool.singInByPassword) }
   },
 
   mounted () {
@@ -130,6 +138,7 @@ export default {
 
   methods: {
     selectSchool (school) {
+      this.submitting = true
       let redirect = this.$route.query.redirect || ''
       if (redirect[0] === '/') redirect = redirect.substr(1)
       window.location.assign(`${this.apiUrl}/auth/saml?name=${school.name}&entrypoint=${school.url}&redirectpath=${redirect}`)

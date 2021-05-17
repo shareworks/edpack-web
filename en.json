@@ -721,5 +721,6 @@
   "SW_ALLOW_AUTO_LOCK_DATES_TEXT": "Allow instructor to set automatic lock date when creating evaluation.",
   "SW_ADVANCED_OPTIONS": "Show advanced options",
   "SW_AUTOLOCK_DATE": "Auto lock date",
-  "SW_REMINDER_DATE": "Reminder date"
+  "SW_REMINDER_DATE": "Reminder date",
+  "SW_LOGIN_TO_SELECTED_SCHOOL": "Sign in {0} from {1}"
 }
