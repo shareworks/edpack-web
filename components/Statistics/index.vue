@@ -3,10 +3,9 @@
     <div v-if="status === 'done'">
       <el-form class="mb-10">
         <!-- Start & End date -->
-        <el-form-item :label="$t('SW_STARTEND_DATE')">
           <el-row type="flex" justify="center" align="middle">
             <el-col :xs="24" :sm="8">
-              <el-date-picker v-model="minDate" @change="clearCalendar" class="auto-width" type="date" format="dd-MM-yyyy" :picker-options="endDateOptions" :placeholder="$t('SW_SELECT_DATE')"/>
+              <el-date-picker v-model="minDate" @change="clearCalendar" size="medium" class="auto-width" type="date" format="dd-MM-yyyy" :picker-options="endDateOptions" :placeholder="$t('SW_SELECT_START_DATE')"/>
             </el-col>
             <el-col :xs="24" :sm="4" class="">
               <div class="text-muted text-center">
@@ -14,7 +13,7 @@
               </div>
             </el-col>
             <el-col :xs="24" :sm="8">
-              <el-date-picker v-model="maxDate" class="auto-width" type="date" format="dd-MM-yyyy" :placeholder="$t('SW_SELECT_DATE')" :picker-options="endDateOptions"/>
+              <el-date-picker v-model="maxDate" size="medium" class="auto-width" type="date" format="dd-MM-yyyy" :placeholder="$t('SW_SELECT_END_DATE')" :picker-options="endDateOptions"/>
             </el-col>
 
             <el-col :xs="24" :sm="4" class="ml-5">
@@ -23,7 +22,6 @@
               </el-button>
             </el-col>
           </el-row>
-        </el-form-item>
       </el-form>
 
       <el-alert :closable="false" type="warning" :title="$t('SW_CALENDAR_MODE', [startEndFormat(minDate), startEndFormat(maxDate, true)])" v-if="calendarMode" class="mt-10 mb-10">
