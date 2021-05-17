@@ -3,7 +3,7 @@
     {{ $t('SW_CREDITS_REMAINING_INFO', [school.name[lang], appName])}} <a href="#" @click.prevent="contactUs">{{ $t('SW_CONTACT_SUPPORT') }}</a>.
 
     <h3 class="text-center mt-20 bold" v-if="inDialog">
-      You currently have <el-tag type="success">{{ creditsLeft || 0 }}</el-tag> credits.
+      You currently have <el-tag type="success" effect="dark">{{ creditsLeft || 0 }}</el-tag> credits.
     </h3>
     <div v-if="user.credits && user.credits.limit && user.credits.exp">
       <p class="text-center mt-20 mb-10">You have to use these credits before:</p>

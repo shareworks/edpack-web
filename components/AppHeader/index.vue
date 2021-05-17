@@ -23,7 +23,7 @@
           <strong class="visible-sm-inline visible-xs-inline"><i class="icon-done_all"/></strong>
           <strong v-if="user.credits"> {{ creditsLeft }} </strong>
           <strong v-else> 0 </strong>
-          <strong class="hidden-xs hidden-sm">{{ $t('SW_ASSESSMENTS_LEFT') }}</strong>
+          <strong class="hidden-xs hidden-sm">{{ $t('SW_CREDITS_LEFT') }}</strong>
         </el-button>
 
         <el-menu-item index="" class="hide"/>
