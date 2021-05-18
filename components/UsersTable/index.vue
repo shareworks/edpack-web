@@ -139,7 +139,7 @@
       </el-table-column>
 
       <!-- Credits -->
-      <el-table-column property="credits" v-if="school.creditsEnabled" :label="$t('SW_LIMIT_ASSESSMENT_CREATION')" width="120">
+      <el-table-column property="credits" v-if="school.creditsEnabled" :label="$t('SW_CREDITS')" width="120">
         <template slot-scope="props">
           <!-- Credits column -->
           <credits-column :scope="props.row" :updateUser="updateUser"/>
