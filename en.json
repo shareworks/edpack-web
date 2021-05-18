@@ -124,7 +124,7 @@
   "SW_COURSE_CREATED": "Course was successfully added. Click on your course to continue!",
   "SW_COURSE_ID": "ID",
   "SW_COURSE_INACTIVE": "{0} not activated by course instructor(s).",
-  "SW_COURSE_INACTIVE_HELP": "Please, contact with your instructor(s).",
+  "SW_COURSE_INACTIVE_HELP": "Please contact your instructor(s) if you think this is incorrect.",
   "SW_COURSE_IS_ARCHIVED": "This course has been archived.",
   "SW_COURSE_NAME": "Course name",
   "SW_COURSE_NAME_PLACEHOLDER": "Name of the course ...",
