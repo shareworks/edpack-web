@@ -58,7 +58,7 @@ export default {
       appName: config.name,
       webUrl: config.web_url,
       inLTI: this.$store.state.inLTI,
-      errorType: this.$route.query.tl || this.$route.query.type || this.$route.query.code || 'UNKNOWN_ERROR'
+      errorType: this.$route.query.translation || this.$route.query.tl || this.$route.query.type || this.$route.query.code || 'UNKNOWN_ERROR'
     }
   },
 

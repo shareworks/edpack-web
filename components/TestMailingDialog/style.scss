@@ -30,36 +30,3 @@
     }
   }
 }
-
-.terms-window {
-  max-height: calc(90vh - 400px);
-  min-height: 140px;
-  padding: 15px;
-  overflow-x: hidden;
-  text-align: left;
-  overflow-y: auto;
-  margin: -15px;
-  font-size: 0.82rem;
-
-  .static-header {
-    padding: 30px;
-    text-align: center;
-  }
-
-  h2 {
-    font-size: 0.875rem;
-  }
-
-  .terms > section {
-    margin-bottom: 20px;
-    margin-top: 20px;
-
-    > p {
-      margin-bottom: 10px;
-    }
-  }
-}
-
-.welcome-dialog .additional {
-  display: none;
-}
