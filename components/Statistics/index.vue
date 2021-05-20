@@ -1,6 +1,6 @@
 <template>
   <div>
-    <page-cover class="mb-30">
+    <page-cover class="mb-30" v-if="!faculty">
       <!-- Download products results -->
       <page-header :title="$t('SW_STATS')"/>
 
