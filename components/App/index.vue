@@ -4,11 +4,14 @@
     <vue-progress-bar/>
     <app-sidebar v-if="navAvailable" :closeSidebar="closeSidebar" :active="sidebarOpened" />
     <app-header v-if="navAvailable" :openSidebar="openSidebar"/>
-    <lti-header v-if="showLtiHeader"></lti-header>
+    <lti-header v-if="showLtiHeader"/>
 
     <!-- Main content -->
     <main :class="{ 'page-offset': pageOffset, 'nav-offset': navAvailable || showLtiHeader, 'page-lti': inLTI && !showLtiHeader }">
-      <el-alert type="error" class="no-border-radius text-center" effect="dark" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE', [appName])" v-if="!serverOnline"/>
+      <el-alert type="error" class="no-border-radius text-center" effect="dark" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE', [appName])" v-if="!serverOnline">
+        <spinner v-if="checkConnectionLoading"/>
+        <span v-else>{{ $t('SW_RETRY_IN', [countdownNumber]) }}</span>
+      </el-alert>
       <el-alert type="warning" class="no-border-radius text-center" effect="dark" show-icon :title="$t('SW_COOKIE_WARNING', [appName])" v-if="cookieWarning"/>
 
       <el-row class="container">
@@ -75,6 +78,9 @@ export default {
       serverOnline: true,
       appName: config.name,
       releaseStage: config.releaseStage,
+      checkConnectionLoading: false,
+      countdownFunction: null,
+      countdownNumber: 30,
       cookieWarning: config.cookieWarning && !navigator.cookieEnabled
     }
   },
@@ -132,9 +138,24 @@ export default {
       Bugsnag.addMetadata('school', { name: user.organization.slug, id: user.organization._id })
     },
     checkConnection () {
+      this.checkConnectionLoading = true
+
       this.$http.get('status')
         .then(() => { this.serverOnline = true })
-        .catch(() => { this.serverOnline = false })
+        .catch(() => {
+          this.serverOnline = false
+          this.countdownNumber = 30
+          this.countdownFunction = setInterval(() => { this.checkCountdown() }, 1000)
+        })
+        .finally(() => { this.checkConnectionLoading = false })
+    },
+    checkCountdown () {
+      if (this.countdownNumber > 1) {
+        return this.countdownNumber--
+      }
+
+      clearInterval(this.countdownFunction)
+      this.checkConnection()
     },
     toggleDialog () {
       this.dialogWelcome = !this.dialogWelcome
