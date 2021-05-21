@@ -12,7 +12,6 @@
         </router-link>
 
         <!-- Log in panel -->
-        <el-alert type="warning" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE', [appName])" v-if="!serverOnline"/>
         <register class="mb-30"/>
 
         <!-- Footer links -->
@@ -35,7 +34,6 @@ export default {
 
   data () {
     return {
-      serverOnline: true,
       appName: config.name
     }
   }

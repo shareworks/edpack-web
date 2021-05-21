@@ -3,7 +3,6 @@
     <page-cover>
       <!-- Page Header -->
       <page-header :title="$t('SW_MY_ACCOUNT')" :intro="$t(school.manageAccountEnabled || school.role === 'admin' || form.systemAdmin ? 'SW_MY_ACCOUNT_SHORT' : '')"/>
-      <el-alert type="warning" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE', [appName])" v-if="!serverOnline"/>
 
       <!-- View your profile -->
       <el-button size="small" type="primary" v-if="hasUserProfiles" @click="$router.push({ name: 'profile', params: { id: form._id, slug: school.slug } })" class="mt-10">
@@ -63,7 +62,6 @@ export default {
       hasUserProfiles: config.hasUserProfiles,
       school: this.$store.state.school,
       form: JSON.parse(JSON.stringify(this.$store.state.user)),
-      serverOnline: true,
       isAdmin: this.$store.state.isAdmin,
       appName: config.name
     }
