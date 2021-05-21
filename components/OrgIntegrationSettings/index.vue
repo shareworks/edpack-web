@@ -4,9 +4,9 @@
       <div>
         {{ $t('SW_INTEGRATIONS_INFO_TEXT', [appName]) }}
 
-        <p class="mt-5 bold">
+        <p v-if="showChatLink" class="mt-5 bold">
           {{ $t('SW_HELP_SETUP_INTEGRATION') }}
-          <a v-if="showChatLink" href="#" @click.prevent="openChat">{{ $t('SW_CONTACT_US').toLowerCase() }}</a>.
+          <a href="#" @click.prevent="openChat">{{ $t('SW_CONTACT_US').toLowerCase() }}</a>.
         </p>
       </div>
     </el-alert>
