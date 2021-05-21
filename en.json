@@ -722,5 +722,9 @@
   "SW_LOGIN_TO_SELECTED_SCHOOL": "Sign in {0} from {1}",
   "SW_CREATED_AFTER_MIN_DATE": "Created after min. date",
   "SW_READ_TERMS": "Please read and accept our terms before using {0}.",
-  "SW_ACCEPT_CLOSE": "Accept & close"
+  "SW_ACCEPT_CLOSE": "Accept & close",
+  "SW_AUTH_OPTIONS": "Auth options",
+  "SW_MICROSOFT": "Microsoft",
+  "SW_GOOGLE": "Google",
+  "SW_ALLOW_AUTH_OPTIONS_LOGIN": "Allow members to sign in with {0} by social account."
 }

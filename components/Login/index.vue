@@ -3,7 +3,7 @@
     <transition name="login" mode="out-in">
       <!-- Main screen where you choose the way to login -->
       <div class="login" :key="'google'" v-if="!passwordMode">
-        <div v-loading="submitting">
+        <div>
           <el-alert v-if="serverStatus === 'offline'" class="mb-10" center :title="$t('SW_SERVER_OFFLINE')" type="error" :closable="false"/>
 
           <p v-if="selectedSchool" class="title mb-10"><strong>{{ $t('SW_LOGIN_TO_SELECTED_SCHOOL', [appName, selectedSchool.name]) }}</strong></p>
@@ -25,23 +25,26 @@
           </div>
 
           <!-- MS log in -->
-          <el-button v-if="signinWithMS" class="block mb-5 no-margin" @click="selectMicrosoft">
+          <el-button v-if="signinWithMS" :disabled="submitting" class="block mb-5 no-margin" @click="selectMicrosoft">
             <span class="ms-icon"/>
             <strong>{{ $t('SW_LOG_IN_WITH_MS') }}</strong>
           </el-button>
 
           <!-- Google log in -->
-          <el-button v-if="signInWithGoogle" class="block no-margin" @click="selectGoogle">
+          <el-button v-if="signInWithGoogle" :disabled="submitting" class="block no-margin" @click="selectGoogle">
             <span class="google-icon"/>
             <strong>{{ $t('SW_LOG_IN_WITH_GOOGLE') }}</strong>
           </el-button>
 
           <!-- Sign in by password -->
-          <el-button v-if="signinByPassword" class="mt-10 block no-margin" type="primary" plain @click="passwordMode = true">
+          <el-button v-if="signinByPassword" :disabled="submitting" class="mt-10 block no-margin" type="primary" plain @click="passwordMode = true">
             <i class="icon-user"/>
             {{ $t('SW_SIGN_IN_BY_PASSWORD') }}
           </el-button>
         </div>
+
+        <!-- Loading -->
+        <spinner class="mt-30" v-if="submitting"/>
 
         <!-- Error alert -->
         <el-alert class="mt-10" type="error" show-icon v-if="errorType" :title="$t('SW_' + errorType.toUpperCase())"/>
@@ -112,7 +115,6 @@ export default {
       showRequestPasswordLink: config.showRequestPasswordLink,
       passwordMode: false,
       submitting: false,
-      loading: false,
       schools: [],
       errorType: this.$route.query.error,
       businessUrl: config.business.url,
@@ -125,9 +127,9 @@ export default {
   },
 
   computed: {
-    signInWithGoogle () { return !this.selectedSchool || this.selectedSchool.singInByPassword },
-    signinWithMS () { return config.signinWithMS && (!this.selectedSchool || this.selectedSchool.singInWithMS) },
-    signinByPassword () { return config.signinByPassword && (!this.selectedSchool || this.selectedSchool.singInByPassword) }
+    signInWithGoogle () { return !this.selectedSchool || this.selectedSchool.loginMethods.includes('google') },
+    signinWithMS () { return !this.selectedSchool || this.selectedSchool.loginMethods.includes('microsoft') },
+    signinByPassword () { return !this.selectedSchool || this.selectedSchool.loginMethods.includes('loginByPassword') }
   },
 
   mounted () {
@@ -141,7 +143,12 @@ export default {
       this.submitting = true
       let redirect = this.$route.query.redirect || ''
       if (redirect[0] === '/') redirect = redirect.substr(1)
-      window.location.assign(`${this.apiUrl}/auth/saml?name=${school.name}&entrypoint=${school.url}&redirectpath=${redirect}`)
+
+      if (this.selectedSchool.loginMethods.includes('saml')) {
+        window.location.assign(`${this.apiUrl}/auth/saml?name=${school.name}&entrypoint=${school.url}&redirectpath=${redirect}`)
+      } else {
+        this.submitting = false
+      }
     },
     selectGoogle () {
       if (config.mock_user) return this.$router.push('/admin')

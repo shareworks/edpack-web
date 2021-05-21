@@ -35,17 +35,17 @@
           </el-button>
 
           <!-- Register with MS account -->
-          <el-button class="block no-margin mt-5" v-if="signinWithMS" @click="selectMicrosoft">
+          <el-button class="block no-margin mt-5" @click="selectMicrosoft">
             <span class="ms-icon"></span>
             <strong>{{ $t('SW_REGISTER_WITH_MS') }}</strong>
           </el-button>
 
           <div v-if="localLoginEnabled">
             <!-- or Sign in By Password -->
-            <div class="login-or" v-if="signinByPassword">{{$t('SW_OR')}}</div>
+            <div class="login-or">{{$t('SW_OR')}}</div>
 
             <!-- Register with new password -->
-            <div v-if="signinByPassword">
+            <div>
               <p class="title"><strong>{{$t(recoverToken ? 'SW_RESET_BY_ACCOUNT' : 'SW_ACCEPT_BY_ACCOUNT', [appName]) }}</strong></p>
 
               <!-- Password -->
@@ -100,8 +100,6 @@ export default {
       recoverToken: this.$route.query.recoverToken || '',
       organizationId: this.$route.query.organization || '',
       apiUrl: config.api_url,
-      signinByPassword: config.signinByPassword,
-      signinWithMS: config.signinWithMS,
       passwordMode: false,
       submitting: false,
       selectedSchool: '',
