@@ -8,9 +8,17 @@
 
     <!-- Main content -->
     <main :class="{ 'page-offset': pageOffset, 'nav-offset': navAvailable || showLtiHeader, 'page-lti': inLTI && !showLtiHeader }">
+
       <el-alert type="error" class="no-border-radius text-center" effect="dark" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE', [appName])" v-if="!serverOnline">
         <spinner v-if="checkConnectionLoading"/>
-        <span v-else>{{ $t('SW_RETRY_IN', [countdownNumber]) }}</span>
+        <p v-else>
+          <span>{{ $t('SW_RETRY_IN', [countdownNumber]) }}</span>
+
+          <el-button class="inline ml-5" type="primary" plain size="mini" @click="checkConnection">{{ $t('SW_RETRY_NOW') }}</el-button>
+        </p>
+
+        <a href="https://status.shareworks.nl/" target="_blank">{{ $t('SW_CHECK_STATUS') }}</a>
+
       </el-alert>
       <el-alert type="warning" class="no-border-radius text-center" effect="dark" show-icon :title="$t('SW_COOKIE_WARNING', [appName])" v-if="cookieWarning"/>
 
@@ -139,6 +147,7 @@ export default {
     },
     checkConnection () {
       this.checkConnectionLoading = true
+      clearInterval(this.countdownFunction)
 
       this.$http.get('status')
         .then(() => { this.serverOnline = true })
@@ -153,8 +162,6 @@ export default {
       if (this.countdownNumber > 1) {
         return this.countdownNumber--
       }
-
-      clearInterval(this.countdownFunction)
       this.checkConnection()
     },
     toggleDialog () {

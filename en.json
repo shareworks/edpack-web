@@ -728,5 +728,7 @@
   "SW_GOOGLE": "Google",
   "SW_ALLOW_AUTH_OPTIONS_LOGIN": "Allow members to sign in with {0} by social account.",
   "SW_SIGN_IN_TITLE": "You can sign in using one of these methods:",
-  "SW_RETRY_IN": "Retry in {0}"
+  "SW_RETRY_IN": "Retry in {0}",
+  "SW_CHECK_STATUS": "Check status",
+  "SW_RETRY_NOW": "Retry now"
 }
