@@ -726,5 +726,6 @@
   "SW_AUTH_OPTIONS": "Auth options",
   "SW_MICROSOFT": "Microsoft",
   "SW_GOOGLE": "Google",
-  "SW_ALLOW_AUTH_OPTIONS_LOGIN": "Allow members to sign in with {0} by social account."
+  "SW_ALLOW_AUTH_OPTIONS_LOGIN": "Allow members to sign in with {0} by social account.",
+  "SW_SIGN_IN_TITLE": "You can sign in using one of these methods:"
 }

@@ -9,9 +9,11 @@
           <p v-if="selectedSchool" class="title mb-10"><strong>{{ $t('SW_LOGIN_TO_SELECTED_SCHOOL', [appName, selectedSchool.name]) }}</strong></p>
           <p v-else class="title"><strong>{{ $t('SW_LOGIN_SCHOOL') }}</strong></p>
 
+          <p v-if="selectedSchool" class="title mb-10">{{ $t('SW_SIGN_IN_TITLE') }}</p>
+
           <div v-if="!selectedSchool">
             <!-- School selection -->
-            <el-select class="block" v-model="selectedSchool" filterable :placeholder="$t('SW_SELECT_YOUR_SCHOOL')"
+            <el-select :value="selectedSchool" class="block" filterable :placeholder="$t('SW_SELECT_YOUR_SCHOOL')"
                        @change="selectSchool" :no-data-text="$t('SW_NO_DATA')" :no-match-text="$t('SW_NO_SCHOOLS_FOUND')"
                        :loading-text="$t('SW_LOADING')">
               <el-option v-for="(item, index) in schools" :key="index" :value="item">
@@ -134,19 +136,29 @@ export default {
 
   mounted () {
     this.$http.get('/auth/saml/identity-providers')
-      .then((res) => { this.schools = res.data.list })
+      .then((res) => {
+        this.schools = res.data.list
+
+        if (this.$route.query.schoolId) {
+          const targetSchool = this.schools.find((school) => school._id === this.$route.query.schoolId)
+          if (targetSchool) this.selectSchool(targetSchool)
+        }
+      })
       .catch(() => { this.$message({ message: this.$i18n.t('SW_COULD_NOT_GET_IDP'), type: 'error' }) })
   },
 
   methods: {
     selectSchool (school) {
       this.submitting = true
+      this.selectedSchool = school
       let redirect = this.$route.query.redirect || ''
       if (redirect[0] === '/') redirect = redirect.substr(1)
 
       if (this.selectedSchool.loginMethods.includes('saml')) {
         window.location.assign(`${this.apiUrl}/auth/saml?name=${school.name}&entrypoint=${school.url}&redirectpath=${redirect}`)
       } else {
+        const route = { name: 'landing', query: { schoolId: school._id } }
+        this.$router.push(route)
         this.submitting = false
       }
     },

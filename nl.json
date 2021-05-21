@@ -693,5 +693,6 @@
   "SW_AUTH_OPTIONS": "Auth-opties",
   "SW_MICROSOFT": "Microsoft",
   "SW_GOOGLE": "Google",
-  "SW_ALLOW_AUTH_OPTIONS_LOGIN": "Leden toestaan zich aan te melden met {0} via een sociaal account."
+  "SW_ALLOW_AUTH_OPTIONS_LOGIN": "Leden toestaan zich aan te melden met {0} via een sociaal account.",
+  "SW_SIGN_IN_TITLE": "U kunt zich op een van deze manieren aanmelden:"
 }
