@@ -101,22 +101,47 @@
       <el-input v-model="form.websiteUrl" type="url" placeholder="https://about.your-school.com ..."/>
     </el-form-item>
 
-    <!-- Faculty term EN -->
+    <!-- Faculty term -->
     <el-form-item :label="$t('SW_ORG_FACULTYTERM_NAME')" required>
       <inputs-with-flags :change="setNewFaculty" :value="form.terminology.faculty" name="facultyTerm"/>
     </el-form-item>
 
-    <!-- Faculties term EN -->
+    <!-- Faculties term -->
     <el-form-item :label="$t('SW_ORG_FACULTIESTERM_NAME')" required>
       <inputs-with-flags :change="setNewFaculties" :value="form.terminology.faculties" name="facultiesTerm"/>
     </el-form-item>
 
-    <!-- Plan term EN -->
+    <!-- Student term -->
+    <el-form-item :label="$t('SW_ORG_FACULTIESTERM_NAME')" required>
+      <inputs-with-flags :change="setNewFaculties" :value="form.terminology.student" name="facultiesTerm"/>
+    </el-form-item>
+
+    <!-- Student term -->
+    <el-form-item :label="$t('SW_ORG_STUDENT_TERM_NAME')" required>
+      <inputs-with-flags :change="setNewFaculties" :value="form.terminology.student" name="facultiesTerm"/>
+    </el-form-item>
+
+    <!-- Students term -->
+    <el-form-item :label="$t('SW_ORG_STUDENTS_TERM_NAME')" required>
+      <inputs-with-flags :change="setNewFaculties" :value="form.terminology.students" name="facultiesTerm"/>
+    </el-form-item>
+
+    <!-- Instructor term -->
+    <el-form-item :label="$t('SW_ORG_INSTRUCTOR_TERM_NAME')" required>
+      <inputs-with-flags :change="setNewFaculties" :value="form.terminology.instructor" name="facultiesTerm"/>
+    </el-form-item>
+
+    <!-- Instructors term -->
+    <el-form-item :label="$t('SW_ORG_INSTRUCTORS_TERM_NAME')" required>
+      <inputs-with-flags :change="setNewFaculties" :value="form.terminology.instructors" name="facultiesTerm"/>
+    </el-form-item>
+
+    <!-- Plan term -->
     <el-form-item :label="$t('SW_ORG_PLANTERM_NAME')" v-if="usePlansTerminology && school.enablePlans" required>
       <inputs-with-flags :change="setNewPlan" :value="form.terminology.plan" name="planTerm"/>
     </el-form-item>
 
-    <!-- Plans term EN -->
+    <!-- Plans term -->
     <el-form-item :label="$t('SW_ORG_PLANSTERM_NAME')" v-if="usePlansTerminology && school.enablePlans" required>
       <inputs-with-flags :change="setNewPlans" :value="form.terminology.plans" name="plansTerm"/>
     </el-form-item>

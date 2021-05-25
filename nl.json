@@ -697,5 +697,9 @@
   "SW_SIGN_IN_TITLE": "U kunt zich op een van deze manieren aanmelden:",
   "SW_RETRY_IN": "Probeer opnieuw in {0}",
   "SW_CHECK_STATUS": "Controleer de status",
-  "SW_RETRY_NOW": "Probeer het nu opnieuw"
+  "SW_RETRY_NOW": "Probeer het nu opnieuw",
+  "SW_ORG_STUDENT_TERM_NAME": "Term 'student'",
+  "SW_ORG_STUDENTS_TERM_NAME": "Term 'studenten'",
+  "SW_ORG_INSTRUCTOR_TERM_NAME": "Term 'docent'",
+  "SW_ORG_INSTRUCTORS_TERM_NAME": "Term 'docenten'"
 }
