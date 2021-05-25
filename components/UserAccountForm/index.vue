@@ -68,7 +68,10 @@
 
     <!-- Role: Admin, Staff or Student -->
     <el-form-item :label="$tc('SW_ROLE', 1)" class="additional">
-      <strong>{{ $tc('SW_' + (form.role || user.role).toUpperCase()) }}</strong>
+      <strong v-if="form.role === 'student' || user.role === 'student'">{{ school.terminology.student[lang] }}</strong>
+      <strong v-else-if="form.role === 'staff' || user.role === 'staff'">{{ school.terminology.instructor[lang] }}</strong>
+      <strong v-else-if="form.role === 'admin' || user.role === 'admin'">{{ $tc('SW_ADMIN', 1) }}</strong>
+
       {{ $t('SW_ROLE_AT', { school: form.organization.name[lang] }) }}
 
       <!-- Change role -->
@@ -79,8 +82,8 @@
         </el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item :command="{ newRole: 'admin' }" v-if="isSysAdmin" :disabled="form.role === 'admin'">{{ $tc('SW_ADMIN', 1) }}</el-dropdown-item>
-          <el-dropdown-item :command="{ newRole: 'staff' }" :disabled="form.role === 'staff'">{{ $tc('SW_STAFF', 1) }}</el-dropdown-item>
-          <el-dropdown-item :command="{ newRole: 'student' }" :disabled="form.role === 'student'">{{ $tc('SW_STUDENT', 1) }}</el-dropdown-item>
+          <el-dropdown-item :command="{ newRole: 'staff' }" :disabled="form.role === 'staff'">{{ school.terminology.instructor[lang] }}</el-dropdown-item>
+          <el-dropdown-item :command="{ newRole: 'student' }" :disabled="form.role === 'student'">{{ school.terminology.student[lang] }}</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </el-form-item>

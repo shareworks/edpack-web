@@ -36,6 +36,13 @@ export default {
   components: { draggable },
   props: ['students', 'setDragging', 'mode', 'group', 'searchText', 'changeStudentGroup', 'manipulationDisabled'],
 
+  data () {
+    return {
+      school: this.$store.state.school,
+      lang: this.$store.state.user.language
+    }
+  },
+
   methods: {
     onEnd (draggableEvent) {
       this.setDragging(false, this.mode === 'all')
@@ -48,7 +55,7 @@ export default {
         return
       }
 
-      const message = this.$i18n.t(draggableEvent.pullMode === 'clone' ? 'SW_USER_COPIED' : 'SW_USER_MOVED')
+      const message = this.$i18n.t(draggableEvent.pullMode === 'clone' ? 'SW_USER_COPIED' : 'SW_USER_MOVED', [this.school.terminology.student[this.lang]])
       this.$message({ message, type: 'success' })
       this.$emit('updateGroupCount', true)
     }

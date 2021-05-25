@@ -3,7 +3,7 @@
     <h3 class="collapse-header block">
       <!-- Amount of students -->
       <p class="question-sentence groups-header">
-        <strong>{{ $tc('SW_STUDENT', 2) }}</strong>
+        <strong>{{ school.terminology.students[lang] }}</strong>
         <el-tag size="mini" class="ml-5">{{ noGroup ? studentsWithoutGroup.length : studentsSorted.length }}
       </el-tag>
       </p>
@@ -31,7 +31,9 @@ export default {
   data () {
     return {
       noGroup: false,
-      studentsSorted: []
+      studentsSorted: [],
+      lang: this.$store.state.lang,
+      school: this.$store.state.school
     }
   },
 

@@ -30,7 +30,7 @@
 
               <el-col :xs="4" :sm="8" :span="4" class="to-right">
                 <!-- Search input -->
-                <el-input prefix-icon="icon-search" :placeholder="$t('SW_SEARCH_STUDENTS')" size="medium" v-model="searchText" clearable/>
+                <el-input prefix-icon="icon-search" :placeholder="$t('SW_SEARCH_STUDENTS', [school.terminology.student[lang]])" size="medium" v-model="searchText" clearable/>
               </el-col>
             </el-row>
 
@@ -82,7 +82,7 @@
                         <div class="group-item-controls">
                           <div class="top-minus-3">
                             <!-- Remove group -->
-                            <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @confirm="studentsData_RemoveGroup(group)" v-if="!manipulationDisabled" hideIcon :title="$t('SW_DELETE_GROUP')">
+                            <el-popconfirm :confirmButtonText="$t('SW_REMOVE')" :cancelButtonText="$t('SW_CANCEL')" @confirm="studentsData_RemoveGroup(group)" v-if="!manipulationDisabled" hideIcon :title="$t('SW_DELETE_GROUP', [school.terminology.students[lang]])">
                               <el-button slot="reference" :disabled="manipulationDisabled" plain size="small" @click.stop class="button-square mr-5 hidden-xs" type="danger">
                                 <i class="icon-delete"/>
                               </el-button>
@@ -98,7 +98,7 @@
                             </el-popover>
                           </div>
 
-                          <el-tag class="question-tag-info hidden-xs" type="info">{{ countFilteredGroupsItem(group.students) }} {{ $tc('SW_STUDENT', countFilteredGroupsItem(group.students)).toLowerCase() }}</el-tag>
+                          <el-tag class="question-tag-info hidden-xs" type="info">{{ countFilteredGroupsItem(group.students) }} {{ countFilteredGroupsItem(group.students) > 1 ? school.terminology.students[lang] : school.terminology.student[lang].toLowerCase() }}</el-tag>
                         </div>
                       </h3>
                   </template>
@@ -113,7 +113,7 @@
       </div>
 
       <!-- Table status -->
-      <table-status :status="status" :noneText="$t('SW_NO_STUDENTS_FOUND')"/>
+      <table-status :status="status" :noneText="$t('SW_NO_STUDENTS_FOUND', [school.terminology.students[lang]])"/>
 
     <!-- Add group dialog -->
     <el-dialog :title="$t('SW_ADD_GROUP')" append-to-body :visible.sync="addGroupDialog">
@@ -152,6 +152,8 @@ export default {
       draggingMainList: false,
       searchText: '',
       fullStudentsKey: 0,
+      lang: this.$store.state.lang,
+      school: this.$store.state.school,
       // studentsData: never try to access _inner_values, use studentsData functions
       studentsData: { _groupsList: [], _fullStudentsList: [], _studentsWithoutGroup: [] }
     }
@@ -253,7 +255,7 @@ export default {
     confirmRemoveUser (action) {
       if (this.muteRemoveWarning) return this.removeUser(action)
 
-      this.$confirm(this.$i18n.tc('SW_REMOVE_PARTICIPANT_FROM_GROUP_TEXT', 1), this.$i18n.tc('SW_REMOVE_PARTICIPANT_FROM_GROUP', 1), {
+      this.$confirm(this.$i18n.tc('SW_REMOVE_PARTICIPANT_FROM_GROUP_TEXT', 1, [this.school.terminology.student[this.lang]]), this.$i18n.tc('SW_REMOVE_PARTICIPANT_FROM_GROUP', 1), {
         confirmButtonText: this.$i18n.t('SW_REMOVE_SHOW_NEVER'),
         cancelButtonText: this.$i18n.t('SW_CANCEL')
       }).then(() => { this.removeUser(action) })
@@ -277,7 +279,7 @@ export default {
 
     // Submit
     confirmSubmitChanges () {
-      this.$confirm(this.$i18n.t('SW_MANAGE_STAFF_EFFECT'), this.$i18n.t('SW_SUBMIT_MANAGE_GROUP_TITLE'), {
+      this.$confirm(this.$i18n.t('SW_MANAGE_STAFF_EFFECT', [this.school.terminology.students[this.lang]]), this.$i18n.t('SW_SUBMIT_MANAGE_GROUP_TITLE'), {
         confirmButtonText: this.$i18n.t('SW_SAVE_CHANGES'),
         cancelButtonText: this.$i18n.t('SW_CANCEL')
       }).then(() => { this.submitChanges() })

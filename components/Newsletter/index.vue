@@ -18,8 +18,8 @@
 
         <el-checkbox-group v-model="form.roles">
           <el-checkbox label="admin" class="mr-20">{{ $tc('SW_ADMIN', 2) }}</el-checkbox>
-          <el-checkbox label="staff" class="mr-20">{{ $tc('SW_STAFF', 2) }}</el-checkbox>
-          <el-checkbox label="student" class="mr-20">{{ $tc('SW_STUDENT', 2) }}</el-checkbox>
+          <el-checkbox label="staff" class="mr-20">{{ school.terminology.instructors[lang] }}</el-checkbox>
+          <el-checkbox label="student" class="mr-20">{{ school.terminology.student[lang] }}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
 
@@ -47,6 +47,8 @@ export default {
   data () {
     return {
       user: this.$store.state.user,
+      lang: this.$store.state.lang,
+      school: this.$store.state.school,
       sending: false,
       form: {
         subject: '',

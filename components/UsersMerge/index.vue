@@ -33,7 +33,9 @@
               </el-table-column>
               <el-table-column property="role" :label="$t('SW_ROLE')" min-width="110">
                 <template slot-scope="scope">
-                  <span v-if="scope.row.role">{{ $t('SW_' + scope.row.role.toUpperCase() )}}</span>
+                  <span v-if="scope.row.role === 'student'">{{ school.terminology.student[lang] }}</span>
+                  <span v-else-if="scope.row.role === 'staff'">{{ school.terminology.instructor[lang] }}</span>
+                  <span v-else-if="scope.row.role === 'admin'">{{ $t('SW_ADMIN') }}</span>
                   <span v-else>-</span>
                 </template>
               </el-table-column>
@@ -71,7 +73,9 @@
                 </el-table-column>
                 <el-table-column property="role" :label="$t('SW_ROLE')" min-width="110">
                   <template slot-scope="scope">
-                    <span v-if="scope.row.role">{{ $t('SW_' + scope.row.role.toUpperCase() )}}</span>
+                    <span v-if="scope.row.role === 'student'">{{ school.terminology.student[lang] }}</span>
+                    <span v-else-if="scope.row.role === 'staff'">{{ school.terminology.instructor[lang] }}</span>
+                    <span v-else-if="scope.row.role === 'admin'">{{ $t('SW_ADMIN') }}</span>
                     <span v-else>-</span>
                   </template>
                 </el-table-column>
@@ -105,6 +109,7 @@ export default {
       targetUserId: this.selectedUsers[1] ? this.selectedUsers[1]._id : '',
       user: this.$store.state.user,
       school: this.$store.state.school,
+      lang: this.$store.state.lang,
       loading: false,
       originalUser: this.selectedUsers[0],
       targetUser: this.selectedUsers[1],

@@ -16,7 +16,7 @@
             </p>
             <p v-if="props.row.counts">
               <!-- Counts -->
-              <strong class="mr-5">{{ $tc('SW_STAFF', 2) }}</strong>
+              <strong class="mr-5">{{ school.terminology.instructors[lang] }}</strong>
               <i class="icon-user"></i>
               {{ props.row.counts.staff || 0 }}
             </p>
@@ -85,7 +85,7 @@
     </el-table-column>
 
     <!-- Student count -->
-    <el-table-column property="counts.students" :label="$tc('SW_STUDENT', 2)" width="140">
+    <el-table-column property="counts.students" :label="school.terminology.students[lang]" width="140">
       <template slot-scope="props">
         <i class="icon-user"/>
         {{ props.row.counts && props.row.counts.students || 0 | numeral('0a') }}
@@ -103,7 +103,9 @@
     <!-- User role -->
     <el-table-column property="role" :label="$t('SW_YOUR_ROLE')" min-width="80">
       <template slot-scope="props">
-        <span v-if="props.row.role">{{ $tc('SW_' + props.row.role.toUpperCase(), 1 )}}</span>
+        <span v-if="props.row.role === 'student'">{{ school.terminology.student[lang] }}</span>
+        <span v-else-if="props.row.role === 'staff'">{{ school.terminology.instructor[lang] }}</span>
+        <span v-else-if="props.row.role === 'admin'">{{ $t('SW_ADMIN') }}</span>
         <span v-else>-</span>
       </template>
     </el-table-column>

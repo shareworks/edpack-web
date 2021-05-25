@@ -113,22 +113,22 @@
 
     <!-- Student term -->
     <el-form-item :label="$t('SW_ORG_STUDENT_TERM_NAME')" required>
-      <inputs-with-flags :change="setNewFaculties" :value="form.terminology.student" name="facultiesTerm"/>
+      <inputs-with-flags :change="setNewFaculties" :value="form.terminology.student" name="studentTerm"/>
     </el-form-item>
 
     <!-- Students term -->
     <el-form-item :label="$t('SW_ORG_STUDENTS_TERM_NAME')" required>
-      <inputs-with-flags :change="setNewFaculties" :value="form.terminology.students" name="facultiesTerm"/>
+      <inputs-with-flags :change="setNewFaculties" :value="form.terminology.students" name="studentsTerm"/>
     </el-form-item>
 
     <!-- Instructor term -->
     <el-form-item :label="$t('SW_ORG_INSTRUCTOR_TERM_NAME')" required>
-      <inputs-with-flags :change="setNewFaculties" :value="form.terminology.instructor" name="facultiesTerm"/>
+      <inputs-with-flags :change="setNewFaculties" :value="form.terminology.instructor" name="instructorTerm"/>
     </el-form-item>
 
     <!-- Instructors term -->
     <el-form-item :label="$t('SW_ORG_INSTRUCTORS_TERM_NAME')" required>
-      <inputs-with-flags :change="setNewFaculties" :value="form.terminology.instructors" name="facultiesTerm"/>
+      <inputs-with-flags :change="setNewFaculties" :value="form.terminology.instructors" name="instructorsTerm"/>
     </el-form-item>
 
     <!-- Plan term -->
@@ -142,14 +142,14 @@
     </el-form-item>
 
     <!-- Introduction by school EN -->
-    <el-form-item v-if="introBySchool" :class="isJustOneLanguage ? '' : 'form-en'" :label="$t('SW_INTRO_FOR')">
-      <p class="text-muted">{{ $t('SW_INTRO_FOR_NEWLY') }}</p>
+    <el-form-item v-if="introBySchool" :class="isJustOneLanguage ? '' : 'form-en'" :label="$t('SW_INTRO_FOR', [school.terminology.instructor[lang]])">
+      <p class="text-muted">{{ $t('SW_INTRO_FOR_NEWLY', [school.terminology.instructor[lang]]) }}</p>
       <redactor :config="editorOptions" v-model="form.orgCourseIntro.en"/>
     </el-form-item>
 
     <!-- Introduction by school NL -->
-    <el-form-item v-if="introBySchool" :class="isJustOneLanguage ? '' : 'form-nl'" :label="$t('SW_INTRO_FOR')">
-      <p class="text-muted">{{ $t('SW_INTRO_FOR_NEWLY') }}</p>
+    <el-form-item v-if="introBySchool" :class="isJustOneLanguage ? '' : 'form-nl'" :label="$t('SW_INTRO_FOR', [school.terminology.instructor[lang]])">
+      <p class="text-muted">{{ $t('SW_INTRO_FOR_NEWLY', [school.terminology.instructor[lang]]) }}</p>
       <redactor :config="editorOptions" v-model="form.orgCourseIntro.nl"/>
     </el-form-item>
 

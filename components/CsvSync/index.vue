@@ -5,7 +5,7 @@
     <input type="text" class="opacity-0" ref="focusInput" autofocus aria-hidden="true">
 
     <div>
-      <p class="mb-20">{{ $t('SW_CSV_SYNC_EXPLAIN_TEXT', [appName]) }}</p>
+      <p class="mb-20">{{ $t('SW_CSV_SYNC_EXPLAIN_TEXT', [appName, school.terminology.student[lang], school.terminology.students[lang]]) }}</p>
 
       <!-- Upload csv file -->
       <csv-upload-form @addUsers="addUsers" @clearUsers="clearUsers" templatePrefix="template-" :existing="{students: currentUsers.length, groups: statsBeforeSync.groups.length}"/>
@@ -94,6 +94,7 @@ export default {
     return {
       appName: config.name,
       processing: false,
+      school: this.$store.state.school,
       user: this.$store.state.user,
       course: this.$store.state.course || null,
       lang: this.$store.state.lang,
@@ -127,7 +128,7 @@ export default {
         .finally(() => { this.loading = false })
     },
     confirmSync () {
-      this.$confirm(this.$i18n.t('SW_MANAGE_STAFF_EFFECT'), this.$i18n.t('SW_SUBMIT_MANAGE_GROUP_TITLE'), {
+      this.$confirm(this.$i18n.t('SW_MANAGE_STAFF_EFFECT', [this.school.terminology.students[this.lang]]), this.$i18n.t('SW_SUBMIT_MANAGE_GROUP_TITLE'), {
         confirmButtonText: this.$i18n.t('SW_SYNC_NOW'),
         cancelButtonText: this.$i18n.t('SW_CANCEL')
       }).then(() => { this.syncWithCsv() })
