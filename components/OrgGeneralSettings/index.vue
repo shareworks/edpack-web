@@ -112,11 +112,6 @@
     </el-form-item>
 
     <!-- Student term -->
-    <el-form-item :label="$t('SW_ORG_FACULTIESTERM_NAME')" required>
-      <inputs-with-flags :change="setNewFaculties" :value="form.terminology.student" name="facultiesTerm"/>
-    </el-form-item>
-
-    <!-- Student term -->
     <el-form-item :label="$t('SW_ORG_STUDENT_TERM_NAME')" required>
       <inputs-with-flags :change="setNewFaculties" :value="form.terminology.student" name="facultiesTerm"/>
     </el-form-item>
