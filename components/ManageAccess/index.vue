@@ -36,6 +36,9 @@
                 <span v-if="props.row.role === 'student'">{{ school.terminology.student[lang] }}</span>
                 <span v-else-if="props.row.role === 'staff'">{{ school.terminology.instructor[lang] }}</span>
                 <span v-else-if="props.row.role === 'admin'">{{ $t('SW_ADMIN') }}</span>
+                <span v-else-if="props.row.role === 'owner'">{{ $t('SW_OWNER') }}</span>
+                <span v-else-if="props.row.role === 'viewer'">{{ $t('SW_VIEWER') }}</span>
+                <span v-else-if="props.row.role === 'none'">{{ $t('SW_NONE') }}</span>
                 <i class="el-icon-caret-bottom el-icon--right"/>
               </el-button>
               <el-dropdown-menu slot="dropdown">

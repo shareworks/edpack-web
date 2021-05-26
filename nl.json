@@ -697,5 +697,6 @@
   "SW_ORG_STUDENT_TERM_NAME": "Term 'student'",
   "SW_ORG_STUDENTS_TERM_NAME": "Term 'studenten'",
   "SW_ORG_INSTRUCTOR_TERM_NAME": "Term 'docent'",
-  "SW_ORG_INSTRUCTORS_TERM_NAME": "Term 'docenten'"
+  "SW_ORG_INSTRUCTORS_TERM_NAME": "Term 'docenten'",
+  "SW_REUSE_EVAL_INFO": "Deze bevraging heeft {0} {2} in {1} groepen."
 }
