@@ -100,7 +100,7 @@ export default {
           this.$store.state.course.counts.staff = this.course.counts.staff
 
           const message = config.name === 'Comproved' ? 'SW_INSTRUCTORS_REMOVED' : 'SW_USERS_REMOVED'
-          this.$message({ message: this.$i18n.t(message), type: 'success' })
+          this.$message({ message: this.$i18n.t(message, [this.school.terminology.instructor[this.lang]]), type: 'success' })
         })
         .catch((err) => {
           console.log(err)

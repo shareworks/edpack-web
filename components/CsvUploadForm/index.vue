@@ -24,7 +24,7 @@
         <p class="mb-10" v-else>{{ $t('SW_CSV_CHANGES_TEXT', [existing.groups, existing.students, groups.length, users.length, school.terminology.students[lang]]) }}</p>
       </div>
       <p class="mb-10" v-else-if="useParticipantsCsv && assessors">{{ $t('SW_REUSE_EVAL_INFO_ASSESSORS', [users.length]) }}</p>
-      <p class="mb-10" v-else>{{ $t('SW_REUSE_EVAL_USER', [users.length]) }}</p>
+      <p class="mb-10" v-else>{{ $t('SW_REUSE_EVAL_USER', [users.length, school.terminology.students[lang]]) }}</p>
 
       <!-- See student list -->
       <el-button size="small" type="success" v-if="!existing" @click="toggleStudentsList">
@@ -38,7 +38,7 @@
         <span v-if="!useParticipantsCsv">{{ $t('SW_UPLOAD_NEW_CSV') }}</span>
         <!-- Comproved specific code -->
         <span v-else-if="useParticipantsCsv && isGroups">{{ $t('SW_UPLOAD_NEW_CSV') }}</span>
-        <span v-else>{{ $t(cancelButtonText ? cancelButtonText : 'SW_UPLOAD_NEW_CSV_PARTICIPANTS') }}</span>
+        <span v-else>{{ $t(cancelButtonText ? cancelButtonText : 'SW_UPLOAD_NEW_CSV_PARTICIPANTS', [school.terminology.students[lang]]) }}</span>
       </el-button>
     </el-alert>
 

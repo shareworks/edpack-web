@@ -173,7 +173,7 @@
         <template slot-scope="props">
           <span v-if="props.row.role === 'student'">{{ school.terminology.student[lang] }}</span>
           <span v-else-if="props.row.role === 'staff'">{{ school.terminology.instructor[lang] }}</span>
-          <span v-else-if="props.row.role === 'admin'">{{ $t('SW_ADMIN') }}</span>
+          <span v-else-if="props.row.role === 'admin'">{{ $tc('SW_ADMIN', 2) }}</span>
           <div v-else>
             <el-button type="text" size="mini" @click="becomeAdmin(props.row)" :disabled="sending">
               {{ $t('SW_BECOME_ADMIN') }}

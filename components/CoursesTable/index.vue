@@ -105,7 +105,7 @@
       <template slot-scope="props">
         <span v-if="props.row.role === 'student'">{{ school.terminology.student[lang] }}</span>
         <span v-else-if="props.row.role === 'staff'">{{ school.terminology.instructor[lang] }}</span>
-        <span v-else-if="props.row.role === 'admin'">{{ $t('SW_ADMIN') }}</span>
+        <span v-else-if="props.row.role === 'admin'">{{ $tc('SW_ADMIN', 2) }}</span>
         <span v-else>-</span>
       </template>
     </el-table-column>

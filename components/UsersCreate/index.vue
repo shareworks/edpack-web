@@ -1,8 +1,8 @@
 <template>
   <div>
-    <p v-if="!isManageStaff" class="mb-20">{{ $t('SW_ADD_USERS_TEXT') }}</p>
-    <p v-else-if="justStudents" class="mb-20">{{ $t('SW_ADD_STUDENTS_TEXT') }}</p>
-    <p v-else class="mb-10 bold">{{ $t('SW_INVITE_COACHES') }}</p>
+    <p v-if="!isManageStaff" class="mb-20">{{ $t('SW_ADD_USERS_TEXT', [school.terminology.students[lang]]) }}</p>
+    <p v-else-if="justStudents" class="mb-20">{{ $t('SW_ADD_STUDENTS_TEXT', [school.terminology.students[lang]]) }}</p>
+    <p v-else class="mb-10 bold">{{ $t('SW_INVITE_COACHES', [school.terminology.instructors[lang]]) }}</p>
 
     <el-alert class="mb-10" show-icon v-if="showDomainWarning" type="warning" :title="$t('SW_DIFFERENT_EMAIL_TITLE')">
       <p>{{ $t("SW_DIFFERENT_EMAIL_TEXT") }}</p>
@@ -26,7 +26,7 @@
       <!-- Role -->
       <el-form-item v-if="!isManageStaff" class="role-select">
         <el-select v-model="role" class="block">
-          <el-option v-for="item in roles" :key="item" :label="$tc('SW_' + item.toUpperCase(), 1)" :value="item"/>
+          <el-option v-for="item in roles" :key="item" :label="getRoleText(item)" :value="item"/>
         </el-select>
       </el-form-item>
 
@@ -57,6 +57,7 @@ export default {
 
   data () {
     return {
+      lang: this.$store.state.lang,
       user: this.$store.state.user,
       school: this.$store.state.school,
       role: 'staff',
@@ -73,6 +74,11 @@ export default {
   },
 
   methods: {
+    getRoleText (role) {
+      if (role === 'student') return this.school.terminology.student[this.lang]
+      if (role === 'staff') return this.school.terminology.instructor[this.lang]
+      if (role === 'admin') return this.$i18n.tc('SW_ADMIN', 1)
+    },
     emailsValidation (emails) {
       let failedEmails = [] // out param
 

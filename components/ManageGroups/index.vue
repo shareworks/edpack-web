@@ -255,7 +255,7 @@ export default {
     confirmRemoveUser (action) {
       if (this.muteRemoveWarning) return this.removeUser(action)
 
-      this.$confirm(this.$i18n.tc('SW_REMOVE_PARTICIPANT_FROM_GROUP_TEXT', 1, [this.school.terminology.student[this.lang]]), this.$i18n.tc('SW_REMOVE_PARTICIPANT_FROM_GROUP', 1), {
+      this.$confirm(this.$i18n.tc('SW_REMOVE_PARTICIPANT_FROM_GROUP_TEXT', 1, [this.school.terminology.student[this.lang]]), this.$i18n.tc('SW_REMOVE_PARTICIPANT_FROM_GROUP', [this.school.terminology.student[this.lang]], 1), {
         confirmButtonText: this.$i18n.t('SW_REMOVE_SHOW_NEVER'),
         cancelButtonText: this.$i18n.t('SW_CANCEL')
       }).then(() => { this.removeUser(action) })
@@ -266,7 +266,7 @@ export default {
       this.muteRemoveWarning = true
       this.studentsData_RemoveStudent(action.added.element)
       this.studentsData_UpdateGroupCount(true)
-      this.$message({ message: this.$i18n.t('SW_USER_DELETED'), type: 'success' })
+      this.$message({ message: this.$i18n.t('SW_USER_DELETED', [this.school.terminology.student[this.lang]]), type: 'success' })
     },
     returnUserToGroup (action) {
       this.studentsData_GetGroupsList().map(group => {

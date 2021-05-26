@@ -588,7 +588,6 @@
   "SW_FACULTY_MANAGERS_TEXT": "Geef elk {0} zijn eigen manager.",
   "SW_DOWNLOAD_PDF_FILE": "Download als PDF",
   "SW_DUPLICATED_USER_REMOVED": "De gedupliceerde gebruiker is opgemerkt en verwijderd.",
-  "SW_STAFFS": "Docenten",
   "SW_FULLSCREEN": "Fullscreen",
   "SW_AGO": "geleden",
   "SW_INVALID_LOGIN_WAY": "De school heeft de mogelijkheid om in te loggen met een wachtwoord uitgeschakeld.",
@@ -627,7 +626,7 @@
   "SW_CONTINUE_LAST_EDITING": "Onopgeslagen bewerking: ",
   "SW_ACCEPT": "Accepteren",
   "SW_REMOVE_PARTICIPANT_FROM_GROUP_TEXT": "Weet u zeker dat u de {0} uit de groep wilt verwijderen?",
-  "SW_REMOVE_PARTICIPANT_FROM_GROUP": "Deelnemer uit groep verwijderen",
+  "SW_REMOVE_PARTICIPANT_FROM_GROUP": "{0} uit groep verwijderen",
   "SW_PARAMETERS_EXPLAINER": "Kopieer de tekst hieronder naar het 'Custom tool parameters' tekstveld wanneer je de LTI tool configureert.",
   "SW_TOKEN_EXPIRED": "Je toegangstoken is verlopen.",
   "SW_TOKEN_EXPIRED_TEXT": "Vraag je {0} om een nieuwe uitnodiging te doen.",
@@ -698,5 +697,6 @@
   "SW_ORG_STUDENTS_TERM_NAME": "Term 'studenten'",
   "SW_ORG_INSTRUCTOR_TERM_NAME": "Term 'docent'",
   "SW_ORG_INSTRUCTORS_TERM_NAME": "Term 'docenten'",
-  "SW_REUSE_EVAL_INFO": "Deze bevraging heeft {0} {2} in {1} groepen."
+  "SW_REUSE_EVAL_INFO": "Deze bevraging heeft {0} {2} in {1} groepen.",
+  "SW_USER_DELETED": "{0} is verwijderd"
 }
