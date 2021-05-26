@@ -13,7 +13,7 @@
         <!-- Headers -->
         <h3 class="mb-20 font-18 max-600">
           <div v-if="step === 0">
-            <p>{{ $t('SW_WELCOME_ABOUT') }}</p>
+            <p>{{ $t('SW_WELCOME_ABOUT', [school.terminology.students[lang]]) }}</p>
 
             <a v-if="aboutUrl" :href="aboutUrl" target="_blank">
               <strong>{{ $t('SW_LEARN_MORE') }}</strong>
@@ -59,7 +59,7 @@
 
       <!-- Fill student name and avatar -->
       <section v-else-if="steps[step] === 'verify'" class="mb-30">
-        <p class="mb-20">{{ $t('SW_ADD_NAME_TEXT') }}</p>
+        <p class="mb-20">{{ $t('SW_ADD_NAME_TEXT', [school.terminology.students[lang]]) }}</p>
         <el-form ref="form" :model="form" label-width="150px" class="text-left">
 
           <!-- Thumbnail -->

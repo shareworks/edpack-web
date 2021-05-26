@@ -142,7 +142,7 @@ export default {
 
       this.$http.put(`${this.model.type}s/${form._id}/sync-users`, form, { params, timeout: 100000 })
         .then(() => {
-          this.$message({ message: this.$i18n.t('SW_MODEL_SYNC_EXCEL'), type: 'success' })
+          this.$message({ message: this.$i18n.t('SW_MODEL_SYNC_EXCEL', [this.school.terminology.students[this.lang]]), type: 'success' })
           this.closeDialog(true)
         })
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
