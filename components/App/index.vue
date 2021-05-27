@@ -9,15 +9,13 @@
     <!-- Main content -->
     <main :class="{ 'page-offset': pageOffset, 'nav-offset': navAvailable || showLtiHeader, 'page-lti': inLTI && !showLtiHeader }">
 
-      <el-alert type="error" class="no-border-radius text-center" effect="dark" show-icon :closable="false" :title="$t('SW_SERVER_MAINTENANCE', [appName])" v-if="!serverOnline">
+      <el-alert type="error" class="no-border-radius text-center" effect="dark" show-icon :closable="false" v-if="!serverOnline">
         <spinner v-if="checkConnectionLoading"/>
         <p v-else>
-          <span>{{ $t('SW_RETRY_IN', [countdownNumber]) }}</span>
-
+          <span class="mr-5">{{ $t('SW_SERVER_MAINTENANCE', [appName]) }} <a href="https://status.shareworks.nl/" class="check-status-button bold is-underline" target="_blank">{{ $t('SW_CHECK_STATUS') }}</a>.</span>
+          <span>{{ $t('SW_RETRY_IN', [countdownNumber]) }} </span>
           <el-button class="inline ml-5" type="primary" plain size="mini" @click="checkConnection">{{ $t('SW_RETRY_NOW') }}</el-button>
         </p>
-
-        <a href="https://status.shareworks.nl/" target="_blank">{{ $t('SW_CHECK_STATUS') }}</a>
 
       </el-alert>
       <el-alert type="warning" class="no-border-radius text-center" effect="dark" show-icon :title="$t('SW_COOKIE_WARNING', [appName])" v-if="cookieWarning"/>
