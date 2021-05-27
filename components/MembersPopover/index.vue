@@ -9,12 +9,12 @@
           <el-tag class="ml-5" type="info" v-if="evaluation" size="mini">{{ school.terminology.instructor[lang].toLowerCase() }}</el-tag>
         </div>
       </div>
-      <div v-else class="text-muted">{{ $t('SW_NO_STAFF_FOUND', [school.terminology.instructors[lang]]) }}</div>
+      <div v-else class="text-muted">{{ $t('SW_NO_STAFF_FOUND', [school.terminology.instructors[lang].toLowerCase()]) }}</div>
 
       <!-- Manage staff -->
       <el-button v-if="canUpdate && !inLTI" type="text" size="small" @click="$emit('manageStaff')">
         <i class="icon-pencil"/>
-        {{ $t('SW_MANAGE_STAFF', [school.terminology.instructors[lang]]) }}
+        {{ $t('SW_MANAGE_STAFF', [school.terminology.instructors[lang].toLowerCase()]) }}
       </el-button>
 
       <!-- Popover text -->

@@ -2,7 +2,7 @@
   <div>
     <p v-if="!isManageStaff" class="mb-20">{{ $t('SW_ADD_USERS_TEXT', [school.terminology.students[lang]]) }}</p>
     <p v-else-if="justStudents" class="mb-20">{{ $t('SW_ADD_STUDENTS_TEXT', [school.terminology.students[lang]]) }}</p>
-    <p v-else class="mb-10 bold">{{ $t('SW_INVITE_COACHES', [school.terminology.instructors[lang]]) }}</p>
+    <p v-else class="mb-10 bold">{{ $t('SW_INVITE_COACHES', [school.terminology.instructors[lang].toLowerCase()]) }}</p>
 
     <el-alert class="mb-10" show-icon v-if="showDomainWarning" type="warning" :title="$t('SW_DIFFERENT_EMAIL_TITLE')">
       <p>{{ $t("SW_DIFFERENT_EMAIL_TEXT") }}</p>

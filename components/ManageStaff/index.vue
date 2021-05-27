@@ -1,11 +1,11 @@
 <template>
   <div>
-    <p class="mb-20">{{ $t('SW_DIALOG_MANAGE_STAFF_TEXT', [school.terminology.instructors[lang]]) }}</p>
+    <p class="mb-20">{{ $t('SW_DIALOG_MANAGE_STAFF_TEXT', [school.terminology.instructors[lang].toLowerCase()]) }}</p>
 
     <el-row :gutter="10" v-if="!loading">
       <!-- Existing instructors -->
       <el-col :span="12" :xs="24">
-        <p class="mb-10 bold">{{ $t('SW_CURRENT_STAFF_TEXT', [school.terminology.instructors[lang]]) }}</p>
+        <p class="mb-10 bold">{{ $t('SW_CURRENT_STAFF_TEXT', [school.terminology.instructors[lang].toLowerCase()]) }}</p>
         <div class="instructor-list">
           <!-- Instructor list -->
           <div v-for="instructor in instructors" class="text-ellipsis instructor-data" :key="instructor._id">

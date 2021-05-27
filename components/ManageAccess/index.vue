@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="mb-20">{{ $t('SW_DIALOG_MANAGE_STAFF_TEXT', [school.terminology.instructors[lang]]) }}</p>
+    <p class="mb-20">{{ $t('SW_DIALOG_MANAGE_STAFF_TEXT', [school.terminology.instructors[lang].toLowerCase()]) }}</p>
 
     <!-- Table with instructors -->
     <el-table v-if="!loading && staff.length" :data="dataInStep" row-key="_id" @sort-change="sortChange"

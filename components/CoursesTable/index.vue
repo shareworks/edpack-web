@@ -16,8 +16,8 @@
             </p>
             <p v-if="props.row.counts">
               <!-- Counts -->
-              <strong class="mr-5">{{ school.terminology.instructors[lang].toLowerCase().toLowerCase() }}</strong>
-              <i class="icon-user"></i>
+              <strong class="mr-5">{{ school.terminology.instructors[lang] }}</strong>
+              <i class="icon-user"/>
               {{ props.row.counts.staff || 0 }}
             </p>
           </el-col>
