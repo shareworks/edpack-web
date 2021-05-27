@@ -17,12 +17,19 @@ export default {
   data () {
     return {
       isAdmin: this.$store.state.isAdmin,
+      school: this.$store.state.school,
+      lang: this.$store.state.lang,
       notificationRoles: config.notificationRoles
     }
   },
   methods: {
     translateRoles (rolesList) {
-      return rolesList.map(role => ' ' + this.$i18n.tc(`SW_${role.toUpperCase()}`, 1).toLowerCase())
+      return rolesList.map(role => ' ' + this.getLabelText(role))
+    },
+    getLabelText (role) {
+      if (role === 'student') return this.school.terminology.student[this.lang]
+      else if (role === 'staff') return this.school.terminology.instructor[this.lang]
+      else if (role === 'admin') return this.$i18n.tc('SW_ADMIN', 1)
     }
   }
 }

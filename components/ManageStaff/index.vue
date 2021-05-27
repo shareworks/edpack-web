@@ -1,11 +1,11 @@
 <template>
   <div>
-    <p class="mb-20">{{ $t('SW_DIALOG_MANAGE_STAFF_TEXT') }}</p>
+    <p class="mb-20">{{ $t('SW_DIALOG_MANAGE_STAFF_TEXT', [school.terminology.instructors[lang]]) }}</p>
 
     <el-row :gutter="10" v-if="!loading">
       <!-- Existing instructors -->
       <el-col :span="12" :xs="24">
-        <p class="mb-10 bold">{{ $t('SW_CURRENT_STAFF_TEXT') }}</p>
+        <p class="mb-10 bold">{{ $t('SW_CURRENT_STAFF_TEXT', [school.terminology.instructors[lang]]) }}</p>
         <div class="instructor-list">
           <!-- Instructor list -->
           <div v-for="instructor in instructors" class="text-ellipsis instructor-data" :key="instructor._id">
@@ -84,7 +84,7 @@ export default {
         .finally(() => { this.loading = false })
     },
     confirmRemove (instructor) {
-      this.$confirm(this.$i18n.t('SW_REMOVE_INSTRUCTOR_CONFIRM'), this.$i18n.t('SW_REMOVE_INSTRUCTOR'), {
+      this.$confirm(this.$i18n.t('SW_REMOVE_INSTRUCTOR_CONFIRM', [this.school.terminology.instructor[this.lang]]), this.$i18n.t('SW_REMOVE_INSTRUCTOR'), {
         confirmButtonText: this.$i18n.t('SW_REMOVE'),
         cancelButtonText: this.$i18n.t('SW_CANCEL')
       }).then(() => { this.removeInstructor(instructor) })
@@ -100,7 +100,7 @@ export default {
           this.$store.state.course.counts.staff = this.course.counts.staff
 
           const message = config.name === 'Comproved' ? 'SW_INSTRUCTORS_REMOVED' : 'SW_USERS_REMOVED'
-          this.$message({ message: this.$i18n.t(message), type: 'success' })
+          this.$message({ message: this.$i18n.t(message, [this.school.terminology.instructor[this.lang]]), type: 'success' })
         })
         .catch((err) => {
           console.log(err)

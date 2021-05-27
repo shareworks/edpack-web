@@ -1,12 +1,12 @@
 <template>
   <div>
-    <p class="mb-20">{{ $t('SW_DIALOG_MANAGE_STAFF_TEXT') }}</p>
+    <p class="mb-20">{{ $t('SW_DIALOG_MANAGE_STAFF_TEXT', [school.terminology.instructors[lang]]) }}</p>
 
     <!-- Table with instructors -->
     <el-table v-if="!loading && staff.length" :data="dataInStep" row-key="_id" @sort-change="sortChange"
               ref="staffTable" :default-sort="{prop: 'activityDate', order: 'descending'}">
       <!-- Name -->
-      <el-table-column :label="$tc('SW_STAFF', 1)" prop="name" min-width="160">
+      <el-table-column :label="school.terminology.instructor[lang].toLowerCase()" prop="name" min-width="160">
         <template slot-scope="props">
           <div class="text-ellipsis">
             <thumbnail :model="props.row" class="thumb-user thumb-24 mr-5 hidden-xs hidden-sm"/>
@@ -33,7 +33,12 @@
             <el-dropdown trigger="click" @command="handleCommand">
               <el-button size="small" :plain="props.row.role !== 'owner'" :type="props.row.role !== 'none' ? 'primary' : 'default'">
                 <i v-if="props.row.role !== 'none'" :class="props.row.role === 'owner' ? 'icon-star-full' : 'icon-star-empty'"></i>
-                {{ $t('SW_' + props.row.role.toUpperCase()) }}
+                <span v-if="props.row.role === 'student'">{{ school.terminology.student[lang] }}</span>
+                <span v-else-if="props.row.role === 'staff'">{{ school.terminology.instructor[lang].toLowerCase() }}</span>
+                <span v-else-if="props.row.role === 'admin'">{{ $t('SW_ADMIN') }}</span>
+                <span v-else-if="props.row.role === 'owner'">{{ $t('SW_OWNER') }}</span>
+                <span v-else-if="props.row.role === 'viewer'">{{ $t('SW_VIEWER') }}</span>
+                <span v-else-if="props.row.role === 'none'">{{ $t('SW_NONE') }}</span>
                 <i class="el-icon-caret-bottom el-icon--right"/>
               </el-button>
               <el-dropdown-menu slot="dropdown">

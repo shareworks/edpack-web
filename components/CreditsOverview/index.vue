@@ -3,11 +3,11 @@
     <page-cover v-if="inDialog" class="mb-30">
       <!-- Download products results -->
       <page-header :title="$t('SW_CREDITS_INFO')"/>
-      {{ $t('SW_CREDITS_REMAINING_INFO', [school.name[lang], appName])}} <a href="#" @click.prevent="contactUs">{{ $t('SW_CONTACT_SUPPORT') }}</a>.
+      {{ $t('SW_CREDITS_REMAINING_INFO', [school.name[lang], appName, school.terminology.instructor[lang]])}} <a href="#" @click.prevent="contactUs">{{ $t('SW_CONTACT_SUPPORT') }}</a>.
     </page-cover>
 
     <div v-else>
-      {{ $t('SW_CREDITS_REMAINING_INFO', [school.name[lang], appName])}} <a href="#" @click.prevent="contactUs">{{ $t('SW_CONTACT_SUPPORT') }}</a>.
+      {{ $t('SW_CREDITS_REMAINING_INFO', [school.name[lang], appName, school.terminology.instructor[lang]])}} <a href="#" @click.prevent="contactUs">{{ $t('SW_CONTACT_SUPPORT') }}</a>.
     </div>
 
     <h3 class="text-center mt-20 bold" v-if="inDialog">

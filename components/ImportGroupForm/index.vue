@@ -18,13 +18,13 @@
             <el-checkbox class="text-ellipsis" :label="group" :key="group.blackboardId">
               {{ group.name }}
               <el-tag size="mini" class="ml-5 no-bold" v-if="group.membersCount && !disabledEdit">
-                {{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}
+                {{ group.membersCount }} {{ (group.membersCount > 1 ? school.terminology.students[lang] : school.terminology.student[lang]).toLowerCase() }}
               </el-tag>
             </el-checkbox>
           </div>
         </el-checkbox-group>
       </el-form-item>
-      <el-alert class="mt-5" type="warning" v-if="!loading && !lmsGroups.length" :title="$t('SW_NO_GROUPS_INDIVIDUAL')"/>
+      <el-alert class="mt-5" type="warning" v-if="!loading && !lmsGroups.length" :title="$t('SW_NO_GROUPS_INDIVIDUAL', [school.terminology.students[lang]])"/>
     </div>
 
     <!-- Group categories -->
@@ -32,7 +32,7 @@
       <el-form-item :label="$t('SW_AVAILABLE_GROUPS')" required>
         <p class="form-help-text">
           {{$t('SW_AVAILABLE_GROUP_SETS_TEXT')}}
-          <el-popover placement="top-start" width="400" trigger="click" :content="$t('SW_USER_IMPORT_SOURCE_HELP')">
+          <el-popover placement="top-start" width="400" trigger="click" :content="$t('SW_USER_IMPORT_SOURCE_HELP', [school.terminology.students[lang]])">
             <a class="cursor-pointer" slot="reference"><i class="icon-question question-circle question-pop ml-5"/></a>
           </el-popover>
         </p>
@@ -42,7 +42,7 @@
               <span v-if="lms !== 'blackboard' || !group.groupNames">
                 {{ group.name }}
                 <el-tag size="mini" class="ml-5 no-bold" v-if="group.membersCount && !disabledEdit">
-                  {{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}
+                  {{ group.membersCount }} {{ (group.membersCount > 1 ? school.terminology.students[lang] : school.terminology.student[lang]).toLowerCase() }}
                 </el-tag>
               </span>
               <span v-else>
@@ -51,13 +51,13 @@
                 <span>{{ (group.groupNames.length || 0) + ' groups | Blackboard id:' }}</span>
                 <span> {{ group.blackboardId }})</span>
                 <el-tag size="mini" class="ml-5 no-bold" v-if="group.membersCount && !disabledEdit">
-                  {{ group.membersCount }} {{ $tc('SW_STUDENT', group.membersCount).toLowerCase() }}
+                  {{ group.membersCount }} {{ (group.membersCount > 1 ? school.terminology.students[lang] : school.terminology.student[lang]).toLowerCase() }}
                 </el-tag>
               </span>
             </el-checkbox>
           </div>
         </el-checkbox-group>
-        <el-alert class="mt-5" type="warning" v-if="!loading && !lmsGroupSets.length" :title="$t('SW_NO_GROUP_CATEGORIES')"/>
+        <el-alert class="mt-5" type="warning" v-if="!loading && !lmsGroupSets.length" :title="$t('SW_NO_GROUP_CATEGORIES', [school.terminology.students[lang]])"/>
       </el-form-item>
     </div>
   </div>
@@ -74,6 +74,8 @@ export default {
     return {
       lms: getLmsType(this.$store.state.course),
       course: this.$store.state.course,
+      school: this.$store.state.school,
+      lang: this.$store.state.lang,
       disabledEdit: !this.form.isNew,
       lmsGroupSets: [],
       lmsGroups: []

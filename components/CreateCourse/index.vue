@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="mb-20">{{ $t('SW_CREATE_COURSE_TEXT') }}</p>
+    <p class="mb-20">{{ $t('SW_CREATE_COURSE_TEXT', [school.terminology.students[lang]]) }}</p>
 
     <!-- Form -->
     <el-form label-width="150px" :model="form" @submit.prevent.native="createCourse">

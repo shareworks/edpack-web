@@ -42,7 +42,9 @@
         <!-- Role -->
         <el-table-column property="role" :label="$tc('SW_ROLE', 1)" min-width="110">
           <template slot-scope="scope">
-            <span v-if="scope.row.role">{{ $tc('SW_' + scope.row.role.toUpperCase(), 1 )}}</span>
+            <span v-if="scope.row.role === 'student'">{{ school.terminology.student[lang] }}</span>
+            <span v-else-if="scope.row.role === 'staff'">{{ school.terminology.instructor[lang].toLowerCase() }}</span>
+            <span v-else-if="scope.row.role === 'admin'">{{ $t('SW_ADMIN') }}</span>
             <span v-else>-</span>
           </template>
         </el-table-column>

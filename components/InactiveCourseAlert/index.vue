@@ -1,6 +1,6 @@
 <template>
-  <el-alert type="warning" class="mb-30" :title="$t('SW_COURSE_INACTIVE', [appName])">
-    <p class="mb-10">{{$t('SW_INACTIVE_COURSE_TEXT', [appName])}}</p>
+  <el-alert type="warning" class="mb-30" :title="$t('SW_COURSE_INACTIVE', [appName, school.terminology.instructors[lang]])">
+    <p class="mb-10">{{$t('SW_INACTIVE_COURSE_TEXT', [appName, school.terminology.students[lang]])}}</p>
     <el-button :loading="activating" type="warning" @click="activateCourse">
       <i class="icon-ok-sign"/> {{$t('SW_ACTIVATE_COURSE', [appName])}}
     </el-button>
@@ -16,7 +16,9 @@ export default {
     return {
       activating: false,
       appName: config.name,
-      course: this.$store.state.course
+      course: this.$store.state.course,
+      school: this.$store.state.school,
+      lang: this.$store.state.lang
     }
   },
   methods: {
