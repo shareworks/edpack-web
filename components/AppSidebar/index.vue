@@ -8,7 +8,7 @@
       </div>
 
       <!-- Sidebar menu -->
-      <el-menu-item index="home" @click="tabClick('home')">
+      <el-menu-item v-if="!hideHomeTab" index="home" @click="tabClick('home')">
         <span>{{ $t('SW_HOME') }}</span>
       </el-menu-item>
       <el-menu-item v-if="isAdmin" index="admin" @click="tabClick('admin')">
@@ -20,12 +20,15 @@
 </template>
 
 <script>
+import config from 'config'
+
 export default {
   name: 'AppSidebar',
   props: ['active', 'closeSidebar'],
 
   data () {
     return {
+      hideHomeTab: config.hideHomeTab,
       user: this.$store.state.user,
       school: this.$store.state.school,
       activeTab: 'home'

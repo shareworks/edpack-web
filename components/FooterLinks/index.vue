@@ -9,7 +9,7 @@
         </el-button>
 
         <!-- Home -->
-        <el-button v-if="currentUser && !inLTI" size="large" type="text" @click="$router.push({ name: 'home' })">
+        <el-button v-if="currentUser && !inLTI && !hideHomeTab" size="large" type="text" @click="$router.push({ name: 'home' })">
           <strong>{{ $t('SW_HOME') }}</strong>
         </el-button>
 
@@ -50,6 +50,7 @@ export default {
     return {
       aboutUrl: config.aboutUrl,
       inLTI: this.$store.state.inLTI,
+      hideHomeTab: config.hideHomeTab,
       currentUser: this.$store.state.user
     }
   },

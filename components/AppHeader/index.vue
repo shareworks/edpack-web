@@ -11,7 +11,7 @@
 
       <!-- Menu buttons-->
       <el-menu class="hidden-xs hidden-sm header-tabs pull-left" mode="horizontal" :default-active="activeTab">
-        <el-menu-item index="home" @click="tabClick('home')">
+        <el-menu-item v-if="!hideHomeTab" index="home" @click="tabClick('home')">
           <span>{{ $t('SW_HOME') }}</span>
         </el-menu-item>
         <el-menu-item v-if="isAdmin" index="admin" @click="tabClick('admin')">
@@ -98,6 +98,7 @@ export default {
       lang: this.$store.state.lang,
       showProfile: config.hasUserProfiles,
       hasCredits: config.hasCredits,
+      hideHomeTab: config.hideHomeTab,
       selectedOrg: this.$store.state.user.organization.name[this.$store.state.user.language],
       showSchoolSelect: false,
       showOrgButton: false,
