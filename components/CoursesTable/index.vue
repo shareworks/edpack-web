@@ -16,7 +16,7 @@
             </p>
             <p v-if="props.row.counts">
               <!-- Counts -->
-              <strong class="mr-5">{{ school.terminology.instructors[lang] }}</strong>
+              <strong class="mr-5">{{ school.terminology.instructors[lang].toLowerCase().toLowerCase() }}</strong>
               <i class="icon-user"></i>
               {{ props.row.counts.staff || 0 }}
             </p>
@@ -104,7 +104,7 @@
     <el-table-column property="role" :label="$t('SW_YOUR_ROLE')" min-width="80">
       <template slot-scope="props">
         <span v-if="props.row.role === 'student'">{{ school.terminology.student[lang] }}</span>
-        <span v-else-if="props.row.role === 'staff'">{{ school.terminology.instructor[lang] }}</span>
+        <span v-else-if="props.row.role === 'staff'">{{ school.terminology.instructor[lang].toLowerCase() }}</span>
         <span v-else-if="props.row.role === 'admin'">{{ $tc('SW_ADMIN', 2) }}</span>
         <span v-else>-</span>
       </template>

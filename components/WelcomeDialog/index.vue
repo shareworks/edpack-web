@@ -32,7 +32,7 @@
 
       <!-- About project -->
       <section v-if="steps[step] === 'intro'">
-        <p class="mb-20 font-16">{{ $t('SW_WELCOME_TEXT', [school.terminology.instructor[lang], school.terminology.student[lang]]) }}
+        <p class="mb-20 font-16">{{ $t('SW_WELCOME_TEXT', [school.terminology.instructor[lang].toLowerCase(), school.terminology.student[lang]]) }}
           <span v-if="showChatLink">{{ $t('SW_WELCOME_TEXT1') }} <a href="#" @click.prevent="openChat">{{ $t('SW_WELCOME_TEXT2') }}</a></span>
           <span v-else>{{ $t('SW_WELCOME_TEXT3') }}</span>.
         </p>
