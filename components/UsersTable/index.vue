@@ -117,7 +117,7 @@
       <el-table-column property="role" :label="$tc('SW_ROLE', 1)" min-width="80">
         <template slot-scope="props">
             <div class="text-ellipsis">
-              <span>{{ getLabelText(props.row.role) }}</span>
+              <span class="capitalize">{{ getLabelText(props.row.role) }}</span>
             </div>
         </template>
       </el-table-column>

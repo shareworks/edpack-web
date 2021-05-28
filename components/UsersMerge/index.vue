@@ -34,6 +34,8 @@
               <el-table-column property="role" :label="$t('SW_ROLE')" min-width="110">
                 <template slot-scope="scope">
                   <span v-if="scope.row.role === 'student'">{{ school.terminology.student[lang] }}</span>
+                  <span v-else-if="scope.row.role === 'participant'">{{ school.terminology.student[lang] }}</span>
+                  <span v-else-if="scope.row.role === 'assessor'">{{ $tc('SW_ASSESSOR', 1) }}</span>
                   <span v-else-if="scope.row.role === 'staff'">{{ school.terminology.instructor[lang].toLowerCase() }}</span>
                   <span v-else-if="scope.row.role === 'admin'">{{ $t('SW_ADMIN') }}</span>
                   <span v-else>-</span>
@@ -74,6 +76,8 @@
                 <el-table-column property="role" :label="$t('SW_ROLE')" min-width="110">
                   <template slot-scope="scope">
                     <span v-if="scope.row.role === 'student'">{{ school.terminology.student[lang] }}</span>
+                    <span v-else-if="scope.row.role === 'participant'">{{ school.terminology.student[lang] }}</span>
+                    <span v-else-if="scope.row.role === 'assessor'">{{ $tc('SW_ASSESSOR', 1) }}</span>
                     <span v-else-if="scope.row.role === 'staff'">{{ school.terminology.instructor[lang].toLowerCase() }}</span>
                     <span v-else-if="scope.row.role === 'admin'">{{ $t('SW_ADMIN') }}</span>
                     <span v-else>-</span>

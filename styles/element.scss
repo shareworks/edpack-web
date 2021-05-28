@@ -299,6 +299,6 @@ th .cell{
   }
 }
 
-.el-table__header {
+.el-table__header, .el-form-item__label, .el-tabs__item, .el-checkbox__label {
   text-transform: capitalize;
 }

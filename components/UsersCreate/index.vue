@@ -26,7 +26,7 @@
       <!-- Role -->
       <el-form-item v-if="!isManageStaff" class="role-select">
         <el-select v-model="role" class="block">
-          <el-option v-for="item in roles" :key="item" :label="getRoleText(item)" :value="item"/>
+          <el-option v-for="item in roles" :key="item" :label="getRoleText(item)" :value="item" class="capitalize"/>
         </el-select>
       </el-form-item>
 
