@@ -53,7 +53,6 @@ export default {
   data () {
     return {
       terminologyList: config.terminologyList,
-      usePlansTerminology: config.usePlansTerminology,
       school: this.$store.state.school,
       user: this.$store.state.user,
       lang: this.$store.state.lang

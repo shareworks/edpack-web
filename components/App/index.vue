@@ -2,7 +2,7 @@
   <div id="app">
     <VueAnnouncer />
     <vue-progress-bar/>
-    <app-sidebar v-if="navAvailable" :closeSidebar="closeSidebar" :active="sidebarOpened" />
+    <app-sidebar v-if="navAvailable" :closeSidebar="closeSidebar" :active="sidebarOpened"/>
     <app-header v-if="navAvailable" :openSidebar="openSidebar"/>
     <lti-header v-if="showLtiHeader"/>
 
