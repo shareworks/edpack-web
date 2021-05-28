@@ -700,5 +700,6 @@
   "SW_REUSE_EVAL_INFO": "Deze bevraging heeft {0} {2} in {1} groepen.",
   "SW_USER_DELETED": "{0} is verwijderd",
   "SW_UNEXPECTED_ERROR": "Onverwachte fout",
-  "SW_UNEXPECTED_ERROR_HELP": "Er is iets fout gegaan. Probeer het later opnieuw of neem contact op met de ondersteuning."
+  "SW_UNEXPECTED_ERROR_HELP": "Er is iets fout gegaan. Probeer het later opnieuw of neem contact op met de ondersteuning.",
+  "SW_TERMINOLOGY": "Terminologie"
 }

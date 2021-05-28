@@ -57,6 +57,7 @@ import AnimatedTabs from '@/edpack-web/components/AnimatedTabs'
 import OrgGeneralSettings from '@/edpack-web/components/OrgGeneralSettings'
 import OrgFacultiesSettings from '@/edpack-web/components/OrgFacultiesSettings'
 import OrgIntegrationSettings from '@/edpack-web/components/OrgIntegrationSettings'
+import OrgTerminologySettings from '@/edpack-web/components/OrgTerminologySettings'
 
 Vue.use(VueClipboards)
 
@@ -64,7 +65,7 @@ export default {
   name: 'OrgSettingsWrapper',
   metaInfo: { title: 'Settings' },
   props: ['tabs'],
-  components: { OrgGeneralSettings, OrgOptions, OrgFacultiesSettings, OrgIntegrationSettings, AnimatedTabs },
+  components: { OrgGeneralSettings, OrgOptions, OrgFacultiesSettings, OrgIntegrationSettings, OrgTerminologySettings, AnimatedTabs },
 
   data () {
     return {

@@ -733,5 +733,6 @@
   "SW_ORG_INSTRUCTORS_TERM_NAME": "Term 'instructors'",
   "SW_REUSE_EVAL_INFO": "This survey has {0} {2} in {1} groups.",
   "SW_UNEXPECTED_ERROR": "Unexpected error",
-  "SW_UNEXPECTED_ERROR_HELP": "Something went wrong. Please try again later or contact support."
+  "SW_UNEXPECTED_ERROR_HELP": "Something went wrong. Please try again later or contact support.",
+  "SW_TERMINOLOGY": "Terminology"
 }

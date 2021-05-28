@@ -101,46 +101,6 @@
       <el-input v-model="form.websiteUrl" type="url" placeholder="https://about.your-school.com ..."/>
     </el-form-item>
 
-    <!-- Faculty term -->
-    <el-form-item :label="$t('SW_ORG_FACULTYTERM_NAME')" required>
-      <inputs-with-flags :change="setNewFaculty" :value="form.terminology.faculty" name="facultyTerm"/>
-    </el-form-item>
-
-    <!-- Faculties term -->
-    <el-form-item :label="$t('SW_ORG_FACULTIESTERM_NAME')" required>
-      <inputs-with-flags :change="setNewFaculties" :value="form.terminology.faculties" name="facultiesTerm"/>
-    </el-form-item>
-
-    <!-- Student term -->
-    <el-form-item :label="$t('SW_ORG_STUDENT_TERM_NAME')" required>
-      <inputs-with-flags :change="setNewStudent" :value="form.terminology.student" name="studentTerm"/>
-    </el-form-item>
-
-    <!-- Students term -->
-    <el-form-item :label="$t('SW_ORG_STUDENTS_TERM_NAME')" required>
-      <inputs-with-flags :change="setNewStudents" :value="form.terminology.students" name="studentsTerm"/>
-    </el-form-item>
-
-    <!-- Instructor term -->
-    <el-form-item :label="$t('SW_ORG_INSTRUCTOR_TERM_NAME')" required>
-      <inputs-with-flags :change="setNewInstructor" :value="form.terminology.instructor" name="instructorTerm"/>
-    </el-form-item>
-
-    <!-- Instructors term -->
-    <el-form-item :label="$t('SW_ORG_INSTRUCTORS_TERM_NAME')" required>
-      <inputs-with-flags :change="setNewInstructors" :value="form.terminology.instructors" name="instructorsTerm"/>
-    </el-form-item>
-
-    <!-- Plan term -->
-    <el-form-item :label="$t('SW_ORG_PLANTERM_NAME')" v-if="usePlansTerminology && school.enablePlans" required>
-      <inputs-with-flags :change="setNewPlan" :value="form.terminology.plan" name="planTerm"/>
-    </el-form-item>
-
-    <!-- Plans term -->
-    <el-form-item :label="$t('SW_ORG_PLANSTERM_NAME')" v-if="usePlansTerminology && school.enablePlans" required>
-      <inputs-with-flags :change="setNewPlans" :value="form.terminology.plans" name="plansTerm"/>
-    </el-form-item>
-
     <!-- Introduction by school EN -->
     <el-form-item v-if="introBySchool" :class="isJustOneLanguage ? '' : 'form-en'" :label="$t('SW_INTRO_FOR', [school.terminology.instructor[lang]])">
       <p class="text-muted">{{ $t('SW_INTRO_FOR_NEWLY', [school.terminology.instructor[lang]]) }}</p>
@@ -202,7 +162,6 @@ export default {
       appName: config.name,
       useCustomApp: config.useCustomApp,
       isSysAdmin: this.$store.state.user.systemAdmin,
-      usePlansTerminology: config.usePlansTerminology,
       school: this.$store.state.school,
       user: this.$store.state.user,
       lang: this.$store.state.lang,
@@ -246,15 +205,7 @@ export default {
       })
     },
     errorUploading () { this.$message({ message: this.$i18n.t('SW_ERROR_LOADING'), type: 'error' }) },
-    setNewName (lang, value) { this.form.name[lang] = value },
-    setNewFaculty (lang, value) { this.form.terminology.faculty[lang] = value },
-    setNewFaculties (lang, value) { this.form.terminology.faculties[lang] = value },
-    setNewPlan (lang, value) { this.form.terminology.plan[lang] = value },
-    setNewPlans (lang, value) { this.form.terminology.plans[lang] = value },
-    setNewStudent (lang, value) { this.form.terminology.student[lang] = value },
-    setNewStudents (lang, value) { this.form.terminology.students[lang] = value },
-    setNewInstructor (lang, value) { this.form.terminology.instructor[lang] = value },
-    setNewInstructors (lang, value) { this.form.terminology.instructors[lang] = value }
+    setNewName (lang, value) { this.form.name[lang] = value }
   }
 }
 </script>
