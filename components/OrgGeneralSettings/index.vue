@@ -113,22 +113,22 @@
 
     <!-- Student term -->
     <el-form-item :label="$t('SW_ORG_STUDENT_TERM_NAME')" required>
-      <inputs-with-flags :change="setNewFaculties" :value="form.terminology.student" name="studentTerm"/>
+      <inputs-with-flags :change="setNewStudent" :value="form.terminology.student" name="studentTerm"/>
     </el-form-item>
 
     <!-- Students term -->
     <el-form-item :label="$t('SW_ORG_STUDENTS_TERM_NAME')" required>
-      <inputs-with-flags :change="setNewFaculties" :value="form.terminology.students" name="studentsTerm"/>
+      <inputs-with-flags :change="setNewStudents" :value="form.terminology.students" name="studentsTerm"/>
     </el-form-item>
 
     <!-- Instructor term -->
     <el-form-item :label="$t('SW_ORG_INSTRUCTOR_TERM_NAME')" required>
-      <inputs-with-flags :change="setNewFaculties" :value="form.terminology.instructor" name="instructorTerm"/>
+      <inputs-with-flags :change="setNewInstructor" :value="form.terminology.instructor" name="instructorTerm"/>
     </el-form-item>
 
     <!-- Instructors term -->
     <el-form-item :label="$t('SW_ORG_INSTRUCTORS_TERM_NAME')" required>
-      <inputs-with-flags :change="setNewFaculties" :value="form.terminology.instructors" name="instructorsTerm"/>
+      <inputs-with-flags :change="setNewInstructors" :value="form.terminology.instructors" name="instructorsTerm"/>
     </el-form-item>
 
     <!-- Plan term -->
@@ -193,9 +193,7 @@ export default {
   components: { InputsWithFlags, Redactor: () => import('@/edpack-web/components/Redactor') },
 
   computed: {
-    isJustOneLanguage () {
-      return this.$store.state.languages.length === 1
-    }
+    isJustOneLanguage () { return this.$store.state.languages.length === 1 }
   },
 
   data () {
@@ -249,10 +247,14 @@ export default {
     },
     errorUploading () { this.$message({ message: this.$i18n.t('SW_ERROR_LOADING'), type: 'error' }) },
     setNewName (lang, value) { this.form.name[lang] = value },
-    setNewFaculty (lang, value) { this.form.terminology.faculty[lang] = value },
-    setNewFaculties (lang, value) { this.form.terminology.faculties[lang] = value },
-    setNewPlan (lang, value) { this.form.terminology.plan[lang] = value },
-    setNewPlans (lang, value) { this.form.terminology.plans[lang] = value }
+    setNewFaculty (lang, value) { this.form.terminology.faculty[lang] = value.toLowerCase() },
+    setNewFaculties (lang, value) { this.form.terminology.faculties[lang] = value.toLowerCase() },
+    setNewPlan (lang, value) { this.form.terminology.plan[lang] = value.toLowerCase() },
+    setNewPlans (lang, value) { this.form.terminology.plans[lang] = value.toLowerCase() },
+    setNewStudent (lang, value) { this.form.terminology.student[lang] = value.toLowerCase() },
+    setNewStudents (lang, value) { this.form.terminology.students[lang] = value.toLowerCase() },
+    setNewInstructor (lang, value) { this.form.terminology.instructor[lang] = value.toLowerCase() },
+    setNewInstructors (lang, value) { this.form.terminology.instructors[lang] = value.toLowerCase() }
   }
 }
 </script>
