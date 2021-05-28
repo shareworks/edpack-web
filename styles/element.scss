@@ -298,3 +298,7 @@ th .cell{
     display: none !important;
   }
 }
+
+.el-table__header {
+  text-transform: capitalize;
+}

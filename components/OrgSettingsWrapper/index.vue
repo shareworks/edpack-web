@@ -68,6 +68,7 @@ export default {
 
   data () {
     return {
+      languages: this.$store.state.languages,
       school: Vue.util.extend({}, this.$store.state.school),
       form: Vue.util.extend({}, this.$store.state.school),
       settingsMode: this.$route.params.settingsMode || 'general',
@@ -161,6 +162,19 @@ export default {
 
       mergeEmptyLanguageFields(this.form, propsToCheck)
       mergeEmptyLanguageFields(this.form.terminology, ['faculty', 'faculties'])
+
+      // make sure all terminology in lowercase mode
+      const terminology = this.form.terminology
+      this.languages.forEach(lang => {
+        if (terminology.faculty) this.form.terminology.faculty[lang] = this.form.terminology.faculty[lang].toLowerCase()
+        if (terminology.faculties) this.form.terminology.faculties[lang] = this.form.terminology.faculties[lang].toLowerCase()
+        if (terminology.plan) this.form.terminology.plan[lang] = this.form.terminology.plan[lang].toLowerCase()
+        if (terminology.plans) this.form.terminology.plans[lang] = this.form.terminology.plans[lang].toLowerCase()
+        if (terminology.student) this.form.terminology.student[lang] = this.form.terminology.student[lang].toLowerCase()
+        if (terminology.students) this.form.terminology.students[lang] = this.form.terminology.students[lang].toLowerCase()
+        if (terminology.instructor) this.form.terminology.instructor[lang] = this.form.terminology.instructor[lang].toLowerCase()
+        if (terminology.instructors) this.form.terminology.instructors[lang] = this.form.terminology.instructors[lang].toLowerCase()
+      })
 
       // filter scope items to prevent saving empty values
       this.form.lmsConfig.scope = this.form.lmsConfig.scope.filter(scope => scope.trim().length)

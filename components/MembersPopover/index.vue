@@ -1,6 +1,6 @@
 <template>
   <div class="inline">
-    <el-popover :title="instructors.length > 1 ? school.terminology.instructors[lang].toLowerCase().toLowerCase() : school.terminology.instructor[lang].toLowerCase()" placement="bottom-start">
+    <el-popover :title="instructors.length > 1 ? school.terminology.instructors[lang] : school.terminology.instructor[lang]" placement="bottom-start">
       <!-- List of instructors -->
       <div v-if="instructors.length" class="mb-10">
         <div v-for="instructor in instructors" class="text-ellipsis mb-5" :key="instructor._id">
@@ -20,7 +20,7 @@
       <!-- Popover text -->
       <a href="#" @click.prevent slot="reference" class="bold">
         {{ (evaluation ? evaluation.staff.length : course.counts.staff) || 0 }}
-        {{ instructors.length > 1 ? school.terminology.instructors[lang].toLowerCase().toLowerCase() : school.terminology.instructor[lang].toLowerCase() }}
+        {{ instructors.length > 1 ? school.terminology.instructors[lang] : school.terminology.instructor[lang] }}
       </a>
     </el-popover>
     <span v-if="evaluation"> {{ $t('SW_CAN_ACCESS_RESULTS')}}</span>

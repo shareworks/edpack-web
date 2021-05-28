@@ -247,14 +247,14 @@ export default {
     },
     errorUploading () { this.$message({ message: this.$i18n.t('SW_ERROR_LOADING'), type: 'error' }) },
     setNewName (lang, value) { this.form.name[lang] = value },
-    setNewFaculty (lang, value) { this.form.terminology.faculty[lang] = value.toLowerCase() },
-    setNewFaculties (lang, value) { this.form.terminology.faculties[lang] = value.toLowerCase() },
-    setNewPlan (lang, value) { this.form.terminology.plan[lang] = value.toLowerCase() },
-    setNewPlans (lang, value) { this.form.terminology.plans[lang] = value.toLowerCase() },
-    setNewStudent (lang, value) { this.form.terminology.student[lang] = value.toLowerCase() },
-    setNewStudents (lang, value) { this.form.terminology.students[lang] = value.toLowerCase() },
-    setNewInstructor (lang, value) { this.form.terminology.instructor[lang] = value.toLowerCase() },
-    setNewInstructors (lang, value) { this.form.terminology.instructors[lang] = value.toLowerCase() }
+    setNewFaculty (lang, value) { this.form.terminology.faculty[lang] = value },
+    setNewFaculties (lang, value) { this.form.terminology.faculties[lang] = value },
+    setNewPlan (lang, value) { this.form.terminology.plan[lang] = value },
+    setNewPlans (lang, value) { this.form.terminology.plans[lang] = value },
+    setNewStudent (lang, value) { this.form.terminology.student[lang] = value },
+    setNewStudents (lang, value) { this.form.terminology.students[lang] = value },
+    setNewInstructor (lang, value) { this.form.terminology.instructor[lang] = value },
+    setNewInstructors (lang, value) { this.form.terminology.instructors[lang] = value }
   }
 }
 </script>
