@@ -731,5 +731,7 @@
   "SW_ORG_STUDENTS_TERM_NAME": "Term 'students'",
   "SW_ORG_INSTRUCTOR_TERM_NAME": "Term 'instructor'",
   "SW_ORG_INSTRUCTORS_TERM_NAME": "Term 'instructors'",
-  "SW_REUSE_EVAL_INFO": "This survey has {0} {2} in {1} groups."
+  "SW_REUSE_EVAL_INFO": "This survey has {0} {2} in {1} groups.",
+  "SW_UNEXPECTED_ERROR": "Unexpected error",
+  "SW_UNEXPECTED_ERROR_HELP": "Something went wrong. Please try again later or contact support."
 }
