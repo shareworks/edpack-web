@@ -25,12 +25,10 @@
           <strong v-else> 0 </strong>
           <strong class="hidden-xs hidden-sm">{{ $t('SW_CREDITS_LEFT') }}</strong>
         </el-button>
-
-        <el-menu-item index="" class="hide"/>
       </el-menu>
 
       <!-- Header logo or text -->
-      <router-link v-if="!showSchoolSelect" to="/home" aria-hidden="true" tabindex="-1">
+      <router-link v-if="!showSchoolSelect" :to="logoClickPath" aria-hidden="true" tabindex="-1">
         <div v-if="school.appName" class="app-header-title">{{ school.appName }}</div>
         <div v-else class="header-logo"></div>
       </router-link>
@@ -106,6 +104,20 @@ export default {
     }
   },
 
+  computed: {
+    logoClickPath () { return this.hideHomeTab ? '/admin' : '/home' },
+    user () { return this.$store.state.user },
+    creditsLeft () {
+      const user = this.$store.state.user
+      return user.credits.used > user.credits.limit ? 0 : user.credits.limit - user.credits.used
+    },
+    userOrgs () {
+      const orgs = this.$store.state.user.organizations
+      return orgs.sort((a, b) => { return a.name.en.toLowerCase().localeCompare(b.name.en.toLowerCase()) })
+    },
+    isAdmin () { return this.$store.state.user.systemAdmin || this.$store.state.user.role === 'admin' }
+  },
+
   watch: {
     $route (to) {
       if (to.name === 'admin') this.activeTab = 'admin'
@@ -120,19 +132,6 @@ export default {
   },
   destroyed () {
     window.removeEventListener('resize', this.resizeHandler)
-  },
-
-  computed: {
-    user () { return this.$store.state.user },
-    creditsLeft () {
-      const user = this.$store.state.user
-      return user.credits.used > user.credits.limit ? 0 : user.credits.limit - user.credits.used
-    },
-    userOrgs () {
-      const orgs = this.$store.state.user.organizations
-      return orgs.sort((a, b) => { return a.name.en.toLowerCase().localeCompare(b.name.en.toLowerCase()) })
-    },
-    isAdmin () { return this.$store.state.user.systemAdmin || this.$store.state.user.role === 'admin' }
   },
 
   methods: {
