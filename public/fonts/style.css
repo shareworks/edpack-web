@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?719pd7');
-  src:  url('fonts/icomoon.eot?719pd7#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?719pd7') format('truetype'),
-    url('fonts/icomoon.woff?719pd7') format('woff'),
-    url('fonts/icomoon.svg?719pd7#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?40vqu3');
+  src:  url('fonts/icomoon.eot?40vqu3#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?40vqu3') format('truetype'),
+    url('fonts/icomoon.woff?40vqu3') format('woff'),
+    url('fonts/icomoon.svg?40vqu3#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -13,7 +13,7 @@
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon' !important;
-  speak: none;
+  speak: never;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -25,8 +25,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-help-with-circle:before {
-  content: "\e946";
+.icon-qr-code:before {
+  content: "\e947";
 }
 .icon-event_note:before {
   content: "\e900";
@@ -271,17 +271,8 @@
 .icon-facebook:before {
   content: "\e631";
 }
-.icon-tumblr:before {
-  content: "\e633";
-}
 .icon-linkedin:before {
   content: "\e634";
-}
-.icon-instagram:before {
-  content: "\e635";
-}
-.icon-behance:before {
-  content: "\e637";
 }
 .icon-upload:before {
   content: "\e639";
@@ -576,4 +567,10 @@
 }
 .icon-triangle-right:before {
   content: "\f05a";
+}
+.icon-graduation:before {
+  content: "\e948";
+}
+.icon-help-with-circle:before {
+  content: "\e946";
 }

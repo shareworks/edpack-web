@@ -6,12 +6,6 @@
       <inputs-with-flags :change="setNewName" :value="form.name" name="full" :placeholder="$t('SW_ORG_FULL_NAME')"/>
     </el-form-item>
 
-    <!-- Production -->
-    <el-form-item :label="$t('SW_PRODUCTION')">
-      <el-switch v-model="form.production" active-color="#13ce66" inactive-color="#ff4949"/>
-      <span class="text-muted ml-10">{{ $t('SW_PRODUCTION_TEXT') }}</span>
-    </el-form-item>
-
     <!-- Short name -->
     <el-form-item :label="$t('SW_ORG_SHORT_NAME')" required>
       <el-input v-model="form.shortName.en"/>
@@ -101,6 +95,27 @@
       <el-input v-model="form.websiteUrl" type="url" placeholder="https://about.your-school.com ..."/>
     </el-form-item>
 
+    <!-- Production -->
+    <el-form-item :label="$t('SW_PRODUCTION')">
+      <el-switch v-model="form.production" active-color="#13ce66" inactive-color="#ff4949"/>
+      <span class="text-muted ml-10">{{ $t('SW_PRODUCTION_TEXT') }}</span>
+    </el-form-item>
+
+    <!-- Use email password combination -->
+    <el-form-item :label="$t('SW_ALLOW_EMAIL_LOGIN')">
+      <el-switch v-model="form.loginByPassword" active-color="#13ce66" :disabled="!isSysAdmin" inactive-color="#ff4949"/>
+      <span class="text-muted ml-10">{{ $t('SW_ALLOW_EMAIL_LOGIN_TEXT', [appName]) }}</span><span v-if="!isSysAdmin" class="font-12 text-muted ml-10">{{ $t('SW_SYS_ADMIN_ONLY') }}</span>
+    </el-form-item>
+
+    <!-- Select auth options -->
+    <el-form-item :label="$t('SW_AUTH_OPTIONS')">
+      <p class="text-muted ml-10">{{ $t('SW_ALLOW_AUTH_OPTIONS_LOGIN', [appName]) }} <span v-if="!isSysAdmin" class="font-12 text-muted ml-10">{{ $t('SW_SYS_ADMIN_ONLY') }}</span></p>
+
+      <el-select v-model="form.alternativeAuthOptions" class="w-100" multiple :placeholder="$t('SW_SELECT')">
+        <el-option v-for="option in authOptions" :key="option" :label="$t(`SW_${option.toUpperCase()}`)" :value="option"/>
+      </el-select>
+    </el-form-item>
+
     <!-- Introduction by school EN -->
     <el-form-item v-if="introBySchool" :class="isJustOneLanguage ? '' : 'form-en'" :label="$t('SW_INTRO_FOR', [school.terminology.instructor[lang]])">
       <p class="text-muted">{{ $t('SW_INTRO_FOR_NEWLY', [school.terminology.instructor[lang]]) }}</p>
@@ -120,21 +135,6 @@
     <!-- Colofon NL -->
     <el-form-item :label="$t('SW_COLOFON')" :class="isJustOneLanguage ? '' : 'form-nl'" v-show="form.languages.nl">
       <redactor :config="editorOptions" ref="ColofonNL" v-model="form.colofon.nl"/>
-    </el-form-item>
-
-    <!-- Use email password combination -->
-    <el-form-item :label="$t('SW_ALLOW_EMAIL_LOGIN')">
-      <el-switch v-model="form.loginByPassword" active-color="#13ce66" :disabled="!isSysAdmin" inactive-color="#ff4949"/>
-      <span class="text-muted ml-10">{{ $t('SW_ALLOW_EMAIL_LOGIN_TEXT', [appName]) }}</span><span v-if="!isSysAdmin" class="font-12 text-muted ml-10">{{ $t('SW_SYS_ADMIN_ONLY') }}</span>
-    </el-form-item>
-
-    <!-- Select auth options -->
-    <el-form-item :label="$t('SW_AUTH_OPTIONS')">
-      <p class="text-muted ml-10">{{ $t('SW_ALLOW_AUTH_OPTIONS_LOGIN', [appName]) }} <span v-if="!isSysAdmin" class="font-12 text-muted ml-10">{{ $t('SW_SYS_ADMIN_ONLY') }}</span></p>
-
-      <el-select v-model="form.alternativeAuthOptions" class="w-100" multiple :placeholder="$t('SW_SELECT')">
-        <el-option v-for="option in authOptions" :key="option" :label="$t(`SW_${option.toUpperCase()}`)" :value="option"/>
-      </el-select>
     </el-form-item>
   </div>
 </template>
