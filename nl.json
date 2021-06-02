@@ -653,6 +653,7 @@
   "SW_DELETE_SCOPE_CONFIRM": "Weet u zeker dat u het API-bereik wilt verwijderen?",
   "SW_ORG_COUNTRY": "Land",
   "SW_MODIFIED_BY": "Bijgewerkt door",
+  "SW_HAVE_A_CHAT": "hier een chat te starten",
   "SW_TEST_MAILING": "Test:mailing",
   "SW_TEST_TEMPLATE_MAILING": "Test templates",
   "SW_TEST_CRONJOB_MAILING": "Test CronJobs (under construction)",

@@ -4,9 +4,10 @@
       <div>
         {{ $t('SW_INTEGRATIONS_INFO_TEXT', [appName]) }}
 
-        <p v-if="showChatLink" class="mt-5 bold">
+        <p class="mt-5 bold">
           {{ $t('SW_HELP_SETUP_INTEGRATION') }}
-          <a href="#" @click.prevent="openChat">{{ $t('SW_CONTACT_US').toLowerCase() }}</a>.
+          <a v-if="showChatLink"  href="#" @click.prevent="openChat">{{ $t('SW_HAVE_A_CHAT').toLowerCase() }}</a>
+          <a v-else  href="#" @click.prevent="openChat">{{ $t('SW_CONTACT_US').toLowerCase() }}</a>.
         </p>
       </div>
     </el-alert>
@@ -378,8 +379,6 @@ export default {
   },
 
   methods: {
-    openChat () { this.$store.dispatch('setContactForm', true) },
-    removeScope (index) { this.form.lmsConfig.scope.splice(index, 1) },
     processHttp () {
       if (!this.form.lmsConfig.apiUrl) return
 
@@ -459,7 +458,10 @@ export default {
       if (!length || this.form.lmsConfig.scope[length - 1]) {
         this.form.lmsConfig.scope.push('')
       }
-    }
+    },
+    removeScope (index) { this.form.lmsConfig.scope.splice(index, 1) },
+    openContact () { this.$store.dispatch('setContactForm', true) },
+    openChat () { window.fcWidget.open() },
   }
 }
 </script>
