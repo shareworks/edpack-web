@@ -3,7 +3,7 @@ import config from 'config'
 const oauthWithPopup = (window, authUrl) => {
   const oauthWindow = window.open(authUrl, 'Give permission to' + config.name, 'height=500,width=800')
 
-  oauthWindow.addEventListener("message", (event) => {
+  window.addEventListener('message', (event) => {
     console.log('oauthWithPopup: ', event.origin)
     console.log('oauthWithPopup: ', event.data)
   }, false);
