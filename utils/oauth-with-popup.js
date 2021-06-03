@@ -1,14 +1,20 @@
 import config from 'config'
 
 const oauthWithPopup = (window, authUrl, onSuccess, onError) => {
-
+  // PostMessages can sometimes be called multiple times, so ignore if we already handling a close
+  let receivedResponse = false
 
   // Create popup window for oauth flow
   const oauthWindow = window.open(authUrl, 'Give permission to' + config.name, 'height=500,width=800')
 
   // Wait will we receive message that oauthFlow completed
-  window.addEventListener('message', (event) => {
+  const eventHandler = (event) => {
+    if (receivedResponse) return
     if (event.origin !== config.web_url) return
+
+    receivedResponse = true
+    // remove eventListener
+    window.removeEventListener('message', eventHandler, false)
 
     if (event.data === 'OauthInPopupSucceeded') {
       if (onSuccess) onSuccess()
@@ -19,13 +25,14 @@ const oauthWithPopup = (window, authUrl, onSuccess, onError) => {
       if (onError) onError()
       else window.history.back()
     }
-  }, false);
+  };
+  window.addEventListener('message', eventHandler , false);
 
   // "Pol" authWindow till we receive message that oauth completed successfully
   const checkConnect = setInterval(function () {
 
-    // If window still exists, send message to check
-    if (oauthWindow && !oauthWindow.closed) {
+    // If window still exists, send message to check (only when we didnt receive a response
+    if (oauthWindow && !oauthWindow.closed && !receivedResponse) {
       oauthWindow.postMessage('checkIfOauthFlowSucceeded', config.web_url)
       return
     }
