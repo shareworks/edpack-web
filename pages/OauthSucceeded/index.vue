@@ -39,9 +39,8 @@ export default {
 
   mounted () {
     window.addEventListener("message", (event) => {
-      console.log(event.origin)
-      // if (event.origin !== "http://example.com:8080") return
-      console.log(event.data)
+      console.log('addEventListener: ', event.origin)
+      console.log('addEventListener: ', event.data)
       event.source.postMessage('OauthInPopupSucceeded', event.origin)
     }, false)
   },
