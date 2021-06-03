@@ -8,13 +8,11 @@ const oauthWithPopup = (window, authUrl, onSuccess, onError) => {
   const oauthWindow = window.open(authUrl, 'Give permission to' + config.name, 'height=500,width=800')
 
   // Wait will we receive message that oauthFlow completed
-  const eventHandler = (event) => {
+  window.addEventListener('message', (event) => {
     if (receivedResponse) return
     if (event.origin !== config.web_url) return
 
     receivedResponse = true
-    // remove eventListener
-    window.removeEventListener('message', eventHandler, false)
 
     if (event.data === 'OauthInPopupSucceeded') {
       if (onSuccess) onSuccess()
@@ -25,8 +23,7 @@ const oauthWithPopup = (window, authUrl, onSuccess, onError) => {
       if (onError) onError()
       else window.history.back()
     }
-  };
-  window.addEventListener('message', eventHandler , false);
+  }, false);
 
   // "Pol" authWindow till we receive message that oauth completed successfully
   const checkConnect = setInterval(function () {
