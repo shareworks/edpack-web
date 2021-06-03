@@ -1,5 +1,7 @@
+import config from 'config'
+
 const oauthWithPopup = (window, authUrl) => {
-  const oauthWindow = window.open(authUrl, 'Buddycheck Oauth2.0', 'height=800,width=600')
+  const oauthWindow = window.open(authUrl, 'Give permission to' + config.name, 'height=500,width=800')
 
   const checkConnect = setInterval(function () {
     if (!oauthWindow || !oauthWindow.closed) return
