@@ -735,5 +735,9 @@
   "SW_REUSE_EVAL_INFO": "This survey has {0} {2} in {1} groups.",
   "SW_UNEXPECTED_ERROR": "Unexpected error",
   "SW_UNEXPECTED_ERROR_HELP": "Something went wrong. Please try again later or contact support.",
-  "SW_TERMINOLOGY": "Terminology"
+  "SW_TERMINOLOGY": "Terminology",
+  "SW_TOGGLE_OAUTH_POPUP": "Oauth in Popup",
+  "SW_TOGGLE_OAUTH_POPUP_TEXT": "Use a popup for Oauth flow (when cookie problems occur)",
+  "SW_TOGGLE_OPEN_NEW_TAB": "Oauth in new window",
+  "SW_TOGGLE_OPEN_NEW_TAB_TEXT": "Run app outside IFrame (when cookies also not working with popup)"
 }
