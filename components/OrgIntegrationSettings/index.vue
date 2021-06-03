@@ -218,6 +218,18 @@
         <!-- Api Integration fields -->
         <el-collapse-transition>
           <div v-show="form.lmsApiIntegration">
+            <!-- Open new tab during oauth launch -->
+            <el-form-item class="mb-10" :label="$t('SW_TOGGLE_OPEN_NEW_TAB')">
+              <el-switch v-model="form.openNewLtiTab" active-color="#13ce66" inactive-color="#ff4949"/>
+              <span class="text-muted ml-10">{{ $t('SW_TOGGLE_OPEN_NEW_TAB_TEXT' )}}</span>
+            </el-form-item>
+
+            <!-- Use popup for Oauth launch -->
+            <el-form-item class="mb-10" :label="$t('SW_TOGGLE_OAUTH_POPUP')">
+              <el-switch v-model="form.usePopupForOauth" active-color="#13ce66" inactive-color="#ff4949"/>
+              <span class="text-muted ml-10">{{ $t('SW_TOGGLE_OAUTH_POPUP_TEXT' )}}</span>
+            </el-form-item>
+
             <div v-for="lms in apiTemplates" :key="lms.name" v-show="lms.name === form.lms">
               <div v-if="lms.name !== 'moodle'">
                 <!-- URL -->
