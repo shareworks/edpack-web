@@ -12,9 +12,11 @@ const oauthWithPopup = (window, authUrl, onSuccess, onError) => {
     if (receivedResponse) return
     if (event.origin !== config.web_url) return
 
-    receivedResponse = true
+    console.log(event.data)
 
     if (event.data === 'OauthInPopupSucceeded') {
+      receivedResponse = true
+
       if (onSuccess) onSuccess()
       else window.location.reload()
     }
