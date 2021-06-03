@@ -569,7 +569,7 @@
   "SW_USE_ANOTHER_BROWSER": "Use another browser",
   "SW_USE_GRADING_WEIGHTS": "Grading weights",
   "SW_USE_GRADING_WEIGHTS_DEFAULT_TEXT": "What should be the default weights for positive and negative changes to the grade?",
-  "SW_USE_GRADING_WEIGHTS_TEXT": "Allow [0] to apply custom weights to positive and negative grade changes before exporting to Grades.",
+  "SW_USE_GRADING_WEIGHTS_TEXT": "Allow {0} to apply custom weights to positive and negative grade changes before exporting to Grades.",
   "SW_VIEW_ALL": "View all",
   "SW_VIEW_CREDENTIALS": "Hide sensitive data",
   "SW_VIEW_PROFILE": "View your profile",
@@ -736,8 +736,8 @@
   "SW_UNEXPECTED_ERROR": "Unexpected error",
   "SW_UNEXPECTED_ERROR_HELP": "Something went wrong. Please try again later or contact support.",
   "SW_TERMINOLOGY": "Terminology",
-  "SW_TOGGLE_OAUTH_POPUP": "Oauth in Popup",
-  "SW_TOGGLE_OAUTH_POPUP_TEXT": "Use a popup for Oauth flow (when cookie problems occur)",
-  "SW_TOGGLE_OPEN_NEW_TAB": "Oauth in new window",
-  "SW_TOGGLE_OPEN_NEW_TAB_TEXT": "Run app outside IFrame (when cookies also not working with popup)"
+  "SW_TOGGLE_OAUTH_POPUP": "Oauth popup",
+  "SW_TOGGLE_OAUTH_POPUP_TEXT": "Use a popup window for Oauth flow.",
+  "SW_TOGGLE_OPEN_NEW_TAB": "Open in new tab",
+  "SW_TOGGLE_OPEN_NEW_TAB_TEXT": "Button to open app in new tab."
 }
