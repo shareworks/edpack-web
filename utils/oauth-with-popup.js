@@ -1,13 +1,24 @@
 import config from 'config'
 
-const oauthWithPopup = (window, authUrl) => {
+const oauthWithPopup = (window, authUrl, onSuccess, onError) => {
+
+
   // Create popup window for oauth flow
   const oauthWindow = window.open(authUrl, 'Give permission to' + config.name, 'height=500,width=800')
 
   // Wait will we receive message that oauthFlow completed
   window.addEventListener('message', (event) => {
     if (event.origin !== config.web_url) return
-    window.location.reload()
+
+    if (event.data === 'OauthInPopupSucceeded') {
+      if (onSuccess) onSuccess()
+      else window.location.reload()
+    }
+    else {
+      console.error(new Error('Oauth flow went wrong!'))
+      if (onError) onError()
+      else window.history.back()
+    }
   }, false);
 
   // "Pol" authWindow till we receive message that oauth completed successfully
@@ -19,10 +30,14 @@ const oauthWithPopup = (window, authUrl) => {
       return
     }
 
-    // Else stop her, clear interval and go back
+    // Else stop her, clear interval and give error message
     clearInterval(checkConnect)
+    console.error(new Error('Oauth flow went wrong!'))
 
-    // window.location.reload()
+    // Go back in history if no error cb is given
+    if (onError) onError()
+    else window.history.back()
+
   }, 500)
 }
 
