@@ -28,8 +28,8 @@
 <script>
 import config from 'config'
 export default {
-  name: 'Error',
-  metaInfo: { title: 'Error' },
+  name: 'OauthSucceeded',
+  metaInfo: { title: 'OauthSucceeded' },
   components: {},
 
   data () {
@@ -37,9 +37,16 @@ export default {
     }
   },
 
+  mounted () {
+    window.addEventListener("message", (event) => {
+      console.log(event.origin)
+      // if (event.origin !== "http://example.com:8080") return
+      console.log(event.data)
+      event.source.postMessage('OauthInPopupSucceeded', event.origin)
+    }, false)
+  },
+
   methods: {
-    allowCookies () {
-    }
   }
 }
 </script>
