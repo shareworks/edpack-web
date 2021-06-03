@@ -17,7 +17,8 @@ const buildOauthUrl = ({
   let authUrl = `${prefix}/auth/${lms}${params}`
   if ($http.defaults.headers.common['Lti-Access-Token']) authUrl = `${authUrl}&ltiAccessToken=${$http.defaults.headers.common['Lti-Access-Token']}`
 
-  authUrl = `${authUrl}&redirectpath=` + encodeURIComponent(slug + redirectUrl + '/' + redirectId + '/' + tab + postfix + (closeAfterOauth ? '&closeAfterOauth=true': ''))
+  if (closeAfterOauth) authUrl = `${authUrl}&redirectpath=` + encodeURIComponent('oauth-succeeded?closeAfterOauth')
+  else authUrl = `${authUrl}&redirectpath=` + encodeURIComponent(slug + redirectUrl + '/' + redirectId + '/' + tab + postfix)
 
   return authUrl
 }
