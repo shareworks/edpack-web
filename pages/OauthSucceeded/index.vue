@@ -34,15 +34,29 @@ export default {
 
   data () {
     return {
+      passedSucceeded: false,
     }
   },
 
   mounted () {
-    window.addEventListener("message", (event) => {
-      console.log('addEventListener: ', event.origin)
-      console.log('addEventListener: ', event.data)
+    const self = this
+
+    window.addEventListener('message', (event) => {
+      // If postMessage already send, stop her
+      if (self.passedSucceeded) return
+
+      // Wait till receive message from parent
+      if (event.origin !== config.web_url) return
+
+      // Send message back that oauth is succeeded
       event.source.postMessage('OauthInPopupSucceeded', event.origin)
+
+      // close this windows after 2 seconds
+      setTimeout(function(){ window.close() }, 2000);
     }, false)
+
+    // Always close this windows after 8 seconds
+    setTimeout(function(){ window.close() }, 8000);
   },
 
   methods: {
