@@ -8,30 +8,29 @@ const oauthWithPopup = (window, authUrl, onSuccess, onError) => {
   const oauthWindow = window.open(authUrl, 'Give permission to' + config.name, 'height=500,width=800')
 
   // Wait will we receive message that oauthFlow completed
-  window.addEventListener('message', (event) => {
-    console.log('CHECK: ', event.data)
-
+  const eventHandler = (event) => {
+    // Skip all messages not from the popup
     if (receivedResponse) return
     if (event.origin !== config.web_url) return
+    if (event.data !== 'OauthInPopupSucceeded') return
 
-    if (event.data === 'OauthInPopupSucceeded') {
-      receivedResponse = true
+    // Keep track we receive a response
+    receivedResponse = true
 
-      if (onSuccess) onSuccess()
-      else window.location.reload()
-    }
-    else {
-      console.error(new Error('Oauth flow went wrong!'))
-      if (onError) onError()
-      else window.history.back()
-    }
-  }, false);
+    // Remove eventListener
+    window.removeEventListener('message', eventHandler , false)
+
+    if (onSuccess) onSuccess()
+    else window.location.reload()
+  }
+
+  window.addEventListener('message', eventHandler , false)
 
   // "Pol" authWindow till we receive message that oauth completed successfully
   const checkConnect = setInterval(function () {
 
     // If window still exists, send message to check (only when we didnt receive a response
-    if (oauthWindow && !oauthWindow.closed) {
+    if (oauthWindow && !oauthWindow.closed && !receivedResponse) {
       oauthWindow.postMessage('checkIfOauthFlowSucceeded', config.web_url)
       return
     }

@@ -41,12 +41,15 @@ export default {
   mounted () {
     const self = this
 
-    window.addEventListener('message', (event) => {
+    const eventHandler = (event) => {
       // If postMessage already send, stop her
       if (self.passedSucceeded) return
 
       // Wait till receive message from parent
       if (event.origin !== config.web_url) return
+
+      // Skip all messages not for the popup
+      if (event.data !== 'checkIfOauthFlowSucceeded') return
 
       // Keep track that we postMessage already=
       self.passedSucceeded = true
@@ -54,9 +57,14 @@ export default {
       // Send message back that oauth is succeeded
       event.source.postMessage('OauthInPopupSucceeded', event.origin)
 
+      // Remove eventListener
+      window.removeEventListener('message', eventHandler , false)
+
       // close this windows after 2 seconds
       setTimeout(function(){ window.close() }, 2000);
-    }, false)
+    }
+
+    window.addEventListener('message', eventHandler, false)
 
     // Always close this windows after 8 seconds
     setTimeout(function(){ window.close() }, 8000);
