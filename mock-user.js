@@ -22,7 +22,7 @@ export default {
     lms: 'canvas',
     ltiVersion: 'basic',
     saml: { domains: [], entityIds: [] },
-    samlServices: [],
+    idps: [],
     name: { nl: 'Shareworks University', en: 'Shareworks University' },
     notificationEmail: 'info@shareworks.nl',
     role: 'admin',
