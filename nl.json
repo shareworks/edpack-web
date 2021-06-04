@@ -706,5 +706,11 @@
   "SW_TOGGLE_OAUTH_POPUP": "Oauth popup",
   "SW_TOGGLE_OAUTH_POPUP_TEXT": "Gebruik een popupvenste voor Oauth flow.",
   "SW_TOGGLE_OPEN_NEW_TAB": "Open in nieuw tabblad",
-  "SW_TOGGLE_OPEN_NEW_TAB_TEXT": "Toon een knop om de app te openen in een nieuw tabblad."
+  "SW_TOGGLE_OPEN_NEW_TAB_TEXT": "Toon een knop om de app te openen in een nieuw tabblad.",
+  "SW_SAML_IDPS": "Saml idps",
+  "SW_SAML_IDP": "Saml idp",
+  "SW_SAML_FEDERATION": "Federation,",
+  "SW_SAML_ENTITY_ID": "SAML Entity ID",
+  "SW_SAML_URL": "SAML Entity Url",
+  "SW_ADD_IDP": "Add new Saml idp"
 }

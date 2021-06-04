@@ -42,41 +42,40 @@
     </el-form-item>
 
     <!--Idps-->
-    <el-form-item :label="$t('SW_IDPS')">
+    <el-form-item :label="$t('SW_SAML_IDPS')">
 
       <el-card v-for="(idp, index) in form.idps" :key="index" class="box-card" style="margin-bottom: 20px;">
         <div slot="header" class="clearfix">
-          <span>{{$t('SW_IDP')}}</span>
+          <span>{{$t('SW_SAML_IDP')}}</span>
           <el-button style="float: right; padding: 3px 0; color:red;" type="text" icon="el-icon-delete" @click.native.prevent="deleteIdp(index)">Remove</el-button>
         </div>
         <el-form label-width="150px" :model="idp">
-          <el-form-item :label="$t('SW_FEDERATION')" size="small" required>
+          <el-form-item :label="$t('SW_SAML_FEDERATION')" size="small" required>
             <el-select v-model="idp.federation" placeholder="Select">
               <el-option
                       v-for="item in [{ value: 'surfconext', label: 'Surfconext' }, { value: 'edugain', label: 'EduGain' }]"
                       :key="item.value"
                       :label="item.label"
-                      :value="item.value">
-              </el-option>
+                      :value="item.value"/>
             </el-select>
           </el-form-item><el-form-item :label="$t('SW_SAML_ENTITY_ID')" size="small">
-          <el-input size="small" v-model="idp.entityId">-</el-input>
+          <el-input size="small" v-model="idp.entityId" @keyup.enter.native="handleInputConfirm('entityId', index, idp)" @blur="handleInputConfirm('entityId', index, idp)"/>
         </el-form-item>
           <el-form-item :label="$t('SW_SAML_URL')" size="small">
-            <el-input size="small" v-model="idp.url"></el-input>
+            <el-input size="small" v-model="idp.url" @keyup.enter.native="handleInputConfirm('url', index, idp)" @blur="handleInputConfirm('url', index, idp)"/>
           </el-form-item>
 
           <el-form-item :label="$t('SW_SAML_DOMAINS')" size="small" required>
             <div class="mb-10">
-              <el-tag v-for="samlDomain in idp.domains" :key="samlDomain" closable :disable-transitions="false" @close="handleClose('samlDomains', samlDomain)">
+              <el-tag v-for="samlDomain in idp.domains" :key="samlDomain" closable :disable-transitions="false" @close="handleClose('idpSamlDomains', samlDomain, idp)">
                 {{ samlDomain }}
               </el-tag>
-              <el-input class="inline ml-5" size="small" v-if="inputVisible.samlDomains" v-model="inputValue.samlDomains"
-                        placeholder="saml-domain.edu" ref="samlDomains" @keyup.enter.native="handleInputConfirm('samlDomains')"
-                        @blur="handleInputConfirm('samlDomains')"/>
+              <el-input class="inline ml-5" size="small" v-if="inputVisible.idpSamlDomains.includes(index)" v-model="inputValue.idpSamlDomains"
+                        placeholder="saml-domain.edu" :ref="String('idpSamlDomains' + index)" @keyup.enter.native="handleInputConfirm('idpSamlDomains', index, idp)"
+                        @blur="handleInputConfirm('idpSamlDomains', index, idp)"/>
 
               <!-- New SAML domain -->
-              <el-button v-else size="small" class="ml-5" @click="showInput('samlDomains')">
+              <el-button v-else size="small" class="ml-5" @click="showInput('idpSamlDomains', index)">
                 <i class="icon-add"/>
                 {{ $t('SW_NEW_SAML_DOMAIN') }}
               </el-button>
@@ -85,42 +84,10 @@
         </el-form>
       </el-card>
 
-      <!-- Add faculty -->
+      <!-- Add idp -->
       <el-button @click="addIdp" class="block">
         <i class="icon-add"/>
-        {{ $t('SW_ADD_IDP') }}
-      </el-button>
-    </el-form-item>
-
-    <!--Saml domains-->
-    <el-form-item :label="$t('SW_SAML_DOMAINS')" required>
-      <el-tag v-for="samlDomain in form.saml.domains" :key="samlDomain" closable :disable-transitions="false" @close="handleClose('samlDomains', samlDomain)">
-        {{ samlDomain }}
-      </el-tag>
-      <el-input class="inline ml-5" size="small" v-if="inputVisible.samlDomains" v-model="inputValue.samlDomains"
-              placeholder="saml-domain.edu" ref="samlDomains" @keyup.enter.native="handleInputConfirm('samlDomains')"
-              @blur="handleInputConfirm('samlDomains')"/>
-
-      <!-- New SAML domain -->
-      <el-button v-else size="small" class="ml-5" @click="showInput('samlDomains')">
-        <i class="icon-add"/>
-        {{ $t('SW_NEW_SAML_DOMAIN') }}
-      </el-button>
-    </el-form-item>
-
-    <!--Saml entity IDs-->
-    <el-form-item :label="$t('SW_SAML_ENTITY_IDS')">
-      <el-tag v-for="entity in form.saml.entityIds" :key="entity" closable :disable-transitions="false" @close="handleClose('samlEntityIds', entity)">
-        {{ entity }}
-      </el-tag>
-
-      <el-input class="inline ml-5" size="small" v-if="inputVisible.samlEntityIds" v-model="inputValue.samlEntityIds"
-                placeholder="https://www.saml-domain.edu/saml-login-url" ref="samlEntityIds" @keyup.enter.native="handleInputConfirm('samlEntityIds')"
-                @blur="handleInputConfirm('samlEntityIds')"/>
-
-      <el-button v-else size="small" class="ml-5" @click="showInput('samlEntityIds')">
-        <i class="icon-add"/>
-        {{ $t('SW_NEW_SAML_ENTITY_ID') }}
+        {{ $t('SW_ADD_SAML_IDP') }}
       </el-button>
     </el-form-item>
 
@@ -320,23 +287,23 @@
                       {{ $t('SW_GENERATE_DEFAULT_SCOPES') }}
                     </el-button>
                   </p>
-                    <!-- Scopes -->
-                    <div v-for="(scope, index) in form.lmsConfig.scope" :key="index">
-                      <div class="mb-10">
-                        <el-input v-model="form.lmsConfig.scope[index]">
-                          <template slot="prepend">#{{index + 1}}</template>
+                  <!-- Scopes -->
+                  <div v-for="(scope, index) in form.lmsConfig.scope" :key="index">
+                    <div class="mb-10">
+                      <el-input v-model="form.lmsConfig.scope[index]">
+                        <template slot="prepend">#{{index + 1}}</template>
 
-                          <!-- Delete email -->
-                          <el-popconfirm slot="append" :confirmButtonText="$t('SW_DELETE')" :cancelButtonText="$t('SW_CANCEL')"
-                                         @confirm="removeScope(index)" hideIcon :title="$t('SW_DELETE_SCOPE_CONFIRM')">
-                            <el-button slot="reference">
-                              <i class="icon-delete"/>
-                              <span class="hidden-xs">{{ $t('SW_REMOVE') }}</span>
-                            </el-button>
-                          </el-popconfirm>
-                        </el-input>
-                      </div>
+                        <!-- Delete email -->
+                        <el-popconfirm slot="append" :confirmButtonText="$t('SW_DELETE')" :cancelButtonText="$t('SW_CANCEL')"
+                                       @confirm="removeScope(index)" hideIcon :title="$t('SW_DELETE_SCOPE_CONFIRM')">
+                          <el-button slot="reference">
+                            <i class="icon-delete"/>
+                            <span class="hidden-xs">{{ $t('SW_REMOVE') }}</span>
+                          </el-button>
+                        </el-popconfirm>
+                      </el-input>
                     </div>
+                  </div>
 
                   <!-- Add scope -->
                   <el-button @click="addScope" class="block">
@@ -378,13 +345,11 @@ export default {
       parameters: parameters,
       inputVisible: {
         emailDomains: false,
-        samlDomains: false,
-        samlEntityIds: false
+        idpSamlDomains: [],
       },
       inputValue: {
         emailDomains: '',
-        samlDomains: '',
-        samlEntityIds: ''
+        idpSamlDomains: '',
       },
       hideCredentials: true,
       apiUrl: config.api_url,
@@ -477,13 +442,13 @@ export default {
         this.processing = true
 
         this.$http.get('organizations/secret', { params: { organization: this.form._id } })
-          .then((res) => {
-            this.form.lmsConfig.ltiBasicSecret = res.data.list[0]
-            this.$message({ message: this.$i18n.t('SW_LTISECRET_GENERATED'), type: 'success' })
-            this.generatedSecretAlert = true
-          })
-          .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
-          .finally(() => { this.processing = false })
+                .then((res) => {
+                  this.form.lmsConfig.ltiBasicSecret = res.data.list[0]
+                  this.$message({ message: this.$i18n.t('SW_LTISECRET_GENERATED'), type: 'success' })
+                  this.generatedSecretAlert = true
+                })
+                .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
+                .finally(() => { this.processing = false })
       })
     },
     trimImportantValues () {
@@ -493,26 +458,41 @@ export default {
         }
       }
     },
-    showInput (type) {
-      this.inputVisible[type] = true
-      this.$nextTick((_) => { this.$refs[type].$refs.input.focus() })
+    showInput (type, index) {
+      if (type === 'idpSamlDomains') {
+        this.inputVisible.idpSamlDomains.push(index)
+        this.$nextTick((_) => {
+          this.$refs[String(type + index)][0].$refs.input.focus()
+        })
+      } else {
+        this.inputVisible[type] = true
+        this.$nextTick((_) => { this.$refs[type].$refs.input.focus() })
+      }
     },
-    handleInputConfirm (type) {
+    handleInputConfirm (type, index, idp) {
+      if (['entityId', 'url'].includes(type)) {
+        idp[type] = idp[type].trim()
+        return
+      }
+
       const inputValue = this.inputValue[type].trim()
+
       if (inputValue) {
-        if (type === 'samlEntityIds') this.form.saml.entityIds.push(inputValue.trim())
-        else if (type === 'samlDomains') this.form.saml.domains.push(inputValue.trim())
+        if (type === 'idpSamlDomains') idp.domains.push(inputValue.trim())
         else this.form[type].push(inputValue.trim())
       }
-      this.inputVisible[type] = false
+
+      if (type === 'idpSamlDomains') this.inputVisible[type] = this.inputVisible[type].filter(i => i !== index)
+      else this.inputVisible[type] = false
+
       this.inputValue[type] = ''
 
       if (type === 'emailDomains') { this.domainsValidation() }
     },
-    handleClose (type, item) {
-      if (type === 'samlEntityIds') this.form.saml.entityIds.splice(this.form.saml.entityIds.indexOf(item), 1)
-      else if (type === 'samlDomains') this.form.saml.domains.splice(this.form.saml.domains.indexOf(item), 1)
-      else this.form[type].splice(this.form[type].indexOf(item), 1)
+    handleClose (type, string, item) {
+      if (type === 'idpSamlDomains') item.domains.splice(item.domains.indexOf(string), 1)
+      else this.form[type].splice(this.form[type].indexOf(string), 1)
+
       this.$nextTick()
 
       if (type === 'emailDomains') { this.domainsValidation() }
