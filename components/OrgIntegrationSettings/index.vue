@@ -41,6 +41,57 @@
       </el-button>
     </el-form-item>
 
+    <!--Idps-->
+    <el-form-item :label="$t('SW_IDPS')">
+
+      <el-card v-for="(idp, index) in form.idps" :key="index" class="box-card" style="margin-bottom: 20px;">
+        <div slot="header" class="clearfix">
+          <span>{{$t('SW_IDP')}}</span>
+          <el-button style="float: right; padding: 3px 0; color:red;" type="text" icon="el-icon-delete" @click.native.prevent="deleteIdp(index)">Remove</el-button>
+        </div>
+        <el-form label-width="150px" :model="idp">
+          <el-form-item :label="$t('SW_FEDERATION')" size="small" required>
+            <el-select v-model="idp.federation" placeholder="Select">
+              <el-option
+                      v-for="item in [{ value: 'surfconext', label: 'Surfconext' }, { value: 'edugain', label: 'EduGain' }]"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item><el-form-item :label="$t('SW_SAML_ENTITY_ID')" size="small">
+          <el-input size="small" v-model="idp.entityId">-</el-input>
+        </el-form-item>
+          <el-form-item :label="$t('SW_SAML_URL')" size="small">
+            <el-input size="small" v-model="idp.url"></el-input>
+          </el-form-item>
+
+          <el-form-item :label="$t('SW_SAML_DOMAINS')" size="small" required>
+            <div class="mb-10">
+              <el-tag v-for="samlDomain in idp.domains" :key="samlDomain" closable :disable-transitions="false" @close="handleClose('samlDomains', samlDomain)">
+                {{ samlDomain }}
+              </el-tag>
+              <el-input class="inline ml-5" size="small" v-if="inputVisible.samlDomains" v-model="inputValue.samlDomains"
+                        placeholder="saml-domain.edu" ref="samlDomains" @keyup.enter.native="handleInputConfirm('samlDomains')"
+                        @blur="handleInputConfirm('samlDomains')"/>
+
+              <!-- New SAML domain -->
+              <el-button v-else size="small" class="ml-5" @click="showInput('samlDomains')">
+                <i class="icon-add"/>
+                {{ $t('SW_NEW_SAML_DOMAIN') }}
+              </el-button>
+            </div>
+          </el-form-item>
+        </el-form>
+      </el-card>
+
+      <!-- Add faculty -->
+      <el-button @click="addIdp" class="block">
+        <i class="icon-add"/>
+        {{ $t('SW_ADD_IDP') }}
+      </el-button>
+    </el-form-item>
+
     <!--Saml domains-->
     <el-form-item :label="$t('SW_SAML_DOMAINS')" required>
       <el-tag v-for="samlDomain in form.saml.domains" :key="samlDomain" closable :disable-transitions="false" @close="handleClose('samlDomains', samlDomain)">
@@ -391,6 +442,12 @@ export default {
   },
 
   methods: {
+    addIdp () {
+      this.form.idps.push({ federation: '', domains: [], entityId: '', url: '' })
+    },
+    deleteIdp (index) {
+      if (index > -1) this.form.idps.splice(index, 1)
+    },
     processHttp () {
       if (!this.form.lmsConfig.apiUrl) return
 
