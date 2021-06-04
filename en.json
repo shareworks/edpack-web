@@ -745,5 +745,5 @@
   "SW_SAML_FEDERATION": "Federation,",
   "SW_SAML_ENTITY_ID": "SAML Entity ID",
   "SW_SAML_URL": "SAML Entity Url",
-  "SW_ADD_IDP": "Add new Saml idp"
+  "SW_ADD_SAML_IDP": "Add new Saml idp"
 }
