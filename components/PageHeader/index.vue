@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Title -->
-    <h1 class="page-header-heading">{{ title }}</h1>
+    <h1>{{ title }}</h1>
 
     <div class="header-text mt-5 hidden-xs hidden-sm print-always-visible">
 
