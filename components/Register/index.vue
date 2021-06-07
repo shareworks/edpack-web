@@ -180,7 +180,7 @@ export default {
         .catch((err) => {
           this.form.password = ''
           let errorString = 'SW_GENERIC_ERROR'
-          const errorTranslation = err.data?.errors[0]?.translation
+          const errorTranslation = err?.data?.errors[0]?.translation
           if (errorTranslation) errorString = 'SW_' + errorTranslation
 
           this.$message({ message: this.$i18n.t(errorString), type: 'error' })
