@@ -150,6 +150,7 @@ export default {
         .then(() => { this.form = JSON.parse(JSON.stringify(this.school)) })
         .catch(() => { this.toTab = this.settingsMode })
     },
+    makeFirstLetterUpper (word) { return word.charAt(0).toUpperCase() + word.slice(1) },
     onSubmit () {
       if (this.form.domainError) {
         return this.$message({ message: this.$i18n.t('SW_DOMAINS_ERROR', this.form.domainError.length), type: 'error' })
@@ -167,14 +168,14 @@ export default {
       // make sure all terminology in lowercase mode
       const terminology = this.form.terminology
       this.languages.forEach(lang => {
-        if (terminology.faculty) this.form.terminology.faculty[lang] = this.form.terminology.faculty[lang].toLowerCase()
-        if (terminology.faculties) this.form.terminology.faculties[lang] = this.form.terminology.faculties[lang].toLowerCase()
-        if (terminology.plan) this.form.terminology.plan[lang] = this.form.terminology.plan[lang].toLowerCase()
-        if (terminology.plans) this.form.terminology.plans[lang] = this.form.terminology.plans[lang].toLowerCase()
-        if (terminology.student) this.form.terminology.student[lang] = this.form.terminology.student[lang].toLowerCase()
-        if (terminology.students) this.form.terminology.students[lang] = this.form.terminology.students[lang].toLowerCase()
-        if (terminology.instructor) this.form.terminology.instructor[lang] = this.form.terminology.instructor[lang].toLowerCase()
-        if (terminology.instructors) this.form.terminology.instructors[lang] = this.form.terminology.instructors[lang].toLowerCase()
+        if (terminology.faculty) this.form.terminology.faculty[lang] = this.makeFirstLetterUpper(this.form.terminology.faculty[lang])
+        if (terminology.faculties) this.form.terminology.faculties[lang] = this.makeFirstLetterUpper(this.form.terminology.faculties[lang])
+        if (terminology.plan) this.form.terminology.plan[lang] = this.makeFirstLetterUpper(this.form.terminology.plan[lang])
+        if (terminology.plans) this.form.terminology.plans[lang] = this.makeFirstLetterUpper(this.form.terminology.plans[lang])
+        if (terminology.student) this.form.terminology.student[lang] = this.makeFirstLetterUpper(this.form.terminology.student[lang])
+        if (terminology.students) this.form.terminology.students[lang] = this.makeFirstLetterUpper(this.form.terminology.students[lang])
+        if (terminology.instructor) this.form.terminology.instructor[lang] = this.makeFirstLetterUpper(this.form.terminology.instructor[lang])
+        if (terminology.instructors) this.form.terminology.instructors[lang] = this.makeFirstLetterUpper(this.form.terminology.instructors[lang])
       })
 
       // filter scope items to prevent saving empty values
