@@ -204,7 +204,7 @@
               <el-input v-model="form.lmsConfig.ltiAdvantageDeploymentId" type="text" :placeholder="lmsTitle + ' LTI Advantage deployment id ...'"/>
             </el-form-item>
             <!-- Lti-advantage auth secret -->
-            <el-form-item label="LTI secret">
+            <el-form-item label="LTI secret" v-if="showLTISecret">
               <el-input v-model="form.lmsConfig.ltiAdvantageSecret" :type="hideCredentials ? 'password' : 'text'" :placeholder="lmsTitle + ' LTI Advantage secret ...'"/>
             </el-form-item>
             <!-- Lti-advantage auth url -->
@@ -345,11 +345,11 @@ export default {
       parameters: parameters,
       inputVisible: {
         emailDomains: false,
-        idpSamlDomains: [],
+        idpSamlDomains: []
       },
       inputValue: {
         emailDomains: '',
-        idpSamlDomains: '',
+        idpSamlDomains: ''
       },
       hideCredentials: true,
       apiUrl: config.api_url,
@@ -403,7 +403,8 @@ export default {
     callbackUrl () { return this.apiUrl + '/auth/' + this.form.lms + '/callback' },
     lmsTitle () { return this.form.lms.charAt(0).toUpperCase() + this.form.lms.substring(1) },
     ltiAdvantageRedirectUrl () { return `${config.api_url}/lti/advantage/` + this.form.lms + '/launch' },
-    ltiAdvantageLoginUrl () { return `${config.api_url}/lti/advantage/` + this.form.lms + '/initiation' }
+    ltiAdvantageLoginUrl () { return `${config.api_url}/lti/advantage/` + this.form.lms + '/initiation' },
+    showLTISecret () { return !(this.form.lms === 'brightspace' && this.form.ltiVersion === 'advantage') }
   },
 
   methods: {
@@ -442,13 +443,13 @@ export default {
         this.processing = true
 
         this.$http.get('organizations/secret', { params: { organization: this.form._id } })
-                .then((res) => {
-                  this.form.lmsConfig.ltiBasicSecret = res.data.list[0]
-                  this.$message({ message: this.$i18n.t('SW_LTISECRET_GENERATED'), type: 'success' })
-                  this.generatedSecretAlert = true
-                })
-                .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
-                .finally(() => { this.processing = false })
+          .then((res) => {
+            this.form.lmsConfig.ltiBasicSecret = res.data.list[0]
+            this.$message({ message: this.$i18n.t('SW_LTISECRET_GENERATED'), type: 'success' })
+            this.generatedSecretAlert = true
+          })
+          .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
+          .finally(() => { this.processing = false })
       })
     },
     trimImportantValues () {
@@ -510,7 +511,7 @@ export default {
     },
     removeScope (index) { this.form.lmsConfig.scope.splice(index, 1) },
     openContact () { this.$store.dispatch('setContactForm', true) },
-    openChat () { window.fcWidget.open() },
+    openChat () { window.fcWidget.open() }
   }
 }
 </script>
