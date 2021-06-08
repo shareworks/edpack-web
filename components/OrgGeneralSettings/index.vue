@@ -109,11 +109,14 @@
 
     <!-- Select auth options -->
     <el-form-item :label="$t('SW_AUTH_OPTIONS')">
-      <p class="text-muted ml-10">{{ $t('SW_ALLOW_AUTH_OPTIONS_LOGIN', [appName]) }} <span v-if="!isSysAdmin" class="font-12 text-muted ml-10">{{ $t('SW_SYS_ADMIN_ONLY') }}</span></p>
-
-      <el-select v-model="form.alternativeAuthOptions" class="w-100" multiple :placeholder="$t('SW_SELECT')">
+      <el-select v-model="form.alternativeAuthOptions" class="w-50" multiple :placeholder="$t('SW_SELECT')">
         <el-option v-for="option in authOptions" :key="option" :label="$t(`SW_${option.toUpperCase()}`)" :value="option"/>
       </el-select>
+
+      <el-popover placement="top-start" width="400" trigger="click">
+        <a class="cursor-pointer ml-5" slot="reference"><i class="icon-question question-circle question-pop ml-5"/></a>
+        <p class="text-muted ml-10">{{ $t('SW_ALLOW_AUTH_OPTIONS_LOGIN', [appName]) }} <span v-if="!isSysAdmin" class="font-12 text-muted ml-10">{{ $t('SW_SYS_ADMIN_ONLY') }}</span></p>
+      </el-popover>
     </el-form-item>
 
     <!-- Introduction by school EN -->

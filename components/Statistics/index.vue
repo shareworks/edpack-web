@@ -20,7 +20,7 @@
           </el-col>
 
           <el-col :xs="24" :md="3" :sm="8" class="ml-5">
-            <el-button type="primary" size="medium" class="button-square-xs" plain @click="getStatisticsByDate" :disabled="!minDate">
+            <el-button type="primary" size="medium" class="button-square-xs" plain @click="getStatisticsByDate">
               <span>{{ $tc('SW_GET_STATISTIC', 1) }}</span>
             </el-button>
           </el-col>
@@ -149,6 +149,8 @@ export default {
       else return date ? moment(date).format('ll') : moment(new Date()).format('ll')
     },
     getStatisticsByDate () {
+      if (!this.minDate) return this.$message({ message: this.$i18n.t('SW_NO_MIN_DATE'), type: 'warning' })
+
       this.status = 'loading'
       this.calendarMode = true
       const params = { minDate: this.minDate, maxDate: this.maxDate }
