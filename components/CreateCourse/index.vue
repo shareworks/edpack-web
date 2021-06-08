@@ -55,7 +55,7 @@ export default {
         organization: this.$store.state.school._id,
         name: '',
         faculty: '',
-        status: this.$store.state.inLTI ? 'inactive' : 'active',
+        status: this.$store.state.inLTI && !config.disableCourseActivation ? 'inactive' : 'active',
         ilearn: {
           integration: !!(this.$store.state.school.ilearn && this.$store.state.school.ilearn.advantageApiId)
         }
