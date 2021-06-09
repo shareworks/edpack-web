@@ -746,5 +746,15 @@
   "SW_SAML_ENTITY_ID": "SAML Entity ID",
   "SW_SAML_URL": "SAML Entity Url",
   "SW_ADD_SAML_IDP": "Add new Saml idp",
-  "SW_NO_MIN_DATE": "Please, choose at least start date."
+  "SW_NO_MIN_DATE": "Please, choose at least start date.",
+  "SW_ACTIVITY_LOG": "Activity log",
+  "SW_ACTIVITY_LOG_TEXT": "Below you will find all create, edit and delete activities.",
+  "SW_SEARCH_BY_NAME_EMAIL": "Search by name or email",
+  "SW_SELECT_CONTENT": "Select content",
+  "SW_SELECT_ACTION": "Select action",
+  "SW_DATE": "Date",
+  "SW_ACTION": "Action",
+  "SW_CONTENT": "Content",
+  "SW_AMOUNT": "Amount",
+  "SW_INFORMATION": "Information"
 }

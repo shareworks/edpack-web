@@ -713,5 +713,15 @@
   "SW_SAML_ENTITY_ID": "SAML Entity ID",
   "SW_SAML_URL": "SAML Entity Url",
   "SW_ADD_SAML_IDP": "Add new Saml idp",
-  "SW_NO_MIN_DATE": "Kies a.u.b. ten minste startdatum."
+  "SW_NO_MIN_DATE": "Kies a.u.b. ten minste startdatum.",
+  "SW_ACTIVITY_LOG": "Activiteiten logboek",
+  "SW_ACTIVITY_LOG_TEXT": "Hieronder vind je alle aanmaak, bewerk en verwijder activiteiten.",
+  "SW_SEARCH_BY_NAME_EMAIL": "Zoek op naam of e-mail",
+  "SW_SELECT_CONTENT": "Selecteer inhoud",
+  "SW_SELECT_ACTION": "Selecteer actie",
+  "SW_DATE": "Datum",
+  "SW_ACTION": "Actie",
+  "SW_CONTENT": "Inhoud",
+  "SW_AMOUNT": "Aantal",
+  "SW_INFORMATION": "Informatie"
 }
