@@ -14,7 +14,7 @@
         <p v-else>
           <span class="mr-5">{{ $t('SW_SERVER_MAINTENANCE', [appName]) }} <a href="https://status.shareworks.nl/" class="check-status-button bold is-underline" target="_blank">{{ $t('SW_CHECK_STATUS') }}</a>.</span>
           <span>{{ $t('SW_RETRY_IN', [countdownNumber]) }} </span>
-          <el-button class="inline ml-5" type="primary" plain size="mini" @click="checkConnection">{{ $t('SW_RETRY_NOW') }}</el-button>
+          <el-button class="inline ml-5" size="mini" @click="checkConnection">{{ $t('SW_RETRY_NOW') }}</el-button>
         </p>
 
       </el-alert>
