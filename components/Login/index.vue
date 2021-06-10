@@ -134,6 +134,17 @@ export default {
     signinByPassword () { return !this.selectedSchool || this.selectedSchool.loginMethods.includes('loginByPassword') }
   },
 
+  watch: {
+    $route (to) {
+      if (to.query.schoolId) {
+        const targetSchool = this.schools.find((school) => school._id === to.query.schoolId)
+        if (targetSchool) this.selectSchool(targetSchool)
+      } else {
+        this.selectedSchool = null
+      }
+    }
+  },
+
   mounted () {
     this.$http.get('/auth/saml/identity-providers')
       .then((res) => {
@@ -154,7 +165,7 @@ export default {
       let redirect = this.$route.query.redirect || ''
       if (redirect[0] === '/') redirect = redirect.substr(1)
 
-      if (this.selectedSchool.loginMethods.includes('saml')) {
+      if (school.loginMethods.includes('saml')) {
         window.location.assign(`${this.apiUrl}/auth/saml?name=${school.name}&entrypoint=${school.url}&redirectpath=${redirect}`)
       } else {
         const route = { name: 'landing', query: { schoolId: school._id } }
