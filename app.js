@@ -5,7 +5,7 @@ import 'promise-polyfill'
 
 // Core (Vue) functionality
 import Vue from 'vue'
-import VueAnalytics from 'vue-analytics'
+import VueGtag from 'vue-gtag'
 import moment from 'moment'
 import XBrowserUpdate from 'x-browser-update'
 import { sync } from 'vuex-router-sync'
@@ -89,7 +89,7 @@ Vue.use(VueMeta)
 Vue.use(VueMasonry)
 
 // Init Google Analytics
-Vue.use(VueAnalytics, { id: config.analytics })
+Vue.use(VueGtag, { config: { id: config.analytics } }, router)
 
 // Run in debug when not in production
 Vue.config.productionTip = false

@@ -16,13 +16,6 @@ export default {
         loadLanguages(Language.i18n, visitorLanguage)
         store.dispatch('setLanguage', visitorLanguage)
       }
-
-      // Track page views with Google Analytics
-      Vue.$ga.page({
-        page: to.fullPath,
-        title: to.name,
-        location: window.location.href
-      })
     })
   }
 }
