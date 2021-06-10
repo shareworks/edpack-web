@@ -5,7 +5,7 @@
     <input type="text" class="opacity-0" ref="focusInput" autofocus aria-hidden="true">
 
     <div>
-      <p class="mb-20">{{ $t('SW_CSV_SYNC_EXPLAIN_TEXT', [appName, school.terminology.student[lang], school.terminology.students[lang]]) }}</p>
+      <p class="mb-20">{{ $t('SW_CSV_SYNC_EXPLAIN_TEXT', [appName, school.terminology.student[lang].toLowerCase(), school.terminology.students[lang].toLowerCase()]) }}</p>
 
       <!-- Upload csv file -->
       <csv-upload-form @addUsers="addUsers" @clearUsers="clearUsers" templatePrefix="template-" :existing="{students: currentUsers.length, groups: statsBeforeSync.groups.length}"/>

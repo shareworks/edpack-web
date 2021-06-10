@@ -3,7 +3,7 @@
     <!-- Access token expired -->
     <div v-if="!userTokenValid">
       <h2>{{ $t('SW_TOKEN_EXPIRED') }}</h2>
-      <p>{{ $t('SW_TOKEN_EXPIRED_TEXT', [school.terminology.instructor[lang]]) }}</p>
+      <p>{{ $t('SW_TOKEN_EXPIRED_TEXT', [school.terminology.instructor[lang].toLowerCase()]) }}</p>
     </div>
 
     <transition v-else name="login" mode="out-in">

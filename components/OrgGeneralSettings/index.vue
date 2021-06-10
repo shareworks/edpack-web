@@ -120,14 +120,14 @@
     </el-form-item>
 
     <!-- Introduction by school EN -->
-    <el-form-item v-if="introBySchool" :class="isJustOneLanguage ? '' : 'form-en'" :label="$t('SW_INTRO_FOR', [school.terminology.instructor[lang]])">
-      <p class="text-muted">{{ $t('SW_INTRO_FOR_NEWLY', [school.terminology.instructor[lang]]) }}</p>
+    <el-form-item v-if="introBySchool" :class="isJustOneLanguage ? '' : 'form-en'" :label="$t('SW_INTRO_FOR', [school.terminology.instructor[lang].toLowerCase()])">
+      <p class="text-muted">{{ $t('SW_INTRO_FOR_NEWLY', [school.terminology.instructor[lang].toLowerCase()]) }}</p>
       <redactor :config="editorOptions" v-model="form.orgCourseIntro.en"/>
     </el-form-item>
 
     <!-- Introduction by school NL -->
-    <el-form-item v-if="introBySchool" :class="isJustOneLanguage ? '' : 'form-nl'" :label="$t('SW_INTRO_FOR', [school.terminology.instructor[lang]])">
-      <p class="text-muted">{{ $t('SW_INTRO_FOR_NEWLY', [school.terminology.instructor[lang]]) }}</p>
+    <el-form-item v-if="introBySchool" :class="isJustOneLanguage ? '' : 'form-nl'" :label="$t('SW_INTRO_FOR', [school.terminology.instructor[lang].toLowerCase()])">
+      <p class="text-muted">{{ $t('SW_INTRO_FOR_NEWLY', [school.terminology.instructor[lang].toLowerCase()]) }}</p>
       <redactor :config="editorOptions" v-model="form.orgCourseIntro.nl"/>
     </el-form-item>
 

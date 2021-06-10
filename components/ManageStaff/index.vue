@@ -84,7 +84,7 @@ export default {
         .finally(() => { this.loading = false })
     },
     confirmRemove (instructor) {
-      this.$confirm(this.$i18n.t('SW_REMOVE_INSTRUCTOR_CONFIRM', [this.school.terminology.instructor[this.lang]]), this.$i18n.t('SW_REMOVE_INSTRUCTOR'), {
+      this.$confirm(this.$i18n.t('SW_REMOVE_INSTRUCTOR_CONFIRM', [this.school.terminology.instructor[this.lang].toLowerCase()]), this.$i18n.t('SW_REMOVE_INSTRUCTOR'), {
         confirmButtonText: this.$i18n.t('SW_REMOVE'),
         cancelButtonText: this.$i18n.t('SW_CANCEL')
       }).then(() => { this.removeInstructor(instructor) })
@@ -100,7 +100,7 @@ export default {
           this.$store.state.course.counts.staff = this.course.counts.staff
 
           const message = config.name === 'Comproved' ? 'SW_INSTRUCTORS_REMOVED' : 'SW_USERS_REMOVED'
-          this.$message({ message: this.$i18n.t(message, [this.school.terminology.instructor[this.lang]]), type: 'success' })
+          this.$message({ message: this.$i18n.t(message, [this.school.terminology.instructor[this.lang].toLowerCase()]), type: 'success' })
         })
         .catch((err) => {
           console.log(err)

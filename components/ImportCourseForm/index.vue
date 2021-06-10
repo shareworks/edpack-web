@@ -3,8 +3,8 @@
     <el-form-item :label="$t('SW_USER_IMPORT_SOURCE')" v-if="lms" required>
     <!-- Choose import source -->
       <p class="form-help-text">
-        {{$t('SW_USER_IMPORT_SOURCE_TEXT', [school.terminology.students[lang]])}}
-        <el-popover placement="top-start" width="400" trigger="click" :content="$t('SW_USER_IMPORT_SOURCE_HELP', [school.terminology.students[lang]])">
+        {{$t('SW_USER_IMPORT_SOURCE_TEXT', [school.terminology.students[lang].toLowerCase()])}}
+        <el-popover placement="top-start" width="400" trigger="click" :content="$t('SW_USER_IMPORT_SOURCE_HELP', [school.terminology.students[lang].toLowerCase()])">
           <a class="cursor-pointer" slot="reference"><i class="icon-question question-circle question-pop ml-5"/></a>
         </el-popover>
       </p>
@@ -19,7 +19,7 @@
 
       <div class="inline ml-10 vertical-top mt-5 normal-line-height" v-if="lms && lmsCourse && (form.lmsImportType === 'courseUsers') && lmsCourse.totalStudents !== undefined && !disabledEdit">
         <span class="text-muted mr-5">{{$t('SW_COURSE_HAS')}}</span>
-        <el-tag size="mini">{{ lmsCourse.totalStudents }} {{ (lmsCourse.totalStudents > 1 ? school.terminology.students[lang] : school.terminology.student[lang]).toLowerCase() }}</el-tag>
+        <el-tag size="mini">{{ lmsCourse.totalStudents }} {{ (lmsCourse.totalStudents > 1 ? school.terminology.students[lang].toLowerCase() : school.terminology.student[lang]).toLowerCase() }}</el-tag>
       </div>
     </el-form-item>
 
@@ -32,12 +32,12 @@
             <el-checkbox class="text-ellipsis" :label="group" :key="group.id">
               {{ group.name }}
               <el-tag size="mini" class="ml-5 no-bold" v-if="group.membersCount !== undefined && !disabledEdit">
-                {{ group.membersCount }} {{ (group.membersCount > 1 ? school.terminology.students[lang] : school.terminology.student[lang]).toLowerCase() }}
+                {{ group.membersCount }} {{ (group.membersCount > 1 ? school.terminology.students[lang].toLowerCase() : school.terminology.student[lang]).toLowerCase() }}
               </el-tag>
             </el-checkbox>
           </div>
         </el-checkbox-group>
-        <span class="text-muted mt-10" v-if="!loading && !lmsGroupSets.length">{{ $t('SW_NO_GROUP_CATEGORIES', [school.terminology.students[lang]]) }}</span>
+        <span class="text-muted mt-10" v-if="!loading && !lmsGroupSets.length">{{ $t('SW_NO_GROUP_CATEGORIES', [school.terminology.students[lang].toLowerCase()]) }}</span>
       </el-form-item>
     </div>
 
@@ -55,7 +55,7 @@
             </el-checkbox>
           </div>
         </el-checkbox-group>
-        <span class="text-muted mt-10" v-if="!loading && !lmsCourseSections.length">{{ $t('SW_NO_COURSE_SECTIONS', [school.terminology.students[lang]]) }}</span>
+        <span class="text-muted mt-10" v-if="!loading && !lmsCourseSections.length">{{ $t('SW_NO_COURSE_SECTIONS', [school.terminology.students[lang].toLowerCase()]) }}</span>
       </el-form-item>
     </div>
   </div>

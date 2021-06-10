@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p v-if="!isManageStaff" class="mb-20">{{ $t('SW_ADD_USERS_TEXT', [school.terminology.students[lang]]) }}</p>
-    <p v-else-if="justStudents" class="mb-20">{{ $t('SW_ADD_STUDENTS_TEXT', [school.terminology.students[lang]]) }}</p>
+    <p v-if="!isManageStaff" class="mb-20">{{ $t('SW_ADD_USERS_TEXT', [school.terminology.students[lang].toLowerCase()]) }}</p>
+    <p v-else-if="justStudents" class="mb-20">{{ $t('SW_ADD_STUDENTS_TEXT', [school.terminology.students[lang].toLowerCase()]) }}</p>
     <p v-else class="mb-10 bold">{{ $t('SW_INVITE_COACHES', [school.terminology.instructors[lang].toLowerCase()]) }}</p>
 
     <el-alert class="mb-10" show-icon v-if="showDomainWarning" type="warning" :title="$t('SW_DIFFERENT_EMAIL_TITLE')">
@@ -76,9 +76,9 @@ export default {
   methods: {
     getRoleText (role) {
       if (role === 'student') return this.school.terminology.student[this.lang]
-      else if (role === 'participant') return this.school.terminology.student[this.lang]
+      else if (role === 'participant') return this.school.terminology.student[this.lang].toLowerCase()
       else if (role === 'assessor') return this.$i18n.tc('SW_ASSESSOR', 1)
-      else if (role === 'staff') return this.school.terminology.instructor[this.lang]
+      else if (role === 'staff') return this.school.terminology.instructor[this.lang].toLowerCase()
       else if (role === 'admin') return this.$i18n.tc('SW_ADMIN', 1)
     },
     emailsValidation (emails) {

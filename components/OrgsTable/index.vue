@@ -171,8 +171,8 @@
       <!-- Your role -->
       <el-table-column property="role" :label="$t('SW_YOUR_ROLE')" min-width="110">
         <template slot-scope="props">
-          <span v-if="props.row.role === 'student'">{{ school.terminology.student[lang] }}</span>
-          <span v-else-if="props.row.role === 'participant'">{{ school.terminology.student[lang] }}</span>
+          <span v-if="props.row.role === 'student'">{{ school.terminology.student[lang].toLowerCase() }}</span>
+          <span v-else-if="props.row.role === 'participant'">{{ school.terminology.student[lang].toLowerCase() }}</span>
           <span v-else-if="props.row.role === 'assessor'">{{ $tc('SW_ASSESSOR', 1) }}</span>
           <span v-else-if="props.row.role === 'staff'">{{ school.terminology.instructor[lang].toLowerCase() }}</span>
           <span v-else-if="props.row.role === 'admin'">{{ $tc('SW_ADMIN', 1) }}</span>

@@ -20,7 +20,7 @@
       <!-- Popover text -->
       <a href="#" @click.prevent slot="reference" class="bold">
         {{ (evaluation ? evaluation.staff.length : course.counts.staff) || 0 }}
-        {{ instructors.length > 1 ? school.terminology.instructors[lang] : school.terminology.instructor[lang] }}
+        {{ instructors.length > 1 ? school.terminology.instructors[lang].toLowerCase() : school.terminology.instructor[lang].toLowerCase() }}
       </a>
     </el-popover>
     <span v-if="evaluation"> {{ $t('SW_CAN_ACCESS_RESULTS')}}</span>

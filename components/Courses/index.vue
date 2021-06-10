@@ -76,7 +76,7 @@
     <div v-if="status === 'none' && statusFilter === 'active'" class="mt-30">
       <!-- Notify students there is nothing to do yet -->
       <el-alert type="info" v-if="user.role === 'student'"  show-icon :title="$t('SW_STUDENT_HOME_ALERT')">
-        {{ $t('SW_STUDENT_HOME_ALERT_TEXT', [appName, school.terminology.instructors[lang]]) }}
+        {{ $t('SW_STUDENT_HOME_ALERT_TEXT', [appName, school.terminology.instructors[lang].toLowerCase()]) }}
       </el-alert>
 
       <!-- Notify teachers they need to create a course to get started -->

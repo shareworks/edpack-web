@@ -27,8 +27,8 @@ export default {
       return rolesList.map(role => ' ' + this.getLabelText(role))
     },
     getLabelText (role) {
-      if (role === 'student') return this.school.terminology.student[this.lang]
-      else if (role === 'staff') return this.school.terminology.instructor[this.lang]
+      if (role === 'student') return this.school.terminology.student[this.lang].toLowerCase()
+      else if (role === 'staff') return this.school.terminology.instructor[this.lang].toLowerCase()
       else if (role === 'admin') return this.$i18n.tc('SW_ADMIN', 1)
     }
   }

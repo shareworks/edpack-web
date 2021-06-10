@@ -244,8 +244,8 @@ export default {
 
   methods: {
     getLabelText (role) {
-      if (role === 'student') return this.school.terminology.student[this.lang]
-      else if (role === 'staff') return this.school.terminology.instructor[this.lang]
+      if (role === 'student') return this.school.terminology.student[this.lang].toLowerCase()
+      else if (role === 'staff') return this.school.terminology.instructor[this.lang].toLowerCase()
       else if (role === 'assessor') return this.$i18n.tc('SW_ASSESSOR', 1)
       else if (role === 'admin') return this.$i18n.tc('SW_ADMIN', 1)
     },

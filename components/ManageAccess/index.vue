@@ -6,7 +6,7 @@
     <el-table v-if="!loading && staff.length" :data="dataInStep" row-key="_id" @sort-change="sortChange"
               ref="staffTable" :default-sort="{prop: 'activityDate', order: 'descending'}">
       <!-- Name -->
-      <el-table-column :label="school.terminology.instructor[lang].toLowerCase()" prop="name" min-width="160">
+      <el-table-column :label="school.terminology.instructor[lang]" prop="name" min-width="160">
         <template slot-scope="props">
           <div class="text-ellipsis">
             <thumbnail :model="props.row" class="thumb-user thumb-24 mr-5 hidden-xs hidden-sm"/>
@@ -33,7 +33,7 @@
             <el-dropdown trigger="click" @command="handleCommand">
               <el-button size="small" :plain="props.row.role !== 'owner'" :type="props.row.role !== 'none' ? 'primary' : 'default'">
                 <i v-if="props.row.role !== 'none'" :class="props.row.role === 'owner' ? 'icon-star-full' : 'icon-star-empty'"></i>
-                <span v-if="props.row.role === 'student'">{{ school.terminology.student[lang] }}</span>
+                <span v-if="props.row.role === 'student'">{{ school.terminology.student[lang].toLowerCase() }}</span>
                 <span v-else-if="props.row.role === 'staff'">{{ school.terminology.instructor[lang].toLowerCase() }}</span>
                 <span v-else-if="props.row.role === 'admin'">{{ $t('SW_ADMIN') }}</span>
                 <span v-else-if="props.row.role === 'owner'">{{ $t('SW_OWNER') }}</span>
