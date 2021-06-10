@@ -76,8 +76,10 @@ export default {
   methods: {
     getRoleText (role) {
       if (role === 'student') return this.school.terminology.student[this.lang]
-      if (role === 'staff') return this.school.terminology.instructor[this.lang]
-      if (role === 'admin') return this.$i18n.tc('SW_ADMIN', 1)
+      else if (role === 'participant') return this.school.terminology.student[this.lang]
+      else if (role === 'assessor') return this.$i18n.tc('SW_ASSESSOR', 1)
+      else if (role === 'staff') return this.school.terminology.instructor[this.lang]
+      else if (role === 'admin') return this.$i18n.tc('SW_ADMIN', 1)
     },
     emailsValidation (emails) {
       let failedEmails = [] // out param
