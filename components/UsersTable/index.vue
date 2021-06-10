@@ -64,7 +64,7 @@
           <!-- Search input -->
           <el-input v-model="searchText" size="medium" clearable :placeholder="$t('SW_SEARCH_USERS')" class="input-with-select">
             <el-select v-model="roleFilter" slot="prepend" @change="changeFilter">
-              <el-option v-for="item in roles" :key="item.value" :label="getLabelText(item.label)" :value="item.value"/>
+              <el-option v-for="item in roles" :key="item.value" :label="getOptionText(item.label)" :value="item.value"/>
             </el-select>
           </el-input>
         </el-col>
@@ -244,10 +244,17 @@ export default {
 
   methods: {
     getLabelText (role) {
-      if (role === 'student') return this.school.terminology.student[this.lang].toLowerCase()
-      else if (role === 'staff') return this.school.terminology.instructor[this.lang].toLowerCase()
+      if (role === 'student') return this.school.terminology.student[this.lang]
+      else if (role === 'staff') return this.school.terminology.instructor[this.lang]
       else if (role === 'assessor') return this.$i18n.tc('SW_ASSESSOR', 1)
       else if (role === 'admin') return this.$i18n.tc('SW_ADMIN', 1)
+    },
+    getOptionText (role) {
+      if (role === 'all') return this.$i18n.t('SW_ALL')
+      if (role === 'students') return this.school.terminology.students[this.lang]
+      else if (role === 'staffs') return this.school.terminology.instructors[this.lang]
+      else if (role === 'assessors') return this.$i18n.tc('SW_ASSESSOR', 2)
+      else if (role === 'admins') return this.$i18n.tc('SW_ADMIN', 2)
     },
     getUsers (refresh) {
       if (this.status === 'loading') return
