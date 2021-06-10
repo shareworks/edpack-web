@@ -99,6 +99,10 @@ export default {
       accessToken: this.$route.query.accessToken || '',
       recoverToken: this.$route.query.recoverToken || '',
       organizationId: this.$route.query.organization || '',
+      courseId: this.$route.query.course || '',
+      evaluationId: this.$route.query.evaluation || '',
+      assessmentId: this.$route.query.assessment || '',
+      role: this.$route.query.role || '',
       apiUrl: config.api_url,
       passwordMode: false,
       submitting: false,
@@ -175,7 +179,15 @@ export default {
       this.$http.post('/auth/local/password', this.form, { params: { accessToken: this.accessToken, organization: this.organizationId } })
         .then(() => {
           this.$message({ message: this.$i18n.t('SW_INVITATION_COMPLETED', [this.appName]), type: 'success' })
-          this.$router.push('/').catch(() => {})
+          if (this.role && (this.evaluationId || this.courseId)) {
+            let pagelinkUrl = `${this.apiUrl}/pagelink/redirect?role=${this.role}&organization=${this.organizationId}`
+            if (this.evaluationId) pagelinkUrl = `${pagelinkUrl}&evaluation=${this.evaluationId}`
+            if (this.assessmentId) pagelinkUrl = `${pagelinkUrl}&assessment=${this.assessmentId}`
+            if (this.courseId) pagelinkUrl = `${pagelinkUrl}&course=${this.courseId}`
+            window.location.assign(pagelinkUrl)
+          } else {
+            this.$router.push('/').catch(() => {})
+          }
         })
         .catch((err) => {
           this.form.password = ''
