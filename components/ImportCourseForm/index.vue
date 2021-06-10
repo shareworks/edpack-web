@@ -17,7 +17,7 @@
         <el-radio-button v-if="lms === 'canvas'" :disabled="disable && disable.includes('courseSections')" label="courseSections">{{ $t('SW_COURSE_SECTIONS') }}</el-radio-button>
       </el-radio-group>
 
-      <div class="inline ml-10 vertical-top mt-5 normal-line-height" v-if="lms && lmsCourse && (form.lmsImportType === 'courseUsers') && lmsCourse.totalStudents  && !disabledEdit">
+      <div class="inline ml-10 vertical-top mt-5 normal-line-height" v-if="lms && lmsCourse && (form.lmsImportType === 'courseUsers') && lmsCourse.totalStudents !== undefined && !disabledEdit">
         <span class="text-muted mr-5">{{$t('SW_COURSE_HAS')}}</span>
         <el-tag size="mini">{{ lmsCourse.totalStudents }} {{ (lmsCourse.totalStudents > 1 ? school.terminology.students[lang] : school.terminology.student[lang]).toLowerCase() }}</el-tag>
       </div>
@@ -49,7 +49,7 @@
           <div v-for="(section, index) in lmsCourseSections" :key="index">
             <el-checkbox class="text-ellipsis" :label="section" :key="section.id">
               {{ section.name }}
-              <el-tag size="mini" class="ml-5 no-bold" v-if="section.totalStudents && !disabledEdit">
+              <el-tag size="mini" class="ml-5 no-bold" v-if="section.totalStudents !== undefined && !disabledEdit">
                 {{ section.totalStudents }} {{ (section.totalStudents > 1 ? school.terminology.students[lang] : school.terminology.student[lang]).toLowerCase() }}
               </el-tag>
             </el-checkbox>
