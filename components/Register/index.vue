@@ -12,7 +12,7 @@
         <div>
           <p class="mb-20">{{ $t('SW_REGISTER_TEXT', [appName]) }}</p>
 
-          <div v-if="samlLoginEnabled">
+          <div v-if="loginMethods.includes('saml')">
             <p class="title"><strong>{{ $t('SW_REGISTER_SCHOOL') }}</strong></p>
 
             <!-- School selection -->
@@ -29,18 +29,18 @@
           </div>
 
           <!-- Register with Google account -->
-          <el-button class="block no-margin" @click="selectGoogle">
+          <el-button class="block no-margin" @click="selectGoogle" v-if="loginMethods.includes('google')">
             <span class="google-icon"></span>
             <strong>{{ $t('SW_REGISTER_WITH_GOOGLE') }}</strong>
           </el-button>
 
           <!-- Register with MS account -->
-          <el-button class="block no-margin mt-5" @click="selectMicrosoft">
+          <el-button class="block no-margin mt-5" @click="selectMicrosoft" v-if="loginMethods.includes('microsoft')">
             <span class="ms-icon"></span>
             <strong>{{ $t('SW_REGISTER_WITH_MS') }}</strong>
           </el-button>
 
-          <div v-if="localLoginEnabled">
+          <div v-if="loginMethods.includes('loginByPassword')">
             <!-- or Sign in By Password -->
             <div class="login-or">{{$t('SW_OR')}}</div>
 
@@ -96,6 +96,7 @@ export default {
 
   data () {
     return {
+      loginMethods: [],
       accessToken: this.$route.query.accessToken || '',
       recoverToken: this.$route.query.recoverToken || '',
       organizationId: this.$route.query.organization || '',
@@ -120,8 +121,6 @@ export default {
       repeatPassword: '',
       form: { password: '' },
       userTokenValid: true,
-      samlLoginEnabled: true,
-      localLoginEnabled: true,
       checkLoading: false
     }
   },
@@ -143,8 +142,7 @@ export default {
         .then(res => {
           const result = res.data.list[0]
           this.userTokenValid = result.userTokenValid
-          this.samlLoginEnabled = result.samlLoginEnabled
-          this.localLoginEnabled = result.localLoginEnabled
+          this.loginMethods = result.loginMethods
         })
         .catch(err => { showErrorMessage(this, err) })
         .finally(() => { this.checkLoading = false })
