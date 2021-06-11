@@ -67,7 +67,7 @@
         <div>
           <el-button type="text" size="small" class="close-password" @click="passwordMode = false">&times;</el-button>
 
-          <p class="title"><strong>{{$t('SW_SIGN_IN_BY_ACCOUNT', [appName]) }}</strong></p>
+          <p class="title"><strong>{{ selectedSchool ? $t('SW_LOGIN_TO_SELECTED_SCHOOL', [appName, selectedSchool.name]) : $t('SW_SIGN_IN_BY_ACCOUNT', [appName]) }}</strong></p>
           <el-input @keyup.enter.native="submitPassword" type="email" :placeholder="$t('SW_YOUR_EMAIL_SHORT')" name="email" id="login-email" prefix-icon="icon-email" v-model="form.email"/>
           <el-input @keyup.enter.native="submitPassword" type="password" :placeholder="$t('SW_YOUR_PASSWORD', [appName])" name="password" id="login-password" prefix-icon="icon-lock" class="mb-10" v-model="form.password"/>
 
@@ -124,7 +124,8 @@ export default {
       businessName: config.business.shortName,
       form: { email: '', password: '' },
       serverStatus: 'loading',
-      selectedSchool: null
+      selectedSchool: null,
+      lmsList: ['canvas', 'brightspace', 'blackboard', 'moodle', 'ilearn']
     }
   },
 
@@ -168,8 +169,30 @@ export default {
       if (school.loginMethods.includes('saml')) {
         window.location.assign(`${this.apiUrl}/auth/saml?name=${school.name}&entrypoint=${school.url}&redirectpath=${redirect}`)
       } else {
-        const route = { name: 'landing', query: { schoolId: school._id } }
-        this.$router.push(route)
+        // filter all methods to remove 'canvas', 'brightspace' and so on
+        const customLoginMethods = school.loginMethods.filter(method => !this.lmsList.includes(method))
+        const justOneMethodExist = customLoginMethods.length === 1
+
+        // just password mode available -> show it
+        if (justOneMethodExist && customLoginMethods[0] === 'loginByPassword') {
+          this.passwordMode = true
+          const route = { name: 'landing', query: { schoolId: school._id } }
+          this.$router.push(route)
+
+        // just google mode available -> open it
+        } else if (justOneMethodExist && customLoginMethods[0] === 'google') {
+          this.selectGoogle()
+
+        // just microsoft mode available -> open it
+        } else if (justOneMethodExist && customLoginMethods[0] === 'microsoft') {
+          this.selectMicrosoft()
+
+        // user has a multiple ways to login, show it
+        } else {
+          const route = { name: 'landing', query: { schoolId: school._id } }
+          this.$router.push(route)
+        }
+
         this.submitting = false
       }
     },
