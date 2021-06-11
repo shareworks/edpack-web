@@ -16,7 +16,7 @@
             <el-select :value="selectedSchool" class="block" filterable :placeholder="$t('SW_SELECT_YOUR_SCHOOL')"
                        @change="selectSchool" :no-data-text="$t('SW_NO_DATA')" :no-match-text="$t('SW_NO_SCHOOLS_FOUND')"
                        :loading-text="$t('SW_LOADING')">
-              <el-option v-for="(item, index) in schools" :key="index" :value="item">
+              <el-option v-for="(item, index) in schools" :key="index" :label="item.name" :value="item">
                 <i class="icon-school"/>
                 <span>{{ item.name }}</span>
               </el-option>
