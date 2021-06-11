@@ -55,7 +55,7 @@ export default {
         return
       }
 
-      const message = this.$i18n.t(draggableEvent.pullMode === 'clone' ? 'SW_USER_COPIED' : 'SW_USER_MOVED', [this.school.terminology.student[this.lang]])
+      const message = this.$i18n.t(draggableEvent.pullMode === 'clone' ? 'SW_USER_COPIED' : 'SW_USER_MOVED', [this.school.terminology.student[this.lang].toLowerCase()])
       this.$message({ message, type: 'success' })
       this.$emit('updateGroupCount', true)
     }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="normal-line-height mb-10 font-13 text-muted" v-if="!existing && !users.length">{{ $t('SW_CSV_IMPORT_TEXT', [school.emailDomains.length ? `student-name${school.emailDomains[0]}` : 'student-name@school-name.com', school.terminology.students[lang]]) }}</p>
+    <p class="normal-line-height mb-10 font-13 text-muted" v-if="!existing && !users.length">{{ $t('SW_CSV_IMPORT_TEXT', [school.emailDomains.length ? `student-name${school.emailDomains[0]}` : 'student-name@school-name.com', school.terminology.students[lang].toLowerCase()]) }}</p>
 
     <!-- Upload csv file -->
     <el-upload v-if="!users.length" class="inline" ref="csvUpload" action="" :show-file-list="false" :on-change="handleCSVChange"
@@ -20,16 +20,16 @@
     <!-- Successful upload -->
     <el-alert v-if="users.length && !submitting" type="success" class="normal-line-height" show-icon :closable="false" :title="$t('SW_CSV_UPLOAD_SUCCESSFUL')">
       <div v-if="!noGroup">
-        <p class="mb-10" v-if="!existing">{{ $t('SW_REUSE_EVAL_INFO', [users.length, groups.length, school.terminology.students[lang]]) }}</p>
-        <p class="mb-10" v-else>{{ $t('SW_CSV_CHANGES_TEXT', [existing.groups, existing.students, groups.length, users.length, school.terminology.students[lang]]) }}</p>
+        <p class="mb-10" v-if="!existing">{{ $t('SW_REUSE_EVAL_INFO', [users.length, groups.length, school.terminology.students[lang].toLowerCase()]) }}</p>
+        <p class="mb-10" v-else>{{ $t('SW_CSV_CHANGES_TEXT', [existing.groups, existing.students, groups.length, users.length, school.terminology.students[lang].toLowerCase()]) }}</p>
       </div>
       <p class="mb-10" v-else-if="useParticipantsCsv && assessors">{{ $t('SW_REUSE_EVAL_INFO_ASSESSORS', [users.length]) }}</p>
-      <p class="mb-10" v-else>{{ $t('SW_REUSE_EVAL_USER', [users.length, school.terminology.students[lang]]) }}</p>
+      <p class="mb-10" v-else>{{ $t('SW_REUSE_EVAL_USER', [users.length, school.terminology.students[lang].toLowerCase()]) }}</p>
 
       <!-- See student list -->
       <el-button size="small" type="success" v-if="!existing" @click="toggleStudentsList">
         <i class="icon-users"/>
-        {{ $t(buttonText ? buttonText : 'SW_VIEW_STUDENTS', [school.terminology.students[lang]]) }}
+        {{ $t(buttonText ? buttonText : 'SW_VIEW_STUDENTS', [school.terminology.students[lang].toLowerCase()]) }}
       </el-button>
 
       <!-- Remove csv -->
@@ -38,14 +38,14 @@
         <span v-if="!useParticipantsCsv">{{ $t('SW_UPLOAD_NEW_CSV') }}</span>
         <!-- Comproved specific code -->
         <span v-else-if="useParticipantsCsv && isGroups">{{ $t('SW_UPLOAD_NEW_CSV') }}</span>
-        <span v-else>{{ $t(cancelButtonText ? cancelButtonText : 'SW_UPLOAD_NEW_CSV_PARTICIPANTS', [school.terminology.students[lang]]) }}</span>
+        <span v-else>{{ $t(cancelButtonText ? cancelButtonText : 'SW_UPLOAD_NEW_CSV_PARTICIPANTS', [school.terminology.students[lang].toLowerCase()]) }}</span>
       </el-button>
     </el-alert>
 
     <!-- Warn about invalid emails -->
     <div class="mt-10 normal-line-height" v-if="invalidUsers.length">
       <el-alert :title="$t('SW_CSV_INVALID_EMAIL_TITLE', [invalidUsers.length])" type="error" :closable="false" effect="dark" show-icon>
-        {{ $t('SW_CSV_INVALID_EMAIL_TEXT', [school.terminology.students[lang]]) }}
+        {{ $t('SW_CSV_INVALID_EMAIL_TEXT', [school.terminology.students[lang].toLowerCase()]) }}
         <p v-if="invalidDomain">{{ $t('SW_DOMAIN_ISSUE') }}</p>
       </el-alert>
       <!-- Invalid emails table -->
@@ -70,7 +70,7 @@
     </div>
 
     <!-- students list table -->
-    <el-dialog :visible.sync="usersListVisible" :title="$t(buttonText ? buttonText : 'SW_VIEW_STUDENTS', [school.terminology.students[lang]])">
+    <el-dialog :visible.sync="usersListVisible" :title="$t(buttonText ? buttonText : 'SW_VIEW_STUDENTS', [school.terminology.students[lang].toLowerCase()])">
         <students-table v-if="usersListVisible" :tableData="users" :noGroup="noGroup" :participantTypeText="participantTypeText"/>
     </el-dialog>
 

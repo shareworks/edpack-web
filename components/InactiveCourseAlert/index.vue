@@ -1,6 +1,6 @@
 <template>
   <el-alert type="warning" class="mb-30" :title="$t('SW_COURSE_INACTIVE', [appName, school.terminology.instructors[lang].toLowerCase()])">
-    <p class="mb-10">{{$t('SW_INACTIVE_COURSE_TEXT', [appName, school.terminology.students[lang]])}}</p>
+    <p class="mb-10">{{$t('SW_INACTIVE_COURSE_TEXT', [appName, school.terminology.students[lang].toLowerCase()])}}</p>
     <el-button :loading="activating" type="warning" @click="activateCourse">
       <i class="icon-ok-sign"/> {{$t('SW_ACTIVATE_COURSE', [appName])}}
     </el-button>

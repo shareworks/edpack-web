@@ -50,7 +50,7 @@
             <el-checkbox class="text-ellipsis" :label="section" :key="section.id">
               {{ section.name }}
               <el-tag size="mini" class="ml-5 no-bold" v-if="section.totalStudents !== undefined && !disabledEdit">
-                {{ section.totalStudents }} {{ (section.totalStudents > 1 ? school.terminology.students[lang] : school.terminology.student[lang]).toLowerCase() }}
+                {{ section.totalStudents }} {{ (section.totalStudents > 1 ? school.terminology.students[lang].toLowerCase() : school.terminology.student[lang]).toLowerCase() }}
               </el-tag>
             </el-checkbox>
           </div>

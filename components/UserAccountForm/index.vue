@@ -68,8 +68,8 @@
 
     <!-- Role: Admin, Staff or Student -->
     <el-form-item :label="$tc('SW_ROLE', 1)" class="additional">
-      <strong v-if="form.role === 'student' || user.role === 'student'">{{ school.terminology.student[lang].toLowerCase() }}</strong>
-      <strong v-else-if="form.role === 'staff' || user.role === 'staff'">{{ school.terminology.instructor[lang].toLowerCase() }}</strong>
+      <strong v-if="form.role === 'student' || user.role === 'student'">{{ school.terminology.student[lang] }}</strong>
+      <strong v-else-if="form.role === 'staff' || user.role === 'staff'">{{ school.terminology.instructor[lang] }}</strong>
       <strong v-else-if="form.role === 'admin' || user.role === 'admin'">{{ $tc('SW_ADMIN', 1) }}</strong>
 
       {{ $t('SW_ROLE_AT', { school: form.organization.name[lang] }) }}
