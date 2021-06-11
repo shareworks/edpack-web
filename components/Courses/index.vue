@@ -122,8 +122,8 @@ export default {
       user: this.$store.state.user,
       lang: this.$store.state.lang,
       statusOptions: ['active', 'inactive', 'archived'],
-      statusFilter: this.$route.query.statusFilter || 'active',
       submitting: false,
+      statusFilter: this.$route.query.statusFilter || 'active',
       facultyFilter: this.faculty ? this.faculty._id : this.$route.query.context || ''
     }
   },
@@ -136,6 +136,12 @@ export default {
     $route: {
       immediate: true,
       handler () {
+        if (!this.$route.query.context) this.facultyFilter = ''
+        else { this.facultyFilter = this.$route.query.context }
+
+        if (!this.$route.query.statusFilter) this.statusFilter = 'active'
+        else { this.statusFilter = this.$route.query.statusFilter }
+
         this.selectionChange()
         this.getCourses(true)
       }
