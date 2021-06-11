@@ -102,6 +102,7 @@ export default {
       courseId: this.$route.query.course || '',
       evaluationId: this.$route.query.evaluation || '',
       assessmentId: this.$route.query.assessment || '',
+      facultyId: this.$route.query.faculty || '',
       role: this.$route.query.role || '',
       apiUrl: config.api_url,
       passwordMode: false,
@@ -160,11 +161,13 @@ export default {
       let linkAfterAuth = `${this.apiUrl}/auth/google`
 
       if (redirect) linkAfterAuth = `${linkAfterAuth}?redirectpath=${redirect}`
-      else if (!redirect && this.role && (this.evaluationId || this.courseId || this.assessmentId)) {
-        linkAfterAuth = `${linkAfterAuth}?role=${this.role}&organization=${this.organizationId}`
+      else if (!redirect && this.organizationId && (this.evaluationId || this.courseId || this.assessmentId || this.facultyId)) {
+        linkAfterAuth = `${linkAfterAuth}?organization=${this.organizationId}`
+        if (this.role) linkAfterAuth = `${linkAfterAuth}&role=${this.role}`
         if (this.evaluationId) linkAfterAuth = `${linkAfterAuth}&evaluation=${this.evaluationId}`
         if (this.assessmentId) linkAfterAuth = `${linkAfterAuth}&assessment=${this.assessmentId}`
         if (this.courseId) linkAfterAuth = `${linkAfterAuth}&course=${this.courseId}`
+        if (this.facultyId) linkAfterAuth = `${linkAfterAuth}&faculty=${this.facultyId}`
       }
 
       window.location.assign(linkAfterAuth)
@@ -176,11 +179,13 @@ export default {
       let linkAfterAuth = `${this.apiUrl}/auth/microsoft`
 
       if (redirect) linkAfterAuth = `${linkAfterAuth}?redirectpath=${redirect}`
-      else if (!redirect && this.role && (this.evaluationId || this.courseId || this.assessmentId)) {
-        linkAfterAuth = `${linkAfterAuth}?role=${this.role}&organization=${this.organizationId}`
+      else if (!redirect && this.organizationId && (this.evaluationId || this.courseId || this.assessmentId || this.facultyId)) {
+        linkAfterAuth = `${linkAfterAuth}?organization=${this.organizationId}`
+        if (this.role) linkAfterAuth = `${linkAfterAuth}&role=${this.role}`
         if (this.evaluationId) linkAfterAuth = `${linkAfterAuth}&evaluation=${this.evaluationId}`
         if (this.assessmentId) linkAfterAuth = `${linkAfterAuth}&assessment=${this.assessmentId}`
         if (this.courseId) linkAfterAuth = `${linkAfterAuth}&course=${this.courseId}`
+        if (this.facultyId) linkAfterAuth = `${linkAfterAuth}&faculty=${this.facultyId}`
       }
 
       window.location.assign(linkAfterAuth)
@@ -201,11 +206,13 @@ export default {
       this.$http.post('/auth/local/password', this.form, { params: { accessToken: this.accessToken, organization: this.organizationId } })
         .then(() => {
           this.$message({ message: this.$i18n.t('SW_INVITATION_COMPLETED', [this.appName]), type: 'success' })
-          if (this.role && (this.evaluationId || this.courseId || this.assessmentId)) {
-            let linkAfterAuth = `${this.apiUrl}/pagelink/redirect?role=${this.role}&organization=${this.organizationId}`
+          if (this.organizationId && (this.evaluationId || this.courseId || this.assessmentId || this.facultyId)) {
+            let linkAfterAuth = `${this.apiUrl}/pagelink/redirect?organization=${this.organizationId}`
+            if (this.role) linkAfterAuth = `${linkAfterAuth}&role=${this.role}`
             if (this.evaluationId) linkAfterAuth = `${linkAfterAuth}&evaluation=${this.evaluationId}`
             if (this.assessmentId) linkAfterAuth = `${linkAfterAuth}&assessment=${this.assessmentId}`
             if (this.courseId) linkAfterAuth = `${linkAfterAuth}&course=${this.courseId}`
+            if (this.facultyId) linkAfterAuth = `${linkAfterAuth}&faculty=${this.facultyId}`
             window.location.assign(linkAfterAuth)
           } else {
             this.$router.push('/').catch(() => {})
