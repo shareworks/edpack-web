@@ -154,12 +154,34 @@ export default {
     selectGoogle () {
       let redirect = this.$route.query.redirect || ''
       if (redirect[0] === '/') redirect = redirect.substr(1)
-      window.location.assign(`${this.apiUrl}/auth/google?redirectpath=${redirect}`)
+
+      let linkAfterAuth = `${this.apiUrl}/auth/google`
+
+      if (redirect) linkAfterAuth = `${linkAfterAuth}?redirectpath=${redirect}`
+      else if (!redirect && this.role && (this.evaluationId || this.courseId || this.assessmentId)) {
+        linkAfterAuth = `${linkAfterAuth}?role=${this.role}&organization=${this.organizationId}`
+        if (this.evaluationId) linkAfterAuth = `${linkAfterAuth}&evaluation=${this.evaluationId}`
+        if (this.assessmentId) linkAfterAuth = `${linkAfterAuth}&assessment=${this.assessmentId}`
+        if (this.courseId) linkAfterAuth = `${linkAfterAuth}&course=${this.courseId}`
+      }
+
+      window.location.assign(linkAfterAuth)
     },
     selectMicrosoft () {
       let redirect = this.$route.query.redirect || ''
       if (redirect[0] === '/') redirect = redirect.substr(1)
-      window.location.assign(`${this.apiUrl}/auth/microsoft?redirectpath=${redirect}`)
+
+      let linkAfterAuth = `${this.apiUrl}/auth/microsoft`
+
+      if (redirect) linkAfterAuth = `${linkAfterAuth}?redirectpath=${redirect}`
+      else if (!redirect && this.role && (this.evaluationId || this.courseId || this.assessmentId)) {
+        linkAfterAuth = `${linkAfterAuth}?role=${this.role}&organization=${this.organizationId}`
+        if (this.evaluationId) linkAfterAuth = `${linkAfterAuth}&evaluation=${this.evaluationId}`
+        if (this.assessmentId) linkAfterAuth = `${linkAfterAuth}&assessment=${this.assessmentId}`
+        if (this.courseId) linkAfterAuth = `${linkAfterAuth}&course=${this.courseId}`
+      }
+
+      window.location.assign(linkAfterAuth)
     },
     submitPassword () {
       if (!this.form.password || !this.repeatPassword) return this.$message({ message: this.$i18n.t('SW_PASSWORD_INCOMPLETE'), type: 'error' })
@@ -177,12 +199,12 @@ export default {
       this.$http.post('/auth/local/password', this.form, { params: { accessToken: this.accessToken, organization: this.organizationId } })
         .then(() => {
           this.$message({ message: this.$i18n.t('SW_INVITATION_COMPLETED', [this.appName]), type: 'success' })
-          if (this.role && (this.evaluationId || this.courseId)) {
-            let pagelinkUrl = `${this.apiUrl}/pagelink/redirect?role=${this.role}&organization=${this.organizationId}`
-            if (this.evaluationId) pagelinkUrl = `${pagelinkUrl}&evaluation=${this.evaluationId}`
-            if (this.assessmentId) pagelinkUrl = `${pagelinkUrl}&assessment=${this.assessmentId}`
-            if (this.courseId) pagelinkUrl = `${pagelinkUrl}&course=${this.courseId}`
-            window.location.assign(pagelinkUrl)
+          if (this.role && (this.evaluationId || this.courseId || this.assessmentId)) {
+            let linkAfterAuth = `${this.apiUrl}/pagelink/redirect?role=${this.role}&organization=${this.organizationId}`
+            if (this.evaluationId) linkAfterAuth = `${linkAfterAuth}&evaluation=${this.evaluationId}`
+            if (this.assessmentId) linkAfterAuth = `${linkAfterAuth}&assessment=${this.assessmentId}`
+            if (this.courseId) linkAfterAuth = `${linkAfterAuth}&course=${this.courseId}`
+            window.location.assign(linkAfterAuth)
           } else {
             this.$router.push('/').catch(() => {})
           }
