@@ -3,7 +3,7 @@
     <h3 class="collapse-header block">
       <!-- Amount of students -->
       <p class="question-sentence groups-header">
-        <strong>{{ school.terminology.students[lang].toLowerCase() }}</strong>
+        <strong>{{ school.terminology.students[lang] }}</strong>
         <el-tag size="mini" class="ml-5">{{ noGroup ? studentsWithoutGroup.length : studentsSorted.length }}
       </el-tag>
       </p>

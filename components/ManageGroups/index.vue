@@ -30,7 +30,7 @@
 
               <el-col :xs="4" :sm="8" :span="4" class="to-right">
                 <!-- Search input -->
-                <el-input prefix-icon="icon-search" :placeholder="$t('SW_SEARCH_STUDENTS', [school.terminology.student[lang]])" size="medium" v-model="searchText" clearable/>
+                <el-input prefix-icon="icon-search" :placeholder="$t('SW_SEARCH_STUDENTS', [school.terminology.student[lang].toLowerCase()])" size="medium" v-model="searchText" clearable/>
               </el-col>
             </el-row>
 
@@ -98,7 +98,7 @@
                             </el-popover>
                           </div>
 
-                          <el-tag class="question-tag-info hidden-xs" type="info">{{ countFilteredGroupsItem(group.students) }} {{ countFilteredGroupsItem(group.students) > 1 ? school.terminology.students[lang] : school.terminology.student[lang].toLowerCase() }}</el-tag>
+                          <el-tag class="question-tag-info hidden-xs" type="info">{{ countFilteredGroupsItem(group.students) }} <span class="hidden-sm">{{ countFilteredGroupsItem(group.students) > 1 ? school.terminology.students[lang].toLowerCase() : school.terminology.student[lang].toLowerCase() }}</span></el-tag>
                         </div>
                       </h3>
                   </template>
@@ -113,7 +113,7 @@
       </div>
 
       <!-- Table status -->
-      <table-status :status="status" :noneText="$t('SW_NO_STUDENTS_FOUND', [school.terminology.students[lang]])"/>
+      <table-status :status="status" :noneText="$t('SW_NO_STUDENTS_FOUND', [school.terminology.students[lang].toLowerCase()])"/>
 
     <!-- Add group dialog -->
     <el-dialog :title="$t('SW_ADD_GROUP')" append-to-body :visible.sync="addGroupDialog">
