@@ -98,7 +98,7 @@
                             </el-popover>
                           </div>
 
-                          <el-tag class="question-tag-info hidden-xs" type="info">{{ countFilteredGroupsItem(group.students) }} <span class="hidden-sm">{{ countFilteredGroupsItem(group.students) > 1 ? school.terminology.students[lang].toLowerCase() : school.terminology.student[lang].toLowerCase() }}</span></el-tag>
+                          <el-tag class="question-tag-info hidden-xs" type="info">{{ countFilteredGroupsItem(group.students) }} <span>{{ countFilteredGroupsItem(group.students) > 1 ? school.terminology.students[lang].toLowerCase() : school.terminology.student[lang].toLowerCase() }}</span></el-tag>
                         </div>
                       </h3>
                   </template>
