@@ -123,8 +123,8 @@ export default {
       lang: this.$store.state.lang,
       statusOptions: ['active', 'inactive', 'archived'],
       submitting: false,
-      statusFilter: this.$route.query.statusFilter || 'active',
-      facultyFilter: this.faculty ? this.faculty._id : this.$route.query.context || ''
+      statusFilter: false,
+      facultyFilter: false
     }
   },
 
@@ -136,12 +136,8 @@ export default {
     $route: {
       immediate: true,
       handler () {
-        if (!this.$route.query.context) this.facultyFilter = ''
-        else { this.facultyFilter = this.$route.query.context }
-
-        if (!this.$route.query.statusFilter) this.statusFilter = 'active'
-        else { this.statusFilter = this.$route.query.statusFilter }
-
+        this.facultyFilter = (this.faculty ? this.faculty._id : this.$route.query.context) || ''
+        this.statusFilter = this.$route.query.filter || 'active'
         this.selectionChange()
         this.getCourses(true)
       }
@@ -275,7 +271,7 @@ export default {
         .catch(() => { this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') }) })
         .finally(() => { this.submitting = false })
     },
-    changeFilter () {
+    changeFilter (filter) {
       const route = { params: { slug: this.school.slug, mode: 'courses' }, query: { query: this.searchText, filter: this.statusFilter, context: this.facultyFilter } }
       this.$router.push(route)
     },

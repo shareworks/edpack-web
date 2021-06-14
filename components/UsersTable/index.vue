@@ -197,16 +197,13 @@ export default {
   components: { UserAccountForm, UsersCreate, EmailUsers, ExpandUser, UsersMerge, CreditsColumn },
 
   data () {
-    const roles = config.usersTableRoles
-    const roleFilter = this.$route.query.filter || roles[0].value
-
     return {
       status: false,
       searchText: this.$route.query.query || '',
       sort: 'activityDate',
       order: 'ascending',
-      roles,
-      roleFilter,
+      roles: config.usersTableRoles,
+      roleFilter: false,
       tableData: [],
       customCounts: config.userCounts,
       inLTI: this.$store.state.inLTI,
@@ -232,9 +229,13 @@ export default {
     searchText: debounce(function () {
       this.$router.replace({ name: 'admin', params: { slug: this.school.slug, mode: 'users' }, query: { query: this.searchText, filter: this.roleFilter } })
     }, 400),
-    '$route' () {
-      this.selectionChange()
-      this.getUsers(true)
+    $route: {
+      immediate: true,
+      handler () {
+        this.roleFilter = this.$route.query.filter || this.roles[0].value
+        this.selectionChange()
+        this.getUsers(true)
+      }
     }
   },
 
@@ -363,7 +364,7 @@ export default {
       this.editUserForm = false
       this.dialogEditUser = false
     },
-    changeFilter (filter) { this.$router.replace({ name: 'admin', params: { slug: this.school.slug, mode: 'users' }, query: { query: this.searchText, filter: filter } }) },
+    changeFilter (filter) { this.$router.push({ name: 'admin', params: { slug: this.school.slug, mode: 'users' }, query: { query: this.searchText, filter: filter } }) },
     dateFormatter (row, column, value) { return value ? moment(value).fromNow() : '-' },
     sortCreatedDate (a, b) { return dateSorter(a.createdDate, b.createdDate) },
     sortActivityDate (a, b) { return dateSorter(a.activityDate, b.activityDate) },
