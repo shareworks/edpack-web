@@ -60,7 +60,7 @@ import { FocusTrap } from 'focus-trap-vue'
 sync(store, router)
 
 // Init Bugsnag for staging and production
-if (config.releaseStage !== 'development') {
+if (config.releaseStage !== 'local') {
   Bugsnag.start({
     apiKey: config.bugsnag,
     enabledReleaseStages: ['staging', 'production'],

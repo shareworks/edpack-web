@@ -139,7 +139,7 @@ export default {
 
   methods: {
     updateBugsnag (user) {
-      if (this.releaseStage === 'development') return
+      if (this.releaseStage === 'local') return
       Bugsnag.setUser(user._id, user.email)
       Bugsnag.addMetadata('school', { name: user.organization.slug, id: user.organization._id })
     },
