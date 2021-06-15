@@ -325,9 +325,9 @@
 
 <script>
 import config from 'config'
-import scopes from '@/edpack-web/lms-api-scopes.json'
+import scopes from '@/edpack-web/json/lms-api-scopes.json'
 import checkRegex from '@/edpack-web/utils/check-regex'
-import parameters from '@/edpack-web/lti-custom-parameters.json'
+import parameters from '@/edpack-web/json/lti-custom-parameters.json'
 
 export default {
   name: 'OrgIntegrationSettings',

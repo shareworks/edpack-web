@@ -89,7 +89,9 @@ Vue.use(VueMeta)
 Vue.use(VueMasonry)
 
 // Init Google Analytics
-Vue.use(VueGtag, { config: { id: config.analytics } }, router)
+const gaSetup = { config: { id: config.analytics } }
+if (config.secondaryAnalytics) gaSetup.includes = [{ id: config.secondaryAnalytics }]
+Vue.use(VueGtag, gaSetup, router)
 
 // Run in debug when not in production
 Vue.config.productionTip = false

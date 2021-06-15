@@ -34,7 +34,7 @@ export default {
 
   data () {
     return {
-      passedSucceeded: false,
+      passedSucceeded: false
     }
   },
 
@@ -58,16 +58,16 @@ export default {
       event.source.postMessage('OauthInPopupSucceeded', event.origin)
 
       // Remove eventListener
-      window.removeEventListener('message', eventHandler , false)
+      window.removeEventListener('message', eventHandler, false)
 
       // close this windows after 2 seconds
-      setTimeout(function(){ window.close() }, 2000);
+      setTimeout(function () { window.close() }, 2000)
     }
 
     window.addEventListener('message', eventHandler, false)
 
     // Always close this windows after 8 seconds
-    setTimeout(function(){ window.close() }, 8000);
+    setTimeout(function () { window.close() }, 8000)
   },
 
   methods: {

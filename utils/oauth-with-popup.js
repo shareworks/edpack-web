@@ -18,17 +18,16 @@ const oauthWithPopup = (window, authUrl, onSuccess, onError) => {
     receivedResponse = true
 
     // Remove eventListener
-    window.removeEventListener('message', eventHandler , false)
+    window.removeEventListener('message', eventHandler, false)
 
     if (onSuccess) onSuccess()
     else window.location.reload()
   }
 
-  window.addEventListener('message', eventHandler , false)
+  window.addEventListener('message', eventHandler, false)
 
   // "Pol" authWindow till we receive message that oauth completed successfully
   const checkConnect = setInterval(function () {
-
     // If window still exists, send message to check (only when we didnt receive a response
     if (oauthWindow && !oauthWindow.closed && !receivedResponse) {
       oauthWindow.postMessage('checkIfOauthFlowSucceeded', config.web_url)

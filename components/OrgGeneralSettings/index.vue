@@ -144,8 +144,8 @@
 
 <script>
 import config from 'config'
-import timezones from '@/edpack-web/timezones.json'
-import countries from '@/edpack-web/countries.json'
+import timezones from '@/edpack-web/json/timezones.json'
+import countries from '@/edpack-web/json/countries.json'
 import * as filestack from 'filestack-js'
 import InputsWithFlags from '../InputsWithFlags'
 import convertDiacritics from '../../utils/convert-diacritics'

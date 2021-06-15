@@ -185,10 +185,7 @@ export default {
         this.statsObject[key].value = newStatisticValues[key] || 0
 
         // filter statistic by type
-        if (this.statsObject[key].type === 'completionStats') { statCompletionValues.push(this.statsObject[key]) }
-        else if (this.statsObject[key].type === 'userStats') { statUserValues.push(this.statsObject[key]) }
-        else if (this.statsObject[key].type === 'usersStats') { statStatsValues.push(this.statsObject[key]) }
-        else if (this.calendarMode && this.statsObject[key].type === 'calendarStats') { calendarStatsValues.push(this.statsObject[key]) }
+        if (this.statsObject[key].type === 'completionStats') { statCompletionValues.push(this.statsObject[key]) } else if (this.statsObject[key].type === 'userStats') { statUserValues.push(this.statsObject[key]) } else if (this.statsObject[key].type === 'usersStats') { statStatsValues.push(this.statsObject[key]) } else if (this.calendarMode && this.statsObject[key].type === 'calendarStats') { calendarStatsValues.push(this.statsObject[key]) }
       }
 
       this.statisticCompletionValues = statCompletionValues
