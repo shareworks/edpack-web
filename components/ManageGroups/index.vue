@@ -279,7 +279,7 @@ export default {
 
     // Submit
     confirmSubmitChanges () {
-      this.$confirm(this.$i18n.t('SW_MANAGE_STAFF_EFFECT', [this.school.terminology.students[this.lang]]), this.$i18n.t('SW_SUBMIT_MANAGE_GROUP_TITLE'), {
+      this.$confirm(this.$i18n.t('SW_MANAGE_STAFF_EFFECT', [this.school.terminology.students[this.lang].toLowerCase()]), this.$i18n.t('SW_SUBMIT_MANAGE_GROUP_TITLE'), {
         confirmButtonText: this.$i18n.t('SW_SAVE_CHANGES'),
         cancelButtonText: this.$i18n.t('SW_CANCEL')
       }).then(() => { this.submitChanges() })

@@ -80,11 +80,8 @@
           <!-- Forgot password -->
           <div class="text-center">
             <el-button type="text" @click="$router.push({name: 'forgot', query: { email: form.email }})" size="small" :aria-label="$t('SW_FORGOT_PASSWORD')">{{ $t('SW_FORGOT_PASSWORD') }}</el-button>
-          </div>
-
-          <!-- Request password -->
-          <div class="text-center" v-if="showRequestPasswordLink">
-            <el-button type="text" @click="$router.push({name: 'forgot', query: { email: form.email, requestPassword: 'true' }})" size="small" :aria-label="$t('SW_REQUEST_PASSWORD')">{{ $t('SW_REQUEST_PASSWORD') }}</el-button>
+            <span class="text-muted" v-if="showRequestPasswordLink"> | </span>
+            <el-button v-if="showRequestPasswordLink" type="text" @click="$router.push({name: 'forgot', query: { email: form.email, requestPassword: 'true' }})" size="small" :aria-label="$t('SW_REQUEST_PASSWORD')">{{ $t('SW_REQUEST_PASSWORD') }}</el-button>
           </div>
         </div>
 

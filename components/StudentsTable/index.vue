@@ -4,7 +4,7 @@
     <el-table v-show="tableValues.length" size="small" :data="getTableData" row-key="_id" ref="studentsTable" class="mb-20">
 
       <!-- Name -->
-      <el-table-column :label="participantTypeText ? $tc(participantTypeText) : school.terminology.student[lang].toLowerCase()" prop="name" min-width="160">
+      <el-table-column :label="participantTypeText ? $tc(participantTypeText) : school.terminology.student[lang]" prop="name" min-width="160">
         <template slot-scope="props">
           <div class="text-ellipsis">
             <el-popover width="200" trigger="click" placement="bottom">
@@ -32,7 +32,7 @@
       <!-- Group Index -->
       <el-table-column v-if="!noGroup" property="groupName" :label="$t('SW_GROUP_INDEX')" min-width="50">
         <template slot-scope="props">
-          <strong>{{ props.row.groupIndex }}</strong>
+          <span>{{ props.row.groupIndex }}</span>
         </template>
       </el-table-column>
     </el-table>

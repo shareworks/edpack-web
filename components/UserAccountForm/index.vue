@@ -82,8 +82,8 @@
         </el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item :command="{ newRole: 'admin' }" v-if="isSysAdmin" :disabled="form.role === 'admin'">{{ $tc('SW_ADMIN', 1) }}</el-dropdown-item>
-          <el-dropdown-item :command="{ newRole: 'staff' }" :disabled="form.role === 'staff'">{{ school.terminology.instructor[lang].toLowerCase() }}</el-dropdown-item>
-          <el-dropdown-item :command="{ newRole: 'student' }" :disabled="form.role === 'student'">{{ school.terminology.student[lang].toLowerCase() }}</el-dropdown-item>
+          <el-dropdown-item :command="{ newRole: 'staff' }" :disabled="form.role === 'staff'">{{ school.terminology.instructor[lang] }}</el-dropdown-item>
+          <el-dropdown-item :command="{ newRole: 'student' }" :disabled="form.role === 'student'">{{ school.terminology.student[lang] }}</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </el-form-item>
