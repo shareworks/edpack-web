@@ -25,8 +25,11 @@ export default {
       // Abort some routes in LTI mode
       if (to.meta.abortInLTI && inLTI && from.name) return next(from)
 
-      // Track with Acke
-      ackeeTracker.create(config.ackee.api_url, { ...config.ackee.options, organization: store.state?.user?.organization?._id }).record(config.ackee.key)
+      // Track with Ackee
+      if (config.ackee) {
+        const ackeeOptions = { ...config.ackee.options, organization: store.state?.user?.organization?._id }
+        ackeeTracker.create(config.ackee.api_url, ackeeOptions).record(config.ackee.key)
+      }
 
       // Check authorization for user with session
       if (store.state.user) {
