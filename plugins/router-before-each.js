@@ -8,6 +8,7 @@ import { setCsrfToken } from '../utils/csrf-handling'
 import Axios from 'axios'
 import { loadLanguages } from '../utils/load-languages'
 import LanguagePlugin from './language'
+import * as ackeeTracker from '../utils/ackee-tracker'
 
 export default {
   install (Vue, options) {
@@ -23,6 +24,9 @@ export default {
     router.beforeEach((to, from, next) => {
       // Abort some routes in LTI mode
       if (to.meta.abortInLTI && inLTI && from.name) return next(from)
+
+      // Track with Acke
+      ackeeTracker.create(config.ackee.api_url, { ...config.ackee.options, organization: store.state?.user?.organization?._id }).record(config.ackee.key)
 
       // Check authorization for user with session
       if (store.state.user) {
