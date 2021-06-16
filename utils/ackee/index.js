@@ -2,7 +2,7 @@ import * as ackeeTracker from './tracker'
 
 import config from 'config'
 import store from '../../store'
-import { router } from '../../../../router'
+import { router } from '../../../router'
 
 const graphqlQuery = {
   records: () => {
