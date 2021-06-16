@@ -14,7 +14,7 @@ const graphqlQuery = {
   facts: (opts) => {
     const props = 'activeVisitors averageViews averageDuration viewsToday viewsMonth viewsYear'
     const query = `query Domain($id: ID!, $organization: ID) { domain(id: $id) { facts(organization: $organization) { ${props} } }}`
-    const variables = { 'id': config.ackee.domain_id, 'organization': (!opts.all && store.state?.user?.organization?._id) || '' }
+    const variables = { id: config.ackee.domain_id, organization: (!opts.all && store.state?.user?.organization?._id) || '' }
     return { query, variables }
   }
 }
