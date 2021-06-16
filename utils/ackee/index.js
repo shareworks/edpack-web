@@ -14,7 +14,7 @@ const graphqlQuery = {
   facts: () => {
     const props = 'activeVisitors '
     const query = `query Domain($id: ID!, $organization: ID) { domain(id: $id) { facts(organization: $organization) { ${props} } }}`
-    const variables = { 'id': config.ackee.key, 'organization': store.state?.user?.organization?._id || '' }
+    const variables = { 'id': config.ackee.domain_id, 'organization': store.state?.user?.organization?._id || '' }
     return { query, variables }
   }
 }
@@ -30,8 +30,9 @@ const canTrack = () => {
 const canRequest = () => {
   const hasToken = !!config?.ackee?.token
   const hasApiUrl = !!config?.ackee?.api_url
+  const hasDomainId = !!config?.ackee?.domain_id
 
-  return hasToken && hasApiUrl
+  return hasToken && hasApiUrl && hasDomainId
 }
 
 const track = () => {
