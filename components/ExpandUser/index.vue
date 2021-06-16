@@ -1,29 +1,33 @@
 <template>
   <div>
-    <!-- Id -->
-    <div class="mb-10" v-if="isAdmin"><strong class="mr-5">ID</strong> {{ _id }}</div>
+    <el-row type="flex">
+      <el-col :span="12">
+        <!-- Id -->
+        <div class="mb-10" v-if="isAdmin"><strong class="mr-5">ID</strong> {{ _id }}</div>
 
-    <!-- Modified date -->
-    <p v-if="user.modifiedDate">
-      <strong class="mr-5">{{ $t('SW_MODIFIED_DATE') }}</strong>
-      {{ fromNow(user.modifiedDate) }}
-      {{ $t('SW_AGO') }}
-    </p>
+        <!-- Faculties Manager -->
+        <div v-if="user.faculties.length" class="mb-10">
+          <strong>{{ $t('SW_FACULTY_MANAGER') }}</strong>
+          <el-tag v-for="fac in facultiesManager" class="ml-5" :key="fac">{{ fac }}</el-tag>
+        </div>
+      </el-col>
+      <el-col :span="12">
 
-    <!-- Modified by -->
-    <p v-if="user.modifiedBy">
-      <strong class="mr-5">{{ $t('SW_MODIFIED_BY') }}</strong>
-      <thumbnail :model="user.modifiedBy" class="thumb-user thumb-24"/>
-      {{user.modifiedBy.name}} <span class="hidden-xs">(<a :href="'mailto:' + user.modifiedBy.email" target="_blank">{{ user.modifiedBy.email }}</a>)</span>
-    </p>
+        <!-- Modified date -->
+        <p v-if="user.modifiedDate">
+          <strong class="mr-5">{{ $t('SW_MODIFIED_DATE') }}</strong>
+          {{ fromNow(user.modifiedDate) }}
+          {{ $t('SW_AGO') }}
+        </p>
 
-    <!-- Faculties Manager -->
-    <div v-if="user.faculties.length" class="mb-10">
-      <p>
-        <strong>{{ $t('SW_FACULTY_MANAGER') }}</strong>
-        <el-tag v-for="fac in facultiesManager" class="ml-5" :key="fac">{{ fac }}</el-tag>
-      </p>
-    </div>
+        <!-- Modified by -->
+        <p v-if="user.modifiedBy">
+          <strong class="mr-5">{{ $t('SW_MODIFIED_BY') }}</strong>
+          <thumbnail :model="user.modifiedBy" class="thumb-user thumb-24"/>
+          {{user.modifiedBy.name}} <span class="hidden-xs">(<a :href="'mailto:' + user.modifiedBy.email" target="_blank">{{ user.modifiedBy.email }}</a>)</span>
+        </p>
+      </el-col>
+    </el-row>
 
     <!-- User Courses -->
     <div v-if="userCourses && userCourses.length" class="mt-20">
