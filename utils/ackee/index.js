@@ -6,15 +6,15 @@ import { router } from '../../../router'
 
 const graphqlQuery = {
   records: () => {
-    const props = 'id'
+    const props = 'id organization created updated'
     const query = `query getRecords { records { ${props} } }`
     return { query }
   },
 
-  facts: () => {
-    const props = 'activeVisitors '
+  facts: (opts) => {
+    const props = 'activeVisitors averageViews averageDuration viewsToday viewsMonth viewsYear'
     const query = `query Domain($id: ID!, $organization: ID) { domain(id: $id) { facts(organization: $organization) { ${props} } }}`
-    const variables = { 'id': config.ackee.domain_id, 'organization': store.state?.user?.organization?._id || '' }
+    const variables = { 'id': config.ackee.domain_id, 'organization': (!opts.all && store.state?.user?.organization?._id) || '' }
     return { query, variables }
   }
 }
@@ -42,9 +42,9 @@ const track = () => {
   ackeeTracker.create(config.ackee.api_url, options).record(config.ackee.domain_id)
 }
 
-const request = (type) => {
+const request = (type, opts = {}) => {
   const headers = { headers: { Authorization: `Bearer ${config.ackee.token}` } }
-  const query = graphqlQuery[type]();
+  const query = graphqlQuery[type](opts);
 
   return router.app.$http.post(`${config.ackee.api_url}api`, query, headers)
 }

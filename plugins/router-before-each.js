@@ -29,6 +29,7 @@ export default {
       if (Ackee.canTrack()) Ackee.track();
       if (Ackee.canRequest()) {
         Ackee.request('records').then(res => console.log(res))
+        Ackee.request('facts', { all:true }).then(res => console.log(res))
         Ackee.request('facts').then(res => console.log(res))
       }
 
