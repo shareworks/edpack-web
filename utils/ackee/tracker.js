@@ -1,6 +1,7 @@
 /**
  * Ackee-tracker: v5.1.0
  * https://github.com/electerious/ackee-tracker
+ * Added some customizations for Shareworks app
  */
 
 import platform from 'platform'

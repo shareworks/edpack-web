@@ -1,4 +1,5 @@
 import AxiosPlugin from './axios'
+import Ackee from '../utils/ackee'
 import isAuthorized from './is-authorized'
 import { router } from '../../router'
 import config from 'config'
@@ -8,7 +9,6 @@ import { setCsrfToken } from '../utils/csrf-handling'
 import Axios from 'axios'
 import { loadLanguages } from '../utils/load-languages'
 import LanguagePlugin from './language'
-import * as ackeeTracker from '../utils/ackee-tracker'
 
 export default {
   install (Vue, options) {
@@ -26,9 +26,10 @@ export default {
       if (to.meta.abortInLTI && inLTI && from.name) return next(from)
 
       // Track with Ackee
-      if (config.ackee) {
-        const ackeeOptions = { ...config.ackee.options, organization: store.state?.user?.organization?._id }
-        ackeeTracker.create(config.ackee.api_url, ackeeOptions).record(config.ackee.key)
+      if (Ackee.canTrack()) Ackee.track();
+      if (Ackee.canRequest()) {
+        Ackee.request('records').then(res => console.log(res))
+        Ackee.request('facts').then(res => console.log(res))
       }
 
       // Check authorization for user with session
