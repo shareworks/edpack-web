@@ -12,9 +12,44 @@ const graphqlQuery = {
   },
 
   facts: (opts) => {
-    const props = 'activeVisitors averageViews averageDuration viewsToday viewsMonth viewsYear'
-    const query = `query Domain($id: ID!, $organization: ID) { domain(id: $id) { facts(organization: $organization) { ${props} } }}`
-    const variables = { id: config.ackee.domain_id, organization: (!opts.all && store.state?.user?.organization?._id) || '' }
+    const ranged = !!(opts.minDate || opts.maxDate)
+
+    const activeVisitors = 'activeVisitors(organization: $organization)'
+    const averageViews = 'averageViews(organization: $organization, minDate: $minDate, maxDate: $maxDate)'
+    const averageDuration = 'averageDuration(organization: $organization, minDate: $minDate, maxDate: $maxDate)'
+    const viewsToday = 'viewsToday(organization: $organization)'
+    const viewsMonth = 'viewsMonth(organization: $organization)'
+    const viewsYear = 'viewsYear(organization: $organization)'
+    const views = 'views(organization: $organization, minDate: $minDate, maxDate: $maxDate)'
+
+    const props = `${activeVisitors} ${averageViews} ${averageDuration} ${viewsToday} ${viewsMonth} ${viewsYear}`
+    const rangedProps = `${averageViews} ${averageDuration} ${views}`
+
+    const query = `query Domain($id: ID!, $organization: ID, $minDate: DateTime, $maxDate: DateTime) { domain(id: $id) { facts { ${ranged ? rangedProps : props}  } }  }`
+    const variables = {
+      id: config.ackee.domain_id,
+      ...opts.organization && { organization: opts.organization },
+      ...opts.minDate && { minDate: opts.minDate },
+      ...opts.maxDate && { maxDate: opts.maxDate }
+    }
+    return { query, variables }
+  },
+
+  statistics: (opts) => {
+    const views = 'views(organization: $organization,interval: DAILY, type: UNIQUE, minDate: $minDate, maxDate: $maxDate) { id count }'
+    const durations = 'durations(organization: $organization,interval: DAILY, minDate: $minDate, maxDate: $maxDate) { id count }'
+    const pages = 'pages(organization: $organization,range: LAST_7_DAYS, limit: 30, sorting: TOP, minDate: $minDate, maxDate: $maxDate) { id count created }'
+    const referrers = 'referrers(organization: $organization,range: LAST_7_DAYS, limit: 30, sorting: TOP, type: WITH_SOURCE, minDate: $minDate, maxDate: $maxDate) { id count created }'
+
+    const props = `${views} ${durations} ${pages} ${referrers}`
+
+    const query = `query Domain($id: ID!, $organization: ID, $minDate: DateTime, $maxDate: DateTime) { domain(id: $id) { statistics { ${props} }  }}`
+    const variables = {
+      id: config.ackee.domain_id,
+      ...opts.organization && { organization: opts.organization },
+      ...opts.minDate && { minDate: opts.minDate },
+      ...opts.maxDate && { maxDate: opts.maxDate }
+    }
     return { query, variables }
   }
 }
@@ -38,13 +73,13 @@ const canRequest = () => {
 const track = () => {
   if (!config?.ackee?.enabledTracking) return
 
-  const options ={ ...config?.ackee?.options, organization: store?.state?.user?.organization?._id }
+  const options = { ...config?.ackee?.options, organization: store?.state?.user?.organization?._id }
   ackeeTracker.create(config.ackee.api_url, options).record(config.ackee.domain_id)
 }
 
 const request = (type, opts = {}) => {
   const headers = { headers: { Authorization: `Bearer ${config.ackee.token}` } }
-  const query = graphqlQuery[type](opts);
+  const query = graphqlQuery[type](opts)
 
   return router.app.$http.post(`${config.ackee.api_url}api`, query, headers)
 }

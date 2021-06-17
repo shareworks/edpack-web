@@ -25,12 +25,19 @@ export default {
       // Abort some routes in LTI mode
       if (to.meta.abortInLTI && inLTI && from.name) return next(from)
 
-      // Track with Ackee
+// Track with Ackee
       if (Ackee.canTrack()) Ackee.track();
       if (Ackee.canRequest()) {
         Ackee.request('records').then(res => console.log(res))
-        Ackee.request('facts', { all:true }).then(res => console.log(res))
-        Ackee.request('facts').then(res => console.log(res))
+        console.log(store?.state?.user?.organization?._id)
+
+        const date = new Date()
+        date.setDate(date.getDate() - 2)
+
+        // Ackee.request('facts', { organization: store?.state?.user?.organization?._id }).then(res => console.log(res))
+        // Ackee.request('facts', { organization: store?.state?.user?.organization?._id, minDate: date }).then(res => console.log(res))
+        // Ackee.request('facts').then(res => console.log(res))
+        Ackee.request('statistics', { organization: store?.state?.user?.organization?._id, minDate: date }).then(res => console.log(res))
       }
 
       // Check authorization for user with session
