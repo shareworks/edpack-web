@@ -41,7 +41,13 @@ const graphqlQuery = {
     const pages = 'pages(organization: $organization,range: LAST_7_DAYS, limit: 30, sorting: TOP, minDate: $minDate, maxDate: $maxDate) { id count created }'
     const referrers = 'referrers(organization: $organization,range: LAST_7_DAYS, limit: 30, sorting: TOP, type: WITH_SOURCE, minDate: $minDate, maxDate: $maxDate) { id count created }'
 
-    const props = `${views} ${durations} ${pages} ${referrers}`
+    const systems = 'systems(organization: $organization,range: LAST_7_DAYS, limit: 30, sorting: TOP, type: WITH_VERSION, minDate: $minDate, maxDate: $maxDate) { id count created }'
+    const devices = 'devices(organization: $organization,range: LAST_7_DAYS, limit: 30, sorting: TOP, type: WITH_MODEL, minDate: $minDate, maxDate: $maxDate) { id count created }'
+    const browsers = 'browsers(organization: $organization,range: LAST_7_DAYS, limit: 30, sorting: TOP, type: WITH_VERSION, minDate: $minDate, maxDate: $maxDate) { id count created }'
+    const sizes = 'sizes(organization: $organization,range: LAST_7_DAYS, limit: 30, sorting: TOP, type: BROWSER_RESOLUTION, minDate: $minDate, maxDate: $maxDate) { id count created }'
+    const languages = 'languages(organization: $organization,range: LAST_7_DAYS, limit: 30, sorting: TOP, minDate: $minDate, maxDate: $maxDate) { id count created }'
+
+    const props = `${views} ${durations} ${pages} ${referrers} ${systems} ${devices} ${browsers} ${sizes} ${languages}`
 
     const query = `query Domain($id: ID!, $organization: ID, $minDate: DateTime, $maxDate: DateTime) { domain(id: $id) { statistics { ${props} }  }}`
     const variables = {
