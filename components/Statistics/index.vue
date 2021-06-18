@@ -29,6 +29,10 @@
     </page-cover>
 
     <div v-if="status === 'done'" :class="isMobile ? 'px-10' : 'px-20'">
+      <statistics-ackee></statistics-ackee>
+
+      <h2>Statistics from Shareworks</h2>
+
       <el-alert :closable="false" type="warning" v-if="calendarMode" class="mb-20" @close="clearCalendar">
         <p>
           <strong>{{ $t('SW_CALENDAR_MODE', [startEndFormat(minDate), startEndFormat(maxDate, true)]) }}</strong>
@@ -95,6 +99,7 @@
 import moment from 'moment'
 import countTo from 'vue-count-to'
 import AnimatedCircleBar from '@/edpack-web/components/AnimatedCircleBar'
+import StatisticsAckee from '@/edpack-web/components/StatisticsAckee'
 
 export default {
   name: 'Statistics',
@@ -102,7 +107,7 @@ export default {
     faculty: { default: false },
     statsObject: Object
   },
-  components: { countTo, AnimatedCircleBar },
+  components: { countTo, AnimatedCircleBar, StatisticsAckee },
 
   data () {
     return {
