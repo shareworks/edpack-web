@@ -100,7 +100,7 @@ export default {
       if (!Ackee.canRequest()) return
 
       try {
-        const [resStats, resFacts] = await Promise.all(['statistics', 'facts'].map(type => Ackee.request(type)))
+        const [resStats, resFacts] = await Promise.all(['statistics', 'facts'].map(type => Ackee.request(type, { organization: this.school._id })))
         this.visualizeStatistics(resStats.data.data.domain.statistics)
         this.visualizeFacts(resFacts.data.data.domain.facts)
       } catch (err) {
