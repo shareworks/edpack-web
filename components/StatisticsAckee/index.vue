@@ -76,6 +76,8 @@ export default {
   name: 'StatisticsAckee',
   props: {
     faculty: { default: false },
+    minDate: [String, Date],
+    maxDate: [String, Date]
   },
   components: { countTo, BarChart },
 
@@ -99,8 +101,13 @@ export default {
     async get () {
       if (!Ackee.canRequest()) return
 
+      // Subtract 10 sec, so time will fall in end of day before*
+      let maxDate = this.maxDate
+      if (maxDate) maxDate = new Date(new Date(maxDate) - 10000)
+
       try {
-        const [resStats, resFacts] = await Promise.all(['statistics', 'facts'].map(type => Ackee.request(type, { organization: this.school._id })))
+        const args = { organization: this.school._id, ...this.minDate && { minDate: this.minDate }, ...maxDate && { maxDate } }
+        const [resStats, resFacts] = await Promise.all(['statistics', 'facts'].map(type => Ackee.request(type, args)))
         this.visualizeStatistics(resStats.data.data.domain.statistics)
         this.visualizeFacts(resFacts.data.data.domain.facts)
       } catch (err) {
@@ -109,14 +116,23 @@ export default {
     },
 
     visualizeFacts (data) {
-      this.facts = [
-        { title: 'Active visitors', count: data.activeVisitors, text: this.pluralize(['visitors', 'visitor', 'visitors'], data.activeVisitors) },
-        { title: 'Average views', count: data.averageViews, text: 'per day' },
-        { title: 'Average duration', ...this.formatDuration(data.averageDuration) },
-        { title: 'Views today', count: data.viewsToday, text: this.pluralize(['views', 'view', 'views'], data.viewsToday) },
-        { title: 'Views this month', count: data.viewsMonth, text: this.pluralize(['views', 'view', 'views'], data.viewsMonth) },
-        { title: 'Views this year', count: data.viewsYear, text: this.pluralize(['views', 'view', 'views'], data.viewsYear) },
-      ]
+      this.facts = []
+      if (this.minDate || this.maxDate) {
+        this.facts = [
+          { title: 'Amount of views', count: data.views, text: this.pluralize(['views', 'view', 'views'], data.views) },
+          { title: 'Average views', count: data.averageViews, text: 'per day' },
+          { title: 'Average duration', ...this.formatDuration(data.averageDuration) },
+        ]
+      } else {
+        this.facts = [
+          { title: 'Active visitors', count: data.activeVisitors, text: this.pluralize(['visitors', 'visitor', 'visitors'], data.activeVisitors) },
+          { title: 'Average views', count: data.averageViews, text: 'per day' },
+          { title: 'Average duration', ...this.formatDuration(data.averageDuration) },
+          { title: 'Views today', count: data.viewsToday, text: this.pluralize(['views', 'view', 'views'], data.viewsToday) },
+          { title: 'Views this month', count: data.viewsMonth, text: this.pluralize(['views', 'view', 'views'], data.viewsMonth) },
+          { title: 'Views this year', count: data.viewsYear, text: this.pluralize(['views', 'view', 'views'], data.viewsYear) },
+        ]
+      }
     },
 
     visualizeStatistics (data) {
@@ -147,6 +163,10 @@ export default {
     },
 
     getDay (date) {
+      if (this.minDate || this.maxDate) {
+        return moment(date).format('LL')
+      }
+
       return moment(date).calendar(null, {
         lastWeek: () => `[${moment(date).fromNow()}]`,
         lastDay: '[Yesterday]',
@@ -189,6 +209,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~scss_vars';
-@import 'style';
+  @import '~scss_vars';
+  @import 'style';
 </style>
