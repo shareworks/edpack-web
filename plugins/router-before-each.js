@@ -86,6 +86,9 @@ export default {
       store.dispatch('setUser', user)
       loadLanguages(i18n, user.language)
 
+      // Track with Ackee
+      if (Ackee.canTrack()) Ackee.track()
+
       // Redirect to home or admin
       const redirectTo = { replace: true, name: 'home', params: { slug: user.organization.slug } }
       if (store.state.isAdmin) redirectTo.name = 'admin'
