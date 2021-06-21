@@ -60,10 +60,9 @@
         </el-table-column>
 
         <!-- Participant -->
-        <el-table-column :label="$t('SW_MEMBER')" prop="userName"/>
+        <el-table-column :label="organization.terminology.student[lang]" prop="userName"/>
       </el-table>
     </div>
-
   </div>
 </template>
 
@@ -73,7 +72,7 @@ import debounce from 'lodash/debounce'
 
 export default {
   name: 'ActivityLog',
-  props: ['closeDialog'],
+  props: ['closeDialog', 'contentFilters', 'actionFilters', 'useAssessment', 'assessment'],
 
   data () {
     return {
@@ -82,23 +81,6 @@ export default {
       status: false,
       activities: [],
       skip: 0,
-      contentFilters: [
-        { value: 'evaluation', label: 'Evaluation' }
-      ],
-
-      actionFilters: [
-        { value: 'add', label: 'Create', contents: ['evaluation'] },
-        { value: 'edit', label: 'Edit', contents: ['evaluation'] },
-        { value: 'delete', label: 'Delete', contents: ['evaluation'] },
-
-        { value: 'submit', label: 'Submit', contents: ['survey'] },
-        { value: 'resubmit', label: 'Resubmit', contents: ['survey'] },
-
-        { value: 'reminder', label: 'Reminder', contents: ['evaluation'] },
-        { value: 'sync_users', label: 'Sync users', contents: ['evaluation'] },
-        { value: 'invite_user', label: 'Invite user', contents: ['evaluation'] },
-        { value: 'delete_user', label: 'Delete user', contents: ['evaluation'] }
-      ],
       contentFilter: '',
       actionFilter: '',
       searchText: ''
@@ -106,7 +88,7 @@ export default {
   },
 
   computed: {
-    evaluation () { return this.$store.state.buddycheck.evaluation }
+    evaluation () { return this.$store.state?.buddycheck.evaluation }
   },
 
   watch: {
@@ -143,9 +125,14 @@ export default {
       this.status = 'loading'
 
       const params = {
-        evaluation: this.evaluation._id,
         skip: this.skip,
         amount: 100
+      }
+
+      if (this.useAssessment) {
+        params.assessment = this.assessment._id
+      } else {
+        params.evaluation = this.evaluation._id
       }
 
       if (this.contentFilter) params.contentType = this.contentFilter
@@ -160,7 +147,7 @@ export default {
           this.activities = this.activities.concat(res.data.list)
           this.skip = res.data.skip
         })
-        .catch(e => {
+        .catch(() => {
           this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') })
           this.status = 'error'
         })
@@ -171,7 +158,7 @@ export default {
 
     getAction (activity) {
       if (activity.activityType === 'delete_user') return 'Removed user'
-      else if (activity.activityType === 'submit') return 'Submit'
+      else if (activity.activityType === 'submit') return this.useAssessment ? 'Upload' : 'Submit'
       else if (activity.activityType === 'add') return 'Create'
 
       return (activity.activityType.charAt(0).toUpperCase() + activity.activityType.slice(1)).replace('_', ' ')
@@ -185,8 +172,11 @@ export default {
       let amount
       let tagType
 
-      const checkContentIds = ['survey'].includes(activity.contentType)
-      const checkSubContentIds = ['invite_user', 'delete_user'].includes(activity.activityType)
+      const checkContentIds = this.useAssessment
+        ? ['feedback', 'submission', 'comparison'].includes(activity.contentType) || (activity.activityType === 'submit' && activity.contentType === 'feedback')
+        : ['survey'].includes(activity.contentType)
+
+      const checkSubContentIds = ['invite_user', 'delete_user'].includes(activity.activityType) || (activity.activityType === 'submit' && activity.contentType === 'feedback')
 
       if (checkContentIds) amount = activity.contentIds.length
       if (checkSubContentIds) amount = activity.subContentIds.length
@@ -217,5 +207,5 @@ export default {
 
 <style lang="scss">
 @import '~scss_vars';
-@import 'style';
+@import './style.scss';
 </style>
