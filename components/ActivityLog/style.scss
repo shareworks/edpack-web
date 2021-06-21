@@ -1,0 +1,14 @@
+.activity-log-body {
+  padding: 10px;
+  max-height: 60vh;
+  overflow: scroll;
+
+  .el-timeline-item__node--large {
+    width: 20px;
+    height: 20px;
+  }
+
+  .activity-content-info {
+    margin-top: -10px;
+  }
+}
