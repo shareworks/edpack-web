@@ -6,30 +6,21 @@
 
       <el-form>
         <!-- Start & End date -->
-        <el-row type="flex" align="middle">
-          <el-col :xs="24" :md="4" :sm="8">
-            <el-date-picker v-model="minDate" @change="clearCalendar" size="medium" class="auto-width" type="date" format="dd-MM-yyyy" :picker-options="endDateOptions" :placeholder="$t('SW_SELECT_START_DATE')"/>
-          </el-col>
-          <el-col :xs="24" :md="2" :sm="2" class="">
-            <div class="text-muted text-center">
-              {{ $t('SW_UNTIL_DATE') }}
+        <el-row>
+          <el-col :lg="12" :md="24" :xs="24">
+            <div class="flex">
+              <el-date-picker v-model="selectedDate" class="w-100 mr-10" @change="clearCalendar" size="medium" type="datetimerange" format="dd-MM-yyyy-HH-mm-ss" :picker-options="endDateOptions" :placeholder="$t('SW_SELECT_START_DATE')"/>
+              <el-button type="primary" size="medium" class="button-square-xs" plain @click="getStatisticsByDate">
+                <span>{{ $tc('SW_GET_STATISTIC', 1) }}</span>
+              </el-button>
             </div>
-          </el-col>
-          <el-col :xs="24" :md="4" :sm="8">
-            <el-date-picker v-model="maxDate" size="medium" class="auto-width" type="date" format="dd-MM-yyyy" :placeholder="$t('SW_SELECT_END_DATE')" :picker-options="endDateOptions"/>
-          </el-col>
-
-          <el-col :xs="24" :md="3" :sm="8" class="ml-5">
-            <el-button type="primary" size="medium" class="button-square-xs" plain @click="getStatisticsByDate">
-              <span>{{ $tc('SW_GET_STATISTIC', 1) }}</span>
-            </el-button>
           </el-col>
         </el-row>
       </el-form>
     </page-cover>
 
     <div v-if="status === 'done'" :class="isMobile ? 'px-10' : 'px-20'">
-      <statistics-ackee></statistics-ackee>
+      <statistics-ackee/>
 
       <h2>Statistics from Shareworks</h2>
 
@@ -114,6 +105,7 @@ export default {
       calendarMode: false,
       minDate: '',
       maxDate: '',
+      selectedDate: '',
       isMobile: this.$store.state.isMobile,
       endDateOptions: { disabledDate (time) { return new Date(time) > new Date() } },
       school: this.$store.state.school,
@@ -139,10 +131,14 @@ export default {
   },
 
   methods: {
-    clearCalendar (startDateValue) {
+    clearCalendar (dateValue) {
       // because date-picker doesn't have clear function we should check on Change that
       // values isn't set, don't want to separate it to another function, so checking it here
-      if (startDateValue) return
+      if (dateValue?.length) {
+        this.minDate = dateValue[0]
+        this.maxDate = dateValue[1]
+        return
+      }
 
       this.setupStatisticValues(this.school.counts)
       this.calendarMode = false
@@ -150,8 +146,8 @@ export default {
       this.maxDate = ''
     },
     startEndFormat (date, endDate = false) {
-      if (!endDate) return moment(date).format('ll')
-      else return date ? moment(date).format('ll') : moment(new Date()).format('ll')
+      if (!endDate) return moment(date).format('LLLL')
+      else return date ? moment(date).format('LLLL') : moment(new Date()).format('LLLL')
     },
     getStatisticsByDate () {
       if (!this.minDate) return this.$message({ message: this.$i18n.t('SW_NO_MIN_DATE'), type: 'warning' })
