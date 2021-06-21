@@ -49,7 +49,7 @@
       <div class="header-user-container" v-if="user">
         <!-- Toggle organization -->
         <div class="hidden-xs hidden-sm org-select" v-if="userOrgs.length > 1">
-          <el-select size="small" v-model="selectedOrg" :filterable="userOrgs.length > 5" :placeholder="$t('SW_SELECT_SCHOOL')" @change="changeOrg">
+          <el-select size="small" v-model="selectedOrg" :filterable="true" :placeholder="$t('SW_SELECT_SCHOOL')" @change="changeOrg">
             <el-option v-for="org in userOrgs" :key="org._id" :label="org.name[lang]" :value="org._id">
               <i class="icon-school"/>
               <span>{{ org.name[lang] }}</span>
