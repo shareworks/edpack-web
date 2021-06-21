@@ -128,7 +128,7 @@
       </el-table-column>
 
       <!-- LMS -->
-      <el-table-column property="lms" label="LMS" min-width="70">
+      <el-table-column property="lms" sortable label="LMS" min-width="70">
         <template slot-scope="props">
           <span v-if="props.row.lms !== 'none'" class="block text-ellipsis capitalize">{{ props.row.lms }}</span>
           <span v-else class="text-muted">{{ $t('SW_NONE') }}</span>
