@@ -176,7 +176,8 @@ export default {
         const unsavedChanges = !isEqual(this.user, this.form)
         this.$store.dispatch('setUnsavedChanges', unsavedChanges)
       }
-    }
+    },
+    'form.emails' () { this.checkDuplicatedEmails() }
   },
 
   methods: {
@@ -188,6 +189,33 @@ export default {
 
       this.form.emails = this.form.emails.filter(em => em !== email)
       this.emailChanged = true
+    },
+    checkDuplicatedEmails () {
+      const emailsCounter = {}
+
+      // count emails
+      this.form.emails.forEach(email => {
+        if (email) { emailsCounter[email] = (emailsCounter[email] || 0) + 1 }
+      })
+
+      // check duplicated emails
+      let hasDuplicatedEmails = false
+      for (const emailsCountKey in emailsCounter) {
+        if (emailsCounter[emailsCountKey] > 1) hasDuplicatedEmails = true
+      }
+
+      if (!hasDuplicatedEmails) return
+
+      // filter emails and add one new empty input
+      this.form.emails = this.form.emails.filter(email => {
+        if (emailsCounter[email] > 1) {
+          emailsCounter[email]--
+          return false
+        }
+        return true
+      })
+
+      this.form.emails.push('')
     },
     setPrimary (email) {
       this.form.email = email
