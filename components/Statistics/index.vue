@@ -20,10 +20,6 @@
     </page-cover>
 
     <div v-if="status === 'done'" :class="isMobile ? 'px-10' : 'px-20'">
-      <statistics-ackee/>
-
-      <h2>Statistics from Shareworks</h2>
-
       <el-alert :closable="false" type="warning" v-if="calendarMode" class="mb-20" @close="clearCalendar">
         <p>
           <strong>{{ $t('SW_CALENDAR_MODE', [startEndFormat(minDate), startEndFormat(maxDate, true)]) }}</strong>
@@ -33,6 +29,10 @@
           </el-button>
         </p>
       </el-alert>
+
+      <statistics-ackee :minDate="minDate" :maxDate="maxDate" :key="`statistics-ackee-${statisticsTick}`"></statistics-ackee>
+
+      <h2>Statistics from Shareworks</h2>
 
       <!-- completionStats -->
       <masonry v-if="!calendarMode" :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}">
@@ -114,7 +114,8 @@ export default {
       statisticUserValues: [],
       statisticStatsValues: [],
       calendarStatisticsValues: [],
-      status: 'loading'
+      status: 'loading',
+      statisticsTick: 0
     }
   },
 
@@ -144,6 +145,7 @@ export default {
       this.calendarMode = false
       this.minDate = ''
       this.maxDate = ''
+      this.statisticsTick += 1
     },
     startEndFormat (date, endDate = false) {
       if (!endDate) return moment(date).format('LLLL')

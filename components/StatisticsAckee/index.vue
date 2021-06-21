@@ -5,7 +5,7 @@
     <masonry v-if="facts" :cols="{default: 3, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
 
       <el-card v-for="(fact, index) in facts" :key="`facts-${index}`" class="stat-counter">
-        <h2>{{ fact.title }}</h2>
+        <p> <span class="fact-title">{{ fact.title }}</span> <el-tag size="small" type="warning" v-if="fact.infoTag">{{fact.infoTag}}</el-tag></p>
         <div class="font-20">
           <span v-if="('count' in fact)"><strong class="counter"><countTo :startVal='0' :endVal='fact.count' separator="." :duration='4000'/></strong> <span class="small-text">{{fact.text}}</span></span>
           <span v-else-if="('value' in fact)"><strong class="counter">{{fact.value}}</strong> <span class="small-text">{{fact.text}}</span></span>
@@ -32,7 +32,7 @@
         <h2>{{ table.title }}</h2>
 
         <el-card>
-          <h2>{{ table.subTitle }}</h2>
+          <p> <span class="fact-title">{{ table.subTitle }}</span> <el-tag size="small" type="warning" v-if="table.infoTag">{{table.infoTag}}</el-tag></p>
           <div class="font-20">
             <el-table :data="table.data" style="width: 100%" height="300">
 
@@ -76,6 +76,8 @@ export default {
   name: 'StatisticsAckee',
   props: {
     faculty: { default: false },
+    minDate: [String, Date],
+    maxDate: [String, Date]
   },
   components: { countTo, BarChart },
 
@@ -99,8 +101,13 @@ export default {
     async get () {
       if (!Ackee.canRequest()) return
 
+      // Subtract 10 sec, so time will fall in end of day before*
+      let maxDate = this.maxDate
+      if (maxDate) maxDate = new Date(new Date(maxDate) - 10000)
+
       try {
-        const [resStats, resFacts] = await Promise.all(['statistics', 'facts'].map(type => Ackee.request(type, { organization: this.school._id })))
+        const args = { organization: this.school._id, ...this.minDate && { minDate: this.minDate }, ...maxDate && { maxDate } }
+        const [resStats, resFacts] = await Promise.all(['statistics', 'facts'].map(type => Ackee.request(type, args)))
         this.visualizeStatistics(resStats.data.data.domain.statistics)
         this.visualizeFacts(resFacts.data.data.domain.facts)
       } catch (err) {
@@ -109,28 +116,43 @@ export default {
     },
 
     visualizeFacts (data) {
-      this.facts = [
-        { title: 'Active visitors', count: data.activeVisitors, text: this.pluralize(['visitors', 'visitor', 'visitors'], data.activeVisitors) },
-        { title: 'Average views', count: data.averageViews, text: 'per day' },
-        { title: 'Average duration', ...this.formatDuration(data.averageDuration) },
-        { title: 'Views today', count: data.viewsToday, text: this.pluralize(['views', 'view', 'views'], data.viewsToday) },
-        { title: 'Views this month', count: data.viewsMonth, text: this.pluralize(['views', 'view', 'views'], data.viewsMonth) },
-        { title: 'Views this year', count: data.viewsYear, text: this.pluralize(['views', 'view', 'views'], data.viewsYear) },
-      ]
+      this.facts = []
+      if (this.minDate || this.maxDate) {
+        this.facts = [
+          { title: 'Amount of views', count: data.views, text: this.pluralize(['views', 'view', 'views'], data.views) },
+          { title: 'Average views', count: data.averageViews, text: 'per day' },
+          { title: 'Average duration', ...this.formatDuration(data.averageDuration) },
+        ]
+      } else {
+        this.facts = [
+          { title: 'Active visitors', count: data.activeVisitors, text: this.pluralize(['visitors', 'visitor', 'visitors'], data.activeVisitors) },
+          { title: 'Average views', infoTag: 'last 14 days', count: data.averageViews, text: 'per day' },
+          { title: 'Average duration', infoTag: 'last 14 days', ...this.formatDuration(data.averageDuration) },
+          { title: 'Views today', count: data.viewsToday, text: this.pluralize(['views', 'view', 'views'], data.viewsToday) },
+          { title: 'Views this month', count: data.viewsMonth, text: this.pluralize(['views', 'view', 'views'], data.viewsMonth) },
+          { title: 'Views this year', count: data.viewsYear, text: this.pluralize(['views', 'view', 'views'], data.viewsYear) },
+        ]
+      }
     },
 
     visualizeStatistics (data) {
       this.visualizeViews(data.views)
       this.visualizeDurations(data.durations)
 
+      const subTitle = (this.minDate || this.maxDate) ? 'Between' : 'Last 24 hours'
+      const formattedMinDate = this.minDate ? moment(this.minDate).format('LL') : 'start'
+      const formattedMaxDate = this.maxDate ? moment(this.maxDate).format('LL') : 'now'
+
+      const infoTag = (this.minDate || this.maxDate) ? `${formattedMinDate} / ${formattedMaxDate}` : ''
+
       this.tables = [
-        { title: 'Pages', subTitle: 'Last 24 hours', data: data.pages.map(el => { return { ...el, url: el.id } }), labels: ['Views', 'Pages'] },
-        { title: 'Referrers', subTitle: 'Last 24 hours', favicon: true, data: data.referrers.map(el => { return { ...el, ...this.formatUrl(el.id, true) } }), labels: ['', ''] },
-        { title: 'Systems', subTitle: 'Last 24 hours', data: data.systems, labels: ['Amount', 'System'] },
-        { title: 'Devices', subTitle: 'Last 24 hours', data: data.devices, labels: ['Amount', 'Device'] },
-        { title: 'Browsers', subTitle: 'Last 24 hours', data: data.browsers, labels: ['Amount', 'Browser'] },
-        { title: 'Sizes', subTitle: 'Last 24 hours', data: data.sizes, labels: ['Amount', 'Size'] },
-        { title: 'Languages', subTitle: 'Last 24 hours', data: data.languages, labels: ['Amount', 'Language'] },
+        { title: 'Pages', subTitle, infoTag, data: data.pages.map(el => { return { ...el, url: el.id } }), labels: ['Views', 'Pages'] },
+        { title: 'Referrers', subTitle, infoTag, favicon: true, data: data.referrers.map(el => { return { ...el, ...this.formatUrl(el.id, true) } }), labels: ['', ''] },
+        { title: 'Systems', subTitle, infoTag, data: data.systems, labels: ['Amount', 'System'] },
+        { title: 'Devices', subTitle, infoTag, data: data.devices, labels: ['Amount', 'Device'] },
+        { title: 'Browsers', subTitle, infoTag, data: data.browsers, labels: ['Amount', 'Browser'] },
+        { title: 'Sizes', subTitle, infoTag, data: data.sizes, labels: ['Amount', 'Size'] },
+        { title: 'Languages', subTitle, infoTag, data: data.languages, labels: ['Amount', 'Language'] },
       ]
     },
 
@@ -147,6 +169,10 @@ export default {
     },
 
     getDay (date) {
+      if (this.minDate || this.maxDate) {
+        return moment(date).format('LL')
+      }
+
       return moment(date).calendar(null, {
         lastWeek: () => `[${moment(date).fromNow()}]`,
         lastDay: '[Yesterday]',
@@ -157,9 +183,9 @@ export default {
 
     pluralize (opts, num) {
       switch (num) {
-      case 0: return opts[0]
-      case 1: return opts[1]
-      default: return opts[2]
+        case 0: return opts[0]
+        case 1: return opts[1]
+        default: return opts[2]
       }
     },
 
@@ -189,6 +215,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~scss_vars';
-@import 'style';
+  @import '~scss_vars';
+  @import 'style';
 </style>
