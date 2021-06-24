@@ -45,7 +45,11 @@
 
         <el-col :xs="13" :sm="8">
           <!-- Search input -->
-          <el-input class="block" size="medium" v-model="searchText" clearable prefix-icon="icon-search" :placeholder="$t('SW_SEARCH_ORGS')"/>
+          <el-input size="medium" v-model="searchText" class="input-with-select" clearable prefix-icon="icon-search" :placeholder="$t('SW_SEARCH_ORGS')">
+            <el-select v-model="lmsFilter" slot="prepend" @change="changeFilter">
+              <el-option v-for="item in lmsTypes" :key="item.value" :label="item.label" :value="item.value"/>
+            </el-select>
+          </el-input>
         </el-col>
       </el-row>
     </affix>
@@ -219,7 +223,17 @@ export default {
   components: { CreateOrg, OrgOptions, Newsletter },
 
   data () {
+    const lmsTypes = [
+      { label: this.$i18n.t('SW_ALL'), value: 'all' },
+      { label: 'Blackboard', value: 'blackboard' },
+      { label: 'Brightspace', value: 'brightspace' },
+      { label: 'Canvas', value: 'canvas' },
+      { label: 'Moodle', value: 'moodle' }
+    ]
+
     return {
+      lmsTypes,
+      lmsFilter: this.$route.query.filter || lmsTypes[0].value,
       status: false,
       sort: 'createdDate',
       order: 'ascending',
@@ -256,6 +270,7 @@ export default {
   },
 
   methods: {
+    changeFilter (filter) { this.$router.push({ name: 'admin', params: { slug: this.school.slug, mode: 'organizations' }, query: { query: this.searchText, filter: filter } }) },
     getOrgs (refresh) {
       if (this.status === 'loading') return
       this.status = 'loading'
