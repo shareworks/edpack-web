@@ -288,6 +288,7 @@ export default {
 
       if (this.skip) params.skip = this.skip
       if (this.searchText) params.filter = this.searchText
+      if (this.lmsFilter) params.lmsFilter = this.lmsFilter
 
       this.$http.get('organizations', { params })
         .then((res) => {
