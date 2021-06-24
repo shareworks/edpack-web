@@ -4,7 +4,7 @@
       <page-header :title="$t('SW_ACTIVITY_LOG')" :intro="$t('SW_ACTIVITY_LOG_TEXT')"/>
     </page-cover>
 
-    <div class="activity-log-body">
+    <div class="activity-log-body" ref="activityLogBody">
       <el-row type="flex" justify="left" class="mb-20" align="middle">
         <el-col :xs="4" :sm="4" class="mr-5">
           <el-select v-model="contentFilter" clearable @change="changedFilter('content')" :placeholder="$t('SW_SELECT_CONTENT')">
@@ -62,6 +62,7 @@
         <!-- Participant -->
         <el-table-column :label="organization.terminology.student[lang]" prop="userName"/>
       </el-table>
+      <mugen-scroll :handler="getActivities" scroll-container="activityLogBody" :handle-on-mount="false" :should-handle="status === 'incomplete'"/>
     </div>
   </div>
 </template>
@@ -126,7 +127,7 @@ export default {
 
       const params = {
         skip: this.skip,
-        amount: 100
+        amount: 20
       }
 
       if (this.useAssessment) {
