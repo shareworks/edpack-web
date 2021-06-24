@@ -55,6 +55,7 @@ export default {
       school: this.$store.state.school,
       user: this.$store.state.user,
       lang: this.$store.state.lang,
+      languages: this.$store.state.languages,
       submitting: false,
       form: {
         name: { en: '', nl: '' },
@@ -68,8 +69,10 @@ export default {
     setNewName (lang, value) { this.form.name[lang] = value },
     createOrg () {
       if (this.submitting) return
-      if (!this.form.name.nl.trim() && !this.form.name.en.trim()) return this.$message({ message: this.$i18n.t('SW_NO_ORG_NAME'), type: 'error' })
-      if (!this.form.shortName.nl.trim() && !this.form.shortName.en.trim()) return this.$message({ message: this.$i18n.t('SW_NO_ORG_NAME'), type: 'error' })
+      const nameExist = this.languages.reduce((previous, current) => { return this.form.name[current].trim() ? previous += 1 : previous }, 0)
+      const shortNameExist = this.languages.reduce((previous, current) => { return this.form.shortName[current].trim() ? previous += 1 : previous }, 0)
+      if (!nameExist) return this.$message({ message: this.$i18n.t('SW_NO_ORG_NAME'), type: 'error' })
+      if (!shortNameExist) return this.$message({ message: this.$i18n.t('SW_NO_ORG_NAME'), type: 'error' })
 
       mergeEmptyLanguageFields(this.form, ['name', 'shortName'])
       this.submitting = true

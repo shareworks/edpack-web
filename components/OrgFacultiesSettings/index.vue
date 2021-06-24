@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'multi-lang': form.languages.en && form.languages.nl }">
+  <div :class="{ 'multi-lang': !isJustOneLanguage }">
     <!-- Faculty Alert -->
     <el-alert type="info" class="mb-20" :title="$t('SW_ATTENTION')" show-icon
               :description="$t('SW_FACULTY_INFO_TEXT', [form.terminology.faculties[lang].toLowerCase(), form.terminology.faculty[lang].toLowerCase()])"/>
@@ -8,36 +8,17 @@
       <p class="form-help-text">{{ $t('SW_EXPLAIN_FACULTY_LIST', [form.terminology.faculties[lang].toLowerCase()]) }}</p>
 
       <el-row v-if="form.faculties.length > 0" :gutter="10">
-        <!-- EN part -->
-        <el-col :span="calcSpan" v-if="form.languages.en">
-          <strong class="mb-10" v-if="form.languages.en && form.languages.nl">
-            {{ $t('SW_DEFAULT_EN') }}
-            <img :src="'/img/en.png'" class="ml-5 language-icon" alt="language-icon">
+        <el-col v-for="language in languages" :key="language" :span="calcSpan">
+          <strong class="mb-10" v-if="!isJustOneLanguage">
+            {{ $t(`SW_DEFAULT_${language.toUpperCase()}`) }}
+            <img :src="`/img/${language}.png`" class="ml-5 language-icon" alt="language-icon">
           </strong>
           <strong class="mb-10" v-else>{{ form.terminology.faculty[lang] }}</strong>
 
           <!-- Faculties -->
           <div v-for="(faculty, index) in form.faculties" :key="index">
             <div class="mb-10">
-              <el-input v-model="faculty.en">
-                <template slot="prepend">#{{index + 1}}</template>
-              </el-input>
-            </div>
-          </div>
-        </el-col>
-
-        <!-- NL part -->
-        <el-col :span="calcSpan" v-if="form.languages.nl">
-          <strong class="mb-10" v-if="form.languages.en && form.languages.nl">
-            {{ $t('SW_DEFAULT_NL') }}
-            <img :src="'/img/nl.png'" class="ml-5 language-icon" alt="language-icon">
-          </strong>
-          <strong class="mb-10" v-else>{{ form.terminology.faculty[lang] }}</strong>
-
-          <!-- Faculties -->
-          <div v-for="(faculty, index) in form.faculties" :key="index">
-            <div class="mb-10">
-              <el-input v-model="faculty.nl">
+              <el-input v-model="faculty[language]">
                 <template slot="prepend">#{{index + 1}}</template>
               </el-input>
             </div>
@@ -96,6 +77,7 @@ export default {
 
   data () {
     return {
+      languages: this.$store.state.languages,
       school: this.$store.state.school,
       user: this.$store.state.user,
       lang: this.$store.state.lang
@@ -103,10 +85,11 @@ export default {
   },
 
   computed: {
+    isJustOneLanguage () { return this.$store.state.languages.length === 1 },
     calcSpan () {
       let span = 1
       if (this.form.lmsApiIntegration && ['canvas', 'brightspace'].includes(this.form.lms)) span++
-      if (this.form.languages.en && this.form.languages.nl) span++
+      if (!this.isJustOneLanguage) span++
       return 24 / span
     }
   },
@@ -114,9 +97,8 @@ export default {
   methods: {
     addFaculty () {
       const length = this.form.faculties.length
-      if (!length || this.form.faculties[length - 1].en || this.form.faculties[length - 1].nl) {
-        this.form.faculties.push({ en: '', nl: '', canvas: { id: '' } })
-      }
+      const previousFacultyExist = this.languages.reduce((previous, current) => { return this.form.faculties[length - 1][current].trim() ? previous += 1 : previous }, 0)
+      if (!length || previousFacultyExist) this.form.faculties.push({ en: '', nl: '', canvas: { id: '' } })
     }
   }
 }

@@ -43,14 +43,14 @@
     <!-- Languages -->
     <el-form-item :label="$t('SW_ORG_LANGUAGES')" required>
       <div class="checkboxes-row">
-        <el-checkbox v-for="language in languages" :key="language" :disabled="!form.languages[language === 'en' ? 'nl' : 'en']" @change="updateDefault"
+        <el-checkbox v-for="language in languages" :key="language" :disabled="isJustOneLanguage && form.languages[language]" @change="updateDefault"
                      v-model="form.languages[language]" :label="language">{{ $t('SW_DEFAULT_' + language.toUpperCase()) }}</el-checkbox>
       </div>
     </el-form-item>
 
     <!-- Default language -->
     <el-form-item :label="$t('SW_DEFAULT_LANGUAGE')">
-      <el-select class="block" v-model="form.defaultLanguage" :disabled="!form.languages.nl || !form.languages.en">
+      <el-select class="block" v-model="form.defaultLanguage" :disabled="isJustOneLanguage">
         <el-option v-for="language in languages" :key="language" :label="$t('SW_DEFAULT_' + language.toUpperCase())" :value="language">
           <img :src="'/img/' + language + '.png'" class="language-icon mr-5" alt="language-icon">
           <span>{{ $t('SW_DEFAULT_' + language.toUpperCase()) }}</span>
@@ -119,25 +119,17 @@
       </el-popover>
     </el-form-item>
 
-    <!-- Introduction by school EN -->
-    <el-form-item v-if="introBySchool" :class="isJustOneLanguage ? '' : 'form-en'" :label="$t('SW_INTRO_FOR', [school.terminology.instructor[lang].toLowerCase()])">
-      <p class="text-muted">{{ $t('SW_INTRO_FOR_NEWLY', [school.terminology.instructor[lang].toLowerCase()]) }}</p>
-      <redactor :config="editorOptions" v-model="form.orgCourseIntro.en"/>
-    </el-form-item>
+    <div v-if="introBySchool">
+      <!-- Introduction by school -->
+      <el-form-item v-for="language in languages" :key="language" :class="isJustOneLanguage ? '' : `form-${language}`" :label="$t('SW_INTRO_FOR', [school.terminology.instructor[lang].toLowerCase()])">
+        <p class="text-muted">{{ $t('SW_INTRO_FOR_NEWLY', [school.terminology.instructor[lang].toLowerCase()]) }}</p>
+        <redactor :config="editorOptions" v-model="form.orgCourseIntro[language]"/>
+      </el-form-item>
+    </div>
 
-    <!-- Introduction by school NL -->
-    <el-form-item v-if="introBySchool" :class="isJustOneLanguage ? '' : 'form-nl'" :label="$t('SW_INTRO_FOR', [school.terminology.instructor[lang].toLowerCase()])">
-      <p class="text-muted">{{ $t('SW_INTRO_FOR_NEWLY', [school.terminology.instructor[lang].toLowerCase()]) }}</p>
-      <redactor :config="editorOptions" v-model="form.orgCourseIntro.nl"/>
-    </el-form-item>
-
-    <!-- Colofon EN -->
-    <el-form-item :label="$t('SW_COLOFON')" :class="isJustOneLanguage ? '' : 'form-en'" v-show="form.languages.en">
-      <redactor :config="editorOptions" ref="ColofonEN" v-model="form.colofon.en"/>
-    </el-form-item>
-    <!-- Colofon NL -->
-    <el-form-item :label="$t('SW_COLOFON')" :class="isJustOneLanguage ? '' : 'form-nl'" v-show="form.languages.nl">
-      <redactor :config="editorOptions" ref="ColofonNL" v-model="form.colofon.nl"/>
+    <!-- Colofon -->
+    <el-form-item v-for="language in languages" :key="language" :class="isJustOneLanguage ? '' : `form-${language}`" :label="$t('SW_COLOFON')" v-show="form.languages[language]">
+      <redactor :config="editorOptions" v-model="form.colofon[language]"/>
     </el-form-item>
   </div>
 </template>
@@ -183,7 +175,7 @@ export default {
         accept: ['image/*'],
         imageMax: type === 'logoUrl' ? [1200, 400] : [400, 400],
         imageMin: type === 'logoUrl' ? [600, 200] : [200, 200],
-        transformations: { crop: { force: true, aspectRatio: type === 'logoUrl' ? 3 / 1 : 1 / 1 } },
+        transformations: { crop: { force: true, aspectRatio: type === 'logoUrl' ? 3 : 1 } },
         onFileSelected: (file) => this.cleanFileName(file),
         onFileUploadFailed: (file, err) => this.errorUploading(),
         onUploadDone: (files) => this.doneUploading(files, type)
@@ -194,8 +186,10 @@ export default {
     },
     updateDefault () {
       this.$store.dispatch('setLanguages', this.form.languages)
-      if (this.form.languages.en && this.form.languages.nl) return
-      this.form.defaultLanguage = this.form.languages.en ? 'en' : 'nl'
+      if (this.isJustOneLanguage) {
+        // @TODO: replace for third language -- i didn't find a good solution, right now
+        this.form.defaultLanguage = this.form.languages.en ? 'en' : 'nl'
+      }
     },
     cleanFileName (file) {
       file.name = convertDiacritics(file.filename.toLowerCase()).replace(/[^a-zA-Z0-9]/g, '_').replace(/_+/g, '_')

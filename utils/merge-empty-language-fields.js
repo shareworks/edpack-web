@@ -1,17 +1,18 @@
 const checkValue = (element) => {
+  // @TODO: replace for third language -- i didn't find a good solution, right now
+  // maybe pass the array of languages and then do reduce() to count is any of fields is filled and so on
+
   // If both values filled - stop, no need to copy values
-  if (element.en && element.nl) {
-    return null
-  }
+  if (element.en.trim() && element.nl.trim()) return null
 
   // If both values empty - stop, no need to copy values
-  if (!element.en && !element.nl) {
+  if (!element.en.trim() && !element.nl.trim()) {
     return null
-  } else if (element.en) {
+  } else if (element.en.trim()) {
     // One values is empty - copy it from another language
-    element.nl = element.en
+    element.nl = element.en.trim()
   } else {
-    element.en = element.nl
+    element.en = element.nl.trim()
   }
 }
 
