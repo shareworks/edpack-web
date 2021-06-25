@@ -44,7 +44,7 @@
 import InputsWithFlags from '../InputsWithFlags'
 import copyObjectProps from '@/edpack-web/utils/copy-object-props'
 import mergeEmptyLanguageFields from '@/edpack-web/utils/merge-empty-language-fields'
-import addLanguagePropsToObject from '@/edpack-web/utils/add-language-props-to-object'
+import { addLanguagePropsToObject } from '@/edpack-web/utils/add-language-props-to-object'
 
 export default {
   name: 'CreateOrg',

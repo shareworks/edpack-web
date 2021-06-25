@@ -1,3 +1,5 @@
+// use this function if you need
+// { name: { en, nl, .... } }
 const addLanguagePropsToObject = (obj, propsList, languagesList, defaultValue = '') => {
   propsList.forEach(property => {
     obj[property] = {}
@@ -5,6 +7,18 @@ const addLanguagePropsToObject = (obj, propsList, languagesList, defaultValue = 
       obj[property][language] = defaultValue
     })
   })
+
+  return obj
 }
 
-export default addLanguagePropsToObject
+// use this function if you need just
+// { en, nl, .... }, without upper level property
+const addLanguagePropToObject = (obj, languagesList, defaultValue = '') => {
+  languagesList.forEach(language => {
+    obj[language] = defaultValue
+  })
+
+  return obj
+}
+
+export { addLanguagePropsToObject, addLanguagePropToObject }

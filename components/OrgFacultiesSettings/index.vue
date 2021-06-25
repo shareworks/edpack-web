@@ -70,7 +70,7 @@
 </template>
 
 <script>
-
+import { addLanguagePropToObject } from '@/edpack-web/utils/add-language-props-to-object'
 export default {
   name: 'OrgFacultiesSettings',
   props: ['form'],
@@ -97,8 +97,12 @@ export default {
   methods: {
     addFaculty () {
       const length = this.form.faculties.length
-      const previousFacultyExist = this.languages.reduce((previous, current) => { return this.form.faculties[length - 1][current].trim() ? previous += 1 : previous }, 0)
-      if (!length || previousFacultyExist) this.form.faculties.push({ en: '', nl: '', canvas: { id: '' } })
+      const previousFacultyExist = length && this.languages.reduce((previous, current) => { return this.form.faculties[length - 1][current].trim() ? previous += 1 : previous }, 0)
+
+      const newFaculty = { canvas: { id: '' } }
+      addLanguagePropToObject(newFaculty, this.languages)
+
+      if (!length || previousFacultyExist) this.form.faculties.push(newFaculty)
     }
   }
 }
