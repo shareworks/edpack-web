@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'multi-lang': form.languages.en && form.languages.nl }">
+  <div :class="{ 'multi-lang': !isJustOneLanguage }">
 
     <!-- Full name -->
     <el-form-item :label="$t('SW_ORG_FULL_NAME')" prop="name.en" required :show-message="false">
