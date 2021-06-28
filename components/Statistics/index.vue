@@ -9,7 +9,8 @@
         <el-row>
           <el-col :lg="12" :md="24" :xs="24">
             <div class="flex">
-              <el-date-picker v-model="selectedDate" class="w-100 mr-10" @change="clearCalendar" size="medium" type="datetimerange" format="dd-MM-yyyy-HH-mm-ss" :picker-options="endDateOptions" :placeholder="$t('SW_SELECT_START_DATE')"/>
+              <!--  Date picker  -->
+              <el-date-picker v-model="selectedDate" class="w-100 mr-10" @change="clearCalendar" size="medium" type="daterange" format="dd-MM-yyyy" :picker-options="endDateOptions" :placeholder="$t('SW_SELECT_START_DATE')"/>
               <el-button type="primary" size="medium" class="button-square-xs" plain @click="getStatisticsByDate">
                 <span>{{ $tc('SW_GET_STATISTIC', 1) }}</span>
               </el-button>
