@@ -17,67 +17,80 @@
             </div>
           </el-col>
         </el-row>
+        <!-- Animated tabs -->
+        <el-row>
+          <el-col :lg="12" :md="24" :xs="24">
+            <!-- Tabs -->
+            <el-tabs v-model="toTab" @tab-click="tabClick" class="mt-10">
+              <el-tab-pane v-for="tab in tabs" :key="tab.name" :label="$t(tab.label)" :name="tab.name"/>
+            </el-tabs>
+          </el-col>
+        </el-row>
       </el-form>
     </page-cover>
 
-    <div v-if="status === 'done'" :class="isMobile ? 'px-10' : 'px-20'">
-      <el-alert :closable="false" type="warning" v-if="calendarMode" class="mb-20" @close="clearCalendar">
-        <p>
-          <strong>{{ $t('SW_CALENDAR_MODE', [startEndFormat(minDate), startEndFormat(maxDate, true)]) }}</strong>
-          <el-button class="ml-10" type="text" @click="clearCalendar()">
-            <i class="icon-clear"></i>
-            {{ $t('SW_CLEAR') }}
-          </el-button>
-        </p>
-      </el-alert>
+    <animated-tabs v-if="status === 'done'" :to-left="toLeftDirection" :class="isMobile ? 'px-10' : 'px-20'">
+      <template v-slot>
+        <statistics-ackee v-if="toTab === 'views'" :minDate="minDate" :maxDate="maxDate" :key="`statistics-ackee-${statisticsTick}`"/>
 
-      <statistics-ackee :minDate="minDate" :maxDate="maxDate" :key="`statistics-ackee-${statisticsTick}`"></statistics-ackee>
+        <div v-else-if="toTab === 'details'">
+          <el-alert :closable="false" type="warning" v-if="calendarMode" class="mb-20" @close="clearCalendar">
+            <p>
+              <strong>{{ $t('SW_CALENDAR_MODE', [startEndFormat(minDate), startEndFormat(maxDate, true)]) }}</strong>
+              <el-button class="ml-10" type="text" @click="clearCalendar()">
+                <i class="icon-clear"/>
+                {{ $t('SW_CLEAR') }}
+              </el-button>
+            </p>
+          </el-alert>
 
-      <h2>Statistics from Shareworks</h2>
+          <h2>Statistics from Shareworks</h2>
 
-      <!-- completionStats -->
-      <masonry v-if="!calendarMode" :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}">
-        <el-card v-for="(stat, index) in statisticCompletionValues" :key="`statisticCompletionValues${index}`" class="stat-counter">
-          <animated-circle-bar :realPercentage="Math.round(stat.value)" :width="200" :strokeWidth="30" :fullText="stat.name"/>
-        </el-card>
-      </masonry>
+          <!-- completionStats -->
+          <masonry v-if="!calendarMode" :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}">
+            <el-card v-for="(stat, index) in statisticCompletionValues" :key="`statisticCompletionValues${index}`" class="stat-counter">
+              <animated-circle-bar :realPercentage="Math.round(stat.value)" :width="200" :strokeWidth="30" :fullText="stat.name"/>
+            </el-card>
+          </masonry>
 
-      <!-- userStats -->
-      <masonry v-if="!calendarMode" :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}">
-        <el-card v-for="(stat, index) in statisticUserValues" :key="`statisticUserValues${index}`" class="stat-counter">
-          <div class="font-26">
-            <i :class="stat.icon"/>
-            <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'/></strong>
-          </div>
-          <div>{{ stat.name }}</div>
-        </el-card>
-      </masonry>
+          <!-- userStats -->
+          <masonry v-if="!calendarMode" :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}">
+            <el-card v-for="(stat, index) in statisticUserValues" :key="`statisticUserValues${index}`" class="stat-counter">
+              <div class="font-26">
+                <i :class="stat.icon"/>
+                <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'/></strong>
+              </div>
+              <div>{{ stat.name }}</div>
+            </el-card>
+          </masonry>
 
-      <!-- calendar stats -->
-      <masonry v-if="calendarMode" :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}">
-        <el-card v-for="(stat, index) in calendarStatisticsValues" :key="`calendarStatisticsValues${index}`" class="stat-counter">
-          <div class="font-26">
-            <i :class="stat.icon"/>
-            <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'/></strong>
-          </div>
+          <!-- calendar stats -->
+          <masonry v-if="calendarMode" :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}">
+            <el-card v-for="(stat, index) in calendarStatisticsValues" :key="`calendarStatisticsValues${index}`" class="stat-counter">
+              <div class="font-26">
+                <i :class="stat.icon"/>
+                <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'/></strong>
+              </div>
 
-          <div>{{ stat.name }}</div>
-        </el-card>
-      </masonry>
+              <div>{{ stat.name }}</div>
+            </el-card>
+          </masonry>
 
-      <!-- stats -->
-      <masonry class="hidden-xs" :cols="{default: 3, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
-        <el-card v-for="(stat, index) in statisticStatsValues" :key="`statisticStatsValues${index}`" class="stat-counter">
-          <div class="font-20">
-            <i :class="stat.icon"/>
-            <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'/></strong>
-          </div>
+          <!-- stats -->
+          <masonry class="hidden-xs" :cols="{default: 3, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
+            <el-card v-for="(stat, index) in statisticStatsValues" :key="`statisticStatsValues${index}`" class="stat-counter">
+              <div class="font-20">
+                <i :class="stat.icon"/>
+                <strong><countTo :startVal='0' :endVal='stat.value' separator="." :duration='4000'/></strong>
+              </div>
 
-          <div v-if="calendarMode">{{ stat.calendarText }} {{ stat.name.toLowerCase() }}</div>
-          <div v-else>{{ $t('SW_TOTAL') }} {{ stat.name.toLowerCase() }}</div>
-        </el-card>
-      </masonry>
-    </div>
+              <div v-if="calendarMode">{{ stat.calendarText }} {{ stat.name.toLowerCase() }}</div>
+              <div v-else>{{ $t('SW_TOTAL') }} {{ stat.name.toLowerCase() }}</div>
+            </el-card>
+          </masonry>
+        </div>
+      </template>
+    </animated-tabs>
 
     <!-- Loading -->
     <spinner v-else-if="status === 'loading'"/>
@@ -90,8 +103,9 @@
 <script>
 import moment from 'moment'
 import countTo from 'vue-count-to'
-import AnimatedCircleBar from '@/edpack-web/components/AnimatedCircleBar'
+import AnimatedTabs from '@/edpack-web/components/AnimatedTabs'
 import StatisticsAckee from '@/edpack-web/components/StatisticsAckee'
+import AnimatedCircleBar from '@/edpack-web/components/AnimatedCircleBar'
 
 export default {
   name: 'Statistics',
@@ -99,10 +113,18 @@ export default {
     faculty: { default: false },
     statsObject: Object
   },
-  components: { countTo, AnimatedCircleBar, StatisticsAckee },
+  components: { countTo, AnimatedCircleBar, StatisticsAckee, AnimatedTabs },
 
   data () {
     return {
+      toTab: 'usage',
+      lastToTab: 'usage',
+      tabs: [
+        { name: 'usage', label: 'SW_USAGE' },
+        { name: 'views', label: 'SW_VIEWS' },
+        { name: 'details', label: 'SW_DETAILS' }
+      ],
+      toLeftDirection: false,
       calendarMode: false,
       minDate: '',
       maxDate: '',
@@ -133,6 +155,22 @@ export default {
   },
 
   methods: {
+    tabClick ({ name }) {
+      if (this.lastToTab === name) return
+
+      // initial value
+      let fromTabIndex = null
+      let toTabIndex = null
+
+      this.tabs.forEach((tab, index) => {
+        if (tab.name === this.lastToTab) fromTabIndex = index
+        if (tab.name === this.toTab) toTabIndex = index
+      })
+
+      // calculate direction
+      this.toLeftDirection = fromTabIndex > toTabIndex
+      this.lastToTab = name
+    },
     clearCalendar (dateValue) {
       // because date-picker doesn't have clear function we should check on Change that
       // values isn't set, don't want to separate it to another function, so checking it here

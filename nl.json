@@ -723,5 +723,8 @@
   "SW_ACTION": "Actie",
   "SW_CONTENT": "Inhoud",
   "SW_AMOUNT": "Aantal",
-  "SW_INFORMATION": "Informatie"
+  "SW_INFORMATION": "Informatie",
+  "SW_USAGE": "Gebruik",
+  "SW_VIEWS":"Keer bekeken",
+  "SW_DETAILS": "Details"
 }

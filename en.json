@@ -758,5 +758,8 @@
   "SW_ACTION": "Action",
   "SW_CONTENT": "Content",
   "SW_AMOUNT": "Amount",
-  "SW_INFORMATION": "Information"
+  "SW_INFORMATION": "Information",
+  "SW_USAGE": "Usage",
+  "SW_VIEWS":"Views",
+  "SW_DETAILS": "Details"
 }
