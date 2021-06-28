@@ -52,16 +52,17 @@
 
 <script>
 import config from 'config'
-import { mapActions, mapState } from 'vuex'
 import Bugsnag from '@bugsnag/js'
+import { mapActions, mapState } from 'vuex'
+
 import AppHeader from '../../components/AppHeader'
 import LtiHeader from '../../components/LtiHeader'
 import AppFooter from '../../components/AppFooter'
 import AppSidebar from '../../components/AppSidebar'
 import browserConfig from '../../utils/browser-update'
+import ContactForm from '../../components/ContactForm'
 import WelcomeDialog from '../../components/WelcomeDialog'
 import ReloadAfterDeploy from '../../components/ReloadAfterDeploy'
-import ContactForm from '../../components/ContactForm'
 
 export default {
   name: 'App',
@@ -87,7 +88,8 @@ export default {
       checkConnectionLoading: false,
       countdownFunction: null,
       countdownNumber: 30,
-      cookieWarning: config.cookieWarning && !navigator.cookieEnabled
+      cookieWarning: config.cookieWarning && !navigator.cookieEnabled,
+      preventCheckConnection: false
     }
   },
 
@@ -98,8 +100,18 @@ export default {
     })
     this.$router.afterEach(() => {
       this.$Progress.finish()
-      this.checkConnection()
     })
+
+    // we intercept error,
+    // the error when api doesn't response is undefined
+    // if error exist but === undefined -> do checkConnection()
+    this.$http.interceptors.response.use(
+      (response) => { return response },
+      (error) => {
+        // debounce didn't work here ;(
+        if (error === undefined && !this.preventCheckConnection) this.checkConnection()
+        return Promise.reject(error)
+      })
   },
 
   mounted () {
@@ -145,6 +157,7 @@ export default {
       Bugsnag.addMetadata('school', { name: user.organization.slug, id: user.organization._id })
     },
     checkConnection () {
+      this.preventCheckConnection = true
       this.checkConnectionLoading = true
       clearInterval(this.countdownFunction)
 
@@ -155,7 +168,10 @@ export default {
           this.countdownNumber = 30
           this.countdownFunction = setInterval(() => { this.checkCountdown() }, 1000)
         })
-        .finally(() => { this.checkConnectionLoading = false })
+        .finally(() => {
+          this.checkConnectionLoading = false
+          setTimeout(() => this.preventCheckConnection = false, 400)
+        })
     },
     checkCountdown () {
       if (this.countdownNumber > 1) {
