@@ -37,7 +37,7 @@ export default {
 
   data () {
     return {
-      useUppy: false,
+      useUppy: config.useUppy,
       filepicker: filestack.init(config.filestack.key)
     }
   },
