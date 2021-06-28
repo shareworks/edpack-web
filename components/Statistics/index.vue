@@ -31,9 +31,9 @@
 
     <animated-tabs v-if="status === 'done'" :to-left="toLeftDirection" :class="isMobile ? 'px-10' : 'px-20'">
       <template v-slot>
-        <statistics-ackee v-if="toTab === 'views'" :minDate="minDate" :maxDate="maxDate" :key="`statistics-ackee-${statisticsTick}`"/>
+        <statistics-ackee v-if="toTab === 'views'" :statisticsMode="'views'" :minDate="minDate" :maxDate="maxDate" :key="`statistics-ackee-${statisticsTick}`"/>
 
-        <div v-else-if="toTab === 'details'">
+        <div v-else-if="toTab === 'usage'">
           <el-alert :closable="false" type="warning" v-if="calendarMode" class="mb-20" @close="clearCalendar">
             <p>
               <strong>{{ $t('SW_CALENDAR_MODE', [startEndFormat(minDate), startEndFormat(maxDate, true)]) }}</strong>
@@ -89,6 +89,8 @@
             </el-card>
           </masonry>
         </div>
+
+        <statistics-ackee v-else-if="toTab === 'details'" :statisticsMode="'details'" :minDate="minDate" :maxDate="maxDate" :key="`statistics-ackee-${statisticsTick}`"/>
       </template>
     </animated-tabs>
 
