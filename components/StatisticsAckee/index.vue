@@ -89,7 +89,7 @@ export default {
       viewsChart: false,
       durationsChart: false,
 
-      tables: false,
+      tables: false
     }
   },
 
@@ -121,7 +121,7 @@ export default {
         this.facts = [
           { title: 'Amount of views', count: data.views, text: this.pluralize(['views', 'view', 'views'], data.views) },
           { title: 'Average views', count: data.averageViews, text: 'per day' },
-          { title: 'Average duration', ...this.formatDuration(data.averageDuration) },
+          { title: 'Average duration', ...this.formatDuration(data.averageDuration) }
         ]
       } else {
         this.facts = [
@@ -130,7 +130,7 @@ export default {
           { title: 'Average duration', infoTag: 'last 14 days', ...this.formatDuration(data.averageDuration) },
           { title: 'Views today', count: data.viewsToday, text: this.pluralize(['views', 'view', 'views'], data.viewsToday) },
           { title: 'Views this month', count: data.viewsMonth, text: this.pluralize(['views', 'view', 'views'], data.viewsMonth) },
-          { title: 'Views this year', count: data.viewsYear, text: this.pluralize(['views', 'view', 'views'], data.viewsYear) },
+          { title: 'Views this year', count: data.viewsYear, text: this.pluralize(['views', 'view', 'views'], data.viewsYear) }
         ]
       }
     },
@@ -152,7 +152,7 @@ export default {
         { title: 'Devices', subTitle, infoTag, data: data.devices, labels: ['Amount', 'Device'] },
         { title: 'Browsers', subTitle, infoTag, data: data.browsers, labels: ['Amount', 'Browser'] },
         { title: 'Sizes', subTitle, infoTag, data: data.sizes, labels: ['Amount', 'Size'] },
-        { title: 'Languages', subTitle, infoTag, data: data.languages, labels: ['Amount', 'Language'] },
+        { title: 'Languages', subTitle, infoTag, data: data.languages, labels: ['Amount', 'Language'] }
       ]
     },
 
@@ -183,9 +183,9 @@ export default {
 
     pluralize (opts, num) {
       switch (num) {
-        case 0: return opts[0]
-        case 1: return opts[1]
-        default: return opts[2]
+      case 0: return opts[0]
+      case 1: return opts[1]
+      default: return opts[2]
       }
     },
 

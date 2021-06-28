@@ -17,7 +17,7 @@
           </div>
 
           <p class="mt-10 text-center">
-            {{ $t('SW_SW_OAUTH_SUCCEEDED_TEXT') }}
+            {{ $t('SW_OAUTH_SUCCEEDED_TEXT') }}
           </p>
         </div>
       </el-col>
