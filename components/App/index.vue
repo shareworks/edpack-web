@@ -98,6 +98,7 @@ export default {
     })
     this.$router.afterEach(() => {
       this.$Progress.finish()
+      this.checkConnection()
     })
   },
 
