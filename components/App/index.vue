@@ -88,8 +88,7 @@ export default {
       checkConnectionLoading: false,
       countdownFunction: null,
       countdownNumber: 30,
-      cookieWarning: config.cookieWarning && !navigator.cookieEnabled,
-      preventCheckConnection: false
+      cookieWarning: config.cookieWarning && !navigator.cookieEnabled
     }
   },
 
@@ -109,7 +108,7 @@ export default {
       (response) => { return response },
       (error) => {
         // debounce didn't work here ;(
-        if (error === undefined && !this.preventCheckConnection) this.checkConnection()
+        if (error === undefined && !this.checkConnectionLoading) this.checkConnection()
         return Promise.reject(error)
       })
   },
@@ -157,7 +156,6 @@ export default {
       Bugsnag.addMetadata('school', { name: user.organization.slug, id: user.organization._id })
     },
     checkConnection () {
-      this.preventCheckConnection = true
       this.checkConnectionLoading = true
       clearInterval(this.countdownFunction)
 
@@ -168,10 +166,7 @@ export default {
           this.countdownNumber = 30
           this.countdownFunction = setInterval(() => { this.checkCountdown() }, 1000)
         })
-        .finally(() => {
-          this.checkConnectionLoading = false
-          setTimeout(() => this.preventCheckConnection = false, 400)
-        })
+        .finally(() => { this.checkConnectionLoading = false })
     },
     checkCountdown () {
       if (this.countdownNumber > 1) {
