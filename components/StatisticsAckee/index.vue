@@ -1,7 +1,7 @@
 <template>
   <div class="statistics-ackee">
-    <h2>Visitors/views</h2>
     <div v-if="statisticsMode === 'views'">
+      <h2>Visitors/views</h2>
       <!-- facts -->
       <masonry v-if="facts" :cols="{default: 3, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
         <el-card v-for="(fact, index) in facts" :key="`facts-${index}`" class="stat-counter">
@@ -27,6 +27,7 @@
     </div>
 
     <!-- Pages and Referrers -->
+    <h2 v-if="tables && statisticsMode === 'details'">Visitors/details</h2>
     <masonry v-if="tables && statisticsMode === 'details'" :cols="{default: 2, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
       <div v-for="(table, index) in tables" :key="`tables-${index}`">
 
