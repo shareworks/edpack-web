@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?fvy49f');
-  src:  url('fonts/icomoon.eot?fvy49f#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?fvy49f') format('truetype'),
-    url('fonts/icomoon.woff?fvy49f') format('woff'),
-    url('fonts/icomoon.svg?fvy49f#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?8i49pm');
+  src:  url('fonts/icomoon.eot?8i49pm#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?8i49pm') format('truetype'),
+    url('fonts/icomoon.woff?8i49pm') format('woff'),
+    url('fonts/icomoon.svg?8i49pm#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,11 +25,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-bar-chart:before {
-  content: "\e99c";
-}
-.icon-stats-bars:before {
-  content: "\e99d";
+.icon-groups:before {
+  content: "\e949";
 }
 .icon-qr-code:before {
   content: "\e947";
@@ -574,9 +571,18 @@
 .icon-triangle-right:before {
   content: "\f05a";
 }
-.icon-graduation:before {
-  content: "\e948";
+.icon-badge:before {
+  content: "\e94a";
 }
 .icon-help-with-circle:before {
   content: "\e946";
+}
+.icon-trophy:before {
+  content: "\e99e";
+}
+.icon-bar-chart:before {
+  content: "\e99c";
+}
+.icon-graduation:before {
+  content: "\e948";
 }
