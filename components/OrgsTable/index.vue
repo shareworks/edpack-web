@@ -36,6 +36,12 @@
               <span class="hidden-xs">{{ $t('SW_CREATE_ORG') }}</span>
             </el-button>
 
+            <!-- Create org -->
+            <el-button type="secondary" plain size="medium" @click="dialogAppStats = true" class="button-square-xs">
+              <i class="icon-stats"/>
+              <span class="hidden-xs">{{ $t('SW_ALL_STATS') }}</span>
+            </el-button>
+
             <!-- Total orgs found -->
             <span v-show="status !== 'loading' || tableData.length" class="hidden-xs hidden-sm ml-10 line-height-38">
               {{ total }} {{ $tc('SW_ORGANIZATION', total).toLowerCase() }}
@@ -205,6 +211,11 @@
     <el-dialog :title="$t('SW_SEND_NEWSLETTER')" append-to-body :visible.sync="dialogNewsletter" :close-on-click-modal="false" :close-on-press-escape="false">
       <newsletter :selectedOrgs="multipleSelection" :closeDialog="closeDialog"/>
     </el-dialog>
+
+    <!-- All statistics dialog -->
+    <el-dialog class="no-padding-dialog padding-bottom-dialog" append-to-body :visible.sync="dialogAppStats">
+      <statistics :appStatistics="true"/>
+    </el-dialog>
   </div>
 </template>
 
@@ -216,11 +227,12 @@ import OrgOptions from '@/components/OrgOptions'
 import dateSorter from '@/edpack-web/utils/date-sorter'
 import CreateOrg from '@/edpack-web/components/CreateOrg'
 import Newsletter from '@/edpack-web/components/Newsletter'
+import Statistics from '@/edpack-web/components/Statistics'
 import sortCaseInsensitive from '@/edpack-web/utils/sort-case-insensitive'
 
 export default {
   name: 'OrgsTable',
-  components: { CreateOrg, OrgOptions, Newsletter },
+  components: { CreateOrg, OrgOptions, Newsletter, Statistics },
 
   data () {
     const lmsTypes = [
@@ -233,6 +245,7 @@ export default {
 
     return {
       lmsTypes,
+      dialogAppStats: false,
       lmsFilter: this.$route.query.filter || lmsTypes[0].value,
       status: false,
       sort: 'createdDate',

@@ -761,5 +761,6 @@
   "SW_INFORMATION": "Information",
   "SW_USAGE": "Usage",
   "SW_VIEWS":"Views",
-  "SW_DETAILS": "Details"
+  "SW_DETAILS": "Details",
+  "SW_ALL_STATS": "All statistics"
 }

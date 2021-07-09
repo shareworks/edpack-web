@@ -79,7 +79,8 @@ export default {
     faculty: { default: false },
     minDate: [String, Date],
     maxDate: [String, Date],
-    statisticsMode: String
+    statisticsMode: String,
+    appStatistics: Boolean
   },
   components: { countTo, BarChart },
 
@@ -108,7 +109,12 @@ export default {
       if (maxDate) maxDate = new Date(new Date(maxDate) - 10000)
 
       try {
-        const args = { organization: this.school._id, ...this.minDate && { minDate: this.minDate }, ...maxDate && { maxDate } }
+        const args = { ...this.minDate && { minDate: this.minDate }, ...maxDate && { maxDate } }
+
+        if (!this.appStatistics) {
+          args.organization = this.school._id
+        }
+
         const [resStats, resFacts] = await Promise.all(['statistics', 'facts'].map(type => Ackee.request(type, args)))
         this.visualizeStatistics(resStats.data.data.domain.statistics)
         this.visualizeFacts(resFacts.data.data.domain.facts)

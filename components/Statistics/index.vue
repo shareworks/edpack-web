@@ -31,7 +31,7 @@
 
     <animated-tabs v-if="status === 'done'" :to-left="toLeftDirection" :class="isMobile ? 'px-10' : 'px-20'">
       <template v-slot>
-        <statistics-ackee v-if="toTab === 'views'" :statisticsMode="'views'" :minDate="minDate" :maxDate="maxDate" :key="`statistics-ackee-${statisticsTick}`"/>
+        <statistics-ackee v-if="toTab === 'views'" :appStatistics="appStatistics" :statisticsMode="'views'" :minDate="minDate" :maxDate="maxDate" :key="`statistics-ackee-${statisticsTick}`"/>
 
         <div v-else-if="toTab === 'usage'">
           <el-alert :closable="false" type="warning" v-if="calendarMode" class="mb-20" @close="clearCalendar">
@@ -90,7 +90,7 @@
           </masonry>
         </div>
 
-        <statistics-ackee v-else-if="toTab === 'details'" :statisticsMode="'details'" :minDate="minDate" :maxDate="maxDate" :key="`statistics-ackee-${statisticsTick}`"/>
+        <statistics-ackee v-else-if="toTab === 'details'" :appStatistics="appStatistics" :statisticsMode="'details'" :minDate="minDate" :maxDate="maxDate" :key="`statistics-ackee-${statisticsTick}`"/>
       </template>
     </animated-tabs>
 
@@ -113,7 +113,8 @@ export default {
   name: 'Statistics',
   props: {
     faculty: { default: false },
-    statsObject: Object
+    statsObject: Object,
+    appStatistics: Boolean
   },
   components: { countTo, AnimatedCircleBar, StatisticsAckee, AnimatedTabs },
 
@@ -152,7 +153,8 @@ export default {
   },
 
   mounted () {
-    if (this.faculty) return this.getFacultyStatistic()
+    if (this.appStatistics) return this.status = 'done'
+    else if (this.faculty) return this.getFacultyStatistic()
     this.checkSchoolCountsAndCallSetup()
   },
 
