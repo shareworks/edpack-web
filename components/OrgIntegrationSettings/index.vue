@@ -357,7 +357,7 @@ export default {
       ltiAdvantageDomainUrl: `${config.api_url.replace('/api/v1', '')}`,
       ltiAdvantageKeysetUrl: `${config.api_url}/lti/advantage/jwks`,
 
-      lmsTypes: config.lmsTypes,
+      lmsTypes: config.lmsTypes || [],
       apiTemplates: [
         {
           name: 'canvas',
