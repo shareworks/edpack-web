@@ -1,7 +1,6 @@
 <template>
   <div class="statistics-ackee">
     <div v-if="statisticsMode === 'views'">
-      <h2>Visitors/views</h2>
       <!-- facts -->
       <masonry v-if="facts" :cols="{default: 3, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
         <el-card v-for="(fact, index) in facts" :key="`facts-${index}`" class="stat-counter">
@@ -15,19 +14,28 @@
 
       <!-- Site views -->
       <masonry v-if="viewsChart" :cols="{default: 1, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
-        <h2>Site views</h2>
+
+        <div class="el-card">
+          <div class="el-card__body">
+            <h2 class="fact-title">Site views</h2>
+          </div>
+        </div>
+
         <bar-chart :data="viewsChart.data" :options="viewsChart.options" :key="`site-views-chart`"></bar-chart>
       </masonry>
 
       <!-- Durations -->
       <masonry v-if="durationsChart" :cols="{default: 1, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
-        <h2>Durations</h2>
+        <div class="el-card">
+          <div class="el-card__body">
+            <h2 class="fact-title">Site views</h2>
+          </div>
+        </div>
         <bar-chart :data="durationsChart.data" :options="durationsChart.options" :key="`durations-chart`"></bar-chart>
       </masonry>
     </div>
 
     <!-- Pages and Referrers -->
-    <h2 v-if="tables && statisticsMode === 'details'">Visitors/details</h2>
     <masonry v-if="tables && statisticsMode === 'details'" :cols="{default: 2, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
       <div v-for="(table, index) in tables" :key="`tables-${index}`">
 

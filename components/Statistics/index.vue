@@ -44,8 +44,6 @@
             </p>
           </el-alert>
 
-          <h2>Statistics from Shareworks</h2>
-
           <!-- completionStats -->
           <masonry v-if="!calendarMode" :cols="{default: 2, 767: 1}" :gutter="{default: '20px', 767: '10px'}">
             <el-card v-for="(stat, index) in statisticCompletionValues" :key="`statisticCompletionValues${index}`" class="stat-counter">
