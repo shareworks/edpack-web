@@ -4,7 +4,7 @@
       <!-- facts -->
       <masonry v-if="facts" :cols="{default: 3, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
         <el-card v-for="(fact, index) in facts" :key="`facts-${index}`" class="stat-counter">
-          <p> <span class="fact-title">{{ fact.title }}</span> <el-tag size="small" type="warning" v-if="fact.infoTag">{{fact.infoTag}}</el-tag></p>
+          <p> <span class="fact-title mb-5">{{ fact.title }}</span> <el-tag size="small" type="warning" v-if="fact.infoTag">{{fact.infoTag}}</el-tag></p>
           <div class="font-20">
             <span v-if="('count' in fact)"><strong class="counter"><countTo :startVal='0' :endVal='fact.count' separator="." :duration='4000'/></strong> <span class="small-text">{{fact.text}}</span></span>
             <span v-else-if="('value' in fact)"><strong class="counter">{{fact.value}}</strong> <span class="small-text">{{fact.text}}</span></span>
@@ -17,7 +17,7 @@
 
         <div class="el-card no-border mt-10">
           <div class="el-card__body py-0">
-            <h2 class="fact-title">Site views</h2>
+            <h2 class="fact-title mb-5">Site views</h2>
           </div>
         </div>
 
@@ -26,9 +26,9 @@
 
       <!-- Durations -->
       <masonry v-if="durationsChart" :cols="{default: 1, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
-        <div class="el-card">
-          <div class="el-card__body">
-            <h2 class="fact-title">Site views</h2>
+        <div class="el-card no-border mt-10">
+          <div class="el-card__body py-0">
+            <h2 class="fact-title mb-5">Site views</h2>
           </div>
         </div>
         <bar-chart :data="durationsChart.data" :options="durationsChart.options" :key="`durations-chart`"></bar-chart>
