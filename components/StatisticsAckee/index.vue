@@ -128,7 +128,7 @@ export default {
       this.facts = []
       if (this.minDate || this.maxDate) {
         this.facts = [
-          { title: 'Amount of visits', count: data.views, text: this.pluralize(['views', 'view', 'views'], data.views) },
+          { title: 'Amount of visits', count: data.views, text: this.pluralize(['visits', 'visit', 'visits'], data.views) },
           { title: 'Average visits', count: data.averageViews, text: 'per day' },
           { title: 'Average duration', ...this.formatDuration(data.averageDuration) }
         ]
@@ -137,9 +137,9 @@ export default {
           { title: 'Active visitors', count: data.activeVisitors, text: this.pluralize(['visitors', 'visitor', 'visitors'], data.activeVisitors) },
           { title: 'Average visits', infoTag: 'last 14 days', count: data.averageViews, text: 'per day' },
           { title: 'Average duration', infoTag: 'last 14 days', ...this.formatDuration(data.averageDuration) },
-          { title: 'Visits today', count: data.viewsToday, text: this.pluralize(['views', 'view', 'views'], data.viewsToday) },
-          { title: 'Visits this month', count: data.viewsMonth, text: this.pluralize(['views', 'view', 'views'], data.viewsMonth) },
-          { title: 'Visits this year', count: data.viewsYear, text: this.pluralize(['views', 'view', 'views'], data.viewsYear) }
+          { title: 'Visits today', count: data.viewsToday, text: this.pluralize(['visits', 'visit', 'visits'], data.viewsToday) },
+          { title: 'Visits this month', count: data.viewsMonth, text: this.pluralize(['visits', 'visit', 'visits'], data.viewsMonth) },
+          { title: 'Visits this year', count: data.viewsYear, text: this.pluralize(['visits', 'visit', 'visits'], data.viewsYear) }
         ]
       }
     },
@@ -155,7 +155,7 @@ export default {
       const infoTag = (this.minDate || this.maxDate) ? `${formattedMinDate} / ${formattedMaxDate}` : ''
 
       this.tables = [
-        { title: 'Pages', subTitle, infoTag, data: data.pages.map(el => { return { ...el, url: el.id } }), labels: ['Views', 'Pages'] },
+        { title: 'Pages', subTitle, infoTag, data: data.pages.map(el => { return { ...el, url: el.id } }), labels: ['Visitors', 'Pages'] },
         { title: 'Referrers', subTitle, infoTag, favicon: true, data: data.referrers.map(el => { return { ...el, ...this.formatUrl(el.id, true) } }), labels: ['', ''] },
         { title: 'Systems', subTitle, infoTag, data: data.systems, labels: ['Amount', 'System'] },
         { title: 'Devices', subTitle, infoTag, data: data.devices, labels: ['Amount', 'Device'] },
