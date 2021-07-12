@@ -89,7 +89,7 @@ export default {
   },
 
   computed: {
-    evaluation () { return this.$store.state?.buddycheck.evaluation }
+    evaluation () { return this.$store.state?.buddycheck?.evaluation }
   },
 
   watch: {
