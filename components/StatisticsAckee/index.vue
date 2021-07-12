@@ -39,7 +39,7 @@
     <masonry v-if="tables && statisticsMode === 'details'" :cols="{default: 2, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
       <div v-for="(table, index) in tables" :key="`tables-${index}`">
 
-        <el-card>
+        <el-card class="mt-20">
           <p> <span class="fact-title mt-20">{{ table.title }}</span> <el-tag size="small" type="warning" v-if="table.subTitle">{{table.subTitle}}</el-tag></p>
           <div class="font-20">
             <el-table :data="table.data" style="width: 100%" height="300">
