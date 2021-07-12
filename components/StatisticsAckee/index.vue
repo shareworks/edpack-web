@@ -15,8 +15,8 @@
       <!-- Site views -->
       <masonry v-if="viewsChart" :cols="{default: 1, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
 
-        <div class="el-card">
-          <div class="el-card__body">
+        <div class="el-card no-border mt-10">
+          <div class="el-card__body py-0">
             <h2 class="fact-title">Site views</h2>
           </div>
         </div>
@@ -39,10 +39,8 @@
     <masonry v-if="tables && statisticsMode === 'details'" :cols="{default: 2, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
       <div v-for="(table, index) in tables" :key="`tables-${index}`">
 
-        <h2>{{ table.title }}</h2>
-
         <el-card>
-          <p> <span class="fact-title">{{ table.subTitle }}</span> <el-tag size="small" type="warning" v-if="table.infoTag">{{table.infoTag}}</el-tag></p>
+          <p> <span class="fact-title mt-20">{{ table.title }}</span> <el-tag size="small" type="warning" v-if="table.subTitle">{{table.subTitle}}</el-tag></p>
           <div class="font-20">
             <el-table :data="table.data" style="width: 100%" height="300">
 
