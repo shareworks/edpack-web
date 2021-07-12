@@ -60,7 +60,7 @@
         </el-table-column>
 
         <!-- Participant -->
-        <el-table-column :label="organization.terminology.student[lang]" prop="userName"/>
+        <el-table-column :label="$t('SW_USER')" prop="userName"/>
       </el-table>
       <mugen-scroll :handler="getActivities" scroll-container="activityLogBody" :handle-on-mount="false" :should-handle="status === 'incomplete'"/>
     </div>

@@ -128,18 +128,18 @@ export default {
       this.facts = []
       if (this.minDate || this.maxDate) {
         this.facts = [
-          { title: 'Amount of views', count: data.views, text: this.pluralize(['views', 'view', 'views'], data.views) },
-          { title: 'Average views', count: data.averageViews, text: 'per day' },
+          { title: 'Amount of visits', count: data.views, text: this.pluralize(['views', 'view', 'views'], data.views) },
+          { title: 'Average visits', count: data.averageViews, text: 'per day' },
           { title: 'Average duration', ...this.formatDuration(data.averageDuration) }
         ]
       } else {
         this.facts = [
           { title: 'Active visitors', count: data.activeVisitors, text: this.pluralize(['visitors', 'visitor', 'visitors'], data.activeVisitors) },
-          { title: 'Average views', infoTag: 'last 14 days', count: data.averageViews, text: 'per day' },
+          { title: 'Average visits', infoTag: 'last 14 days', count: data.averageViews, text: 'per day' },
           { title: 'Average duration', infoTag: 'last 14 days', ...this.formatDuration(data.averageDuration) },
-          { title: 'Views today', count: data.viewsToday, text: this.pluralize(['views', 'view', 'views'], data.viewsToday) },
-          { title: 'Views this month', count: data.viewsMonth, text: this.pluralize(['views', 'view', 'views'], data.viewsMonth) },
-          { title: 'Views this year', count: data.viewsYear, text: this.pluralize(['views', 'view', 'views'], data.viewsYear) }
+          { title: 'Visits today', count: data.viewsToday, text: this.pluralize(['views', 'view', 'views'], data.viewsToday) },
+          { title: 'Visits this month', count: data.viewsMonth, text: this.pluralize(['views', 'view', 'views'], data.viewsMonth) },
+          { title: 'Visits this year', count: data.viewsYear, text: this.pluralize(['views', 'view', 'views'], data.viewsYear) }
         ]
       }
     },
