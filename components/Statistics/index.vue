@@ -31,9 +31,7 @@
 
     <animated-tabs v-if="status === 'done'" :to-left="toLeftDirection" :class="isMobile ? 'px-10' : 'px-20'">
       <template v-slot>
-        <statistics-ackee v-if="toTab === 'views'" :appStatistics="appStatistics" :statisticsMode="'views'" :minDate="minDate" :maxDate="maxDate" :key="`statistics-ackee-${statisticsTick}`"/>
-
-        <div v-else-if="toTab === 'usage'">
+        <div v-if="toTab === 'usage'">
           <el-alert :closable="false" type="warning" v-if="calendarMode" class="mb-20" @close="clearCalendar">
             <p>
               <strong>{{ $t('SW_CALENDAR_MODE', [startEndFormat(minDate), startEndFormat(maxDate, true)]) }}</strong>
@@ -88,6 +86,7 @@
           </masonry>
         </div>
 
+        <statistics-ackee v-else-if="toTab === 'views'" :appStatistics="appStatistics" :statisticsMode="'views'" :minDate="minDate" :maxDate="maxDate" :key="`statistics-ackee-${statisticsTick}`"/>
         <statistics-ackee v-else-if="toTab === 'details'" :appStatistics="appStatistics" :statisticsMode="'details'" :minDate="minDate" :maxDate="maxDate" :key="`statistics-ackee-${statisticsTick}`"/>
       </template>
     </animated-tabs>
@@ -117,14 +116,16 @@ export default {
   components: { countTo, AnimatedCircleBar, StatisticsAckee, AnimatedTabs },
 
   data () {
+    const tabs = []
+
+    if (!this.appStatistics) tabs.push({ name: 'usage', label: 'SW_USAGE' })
+    tabs.push({ name: 'views', label: 'SW_VIEWS' })
+    tabs.push({ name: 'details', label: 'SW_DETAILS' })
+
     return {
-      toTab: 'usage',
-      lastToTab: 'usage',
-      tabs: [
-        { name: 'usage', label: 'SW_USAGE' },
-        { name: 'views', label: 'SW_VIEWS' },
-        { name: 'details', label: 'SW_DETAILS' }
-      ],
+      tabs,
+      toTab: this.appStatistics ? 'views' : 'usage',
+      lastToTab: this.appStatistics ? 'views' : 'usage',
       toLeftDirection: false,
       calendarMode: false,
       minDate: '',
