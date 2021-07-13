@@ -764,5 +764,8 @@
   "SW_USAGE": "Usage",
   "SW_VIEWS":"Visitors",
   "SW_DETAILS": "Details",
-  "SW_ALL_STATS": "All statistics"
+  "SW_ALL_STATS": "All statistics",
+  "SW_USER": "User",
+  "SW_CREATE": "Create",
+  "SW_REMOVED_USER": "Removed user"
 }

@@ -727,5 +727,8 @@
   "SW_USAGE": "Gebruik",
   "SW_VIEWS":"Bezoekers",
   "SW_DETAILS": "Details",
-  "SW_ALL_STATS": "Alle statistieken"
+  "SW_ALL_STATS": "Alle statistieken",
+  "SW_USER": "Gebruiker",
+  "SW_CREATE": "Aanmaken",
+  "SW_REMOVED_USER": "Verwijderde gebruiker"
 }

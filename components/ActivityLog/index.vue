@@ -34,7 +34,7 @@
         <!-- Content -->
         <el-table-column :label="$t('SW_CONTENT')" width="180px">
           <template slot-scope="scope">
-            <span>&nbsp;{{getSubject(scope.row)}}</span>
+            {{getSubject(scope.row)}}
           </template>
         </el-table-column>
 
@@ -55,7 +55,7 @@
         <!-- Information -->
         <el-table-column :label="$t('SW_INFORMATION')">
           <template slot-scope="scope">
-              <span>&nbsp;{{getInformation(scope.row)}}</span>
+            {{getInformation(scope.row)}}
           </template>
         </el-table-column>
 
@@ -73,12 +73,11 @@ import debounce from 'lodash/debounce'
 
 export default {
   name: 'ActivityLog',
-  props: ['closeDialog', 'contentFilters', 'actionFilters', 'useAssessment', 'assessment'],
+  props: ['contentFilters', 'actionFilters', 'assessment'],
 
   data () {
     return {
-      organization: this.$store.state.school,
-      lang: this.$store.state.lang,
+      evaluation: this.$store.state.buddycheck?.evaluation || {},
       status: false,
       activities: [],
       skip: 0,
@@ -86,10 +85,6 @@ export default {
       actionFilter: '',
       searchText: ''
     }
-  },
-
-  computed: {
-    evaluation () { return this.$store.state?.buddycheck?.evaluation }
   },
 
   watch: {
@@ -125,16 +120,10 @@ export default {
       if (this.status === 'loading') return
       this.status = 'loading'
 
-      const params = {
-        skip: this.skip,
-        amount: 20
-      }
+      const params = { skip: this.skip, amount: 20 }
 
-      if (this.useAssessment) {
-        params.assessment = this.assessment._id
-      } else {
-        params.evaluation = this.evaluation._id
-      }
+      if (this.assessment) params.assessment = this.assessment._id
+      else params.evaluation = this.evaluation._id
 
       if (this.contentFilter) params.contentType = this.contentFilter
       if (this.actionFilter) params.activityType = this.actionFilter
@@ -152,15 +141,13 @@ export default {
           this.$message({ type: 'error', message: this.$i18n.t('SW_GENERIC_ERROR') })
           this.status = 'error'
         })
-        .finally(() => {
-          this.loading = false
-        })
+        .finally(() => { this.loading = false })
     },
 
     getAction (activity) {
-      if (activity.activityType === 'delete_user') return 'Removed user'
-      else if (activity.activityType === 'submit') return this.useAssessment ? 'Upload' : 'Submit'
-      else if (activity.activityType === 'add') return 'Create'
+      if (activity.activityType === 'delete_user') return this.$i18n.t('SW_REMOVED_USER')
+      else if (activity.activityType === 'submit') return this.assessment ? this.$i18n.t('SW_UPLOAD') : this.$i18n.t('SW_SUBMIT')
+      else if (activity.activityType === 'add') return this.$i18n.t('SW_CREATE')
 
       return (activity.activityType.charAt(0).toUpperCase() + activity.activityType.slice(1)).replace('_', ' ')
     },
