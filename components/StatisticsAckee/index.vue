@@ -1,5 +1,5 @@
 <template>
-  <div class="statistics-ackee">
+  <div class="statistics-ackee" v-if="!loading">
     <div v-if="statisticsMode === 'views'">
       <!-- facts -->
       <masonry v-if="facts" :cols="{default: 3, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
@@ -72,6 +72,8 @@
       </div>
     </masonry>
   </div>
+
+  <spinner v-else class="mt-30"/>
 </template>
 
 <script>
@@ -93,6 +95,7 @@ export default {
 
   data () {
     return {
+      loading: true,
       school: this.$store.state.school,
       facts: false,
 
@@ -122,11 +125,14 @@ export default {
           args.organization = this.school._id
         }
 
+        this.loading = true
         const [resStats, resFacts] = await Promise.all(['statistics', 'facts'].map(type => Ackee.request(type, args)))
         this.visualizeStatistics(resStats.data.data.domain.statistics)
         this.visualizeFacts(resFacts.data.data.domain.facts)
       } catch (err) {
         console.log(err)
+      } finally {
+        this.loading = false
       }
     },
 
