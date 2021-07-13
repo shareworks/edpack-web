@@ -31,7 +31,7 @@
 
     <animated-tabs v-if="status === 'done'" :to-left="toLeftDirection" :class="isMobile ? 'px-10' : 'px-20'">
       <template v-slot>
-        <div v-if="toTab === 'usage'">
+        <div v-if="toTab === 'usage'" :key="'usage'">
           <el-alert :closable="false" type="warning" v-if="calendarMode" class="mb-20" @close="clearCalendar">
             <p>
               <strong>{{ $t('SW_CALENDAR_MODE', [startEndFormat(minDate), startEndFormat(maxDate, true)]) }}</strong>
@@ -86,8 +86,13 @@
           </masonry>
         </div>
 
-        <statistics-ackee v-else-if="toTab === 'views'" :appStatistics="appStatistics" :statisticsMode="'views'" :minDate="minDate" :maxDate="maxDate" :key="`statistics-ackee-${statisticsTick}`"/>
-        <statistics-ackee v-else-if="toTab === 'details'" :appStatistics="appStatistics" :statisticsMode="'details'" :minDate="minDate" :maxDate="maxDate" :key="`statistics-ackee-${statisticsTick}`"/>
+        <div v-else-if="toTab === 'views'" :key="`statistics-ackee-views`">
+          <statistics-ackee :appStatistics="appStatistics" :statisticsMode="'views'" :minDate="minDate" :maxDate="maxDate" :key="statisticsTick"/>
+        </div>
+
+        <div v-else-if="toTab === 'details'" :key="`statistics-ackee-details`">
+          <statistics-ackee :appStatistics="appStatistics" :statisticsMode="'details'" :minDate="minDate" :maxDate="maxDate" :key="statisticsTick"/>
+        </div>
       </template>
     </animated-tabs>
 
