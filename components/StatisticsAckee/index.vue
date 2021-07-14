@@ -4,7 +4,7 @@
       <!-- facts -->
       <masonry v-if="facts" :cols="{default: 3, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
         <el-card v-for="(fact, index) in facts" :key="`facts-${index}`" class="stat-counter">
-          <p> <span class="fact-title mb-5">{{ fact.title }}</span> <el-tag size="small" type="warning" v-if="fact.infoTag">{{fact.infoTag}}</el-tag></p>
+          <p> <span class="fact-title mb-5">{{ fact.title }}</span> <el-tag size="mini" class="ml-5" type="warning" v-if="fact.infoTag">{{fact.infoTag}}</el-tag></p>
           <div class="font-20">
             <span v-if="('count' in fact)"><strong class="counter"><countTo :startVal='0' :endVal='fact.count' separator="." :duration='4000'/></strong> <span class="small-text">{{fact.text}}</span></span>
             <span v-else-if="('value' in fact)"><strong class="counter">{{fact.value}}</strong> <span class="small-text">{{fact.text}}</span></span>
@@ -17,7 +17,7 @@
 
         <div class="el-card no-border mt-10">
           <div class="el-card__body py-0">
-            <h2 class="fact-title mb-5">Site views</h2>
+            <h2 class="fact-title mb-5 no-bold">Site views</h2>
           </div>
         </div>
 
@@ -28,7 +28,7 @@
       <masonry v-if="durationsChart" :cols="{default: 1, 767: 2}" :gutter="{default: '20px', 767: '10px'}">
         <div class="el-card no-border mt-10">
           <div class="el-card__body py-0">
-            <h2 class="fact-title mb-5">Site views</h2>
+            <h2 class="fact-title mb-5 no-bold">Site views</h2>
           </div>
         </div>
         <bar-chart :data="durationsChart.data" :options="durationsChart.options" :key="`durations-chart`"></bar-chart>
@@ -40,7 +40,7 @@
       <div v-for="(table, index) in tables" :key="`tables-${index}`">
 
         <el-card class="mt-20">
-          <p> <span class="fact-title mt-20">{{ table.title }}</span> <el-tag size="small" type="warning" v-if="table.subTitle">{{table.subTitle}}</el-tag></p>
+          <p> <span class="fact-title mt-20">{{ table.title }}</span> <el-tag size="mini" class="ml-5" type="warning" v-if="table.subTitle">{{table.subTitle}}</el-tag></p>
           <div class="font-20">
             <el-table :data="table.data" style="width: 100%" height="300">
 
@@ -52,7 +52,7 @@
 
               <el-table-column prop="count" :label="table.labels[0]" width="80">
                 <template slot-scope="scope">
-                  <el-tag type="danger" size="small">{{`x${scope.row.count}`}}</el-tag>
+                  <el-tag type="danger" size="mini" class="ml-5">{{`x${scope.row.count}`}}</el-tag>
                 </template>
               </el-table-column>
 
